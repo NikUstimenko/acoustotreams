@@ -6,13 +6,13 @@ setup(
 
     name='acoutreams',
 
-    version='0.1.0',
+    version='0.1.1',
 
-    author='Nikita ustimenko',
+    author='Nikita Ustimenko',
 
     author_email='nikita.ustimenko@kit.edu',
 
-    description='T-matrixm scattering code for acoustic computations',
+    description='A Python package for acoustic scattering based on the T-matrix method',
 
     license = 'MIT',
 
@@ -20,7 +20,11 @@ setup(
 
     long_description_content_type='text/markdown',
 
-    url='https://github.com/NikUstimenko/acoutreams',  
+    url='https://github.com/NikUstimenko/acoutreams',
+
+    project_urls={
+        "Bug Tracker": "https://github.com/NikUstimenko/acoutreams/issues",
+    },  
 
     packages=find_packages(),
 

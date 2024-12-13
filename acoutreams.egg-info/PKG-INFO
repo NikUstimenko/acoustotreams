@@ -26,7 +26,7 @@ To install the package with pip, use
 ```sh
 pip install acoutreams
 ```
-Preliminarily, you have to also install original `treams`
+Preliminarily, you have to also install original `treams` as well as `numpy` and `scipy`
 ```sh
 pip install treams
 ```
