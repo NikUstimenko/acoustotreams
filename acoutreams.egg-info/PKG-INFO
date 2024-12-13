@@ -1,0 +1,48 @@
+Metadata-Version: 2.1
+Name: acoutreams
+Version: 0.1.0
+Summary: T-matrixm scattering code for acoustic computations
+Home-page: https://github.com/NikUstimenko/acoutreams
+Author: Nikita ustimenko
+Author-email: nikita.ustimenko@kit.edu
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# acoutreams
+
+The package `acoutreams` adopts the framework of the `treams` package for acoustic wave scattering in finite and periodic arrangements of particles, based on the T-matrix method.
+
+## Installation
+
+### Installation using pip
+
+To install the package with pip, use
+
+```sh
+pip install acoutreams
+```
+Preliminarily, you have to also install original `treams`
+```sh
+pip install treams
+```
+
+## Documentation
+
+The documentation of `treams` can be found at https://tfp-photonics.github.io/treams.
+
+## Publications
+
+When using this code please cite:
+
+## Features
+
+* [x] T-matrix calculations using a spherical or cylindrical wave basis set
+* [x] Scattering from clusters of particles
+* [x] Scattering from particles and clusters arranged in 3d-, 2d-, and 1d-lattices
+* [x] Calculation of sound propagation in stratified media
+* [x] Band calculation in crystal structures
