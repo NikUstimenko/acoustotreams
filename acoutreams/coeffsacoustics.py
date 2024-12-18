@@ -64,18 +64,18 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
     h = treams.special.hankel1(m, x_env)
     h_d = treams.special.hankel1_d(m, x_env)
     
-    if mat_cyl[2] == 0 and mat_cyl[1] == 0 and mat_cyl[0] == np.inf:
+    if np.abs(mat_cyl[2]) == 0 and np.abs(mat_cyl[1]) == 0 and np.abs(mat_cyl[0]) == np.inf:
         res = -j_d / h_d
-    elif  mat_cyl[2] == 0 and mat_cyl[1] == 0 and mat_cyl[0] == 0:
+    elif np.abs(mat_cyl[2]) == 0 and np.abs(mat_cyl[1]) == 0 and np.abs(mat_cyl[0]) == 0:
         res = -j / h
-    if mat_cyl[1] > 0:
+    if np.abs(mat_cyl[1]) > 0:
         k_cyl = k0 * AcousticMaterial().c / mat_cyl[1]
         j1 = treams.special.jv(m, x_cyl)
         j1_d = treams.special.jv_d(m, x_cyl)
-        if mat_cyl[2] == 0:
+        if np.abs(mat_cyl[2]) == 0:
             delta = x_cyl * mat_env[0] / (x_env * mat_cyl[0]) 
             res = (delta * j1_d * j - j1 * j_d) / (j1 * h_d - delta * j1_d * h)
-        elif mat_cyl[2] > 0:
+        elif np.abs(mat_cyl[2]) > 0:
             k_cyl_t = k0 * AcousticMaterial().c / mat_cyl[2]
             krho_cyl_t = np.sqrt(k_cyl_t * k_cyl_t - kz * kz)
             x_cyl_t = krho_cyl_t * radii
