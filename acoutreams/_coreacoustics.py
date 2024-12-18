@@ -1099,8 +1099,11 @@ class AcousticPhysicsArray(util.AnnotatedArray):
     _scales = {"basis"}
 
     pfield = op.OperatorAttribute(opa.PField)
+    """Pressure field evaluation matrix, see also :class:`acoutreams.PField`."""
     vfield = op.OperatorAttribute(opa.VField)
-    """Field evaluation matrix, see also :class:`acoutreams.EField`."""
+    """Velocity field evaluation matrix, see also :class:`acoutreams.VField`."""
+    ffamplitude = op.OperatorAttribute(opa.FFAmplitude)
+    """Far-field amplitude evaluation matrix, see also :class:`acoutreams.FFAmplitude`."""
     expand = op.OperatorAttribute(opa.Expand)
     """Expansion matrix, see also :class:`acoutreams.Expand`."""
     expandlattice = op.OperatorAttribute(opa.ExpandLattice)
