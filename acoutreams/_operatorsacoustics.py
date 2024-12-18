@@ -1087,7 +1087,6 @@ def _ssw_pfield(r, basis, k0, material, modetype):
 def _scw_pfield(r, basis, k0, material, modetype):
     """Pressure field of scalar cylindrical waves."""
     material = AcousticMaterial(material)
-    ks = material.ks(k0)
     krhos = material.krhos(k0, basis.kz)
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = sc.car2cyl(r - basis.positions)
@@ -1194,12 +1193,38 @@ def _ssw_ffamplitude(r, basis, k0, material, modetype):
     res.ann[-2]["modetype"] = modetype
     return res
 
+def _scw_ffamplitude(r, basis, k0, material, modetype):
+    """Far-field amplitude of singular scalar cylindrical waves."""
+    ks = k0 * AcousticMaterial().c / material.c
+    r = sc.car2cyl(r)
+    material = AcousticMaterial(material)
+    krhos = material.krhos(k0, basis.kz)
+    krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
+    rcyl = basis.positions
+    res = None
+    res = wv.scw_PsiFF(
+            basis.kz,
+            basis.m,
+            krhos,
+            krhos * rcyl[..., basis.pidx, 0],
+            krhos * rcyl[..., basis.pidx, 1],
+            r[..., basis.pidx, 1]
+        )   
+    res *= 1 / (np.sqrt(2 * material.rho * material.c) * ks)
+    if res is None:
+        raise ValueError("invalid parameters")
+    res = util.AnnotatedArray(np.array([res]).T)  
+    res.ann[-2]["basis"] = basis
+    res.ann[-2]["k0"] = k0
+    res.ann[-2]["material"] = material
+    res.ann[-2]["modetype"] = modetype
+    return res
 
 def ffamplitude(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     """Far-field amplitude of pressure field.
 
     The resulting matrix maps the scattered pressure field coefficients in the scalar 
-    spherical wave basis to the far-field amplitude of the pressure field.
+    spherical or cylindrical wave basis to the far-field amplitude of the pressure field.
 
     Args:
         r (array-like): Evaluation points
@@ -1216,6 +1241,11 @@ def ffamplitude(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
         if modetype == "regular":
             raise TypeError("invalid modetype")
         return _ssw_ffamplitude(r, basis, k0, material, modetype).swapaxes(-1, -2)
+    if isinstance(basis, core.ScalarCylindricalWaveBasis):
+        modetype = "singular" if modetype is None else modetype
+        if modetype == "regular":
+            raise TypeError("invalid modetype")
+        return _scw_ffamplitude(r, basis, k0, material, modetype).swapaxes(-1, -2)
     raise TypeError("invalid basis")
 
 

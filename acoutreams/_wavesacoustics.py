@@ -33,11 +33,19 @@ def ssw_rPsi(l, m, kr, theta, phi):
 
 
 def scw_Psi(kz, m, krr, phi, z):
-     """Regular scalar spherical wave"""
+     """Singular scalar cylindrical wave"""
      return np.exp(1j * (m * phi + kz * z)) * sc.hankel1(m, krr)
 
+def scw_PsiFF(kz, m, krhox, krhoy, phi, z, krho):
+     """Far-field amplitude of singular scalar cylindrical wave"""
+     return (np.exp(1j * m * phi) * 
+             np.sqrt(2 / (np.pi * krho)) *
+             np.exp(-1j * ((krhox * np.cos(phi) + krhoy * np.sin(phi)))) *
+             np.power(-1j, m) * 
+             np.exp(-1j * np.pi/4))
+
 def scw_rPsi(kz, m, krr, phi, z):
-     """Regular scalar spherical wave"""
+     """Regular scalar cylindrical wave"""
      return np.exp(1j * (m * phi + kz * z)) * sc.jv(m, krr)
 
 
