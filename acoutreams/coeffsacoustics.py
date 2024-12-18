@@ -16,18 +16,18 @@ def mie_acoustics(l, x, *materials):
     j_d = treams.special.spherical_jn(l, x_env, derivative=True)
     h = treams.special.spherical_hankel1(l, x_env)
     h_d = treams.special.spherical_hankel1_d(l, x_env)
-    if mat_sphere[2] == 0 and mat_sphere[1] == 0 and mat_sphere[0] == np.inf:
+    if np.abs(mat_sphere[2]) == 0 and np.abs(mat_sphere[1]) == 0 and np.abs(mat_sphere[0]) == np.inf:
         res = -j_d / h_d
-    elif  mat_sphere[2] == 0 and mat_sphere[1] == 0 and mat_sphere[0] == 0:
+    elif np.abs(mat_sphere[2]) == 0 and np.abs(mat_sphere[1]) == 0 and np.abs(mat_sphere[0]) == 0:
         res = -j / h
-    elif mat_sphere[1] > 0:
+    elif np.abs(mat_sphere[1]) > 0:
         x_sphere = x * AcousticMaterial().c / mat_sphere[1]
         j1 = treams.special.spherical_jn(l, x_sphere, derivative=False)
         j1_d = treams.special.spherical_jn(l, x_sphere, derivative=True)
-        if mat_sphere[2] == 0:
+        if np.abs(mat_sphere[2]) == 0:
             delta = x_sphere * mat_env[0] / (x_env * mat_sphere[0]) 
             res = (delta * j1_d * j - j1 * j_d) / (j1 * h_d - delta * j1_d * h) 
-        elif mat_sphere[2] > 0:
+        elif np.abs(mat_sphere[2]) > 0:
             x_sphere_t = x * AcousticMaterial().c / mat_sphere[2]
             j1t = treams.special.spherical_jn(l, x_sphere_t, derivative=False)
             j1t_d = treams.special.spherical_jn(l, x_sphere_t, derivative=True)
