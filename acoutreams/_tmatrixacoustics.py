@@ -442,7 +442,11 @@ class AcousticTMatrix(AcousticPhysicsArray):
         if not self.material.isreal:
             raise NotImplementedError
         inc = AcousticPhysicsArray(inc)
-        p = self.sca(inc)
+        inc_basis = inc.basis
+        inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
+        if (not isinstance(inc_basis, SSWB)) or (isinstance(inc_basis, SSWB) and inc.modetype == "singular"):
+            return self @ inc.expand(self.basis, "regular")
+        p = self @ inc
         p_invksq = p * np.power(self.ks, -2)
         del inc.modetype
         return (
@@ -778,7 +782,11 @@ class AcousticTMatrixC(AcousticPhysicsArray):
         if not self.material.isreal:
             raise NotImplementedError
         inc = AcousticPhysicsArray(inc)
-        p = self.sca(inc)
+        inc_basis = inc.basis
+        inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
+        if (not isinstance(inc_basis, SCWB)) or (isinstance(inc_basis, SCWB) and inc.modetype == "singular"):
+            return self @ inc.expand(self.basis, "regular")
+        p = self @ inc
         p_invksq = p * np.power(self.ks, -1)
         del inc.modetype
         return (
