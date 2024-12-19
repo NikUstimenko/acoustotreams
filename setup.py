@@ -6,7 +6,7 @@ setup(
 
     name='acoutreams',
 
-    version='0.1.3',
+    version='0.1.4',
 
     author='Nikita Ustimenko',
 
@@ -38,7 +38,7 @@ setup(
 
     ],
 
-    python_requires='>=3.11',
+    python_requires='>=3.8',
 
     install_requires=[
         "numpy",
