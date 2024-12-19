@@ -1,3 +1,8 @@
+![Version](https://img.shields.io/github/v/tag/NikUstimenko/acoutreams)
+[![PyPI](https://img.shields.io/pypi/v/treams)](https://pypi.org/project/acoutreams)
+![License](https://img.shields.io/github/license/NikUstimenko/acoutreams)
+[![Documentation Status](https://img.shields.io/badge/docs-online-brightgreen)](https://NikUstimenko.github.io/acoutreams)
+
 # acoutreams
 
 The package `acoutreams` adopts the framework of the `treams` package for acoustic wave scattering in finite and periodic arrangements of particles, based on the T-matrix method.
@@ -18,7 +23,7 @@ pip install treams
 
 ## Documentation
 
-The documentation can be found at https://nikustimenko.github.io/acoutreams.
+The documentation can be found at https://NikUstimenko.github.io/acoutreams.
 
 ## Publications
 
