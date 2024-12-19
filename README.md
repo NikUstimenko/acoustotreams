@@ -1,5 +1,4 @@
-![Version](https://img.shields.io/github/v/tag/NikUstimenko/acoutreams)
-[![PyPI](https://img.shields.io/pypi/v/treams)](https://pypi.org/project/acoutreams)
+[![PyPI](https://img.shields.io/pypi/v/acoutreams)](https://pypi.org/project/acoutreams)
 ![License](https://img.shields.io/github/license/NikUstimenko/acoutreams)
 [![Documentation Status](https://img.shields.io/badge/docs-online-brightgreen)](https://NikUstimenko.github.io/acoutreams)
 
