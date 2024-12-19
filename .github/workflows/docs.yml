@@ -22,14 +22,21 @@ jobs:
       run: |
         pip install matplotlib
         pip install sphinx sphinx-rtd-theme myst-parser
-        pip install -e .  # Install your package
+        pip install -e . 
 
     - name: Build documentation
       run: |
-        make html
+        sphinx-build -b html docs docs/build/html
+#        make html
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-docs
+        path: docs/build/html/
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/build/html
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build/html
