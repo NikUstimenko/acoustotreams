@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: acoutreams
-Version: 0.1.3
+Version: 0.1.14
 Summary: A Python package for acoustic scattering based on the T-matrix method
 Home-page: https://github.com/NikUstimenko/acoutreams
 Author: Nikita Ustimenko
@@ -10,7 +10,7 @@ Project-URL: Bug Tracker, https://github.com/NikUstimenko/acoutreams/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.11
+Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: numpy
@@ -37,7 +37,7 @@ pip install treams
 
 ## Documentation
 
-The documentation of `treams` can be found at https://tfp-photonics.github.io/treams.
+The documentation can be found at https://nikustimenko.github.io/acoutreams.
 
 ## Publications
 
