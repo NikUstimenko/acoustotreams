@@ -1,17 +1,21 @@
 Metadata-Version: 2.1
 Name: acoutreams
-Version: 0.1.0
-Summary: T-matrixm scattering code for acoustic computations
+Version: 0.1.3
+Summary: A Python package for acoustic scattering based on the T-matrix method
 Home-page: https://github.com/NikUstimenko/acoutreams
-Author: Nikita ustimenko
+Author: Nikita Ustimenko
 Author-email: nikita.ustimenko@kit.edu
 License: MIT
+Project-URL: Bug Tracker, https://github.com/NikUstimenko/acoutreams/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.8
+Requires-Python: >=3.11
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: treams
 
 # acoutreams
 

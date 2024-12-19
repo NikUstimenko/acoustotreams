@@ -15,4 +15,5 @@ acoutreams/ssw.py
 acoutreams.egg-info/PKG-INFO
 acoutreams.egg-info/SOURCES.txt
 acoutreams.egg-info/dependency_links.txt
+acoutreams.egg-info/requires.txt
 acoutreams.egg-info/top_level.txt
