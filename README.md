@@ -18,7 +18,7 @@ pip install treams
 
 ## Documentation
 
-The documentation of `treams` can be found at https://tfp-photonics.github.io/treams.
+The documentation can be found at https://nikustimenko.github.io/acoutreams.
 
 ## Publications
 
