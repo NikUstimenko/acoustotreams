@@ -20,6 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        pip install matplotlib
         pip install sphinx sphinx-rtd-theme myst-parser
         pip install -e .  # Install your package
 
