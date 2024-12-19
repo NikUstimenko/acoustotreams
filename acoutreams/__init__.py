@@ -1,4 +1,4 @@
-"""ACOUTREAMS: T-Matrix scattering code for acoustic computations.
+"""ACOUTREAMS: A Python package for acoustic scattering based on the T-matrix method.
 
 .. currentmodule:: acoutreams
 
