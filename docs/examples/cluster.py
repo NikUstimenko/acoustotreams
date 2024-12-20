@@ -17,6 +17,7 @@ positions = np.array(
 
 spheres = [acoutreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
 tm = acoutreams.AcousticTMatrix.cluster(spheres, positions).interaction.solve()
+
 inc = acoutreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
 sca = tm.sca(inc)
 xs = tm.xs(inc)
@@ -31,7 +32,6 @@ def compute_intensity(i, j, tm, radii, inc, sca):
     else:
         result = np.nan
     return i, j, result  
-
 results = Parallel(n_jobs=-1)(
     delayed(compute_intensity)(i, j, tm, radii, inc, sca) for i in range(len(z)) for j in range(len(x))
 )
@@ -71,7 +71,6 @@ plt.show()
 
 tm_global = tm.expand(acoutreams.ScalarSphericalWaveBasis.default(10))
 sca = tm_global.sca(inc)
-
 xs = tm_global.xs(inc)
 
 results_global = Parallel(n_jobs=-1)(
