@@ -8,8 +8,8 @@ k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / 343
 materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), acoutreams.AcousticMaterial(998, 1497)]
 lmax = 10
 radius = 0.005
-
 spheres = [acoutreams.AcousticTMatrix.sphere(lmax, k0, radius, materials) for k0 in k0s]
+
 xs_sca = np.array([tm.xs_sca_avg for tm in spheres]) / (np.pi * radius ** 2)
 xs_ext = np.array([tm.xs_ext_avg for tm in spheres]) / (np.pi * radius ** 2)
 
@@ -21,7 +21,6 @@ xs_ext_lmax0 = np.array([tm.xs_ext_avg for tm in spheres_lmax0]) / (np.pi * radi
 tm = spheres[50]
 inc = acoutreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
 sca = tm.sca(inc)
-
 x = np.linspace(-0.0075, 0.0075, 101)
 z = np.linspace(-0.0075, 0.0075, 101)
 def compute_intensity(i, j):
