@@ -4,8 +4,8 @@ Examples
 
 *acoutreams* is a program that covers various aspects of T-matrix calculations and
 associated topics in acoustic scattering scenarios. *acoutreams* adopts the functionality 
-introduced in *treams* for the first time in the electromagnetic domain.
-The functionality involve three levels: low-level functions, intermediate-level functions, 
+introduced, for the first time, in *treams* in the electromagnetic domain.
+The functionality involves three levels: low-level functions, intermediate-level functions, 
 and high-level functions and classes.
 
 The low-level functions implement the underlying mathematical functions, that build
@@ -35,3 +35,5 @@ for scalar plane wave solutions.
 
 .. toctree::
     :maxdepth: 1
+
+    tmatrix
