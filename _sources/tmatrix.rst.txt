@@ -36,6 +36,12 @@ our calculation and creating the acoustic T-matrices themselves.
    :language: python
    :lines: 7-11
 
+Here we define a material using the class :meth:`~acoutreams.AcousticMaterial`.
+To create an instance of this class, we pass three arguments: mass density,
+longitudinal speed of sound, and transverse speed of sound. The acoustic
+material parameters can be complex. The imaginary part of the density must be
+positive, whereas the imaginary part of the speeds negative. 
+
 Now, we can easily access quantities like the scattering and extinction cross
 sections
 
@@ -66,9 +72,93 @@ of the fields as a superposition of incident and scattered fields.
 Here we also accelerate the computations using paralyzation in :mod:`joblib`. 
 
 Finally, we compute the radiation pattern of the sphere at the same frequency.
+The red arrow indicates the direction of incidence of the plane wave.
 
 .. literalinclude:: examples/sphere.py
    :language: python
    :lines: 41-49
 
 .. plot:: examples/sphere.py
+
+
+Clusters
+========
+
+Multi-scattering calculations in a cluster of particles is a typical application of the
+T-matrix method. We first construct an object from two spheres. Using the definition 
+of the relevant parameters
+
+.. literalinclude:: examples/cluster.py
+   :language: python
+   :lines: 7-16
+
+we can simply first create the spheres and put them together in a cluster, where we immediately calculate 
+the interaction.
+
+.. literalinclude:: examples/cluster.py
+   :language: python
+   :lines: 18-19
+
+Then, we can illuminate with a plane wave and get the scattered field coefficients and
+the scattering and extinction cross sections for that particular illumination.
+
+.. literalinclude:: examples/cluster.py
+   :language: python
+   :lines: 21-23
+
+Finally, with few lines similar to the plotting of the field intensity of a single
+sphere we can obtain the fields outside of the sphere.
+
+.. literalinclude:: examples/cluster.py
+   :language: python
+   :lines: 25-40
+
+Up to here, we did all calculations for the cluster in the local basis. By expanding
+the incident and scattered fields in a basis with a single origin we can describe the
+same object. Often, a larger number of multipoles is needed to do so and some
+information on fields between the particles is lost. But, the description in a global
+basis can be more efficient in terms of matrix size.
+
+.. literalinclude:: examples/cluster.py
+   :language: python
+   :lines: 72-74
+
+A comparison of the calculated near-fields and the cross sections show good agreement
+between the results of both, local and global, T-matrices.
+
+.. plot:: examples/cluster.py
+
+In the last figure, the T-matrix is rotated by 90 degrees about the y axis and the
+illumination is set accordingly to be a plane wave propagating in the x direction, 
+such that the whole system remains the same. It shows how the rotate operator 
+produces consistent results.
+
+.. literalinclude:: examples/cluster.py
+   :language: python
+   :lines: 113-115
+
+
+Clusters (Born approximations)
+==============================
+
+One-dimensional arrays (along z)
+================================
+
+Two-dimensional arrays (in the xy plane)
+=========================================
+
+Three-dimensional arrays
+========================
+
+In a three-dimensional lattice we are mostly concerned with finding eigenmodes of a
+crystal. We want to restrict the example to calculating modes at the gamma point in
+reciprocal space. The calculated system consists of a single sphere in a cubic lattice.
+In our very crude analysis, we blindly select the lowest singular value of the lattice
+interaction matrix. Besides the mode when the frequency tends to zero, there are two
+additional modes at higher frequencies in the chosen range.
+
+.. literalinclude:: examples/crystal.py
+   :language: python
+   :lines: 7-18
+
+.. plot:: examples/crystal.py

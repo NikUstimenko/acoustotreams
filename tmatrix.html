@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoutreams 0.1.19 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoutreams 0.1.20 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4848ba22" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=3d116926"></script>
+    <script src="_static/documentation_options.js?v=17aaaefc"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="intro.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.19 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.20 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -55,6 +55,11 @@
 <p class="topic-title">Table of contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#spheres" id="id1">Spheres</a></p></li>
+<li><p><a class="reference internal" href="#clusters" id="id2">Clusters</a></p></li>
+<li><p><a class="reference internal" href="#clusters-born-approximations" id="id3">Clusters (Born approximations)</a></p></li>
+<li><p><a class="reference internal" href="#one-dimensional-arrays-along-z" id="id4">One-dimensional arrays (along z)</a></p></li>
+<li><p><a class="reference internal" href="#two-dimensional-arrays-in-the-xy-plane" id="id5">Two-dimensional arrays (in the xy plane)</a></p></li>
+<li><p><a class="reference internal" href="#three-dimensional-arrays" id="id6">Three-dimensional arrays</a></p></li>
 </ul>
 </nav>
 <p>One of the main objects for acoustic scattering calculations within <em>acoutreams</em> are
@@ -82,6 +87,11 @@ our calculation and creating the acoustic T-matrices themselves.</p>
 <span class="n">spheres</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span> <span class="k">for</span> <span class="n">k0</span> <span class="ow">in</span> <span class="n">k0s</span><span class="p">]</span>
 </pre></div>
 </div>
+<p>Here we define a material using the class <code class="xref py py-meth docutils literal notranslate"><span class="pre">AcousticMaterial()</span></code>.
+To create an instance of this class, we pass three arguments: mass density,
+longitudinal speed of sound, and transverse speed of sound. The acoustic
+material parameters can be complex. The imaginary part of the density must be
+positive, whereas the imaginary part of the speeds negative.</p>
 <p>Now, we can easily access quantities like the scattering and extinction cross
 sections</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xs_sca</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">xs_sca_avg</span> <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">spheres</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
@@ -126,7 +136,8 @@ the x and z coordinates and define the auxiliary function to compute
 the intensity at a single valid point. We can calculate the intensity
 of the fields as a superposition of incident and scattered fields.
 Here we also accelerate the computations using paralyzation in <code class="xref py py-mod docutils literal notranslate"><span class="pre">joblib</span></code>.</p>
-<p>Finally, we compute the radiation pattern of the sphere at the same frequency.</p>
+<p>Finally, we compute the radiation pattern of the sphere at the same frequency.
+The red arrow indicates the direction of incidence of the plane wave.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">301</span><span class="p">)</span>
 <span class="n">radpattern</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">compute_radpattern</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
@@ -139,6 +150,112 @@ Here we also accelerate the computations using paralyzation in <code class="xref
 </pre></div>
 </div>
 <p>(<a class="reference download internal" download="" href="_downloads/4db7961589a8b659add9c6c298e2527d/sphere.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+</section>
+<section id="clusters">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
+<p>Multi-scattering calculations in a cluster of particles is a typical application of the
+T-matrix method. We first construct an object from two spheres. Using the definition
+of the relevant parameters</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">150000</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
+<span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">radii</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">]</span>
+<span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">[</span><span class="mf">0.0075</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.0075</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>we can simply first create the spheres and put them together in a cluster, where we immediately calculate
+the interaction.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spheres</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">radii</span><span class="p">]</span>
+<span class="n">tm</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">spheres</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then, we can illuminate with a plane wave and get the scattered field coefficients and
+the scattering and extinction cross sections for that particular illumination.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inc</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tm</span><span class="o">.</span><span class="n">k0</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">material</span><span class="p">)</span>
+<span class="n">sca</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, with few lines similar to the plotting of the field intensity of a single
+sphere we can obtain the fields outside of the sphere.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_intensity</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>  
+    <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span> 
+        <span class="n">result</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">sca</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>  
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
+<span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span>
+    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_intensity</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="n">intensity</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Up to here, we did all calculations for the cluster in the local basis. By expanding
+the incident and scattered fields in a basis with a single origin we can describe the
+same object. Often, a larger number of multipoles is needed to do so and some
+information on fields between the particles is lost. But, the description in a global
+basis can be more efficient in terms of matrix size.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tm_global</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sca</span> <span class="o">=</span> <span class="n">tm_global</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">tm_global</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A comparison of the calculated near-fields and the cross sections show good agreement
+between the results of both, local and global, T-matrices.</p>
+<p>(<a class="reference download internal" download="" href="_downloads/2f373c568a269e5847e11c539f9854f1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>In the last figure, the T-matrix is rotated by 90 degrees about the y axis and the
+illumination is set accordingly to be a plane wave propagating in the x direction,
+such that the whole system remains the same. It shows how the rotate operator
+produces consistent results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inc</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="n">k0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">material</span><span class="p">)</span>
+<span class="n">tm_rotate</span> <span class="o">=</span> <span class="n">tm_global</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sca</span> <span class="o">=</span> <span class="n">tm_rotate</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="clusters-born-approximations">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Clusters (Born approximations)</a><a class="headerlink" href="#clusters-born-approximations" title="Link to this heading">¶</a></h2>
+</section>
+<section id="one-dimensional-arrays-along-z">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">One-dimensional arrays (along z)</a><a class="headerlink" href="#one-dimensional-arrays-along-z" title="Link to this heading">¶</a></h2>
+</section>
+<section id="two-dimensional-arrays-in-the-xy-plane">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Two-dimensional arrays (in the xy plane)</a><a class="headerlink" href="#two-dimensional-arrays-in-the-xy-plane" title="Link to this heading">¶</a></h2>
+</section>
+<section id="three-dimensional-arrays">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Three-dimensional arrays</a><a class="headerlink" href="#three-dimensional-arrays" title="Link to this heading">¶</a></h2>
+<p>In a three-dimensional lattice we are mostly concerned with finding eigenmodes of a
+crystal. We want to restrict the example to calculating modes at the gamma point in
+reciprocal space. The calculated system consists of a single sphere in a cubic lattice.
+In our very crude analysis, we blindly select the lowest singular value of the lattice
+interaction matrix. Besides the mode when the frequency tends to zero, there are two
+additional modes at higher frequencies in the chosen range.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">40000</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">2350</span><span class="p">),</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
+<span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="mf">0.005</span>
+<span class="n">lattice</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="o">.</span><span class="n">cubic</span><span class="p">(</span><span class="mf">0.015</span><span class="p">)</span>
+<span class="n">kpar</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">compute_svd</span><span class="p">(</span><span class="n">k0</span><span class="p">):</span>
+    <span class="n">sphere</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span>
+    <span class="n">svd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">sphere</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kpar</span><span class="p">),</span> <span class="n">compute_uv</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">svd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_svd</span><span class="p">)(</span><span class="n">k0s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="_downloads/74a26a1e14b5c1e9b33c709b7481ee12/crystal.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 </section>
 
@@ -201,7 +318,7 @@ Here we also accelerate the computations using paralyzation in <code class="xref
         <li class="right" >
           <a href="intro.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.19 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.20 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
