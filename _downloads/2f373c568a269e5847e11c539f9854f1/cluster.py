@@ -5,7 +5,8 @@ from joblib import Parallel, delayed
 import acoutreams
 
 k0 = 2 * np.pi * 150000 / 343
-materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), acoutreams.AcousticMaterial(998, 1497)]
+materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
+             acoutreams.AcousticMaterial(998, 1497)]
 lmax = 3
 radii = [0.005, 0.005]
 positions = np.array(
@@ -33,7 +34,9 @@ def compute_intensity(i, j, tm, radii, inc, sca):
         result = np.nan
     return i, j, result  
 results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm, radii, inc, sca) for i in range(len(z)) for j in range(len(x))
+    delayed(compute_intensity)(i, j, tm, radii, inc, sca) 
+    for i in range(len(z)) 
+    for j in range(len(x))
 )
 intensity = np.zeros((len(z), len(x)))
 for i, j, result in results:

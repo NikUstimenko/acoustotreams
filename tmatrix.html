@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoutreams 0.1.20 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoutreams 0.1.21 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4848ba22" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=17aaaefc"></script>
+    <script src="_static/documentation_options.js?v=b3d22ae5"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="intro.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.20 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -81,7 +81,8 @@ lattices can consist of an arbitrary number of objects described by the acoustic
 method <code class="xref py py-meth docutils literal notranslate"><span class="pre">sphere()</span></code>. We start by defining the relevant parameters for
 our calculation and creating the acoustic T-matrices themselves.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">500000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
-<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
+             <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">radius</span> <span class="o">=</span> <span class="mf">0.005</span>
 <span class="n">spheres</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span> <span class="k">for</span> <span class="n">k0</span> <span class="ow">in</span> <span class="n">k0s</span><span class="p">]</span>
@@ -157,7 +158,8 @@ The red arrow indicates the direction of incidence of the plane wave.</p>
 T-matrix method. We first construct an object from two spheres. Using the definition
 of the relevant parameters</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">150000</span> <span class="o">/</span> <span class="mi">343</span>
-<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
+             <span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">radii</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">]</span>
 <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -194,7 +196,9 @@ sphere we can obtain the fields outside of the sphere.</p>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
 <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span>
-    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_intensity</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_intensity</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">)</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> 
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="p">)</span>
 <span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
@@ -318,7 +322,7 @@ additional modes at higher frequencies in the chosen range.</p>
         <li class="right" >
           <a href="intro.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.20 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
