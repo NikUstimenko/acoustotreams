@@ -70,7 +70,7 @@ ax.annotate(
         color="red" 
     )
 )
-plt.show()
+fig.show()
 
 tm_global = tm.expand(acoutreams.ScalarSphericalWaveBasis.default(10))
 sca = tm_global.sca(inc)
@@ -111,7 +111,7 @@ ax.annotate(
         color="red" 
     )
 )
-plt.show()
+fig.show()
 
 inc = acoutreams.plane_wave_scalar([k0, 0, 0], k0=tm.k0, material=tm.material)
 tm_rotate = tm_global.rotate(0, np.pi / 2)
@@ -152,4 +152,4 @@ ax.annotate(
         color="red" 
     )
 )
-plt.show()
+fig.show()
