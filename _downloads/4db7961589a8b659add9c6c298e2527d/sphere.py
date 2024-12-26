@@ -42,12 +42,9 @@ for i, j, result in results:
 theta = np.linspace(0, 2 * np.pi, 301)
 radpattern = np.zeros(len(theta))
 def compute_radpattern(i):
-    return sca.ffamplitude([np.sin(theta[i]), 0, np.cos(theta[i])])
-radpattern = Parallel(n_jobs=-1)(
-    delayed(compute_radpattern)(i) for i in range(len(theta))
-)
-radpattern = np.abs(radpattern)**2
-radpattern = radpattern / np.max(radpattern)
+    n = [np.sin(theta[i]), 0, np.cos(theta[i])]
+    return 0.5 * np.real(sca.pamplitudeff(n) * np.conjugate(sca.vamplitudeff(n)[0]))
+radpattern = Parallel(n_jobs=-1)(delayed(compute_radpattern)(i) for i in range(len(theta)))
 
 fig, ax = plt.subplots()
 ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext)
@@ -70,10 +67,30 @@ cb = plt.colorbar(cax)
 cb.set_label("Intensity")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
+ax.annotate(
+    "", 
+    xy=(0, -0.5),
+    xytext=(0, -0.75), 
+    arrowprops=dict(
+        arrowstyle="->",
+        lw=3, 
+        color="red" 
+    )
+)
 plt.show()
 
 plt.figure()
 ax = plt.subplot(111, polar=True) 
-ax.plot(theta, radpattern)
+ax.plot(theta, radpattern = radpattern / np.max(radpattern))
 ax.set_theta_offset(np.pi / 2)
+ax.annotate(
+    "", 
+    xy=(np.pi, 0.2), 
+    xytext=(np.pi, 0.6),
+    arrowprops=dict(
+        arrowstyle="->", 
+        color="red", 
+        lw=3
+    )
+)
 plt.show()
