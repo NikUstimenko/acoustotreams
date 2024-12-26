@@ -45,7 +45,7 @@ Functions
 
 """
 
-_version__ = "0.1.21"
+_version__ = "0.1.22"
 
 from scipy.special import (  # noqa: F401
     hankel1,
@@ -132,7 +132,8 @@ from acoutreams.spw import *  # noqa: F401
 from acoutreams._operatorsacoustics import (  # noqa: F401
     PField,
     VField,
-    FFAmplitude,
+    PAmplitudeFF,
+    VAmplitudeFF,
     Expand,
     ExpandLattice,
     Permute,
@@ -140,7 +141,8 @@ from acoutreams._operatorsacoustics import (  # noqa: F401
     Translate,
     vfield,
     pfield,
-    ffamplitude,
+    pamplitudeff,
+    vamplitudeff,
     expand,
     expandlattice,
     permute,

@@ -76,7 +76,7 @@ The red arrow indicates the direction of incidence of the plane wave.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 42-50
+   :lines: 42-47
 
 .. plot:: examples/sphere.py
 
