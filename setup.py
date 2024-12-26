@@ -6,7 +6,7 @@ setup(
 
     name='acoutreams',
 
-    version='0.1.23',
+    version='0.1.24',
 
     author='Nikita Ustimenko',
 

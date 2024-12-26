@@ -57,6 +57,7 @@ intersphinx_mapping = {
     "numpy": ("https://numpy.org/doc/stable", None),
 }
 todo_include_todos = False
+plot_include_source = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
