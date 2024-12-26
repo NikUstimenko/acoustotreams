@@ -34,7 +34,7 @@ our calculation and creating the acoustic T-matrices themselves.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 7-11
+   :lines: 7-12
 
 Here we define a material using the class :meth:`~acoutreams.AcousticMaterial`.
 To create an instance of this class, we pass three arguments: mass density,
@@ -47,7 +47,7 @@ sections
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 13-14
+   :lines: 14-15
 
 From the parameter ``lmax = 10`` we see that the acoustic T-matrix is calculated up to the tenth
 multipolar order. To restrict the T-matrix in the monopole-dipole approximation, we can
@@ -55,7 +55,7 @@ select a basis containing only those multipoles.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 16-19
+   :lines: 17-20
 
 Now, we can look at the results by plotting them and observe, unsurprisingly, that for
 larger frequencies the monopole-dipole approximation is not giving an accurate result.
@@ -63,7 +63,7 @@ Further, we visualize the total acoustic field intensity at frequency 163 kHz.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 21-39
+   :lines: 22-40
 
 We select the T-matrix and illuminate it with a plane wave. Next, we set up 
 the x and z coordinates and define the auxiliary function to compute
@@ -76,7 +76,7 @@ The red arrow indicates the direction of incidence of the plane wave.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 41-49
+   :lines: 42-50
 
 .. plot:: examples/sphere.py
 
@@ -90,28 +90,28 @@ of the relevant parameters
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 7-16
+   :lines: 7-17
 
 we can simply first create the spheres and put them together in a cluster, where we immediately calculate 
 the interaction.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 18-19
+   :lines: 19-20
 
 Then, we can illuminate with a plane wave and get the scattered field coefficients and
 the scattering and extinction cross sections for that particular illumination.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 21-23
+   :lines: 22-24
 
 Finally, with few lines similar to the plotting of the field intensity of a single
 sphere we can obtain the fields outside of the sphere.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 25-40
+   :lines: 26-43
 
 Up to here, we did all calculations for the cluster in the local basis. By expanding
 the incident and scattered fields in a basis with a single origin we can describe the
@@ -121,7 +121,7 @@ basis can be more efficient in terms of matrix size.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 72-74
+   :lines: 75-77
 
 A comparison of the calculated near-fields and the cross sections show good agreement
 between the results of both, local and global, T-matrices.
@@ -135,7 +135,7 @@ produces consistent results.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 113-115
+   :lines: 116-118
 
 
 Clusters (Born approximations)

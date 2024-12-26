@@ -975,8 +975,8 @@ def _scw_vfield(r, basis, k0, material, modetype):
             krhos * rcyl[..., basis.pidx, 0],
             rcyl[..., basis.pidx, 1],
             rcyl[..., basis.pidx, 2],
-            ks,
             krhos,
+            ks
         )
     elif modetype == "singular":
         res = wv.vcw_L(
@@ -985,8 +985,8 @@ def _scw_vfield(r, basis, k0, material, modetype):
             krhos * rcyl[..., basis.pidx, 0],
             rcyl[..., basis.pidx, 1],
             rcyl[..., basis.pidx, 2],
-            ks,
             krhos,
+            ks
         )   
     res *= -1j / (material.rho * material.c)
     if res is None:
@@ -1168,22 +1168,22 @@ class PField(FieldOperator):
     _FUNC = staticmethod(pfield)
 
 
-def _ssw_ffamplitude(r, basis, k0, material, modetype):
-    """Far-field amplitude of singular scalar spherical waves."""
+def _ssw_pamplitudeff(r, basis, k0, material, modetype):
+    """Far-field amplitude of pressure field of singular scalar spherical waves."""
     ks = k0 * AcousticMaterial().c / material.c
     r = sc.car2sph(r)
     rsph = basis.positions
     res = None
-    res = wv.ssw_PsiFF(
+    res = wv.ssw_psi(
             basis.l,
             basis.m,
             ks * rsph[..., basis.pidx, 0],
             ks * rsph[..., basis.pidx, 1],
             ks * rsph[..., basis.pidx, 2],
             r[..., basis.pidx, 1],
-            r[..., basis.pidx, 2]
+            r[..., basis.pidx, 2],
+            ks
         )
-    res *= 1 / (np.sqrt(2 * material.rho * material.c) * ks)
     if res is None:
         raise ValueError("invalid parameters")
     res = util.AnnotatedArray(np.array([res]).T)  
@@ -1193,24 +1193,23 @@ def _ssw_ffamplitude(r, basis, k0, material, modetype):
     res.ann[-2]["modetype"] = modetype
     return res
 
-def _scw_ffamplitude(r, basis, k0, material, modetype):
-    """Far-field amplitude of singular scalar cylindrical waves."""
-    ks = k0 * AcousticMaterial().c / material.c
+def _scw_pamplitudeff(r, basis, k0, material, modetype):
+    """Far-field amplitude of pressure field of singular scalar cylindrical waves."""
     r = sc.car2cyl(r)
     material = AcousticMaterial(material)
     krhos = material.krhos(k0, basis.kz)
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = basis.positions
     res = None
-    res = wv.scw_PsiFF(
+    res = wv.scw_psi(
             basis.kz,
             basis.m,
-            krhos,
             krhos * rcyl[..., basis.pidx, 0],
             krhos * rcyl[..., basis.pidx, 1],
-            r[..., basis.pidx, 1]
+            r[..., basis.pidx, 1],
+            r[..., basis.pidx, 2],
+            krhos,
         )   
-    res *= 1 / (np.sqrt(2 * material.rho * material.c) * ks)
     if res is None:
         raise ValueError("invalid parameters")
     res = util.AnnotatedArray(np.array([res]).T)  
@@ -1220,7 +1219,7 @@ def _scw_ffamplitude(r, basis, k0, material, modetype):
     res.ann[-2]["modetype"] = modetype
     return res
 
-def ffamplitude(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
+def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     """Far-field amplitude of pressure field.
 
     The resulting matrix maps the scattered pressure field coefficients in the scalar 
@@ -1240,22 +1239,115 @@ def ffamplitude(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
         modetype = "singular" if modetype is None else modetype
         if modetype == "regular":
             raise TypeError("invalid modetype")
-        return _ssw_ffamplitude(r, basis, k0, material, modetype).swapaxes(-1, -2)
+        return _ssw_pamplitudeff(r, basis, k0, material, modetype).swapaxes(-1, -2)
     if isinstance(basis, core.ScalarCylindricalWaveBasis):
         modetype = "singular" if modetype is None else modetype
         if modetype == "regular":
             raise TypeError("invalid modetype")
-        return _scw_ffamplitude(r, basis, k0, material, modetype).swapaxes(-1, -2)
+        return _scw_pamplitudeff(r, basis, k0, material, modetype).swapaxes(-1, -2)
     raise TypeError("invalid basis")
 
-
-class FFAmplitude(FieldOperator):
-    """Pressure field evaluation matrix.
+class PAmplitudeFF(FieldOperator):
+    """Far-field amplitude of pressure field evaluation matrix.
 
     When called as attribute of an object it returns a suitable matrix to evaluate field
-    coefficients at specified points. See also :func:`ffamplitude`.
+    coefficients at specified points. See also :func:`pamplitudeff`.
     """
 
-    _FUNC = staticmethod(ffamplitude)
+    _FUNC = staticmethod(pamplitudeff)
+
+
+def _ssw_vamplitudeff(r, basis, k0, material, modetype):
+    """Far-field amplitude of velocity field of singular vector spherical waves L."""
+    ks = k0 * AcousticMaterial().c / material.c
+    r = sc.car2sph(r)
+    rsph = basis.positions
+    res = None
+    res = wv.vsw_l(
+            basis.l,
+            basis.m,
+            ks * rsph[..., basis.pidx, 0],
+            ks * rsph[..., basis.pidx, 1],
+            ks * rsph[..., basis.pidx, 2],
+            r[..., basis.pidx, 1],
+            r[..., basis.pidx, 2],
+            ks
+        )
+    res *= -1j / (material.rho * material.c)
+    if res is None:
+        raise ValueError("invalid parameters")
+    res = util.AnnotatedArray(res)    
+    res.ann[-2]["basis"] = basis
+    res.ann[-2]["k0"] = k0
+    res.ann[-2]["material"] = material
+    res.ann[-2]["modetype"] = modetype
+    return res
+
+def _scw_vamplitudeff(r, basis, k0, material, modetype):
+    """Far-field amplitude of pressure field of singular scalar cylindrical waves."""
+    ks = k0 * AcousticMaterial().c / material.c
+    r = sc.car2cyl(r)
+    material = AcousticMaterial(material)
+    krhos = material.krhos(k0, basis.kz)
+    krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
+    rcyl = basis.positions
+    res = None
+    res = wv.vcw_l(
+            basis.kz,
+            basis.m,
+            krhos * rcyl[..., basis.pidx, 0],
+            krhos * rcyl[..., basis.pidx, 1],
+            r[..., basis.pidx, 1],
+            r[..., basis.pidx, 2],
+            krhos,
+            ks,
+        )   
+    res *= -1j / (material.rho * material.c)
+    if res is None:
+        raise ValueError("invalid parameters")
+    res = util.AnnotatedArray(res)
+    res.ann[-2]["basis"] = basis
+    res.ann[-2]["k0"] = k0
+    res.ann[-2]["material"] = material
+    res.ann[-2]["modetype"] = modetype
+    return res
+
+def vamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
+    """Far-field amplitude of velocity field.
+
+    The resulting matrix maps the scattered pressure field coefficients in the scalar 
+    spherical or cylindrical wave basis to the far-field amplitude of the velocity field
+    in spherical or cylindrical coordinates, respectively.
+
+    Args:
+        r (array-like): Evaluation points
+        basis (:class:`~acoutreams.AcousticBasisSet`): Basis set.
+        k0 (float): Wave number.
+        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        modetype (str, optional): Wave mode.
+    """
+    material = AcousticMaterial(material)
+    r = np.asanyarray(r)
+    r = r[..., None, :]
+    if isinstance(basis, core.ScalarSphericalWaveBasis):
+        modetype = "singular" if modetype is None else modetype
+        if modetype == "regular":
+            raise TypeError("invalid modetype")
+        return _ssw_vamplitudeff(r, basis, k0, material, modetype).swapaxes(-1, -2)
+    if isinstance(basis, core.ScalarCylindricalWaveBasis):
+        modetype = "singular" if modetype is None else modetype
+        if modetype == "regular":
+            raise TypeError("invalid modetype")
+        return _scw_vamplitudeff(r, basis, k0, material, modetype).swapaxes(-1, -2)
+    raise TypeError("invalid basis")
+
+class VAmplitudeFF(FieldOperator):
+    """Far-field amplitude of velocity field evaluation matrix.
+
+    When called as attribute of an object it returns a suitable matrix to evaluate field
+    coefficients at specified points. See also :func:`vamplitudeff`.
+    """
+
+    _FUNC = staticmethod(vamplitudeff)
 
 

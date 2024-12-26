@@ -5,7 +5,8 @@ from joblib import Parallel, delayed
 import acoutreams
 
 k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / 343
-materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), acoutreams.AcousticMaterial(998, 1497)]
+materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
+             acoutreams.AcousticMaterial(998, 1497)]
 lmax = 10
 radius = 0.005
 spheres = [acoutreams.AcousticTMatrix.sphere(lmax, k0, radius, materials) for k0 in k0s]

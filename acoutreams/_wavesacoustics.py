@@ -21,11 +21,13 @@ def ssw_Psi(l, m, kr, theta, phi):
      """Singular scalar spherical wave"""
      return sc.sph_harm(m, l, phi, theta) * sc.spherical_hankel1(l, kr)
 
-def ssw_PsiFF(l, m, kx, ky, kz, theta, phi):
+def ssw_psi(l, m, ksx, ksy, ksz, theta, phi, ks):
      """Far-field amplitude of singular scalar spherical wave"""
      return (sc.sph_harm(m, l, phi, theta)
-             * np.exp(-1j * ((kx * np.cos(phi) + ky * np.sin(phi)) * np.sin(theta) + kz * np.cos(theta)))
-             * np.power(-1j, l + 1))
+             * np.exp(-1j * ((ksx * np.cos(phi) + ksy * np.sin(phi)) * np.sin(theta) 
+                             + ksz * np.cos(theta)))
+             * np.power(-1j, l + 1)
+             * 1 / ks)
 
 def ssw_rPsi(l, m, kr, theta, phi):
      """Regular scalar spherical wave"""
@@ -36,9 +38,9 @@ def scw_Psi(kz, m, krr, phi, z):
      """Singular scalar cylindrical wave"""
      return np.exp(1j * (m * phi + kz * z)) * sc.hankel1(m, krr)
 
-def scw_PsiFF(kz, m, krhox, krhoy, phi, z, krho):
+def scw_psi(kz, m, krhox, krhoy, phi, z, krho):
      """Far-field amplitude of singular scalar cylindrical wave"""
-     return (np.exp(1j * m * phi) * 
+     return (np.exp(1j * m * phi + 1j * kz * z) * 
              np.sqrt(2 / (np.pi * krho)) *
              np.exp(-1j * ((krhox * np.cos(phi) + krhoy * np.sin(phi)))) *
              np.power(-1j, m) * 
@@ -54,6 +56,23 @@ def vsw_L(l, m, kr, theta, phi):
      return np.transpose(sc.vsh_Z(l, m, theta, phi).T * sc.spherical_hankel1_d(l, kr)  + np.sqrt(
          l * (l + 1)
      ) * sc.vsh_Y(l, m, theta, phi).T * sc.spherical_hankel1(l, kr) / kr) * (-1.0j)
+
+
+def vsw_l(l, m, ksx, ksy, ksz, theta, phi, ks):
+     """Far-field amplitude of longitudinal singular vector spherical wave"""
+     return np.transpose(
+         np.array(
+             [
+                 sc.sph_harm(m, l, phi, theta)
+                 * np.exp(-1j * ((ksx * np.cos(phi) + ksy * np.sin(phi)) * np.sin(theta) 
+                                 + ksz * np.cos(theta)))
+                 * np.power(-1j, l)
+                 * 1 / ks, 
+                 0, 
+                 0
+            ]
+        )
+    )
 
 
 def vsw_rL(l, m, kr, theta, phi):
@@ -77,7 +96,7 @@ def vsw_rL(l, m, kr, theta, phi):
      return np.array(res)
 
 
-def vcw_L(kz, m, krr, phi, z, k, krho):
+def vcw_L(kz, m, krr, phi, z, krho, k):
      """Longitudinal singular vector cylindrical wave"""
      return np.transpose(
          np.array(
@@ -89,7 +108,24 @@ def vcw_L(kz, m, krr, phi, z, k, krho):
          )
      )
 
-def vcw_rL(kz, m, krr, phi, z, k, krho):
+def vcw_l(kz, m, krhox, krhoy, phi, z, krho, k):
+     """Far-field amplitude of longitudinal singular vector cylindrical wave"""
+     return np.transpose(
+         np.array(
+             np.sqrt(2 / (np.pi * krho)) *
+             np.exp(-1j * ((krhox * np.cos(phi) + krhoy * np.sin(phi)))) *
+             np.power(-1j, m) * 
+             np.exp(-1j * np.pi/4) *
+             np.exp(1j * (m * phi + kz * z)) *
+             [
+                 1j * krho / k,
+                 0,
+                 1j * kz / k,
+             ]
+         )
+     )
+
+def vcw_rL(kz, m, krr, phi, z, krho, k):
      """Longitudinal regular vector cylindrical wave"""
      res = []
      for i, x in enumerate(krr):
