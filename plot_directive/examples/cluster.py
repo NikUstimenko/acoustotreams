@@ -29,7 +29,7 @@ def compute_intensity(i, j, tm, radii, inc, sca):
     r = [x[j], 0, z[i]]
     result = 0  
     if tm.valid_points(r, radii): 
-        result = 0.5 * np.abs(inc.pfield(r) + sca.pfield(r))**2  
+        result = np.abs(inc.pfield(r) + sca.pfield(r))**2  
     else:
         result = np.nan
     return i, j, result  

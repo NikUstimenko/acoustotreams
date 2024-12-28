@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Acoustic S-Matrices for plane waves &#8212; acoutreams 0.1.24 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4848ba22" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
+    <script src="_static/documentation_options.js?v=ebdbb45b"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.24 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Acoustic S-Matrices for plane waves</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="acoustic-s-matrices-for-plane-waves">
+<h1>Acoustic S-Matrices for plane waves<a class="headerlink" href="#acoustic-s-matrices-for-plane-waves" title="Link to this heading">¶</a></h1>
+<p>In addition to the T-matrix method, where incident and scattered fields are related,
+S-matrices relate incoming and outgoing fields. To describe scattering in the plane
+wave basis, we use exactly such a S-matrix description. The incoming and outgoing waves
+are defined with respect to a plane, typically the xy plane. This plane additionally
+separates the whole space into two parts. This then separates the description into
+four parts: the transmission of fields propagating in the positive and negative
+z direction, and the reflection of those fields.</p>
+<section id="slabs">
+<h2>Slabs<a class="headerlink" href="#slabs" title="Link to this heading">¶</a></h2>
+<p>The main object for plane wave computations is the class <code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticSMatrices</span></code>
+which exactly collects those four individual S-matrices. For simple interfaces and the
+propagation in a homogeneous medium these S-matrices can be obtained analytically.
+Combining these two objects then allows the description of simple slabs.</p>
+</section>
+<section id="from-t-matrix-arrays">
+<h2>From T-matrix arrays<a class="headerlink" href="#from-t-matrix-arrays" title="Link to this heading">¶</a></h2>
+<p>While this example is simple we can build more complicated structures from
+two-dimensional arrays of T-matrices. We take spheres on an thin film as an example.
+This means we first calculate the S-matrices for the thin film and the array
+individually and then couple those two systems.</p>
+</section>
+<section id="from-cylindrical-t-matrix-gratings">
+<h2>From cylindrical T-matrix gratings<a class="headerlink" href="#from-cylindrical-t-matrix-gratings" title="Link to this heading">¶</a></h2>
+<p>Now, we want to perform a small test of the methods. Instead of creating the
+two-dimensional sphere array right away, we intermediately create a one-dimensional
+array, then calculate cylindrical T-matrices, and place them in a second
+one-dimensional lattice, thereby, obtaining the S-matrix from the previous section.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/smatrix.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.24 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Acoustic S-Matrices for plane waves</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>
