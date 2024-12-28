@@ -69,7 +69,8 @@ We select the T-matrix and illuminate it with a plane wave. Next, we set up
 the x and z coordinates and define the auxiliary function to compute
 the intensity at a single valid point. We can calculate the intensity
 of the fields as a superposition of incident and scattered fields.
-Here we also accelerate the computations using paralyzation in :mod:`joblib`. 
+Here, we also accelerate the computations using paralyzation by
+:mod:`Parallel` in :mod:`joblib`. 
 
 Finally, we compute the radiation pattern of the sphere at the same frequency.
 The red arrow indicates the direction of incidence of the plane wave.
@@ -137,6 +138,7 @@ produces consistent results.
    :language: python
    :lines: 116-118
 
+.. plot:: examples/cluster.py
 
 Clusters (Born approximations)
 ==============================
@@ -144,8 +146,69 @@ Clusters (Born approximations)
 One-dimensional arrays (along z)
 ================================
 
+Next, we turn to systems that are periodic in the z direction. We calculate the
+scattering from an array of spheres. Intentionally, we choose a unit cell with two
+spheres that overlap along the z direction, but are not placed exactly along the same
+line. This is the most general case for the implemented lattice sums. After the common
+setup of the parameters, we simply create a cluster in a local basis.
+
+.. literalinclude:: examples/chain.py
+   :language: python
+   :lines: 7-14
+
+This time we let them interact specifying a one-dimensional lattice, so that the spheres
+form a chain.
+
+.. literalinclude:: examples/chain.py
+   :language: python
+   :lines: 16-17
+
+Next, we choose set the illumination to be propagating along the x axis.
+The z component of the wave vector of the plane wave has to match to the wave vector
+component of the lattice interaction, i.e. the Bloch wave vector.
+
+.. literalinclude:: examples/chain.py
+   :language: python
+   :lines: 19-20
+
+There is an efficient way to calculate the acoustic response, especially in the far-field,
+using cylindrical acoustic T-matrices. That will be introduced in :doc:`tmatrixc`. Here, we will
+stay in the expression of the fields as scalar spherical waves. This allows the
+calculation of the fields in the domain between the spheres. To compute them accurately, we
+expand the scattered field coefficients in the whole lattice in monopole approximation at each point
+we want to calculate the pressure field.
+
+.. literalinclude:: examples/chain.py
+   :language: python
+   :lines: 22-40
+
+To calculate the velocity field, we expand the scattered field coefficients, 
+however, in the dipole approximation.
+
+.. literalinclude:: examples/chain.py
+   :language: python
+   :lines: 65-81
+
+.. plot:: examples/chain.py
+
 Two-dimensional arrays (in the xy plane)
-=========================================
+========================================
+
+The case of periodicity in two directions is similar to the case of the previous section
+with one-dimensional periodicity. Here, by convention the array has to be in the
+xy plane.
+
+.. literalinclude:: examples/grid.py
+   :language: python
+   :lines: 7-42
+
+With a few changes we computed the fields in a square array of the same spheres as in the
+previous examples. Most importantly we changed the value of the variable :code:`lattice`
+to an instance of a two-dimensional :class:`~acoutreams.Lattice` and set :code:`kpar`
+accordingly. Most other changes are just resulting from the change of the coordinate
+system.
+
+.. plot:: examples/grid.py
 
 Three-dimensional arrays
 ========================

@@ -26,7 +26,7 @@ def compute_intensity(i, j, tm, radii, inc, sca):
     if tm.valid_points(r, radii):
         swb = acoutreams.ScalarSphericalWaveBasis.default(0, positions=[r])
         field = sca.expandlattice(basis=swb).pfield(r) 
-        result = 0.5 * np.abs(inc.pfield(r) + field)**2  
+        result = np.abs(inc.pfield(r) + field)**2  
     else:
         result = np.nan
     return i, j, result  
@@ -47,7 +47,48 @@ cax = ax.imshow(
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity")
+cb.set_label("Intensity $|p/p_0|^2$")
+ax.set_xlabel("x (cm)")
+ax.set_ylabel("z (cm)")
+ax.annotate(
+    "", 
+    xy=(-1.0, 0),
+    xytext=(-1.75, 0), 
+    arrowprops=dict(
+        arrowstyle="->",
+        lw=3, 
+        color="red" 
+    )
+)
+fig.show()
+
+def compute_velocity(i, j, tm, radii, inc, sca):
+    r = [x[j], 0, z[i]]  
+    if tm.valid_points(r, radii):
+        swb = acoutreams.ScalarSphericalWaveBasis.default(1, positions=[r])
+        field = sca.expandlattice(basis=swb).vfield(r) 
+        result = np.abs(inc.vfield(r)[0] + field[0])**2  
+    else:
+        result = np.nan
+    return i, j, result  
+results = Parallel(n_jobs=-1)(
+    delayed(compute_intensity)(i, j, tm, radii, inc, sca) 
+    for i in range(len(z)) 
+    for j in range(len(x))
+)
+intensity = np.zeros((len(z), len(x)))
+for i, j, result in results:
+    intensity[i, j] = result
+
+fig, ax = plt.subplots()
+cax = ax.imshow(
+    intensity,
+    extent = [x.min() * 100, x.max() * 100, z.min() * 100, z.max() * 100],
+    aspect='auto',
+    origin='lower',
+)
+cb = plt.colorbar(cax)
+cb.set_label("Intensity $|v_x/v_0|^2$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(

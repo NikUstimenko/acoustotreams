@@ -79,19 +79,22 @@ def vsw_rL(l, m, kr, theta, phi):
      """Longitudinal regular vector spherical wave"""
      res = []
      for i, x in enumerate(kr):
-            k = i
             if x == 0:
                 if l[i] != 1:
                     val = np.zeros(3, complex).T
                     res.append(val)
                 else:
-                   val = np.transpose(sc.vsh_Z(1, m[k], 0, 0).T  
-                                        + np.sqrt(2) * sc.vsh_Y(1, m[k], 0, 0).T) * (1/3) * (-1.0j)
+                   val = np.transpose(
+                       sc.vsh_Z(1, m[i], 0, 0).T + 
+                       np.sqrt(2) * sc.vsh_Y(1, m[i], 0, 0).T) * (1/3) * (-1.0j)
                    res.append(val)
             else:      
-                val = np.transpose(sc.vsh_Z(l[k], m[k], theta[i], phi[i]).T * sc.spherical_jn_d(l[k], kr[i])  + np.sqrt(
-                    l[k] * (l[k] + 1)
-                ) * sc.vsh_Y(l[k], m[k], theta[i], phi[i]).T * sc.spherical_jn(l[k], kr[i]) / kr[i]) * (-1.0j)
+                val = np.transpose(
+                    sc.vsh_Z(l[i], m[i], theta[i], phi[i]).T * 
+                    sc.spherical_jn_d(l[i], kr[i])  
+                    + np.sqrt(l[i] * (l[i] + 1)) * 
+                    sc.vsh_Y(l[i], m[i], theta[i], phi[i]).T * 
+                    sc.spherical_jn(l[i], kr[i]) / kr[i]) * (-1.0j)
                 res.append(val)
      return np.array(res)
 
