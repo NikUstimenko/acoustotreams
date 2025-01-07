@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Scalar basis sets and other core parameters &#8212; acoutreams 0.1.26 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
+    <script src="_static/documentation_options.js?v=785bba28"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Acoustic T-Matrices" href="tmatrix.html" />
+    <link rel="prev" title="Examples" href="intro.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tmatrix.html" title="Acoustic T-Matrices"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Examples"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.26 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="scalar-basis-sets-and-other-core-parameters">
+<h1>Scalar basis sets and other core parameters<a class="headerlink" href="#scalar-basis-sets-and-other-core-parameters" title="Link to this heading">¶</a></h1>
+<p>Throughout the high-level functions and classes of <em>acoutreams</em> a set of parameters appear
+that define important underlying quantities for the calculation. First, these are the
+different scalar basis sets that are used to solve scattering processes: the spherical,
+cylindrical, and plane wave solutions. The word “scalar” emphasizes that the basis sets
+do not have polarization. Closely related to these basis sets are the
+mode types. The other parameters are the vacuum wave numbers and the materials as well as,
+in the case of calculations with periodicity involved, the lattice definitions and
+the phase shift between lattice sites.</p>
+<section id="scalar-basis-sets">
+<h2>Scalar basis sets<a class="headerlink" href="#scalar-basis-sets" title="Link to this heading">¶</a></h2>
+<p>As described in <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a> it is possible to solve linear-acoustics equations in different
+coordinate systems. While being in principle equivalent, for different scenarios it is
+beneficial to use suitable solution sets that represent the waves with sufficient
+precision when truncated to a finite number of modes. The chosen finite number of
+modes is given in the classes <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarSphericalWaveBasis</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarCylindricalWaveBasis</span></code>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasis</span></code>, which
+are all children of the base call <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarBasisSet</span></code>.</p>
+<p>The modes of the spherical basis can are defined by their degree <code class="docutils literal notranslate"><span class="pre">l</span></code>, and the order <code class="docutils literal notranslate"><span class="pre">m</span></code>.
+The basis is then simply the collection of multiple of these modes,
+each given in a tuple with exactly that order, for example</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="go">ScalarSphericalWaveBasis(</span>
+<span class="go">    pidx=[0 0 0],</span>
+<span class="go">    l=[0 1 1 1],</span>
+<span class="go">    m=[0 -1  0  1],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>results in a basis with four modes. The degree <code class="docutils literal notranslate"><span class="pre">l</span></code> is either 0 or 1, but the
+order <code class="docutils literal notranslate"><span class="pre">m</span></code> is 0 for <code class="docutils literal notranslate"><span class="pre">l=0</span></code> and goes from -1 to 1 for <code class="docutils literal notranslate"><span class="pre">l=1</span></code>.
+We see that there are also the fields <code class="docutils literal notranslate"><span class="pre">pidx</span></code> and <code class="docutils literal notranslate"><span class="pre">positions</span></code>. This is
+a special case for the spherical (and later also the cyclindrical) wave basis.
+Sometimes, the fields are not expanded with respect to a
+single point, but multiple positions. Then <code class="docutils literal notranslate"><span class="pre">positions</span></code> contains the their Cartesian
+coordinates and <code class="docutils literal notranslate"><span class="pre">pidx</span></code> maps each mode to one of those coordinates. Here, the default
+value of the expansion about a single origin is used. These basis sets behave mostly
+like regular Python sets, we can check for example if a mode is in our basis set by</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">in</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Equally, it is possible to use the regular comparisons and binary operators of Python
+sets</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span> <span class="o">&gt;</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span> <span class="o">&amp;</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="go">ScalarSphericalWaveBasis(</span>
+<span class="go">    pidx=[0],</span>
+<span class="go">    l=[1],</span>
+<span class="go">    m=[0],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>However, because we want to use those basis sets later to index the rows and columns of
+matrices, the order of the entries is fixed. Therefore, the equality operator is
+stricter. Two basis sets are only considered equal when they have the same number modes
+in the same order and the same positions.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span> <span class="o">==</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>For convenience it is possible to create a default order up to a maximal multipolar
+order</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where we now have a spherical wave basis up do quadrupolar order.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="intro.html"
+                          title="previous chapter">Examples</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="tmatrix.html"
+                          title="next chapter">Acoustic T-Matrices</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/params.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tmatrix.html" title="Acoustic T-Matrices"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Examples"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoutreams 0.1.26 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>
