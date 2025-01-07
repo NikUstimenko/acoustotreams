@@ -565,7 +565,7 @@ class AcousticTMatrixC(AcousticPhysicsArray):
                 outside. The last material in the list specifies the embedding medium.
 
         Returns:
-            AcousticT-Matrix
+            AcousticTMatrixC
         """
         materials = [AcousticMaterial(m) for m in materials]
         if materials[-1].isshear:
@@ -611,7 +611,7 @@ class AcousticTMatrixC(AcousticPhysicsArray):
             positions (array): The positions of all individual objects in the cluster.
 
         Returns:
-            AcousticTMatrix
+            AcousticTMatrixC
         """
         for tm in tmats:
             if not tm.basis.isglobal:

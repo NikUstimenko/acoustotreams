@@ -55,9 +55,7 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
 
     mat_cyl, mat_env = zip(*materials) 
     k_env = k0 * AcousticMaterial().c / mat_env[1]
-    krho_cyl = np.sqrt(k_cyl * k_cyl - kz * kz)
     krho_env = np.sqrt(k_env * k_env - kz * kz)
-    x_cyl = krho_cyl * radii
     x_env = krho_env * radii
     j = treams.special.jv(m, x_env)
     j_d = treams.special.jv_d(m, x_env)
@@ -70,6 +68,8 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
         res = -j / h
     if np.abs(mat_cyl[1]) > 0:
         k_cyl = k0 * AcousticMaterial().c / mat_cyl[1]
+        krho_cyl = np.sqrt(k_cyl * k_cyl - kz * kz)
+        x_cyl = krho_cyl * radii
         j1 = treams.special.jv(m, x_cyl)
         j1_d = treams.special.jv_d(m, x_cyl)
         if np.abs(mat_cyl[2]) == 0:

@@ -40,3 +40,5 @@ for scalar plane wave solutions.
     physicsarray
     operators
     tmatrix
+    tmatrixc
+    smatrix

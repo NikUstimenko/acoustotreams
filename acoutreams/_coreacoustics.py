@@ -202,15 +202,15 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         :math:`m = l`.
 
         Example:
-            >>> ScalarSphericalWaveBasis.default(2)
-            SphericalWaveBasis(
+            >>> acoutreams.ScalarSphericalWaveBasis.default(2)
+            ScalarSphericalWaveBasis(
                 pidx=[0 0 0 0 0 0 0 0 0],
                 l=[0 1 1 1 2 2 2 2 2],
-                m=[0 -1 0 1 -2 -1 0 1 2],
+                m=[ 0 -1  0  1 -2 -1  0  1  2],
                 positions=[[0. 0. 0.]],
             )
-            >>> ScalarSphericalWaveBasis.default(0, 2, [[0, 0, 1.], [0, 0, -1.]])
-            SphericalWaveBasis(
+            >>> acoutreams.ScalarSphericalWaveBasis.default(0, 2, [[0, 0, 1.], [0, 0, -1.]])
+            ScalarSphericalWaveBasis(
                 pidx=[0 1],
                 l=[0 0],
                 m=[0 0],
@@ -239,7 +239,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         T-matrices.
 
         Example:
-            >>> SphericalWaveBasis.defaultlmax(len(SphericalWaveBasis.default(3)))
+            >>> acoutreams.ScalarSphericalWaveBasis.defaultlmax(len(acoutreams.ScalarSphericalWaveBasis.default(3)))
             3
 
         Args:
@@ -435,18 +435,18 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         angular momentum is placed in ascending order.
 
         Example:
-            >>> ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)
+            >>> acoutreams.ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)
             ScalarCylindricalWaveBasis(
                 pidx=[0 0 0 0 0 0],
                 kz=[-0.5 -0.5 -0.5 0.5  0.5  0.5],
-                m=[-1  0  1  -1  0  1],
+                m=[-1  0  1 -1  0  1],
                 positions=[[0. 0. 0.]],
             )
-            >>> ScalarCylindricalWaveBasis.default([0], 1, 2, [[1., 0, 0], [-1., 0, 0]])
+            >>> acoutreams.ScalarCylindricalWaveBasis.default([0], 1, 2, [[1., 0, 0], [-1., 0, 0]])
             ScalarCylindricalWaveBasis(
                 pidx=[0 0 0 1 1 1],
                 kz=[0. 0. 0. 0. 0. 0.],
-                m=[-1  0  1  -1  0  1],
+                m=[-1  0  1 -1  0  1],
                 positions=[[ 1.  0.  0.], [-1.  0.  0.]],
             )
 
@@ -472,11 +472,11 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         """Create a basis set for a system periodic in the z-direction.
 
         Example:
-           >>> ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2 * np.pi, 1)
+           >>> acoutreams.ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2 * np.pi, 1)
            ScalarCylindricalWaveBasis(
                pidx=[0 0 0 0 0 0 0 0 0],
                kz=[-0.9 -0.9 -0.9  0.1  0.1  0.1  1.1  1.1  1.1],
-               m=[-1  0  1  -1  0  1  -1  0  1],
+               m=[-1  0  1 -1  0  1 -1  0  1],
                positions=[[0. 0. 0.]],
            )
 
@@ -522,7 +522,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         T-matrices.
 
         Example:
-            >>> ScalarCylindricalWaveBasis.defaultmmax(len(ScalarCylindricalWaveBasis.default([0], 2)), 1)
+            >>> acoutreams.ScalarCylindricalWaveBasis.defaultmmax(len(acoutreams.ScalarCylindricalWaveBasis.default([0], 2)), 1)
             2
 
         Args:
@@ -573,7 +573,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     Cartesian wave vector components ``qx``, ``qy``, and ``qz`` normalized to
     :math:`q_x^2 + q_y^2 + q_z^2 = 1`.
 
-    Plane waves can refer to:func:`~treams.special.spw_Psi`.
+    Plane waves can refer to:func:`~acoutreams.spw_Psi`.
 
     Args:
         modes (array-like): A tuple containing a list for each of ``qx``, ``qy``,
@@ -651,8 +651,8 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         """Default basis from the given wave vectors.
 
         Example:
-            >>> PlaneWaveBasisByUnitVector.default([[0, 0, 5], [0, 3, 4]])
-            PlaneWaveBasisByUnitVector(
+            >>> acoutreams.ScalarPlaneWaveBasisByUnitVector.default([[0, 0, 5], [0, 3, 4]])
+            ScalarPlaneWaveBasisByUnitVector(
                 qx=[0. 0.],
                 qy=[0.  0.6],
                 qz=[1.  0.8],
@@ -881,10 +881,10 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         """Default basis from the given wave vectors.
 
         Example:
-            >>> ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 3]])
+            >>> acoutreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 3]])
             ScalarPlaneWaveBasisByComp(
-                kx=[0. 0.],
-                ky=[0. 3.],
+                kx=[0 0],
+                ky=[0 3],
             )
 
         Args:
@@ -905,16 +905,16 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         orders that lie within the defined maximal radius (in reciprocal space).
 
         Example:
-            >>> ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], Lattice.square(2 * np.pi), 1)
+            >>> acoutreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], acoutreams.Lattice.square(2 * np.pi), 1)
             ScalarPlaneWaveBasisByComp(
                 kx=[ 0.  0.  0.  1. -1.],
-                ky=[ 0.  1.  -1. 0.  0.],
+                ky=[ 0.  1. -1.  0.  0.],
             )
 
         Args:
             kpar (float): Tangential wave vector components. Ideally they are in the
                 first Brillouin zone (use :func:`misc.firstbrillouin2d`).
-            lattice (:class:`treams.Lattice` or float): Lattice definition or pitch.
+            lattice (:class:`acoutreams.Lattice` or float): Lattice definition or pitch.
             bmax (float): Maximal change of tangential wave vector components. So,
                 this defines a maximal momentum transfer.
         """
@@ -1028,7 +1028,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
         kpar (list): Parallel wave vector components. Usually, this is a list of length
             3 with its items corresponding to the Cartesian axes. Unspecified items are
             set to `nan`.
-        lattice (:class:`~treams.Lattice`): Lattice definition.
+        lattice (:class:`~acoutreams.Lattice`): Lattice definition.
         material (:class:`~acoutreams.AcousticMaterial`): Material definition.
         modetype (str): Mode type, for spherical and cylindrical waves this can be
             "incident" and "scattered", for partial plane waves it can be "up" or
@@ -1090,7 +1090,7 @@ class AcousticPhysicsArray(util.AnnotatedArray):
     Additionally to keeping track of the annotations, it is enhanced by the ability to
     create suiting linear operators to perform tasks like rotations, translations, or
     expansions into different basis sets and by applying special rules for the
-    physical properties of :class:`PhysicsDict` upon matrix multiplications, see also
+    physical properties of :class:`ScalarPhysicsDict` upon matrix multiplications, see also
     :meth:`__matmul__`.
     """
 
