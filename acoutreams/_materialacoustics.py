@@ -1,4 +1,5 @@
 import numpy as np
+import cmath
 
 from treams import misc
 
@@ -69,6 +70,42 @@ class AcousticMaterial:
         parameters separately, e.g. ``foo(*material)``.
         """
         return iter((self.rho, self.c, self.ct))
+    
+    @classmethod
+    def from_params(cls, rho=1.3, params=(151767.21, 0.)):
+        r"""Create acoustic material from Lamé parameters.
+
+        This function calculates the longitudinal and transverse speeds of sound with
+        :math:`c = \sqrt{\frac{\lambda+2\mu}{\rho}}` and :math:`c_t = \sqrt{\frac{\mu}{\rho}}`. 
+
+        Args:
+            rho (complex, optional): Mass density. Defaults to 1.3.
+            params (complex, optional): Lamé parameters. Defaults to (151767.21, 0.).
+
+        Returns:
+            AcousticMaterial
+        """
+        c = cmath.sqrt((params[0] + 2 * params[1]) / rho)
+        ct = cmath.sqrt(params[1] / rho)
+        return cls(rho, c, ct)
+    
+    @classmethod
+    def from_pratio(cls, rho=1.3, c=343, pratio=0.5):
+        r"""Create acoustic material from Poisson's ratio.
+
+        This function calculates the transverse speed of sound with
+        :math:`c_t = c \sqrt{\frac{1 - 2\sigma}{2 - 2\sigma}}`. 
+
+        Args:
+            rho (complex, optional): Mass density. Defaults to 1.3.
+            c (complex, optional): Longitudinal speed of sound. Defaults to 343.
+            pratio (complex, optional): Poisson's ratio. Defaults to 0.5.
+
+        Returns:
+            AcousticMaterial
+        """
+        ct = c * cmath.sqrt((1 - 2 * pratio) / (2 - 2 * pratio))
+        return cls(rho, c, ct)
     
     @property
     def impedance(self):
