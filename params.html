@@ -13,10 +13,11 @@
     <script src="_static/documentation_options.js?v=785bba28"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acoustic T-Matrices" href="tmatrix.html" />
+    <link rel="next" title="Acoustic physics-aware arrays" href="physicsarray.html" />
     <link rel="prev" title="Examples" href="intro.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,7 +34,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="tmatrix.html" title="Acoustic T-Matrices"
+          <a href="physicsarray.html" title="Acoustic physics-aware arrays"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Examples"
@@ -56,7 +57,7 @@ that define important underlying quantities for the calculation. First, these ar
 different scalar basis sets that are used to solve scattering processes: the spherical,
 cylindrical, and plane wave solutions. The word “scalar” emphasizes that the basis sets
 do not have polarization. Closely related to these basis sets are the
-mode types. The other parameters are the vacuum wave numbers and the materials as well as,
+mode types. The other parameters are the wave numbers in air and the materials as well as,
 in the case of calculations with periodicity involved, the lattice definitions and
 the phase shift between lattice sites.</p>
 <section id="scalar-basis-sets">
@@ -117,9 +118,247 @@ in the same order and the same positions.</p>
 <p>For convenience it is possible to create a default order up to a maximal multipolar
 order</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">ScalarSphericalWaveBasis(</span>
+<span class="go">    pidx=[0 0 0 0 0 0 0 0 0],</span>
+<span class="go">    l=[0 1 1 1 2 2 2 2 2],</span>
+<span class="go">    m=[ 0 -1  0  1 -2 -1  0  1  2],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
 </pre></div>
 </div>
-<p>where we now have a spherical wave basis up do quadrupolar order.</p>
+<p>where we now have a spherical wave basis up to the quadrupolar order.</p>
+<p>The cyclindrical wave basis is mostly similar to the spherical basis. Instead of the
+multipole degree <code class="docutils literal notranslate"><span class="pre">l</span></code>, the z component of the wave vector <code class="docutils literal notranslate"><span class="pre">kz</span></code> is used</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="p">([(</span><span class="mf">.1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="go">ScalarCylindricalWaveBasis(</span>
+<span class="go">    pidx=[0 0 0],</span>
+<span class="go">    kz=[0.1 0.1 0.1],</span>
+<span class="go">    m=[-1  0  1],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>which is a real number. The default function takes a list of <code class="docutils literal notranslate"><span class="pre">kz</span></code> values and a maximal
+absolute value of <code class="docutils literal notranslate"><span class="pre">m</span></code>.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">([</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">.5</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">ScalarCylindricalWaveBasis(</span>
+<span class="go">    pidx=[0 0 0 0 0 0],</span>
+<span class="go">    kz=[-0.5 -0.5 -0.5  0.5  0.5  0.5],</span>
+<span class="go">    m=[-1  0  1 -1  0  1],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>The cylindrical wave basis is particularly useful for systems with periodicity in the
+z direction. Then, a basis with the diffraction orders up to a certain threshold can be obtained
+by running</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">mmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lattice</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">bmax</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="go">ScalarCylindricalWaveBasis(</span>
+<span class="go">    pidx=[0 0 0 0 0 0 0 0 0],</span>
+<span class="go">    kz=[-0.9 -0.9 -0.9  0.1  0.1  0.1  1.1  1.1  1.1],</span>
+<span class="go">    m=[-1  0  1 -1  0  1 -1  0  1],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">bmax</span></code> defines a distance in reciprocal space.</p>
+<p>The plane wave basis behaves a little bit different. First, it is currently only defined
+with respect to a single origin, so that the <code class="docutils literal notranslate"><span class="pre">pidx</span></code> and <code class="docutils literal notranslate"><span class="pre">positions</span></code> are not defined. Moreover,
+the basis can be defined in two ways: <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByUnitVector</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code>. In the first case, the definition is given by the unit
+vector which, multiplied by the wave number in the medium, provides the full wave vector.
+In the second case, two components of the wave vector are given and the remaining third
+Cartesian component is defined such that it fulfils the dispersion relation.</p>
+<p>. doctest:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByUnitVector</span><span class="p">([(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="go">ScalarPlaneWaveBasisByUnitVector(</span>
+<span class="go">    qx=[0.8],</span>
+<span class="go">    qy=[0.],</span>
+<span class="go">    qz=[0.6],</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+<span class="go">ScalarPlaneWaveBasisByComp(</span>
+<span class="go">    kx=[1],</span>
+<span class="go">    ky=[0],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>By default, it is assumed, that the x and y components are given for the latter class,
+but other components can also be chosen.</p>
+<p>It is possible to convert between those basis sets by using the corresponding
+functions</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pwbc</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="p">([(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pwbc</span><span class="o">.</span><span class="n">byunitvector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">ScalarPlaneWaveBasisByUnitVector(</span>
+<span class="go">    qx=[0.6+0.j],</span>
+<span class="go">    qy=[0.+0.j],</span>
+<span class="go">    qz=[0.8+0.j],</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pwbuv</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByUnitVector</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pwbuv</span><span class="o">.</span><span class="n">bycomp</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">ScalarPlaneWaveBasisByComp(</span>
+<span class="go">    kx=[0.],</span>
+<span class="go">    ky=[0.],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<p>Additionally, similar to the case of cylindrical waves, the basis by components can be
+used for a range of diffraction orders</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">7</span><span class="p">)</span>
+<span class="go">    ScalarPlaneWaveBasisByComp(</span>
+<span class="go">        kx=[ 0.          0.          0.          6.28318531 -6.28318531],</span>
+<span class="go">        ky=[ 0.          6.28318531 -6.28318531  0.          0.        ],</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+</section>
+<section id="polarization">
+<h2>Polarization<a class="headerlink" href="#polarization" title="Link to this heading">¶</a></h2>
+<p>In <em>acoutreams</em> we consider acoustic waves that can be described by scalar pressure fields.
+The scalar waves are defined in <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.ssw_Psi()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.ssw_rPsi()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.scw_Psi()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.scw_rPsi()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.spw_Psi()</span></code>.
+Those scalar waves correspond to the longitudinal vector fields: <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.vsw_L()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.vsw_rL()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.vcw_L()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.vcw_rL()</span></code>,
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoutreams.vpw_L()</span></code>. For spherical waves, they are longitudinal with respect to
+the radial direction, while for cylindrical and plane waves, they are relative to the z axis.</p>
+</section>
+<section id="mode-types">
+<h2>Mode types<a class="headerlink" href="#mode-types" title="Link to this heading">¶</a></h2>
+<p>For some basis sets, there exist two different types of modes that distinguish
+propagation features. For the spherical and cylindrical basis theses are <cite>regular</cite>
+and <cite>singular</cite> modes. The former come through the use of (spherical) Bessel Functions
+and the latter through the use of (spherical) Hankel functions of the first kind. The
+regular modes are finite in the whole space. Thus, they are suitable for describing
+incident modes or to expand a plane wave. The singular modes fulfil the radiation
+condition and as such are used for the scattered fields.</p>
+<p>For the plane wave basis of type (<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code>) only two
+components of the wave vector are given and the third component is only implicitly
+defined by the wave number and the material parameters. The application for this basis
+is mostly within stratified media that are uniform or periodic in the two other
+dimensions. Thus, the two given components of the wave vectors are conserved up to
+reciprocal lattice vectors. To lift the ambiguity of the definition of the third
+component, the mode types <cite>up</cite> and <cite>down</cite> are possible. They define, if the modes
+propagate – or decay for evanescent modes – along the positive or negative direction
+with respect to the third axis.</p>
+</section>
+<section id="wave-number-in-air">
+<h2>Wave number in air<a class="headerlink" href="#wave-number-in-air" title="Link to this heading">¶</a></h2>
+<p>All calculations are executed in frequency domain. Instead of defining the frequency
+<span class="math notranslate nohighlight">\(\nu\)</span> or the angular frequency <span class="math notranslate nohighlight">\(\omega\)</span> itself, <em>acoutreams</em> works by using the
+wave number in air</p>
+<div class="math notranslate nohighlight">
+\[k_0 = \frac{2 \pi \nu}{c} = \frac{\omega}{c}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c\)</span> is the speed of sound in air. In the code this real-valued number is
+usually referred to by <code class="docutils literal notranslate"><span class="pre">k0</span></code>. Implicitly, it is assumed throughout that all quantities,
+like wave numbers, wave vectors, distances, or lattice vectors are given in the same
+unit of (inverse) length.</p>
+</section>
+<section id="materials">
+<h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
+<p>For materials there exists the class <code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code>, which holds the values
+of the mass density, longitudinal speed of sound, and transverse speed of sound. The
+default material is air (room temperature) and can be initialized without any parameters. For other cases,
+the parameters can be given in the order above.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span>
+<span class="go">Material(1.3, 343.0, 0.0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1300</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="go">Material(1300, 2000, 1000)</span>
+</pre></div>
+</div>
+<p>It is also possible to calculate the impedance for longitudinal and transverse waves</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">impedance</span>
+<span class="go">&#39;445.90000000000003&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">impedancet</span>
+<span class="go">&#39;0.0&#39;</span>
+</pre></div>
+</div>
+<p>Moreover, we can get the speeds from the Lamé parameters or Poisson’s ratio</p>
+</section>
+<section id="lattices">
+<h2>Lattices<a class="headerlink" href="#lattices" title="Link to this heading">¶</a></h2>
+<p>The periodicity of arrangements is given by defining an instance of the class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code>. A lattice can be one-, two-, or three-dimensional.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">Lattice(1.0, alignment=&#39;z&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="go">Lattice([[ 1.   0.5]</span>
+<span class="go">         [-0.5  1. ]], alignment=&#39;xy&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">Lattice([[1. 0. 0.]</span>
+<span class="go">         [0. 2. 0.]</span>
+<span class="go">         [0. 0. 3.]], alignment=&#39;xyz&#39;)</span>
+</pre></div>
+</div>
+<p>The one- and two-dimensional lattices have to be aligned with one and two, respectively,
+Cartesian axes. The default alignments are along the z axis for one-dimensional and in
+the xy plane for the two-dimensional lattices. In the last example we see that it is
+sufficient to just specify the diagonal entries. It is also possible to automatically
+create lattices with special unit cells, for example</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="o">.</span><span class="n">hexagonal</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Lattice([[2.    0.   ]</span>
+<span class="go">         [1.    1.732]], alignment=&#39;xy&#39;)</span>
+</pre></div>
+</div>
+<p>creates a hexagonal lattice with sidelength 2. It is also possible to extract a
+lower-dimensional sublattice</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lat_3d</span> <span class="o">=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">lat_3d</span><span class="p">,</span> <span class="s2">&quot;zx&quot;</span><span class="p">)</span>
+<span class="go">Lattice([[0. 1.]</span>
+<span class="go">         [3. 0.]], alignment=&#39;zx&#39;)</span>
+</pre></div>
+</div>
+<p>or to combine and compare lattices</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="go">Lattice([[1. 0.]</span>
+<span class="go">         [0. 2.]], alignment=&#39;xy&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;xy&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;yz&quot;</span><span class="p">)</span>
+<span class="go">Lattice(2.0, alignment=&#39;y&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;xy&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The volume of the lattice can also be obtained</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">volume</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span><span class="o">.</span><span class="n">volume</span>
+<span class="go">-1.0</span>
+</pre></div>
+</div>
+<p>as we see the volume is “signed”, i.e. it shows if the lattice vectors are in a
+right-handed order, and the reciprocal lattice vectors can be computed</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reciprocal</span>
+<span class="go">array([[ 6.283, -0.   ],</span>
+<span class="go">       [-0.   ,  6.283]])</span>
+</pre></div>
+</div>
+</section>
+<section id="phase-vector">
+<h2>Phase vector<a class="headerlink" href="#phase-vector" title="Link to this heading">¶</a></h2>
+<p>The wave vector, often referred to as <code class="docutils literal notranslate"><span class="pre">kpar</span></code>, specifies the phase relationship of
+different lattice sites <span class="math notranslate nohighlight">\(\exp(\mathrm i \boldsymbol k_\parallel \boldsymbol R)\)</span>.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">()</span>
+<span class="go">WaveVector(nan, nan, nan)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">WaveVector(nan, nan, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="go">WaveVector(1, nan, nan)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">WaveVector(1, 2, nan)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">WaveVector(1, 2, 3)</span>
+</pre></div>
+</div>
+<p>where unspecified directions are represented as <code class="docutils literal notranslate"><span class="pre">nan</span></code>. The wave vectors can be
+combined and compared.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">|</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;yz&quot;</span><span class="p">)</span>
+<span class="go">WaveVector(nan, 2, nan)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="go">WaveVector(1, 2, nan)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">acoutreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Note that the ordering is from less strict wave vector to the stricter one.</p>
 </section>
 </section>
 
@@ -146,8 +385,8 @@ order</p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="tmatrix.html"
-                          title="next chapter">Acoustic T-Matrices</a></p>
+    <p class="topless"><a href="physicsarray.html"
+                          title="next chapter">Acoustic physics-aware arrays</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -177,7 +416,7 @@ order</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="tmatrix.html" title="Acoustic T-Matrices"
+          <a href="physicsarray.html" title="Acoustic physics-aware arrays"
              >next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Examples"
