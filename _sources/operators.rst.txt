@@ -491,3 +491,78 @@ lattice along the x axis can also be expanded in plane waves.
         material=AcousticMaterial(1.3, 343.0, 0.0),
         modetype='up',
     )
+
+Permute the axes
+================
+
+The permute operator is only implemented for plane waves.
+For this type of waves, the rotation is only implemented about the z axis. These
+rotations then do not include a relabeling of the Cartesian axes, for example
+:math:`(x', y', z') = (z, x, y)`. This operation is implemented separately as
+permutation, meaning the axes labels get permuted.
+
+.. doctest::
+
+    >>> plw = acoutreams.plane_wave_scalar([2, 3, 6])
+    >>> plw
+    AcousticPhysicsArray(
+        [1.+0.j],
+        basis=ScalarPlaneWaveBasisByUnitVector(
+        qx=[0.286],
+        qy=[0.429],
+        qz=[0.857],
+    ),
+    )
+    >>> plw.permute()
+    AcousticPhysicsArray(
+        [1.+0.j],
+        basis=ScalarPlaneWaveBasisByUnitVector(
+        qx=[0.857],
+        qy=[0.286],
+        qz=[0.429],
+    ),
+    )
+
+Evaluate the field
+==================
+
+From a programming perspective, the evaluation of the field values at specified points
+is also implemented by a couple of operators. The pressure field :math:`p`, and
+the velocity field :math:`\boldsymbol v` in Cartesian coordinates can be computed.
+
+.. doctest::
+
+    >>> sssw = acoutreams.spherical_wave_scalar(1, 0, k0=1, material=1.3, modetype="regular")
+    >>> sssw.pfield([0, 0, 1])
+    AcousticPhysicsArray(
+        [0.14715177+0.j],
+    )
+    >>> sssw.vfield([0, 0, 1])
+    AcousticPhysicsArray(
+        [0.+0.j         0.+0.j         0.-0.00026203j],
+    )
+
+Evaluate the far-field amplitude
+================================
+
+Similarly, we can also calculate the far-field amplitudes of the scattered pressure and velocity fields
+defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0` and :math:`\boldsymbol v = \frac{\mathrm e^{\mathrm i k r}}{r}\boldsymbol v_0` for spherical waves,
+and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0` and :math:`\boldsymbol v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\boldsymbol v_0`
+for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\boldsymbol v_0` can be calculated
+using :func:`acoutreams.ssw_psi` and :func:`acoutreams.ssw_l`, respectively; for a singular cylindrical wave, 
+using :func:`acoutreams.scw_psi` and :func:`acoutreams.scw_l`.
+
+.. doctest::
+
+    >>> sssw = acoutreams.spherical_wave_scalar(1, 0, k0=1, material=1.3, modetype="singular")
+    >>> sssw.pamplitudeff([0, 0, 1])
+    AcousticPhysicsArray(
+        [-0.48860251+0.j],
+    )
+    >>> sssw.vamplitudeff([0, 0, 1])
+    AcousticPhysicsArray(
+        [-0.00109577+0.j  0.+0.j  0.+0.j],
+    )
+
+Note that :math:`v_0` is computed in spherical coordinates for the spherical wave basis and
+cylindrical coordinates for the cylindrical wave basis.

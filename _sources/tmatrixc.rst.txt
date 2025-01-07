@@ -2,9 +2,9 @@
 
 .. only:: builder_html
 
-==========
+===============================
 Acoustic cylindrical T-Matrices
-==========
+===============================
 
 .. contents:: Table of contents
    :local:
@@ -17,7 +17,7 @@ of the wave vector :math:`k_z`, which describes their behavior in the z directio
 used in scalar spherical waves.
 
 The cylindrical T-matrices are suited for structures that are periodic in one dimension
-(conventionally set along the z-axis). Similarly to T-matrices of spheres that contain
+(conventionally set along the z axis). Similarly to T-matrices of spheres that contain
 the analytically known Mie coefficients, the cylindrical T-matrices for infinitely long
 cylinders can also be calculated analytically.
 
@@ -28,6 +28,11 @@ periodic already.
 
 Infinitely long cylinders
 =========================
+
+The first simple object, for which we calculate the cylindrical T-matrix is an
+infinitely long cylinder. Due to the rotation symmetry about the z axis this matrix 
+is diagonal with respect to :code:`m` and due to the translation symmetry 
+it is also diagonal with respect to :code:`kz`.
 
 Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices
 =========================================================================
