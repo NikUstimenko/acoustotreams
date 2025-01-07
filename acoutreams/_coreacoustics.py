@@ -1,4 +1,4 @@
-"""Acoustic basis sets and core array functionalities."""
+"""Scalar basis sets and core array functionalities."""
 
 import abc
 from collections import namedtuple
@@ -12,8 +12,8 @@ from treams import util
 from treams._lattice import Lattice, WaveVector
 from acoutreams._materialacoustics import AcousticMaterial
 
-class AcousticBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
-    """Acoustic basis set base class.
+class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
+    """Scalar basis set base class.
 
     It is the base class for all basis sets used. They are expected to be an ordered
     sequence of the modes, that are included in a expansion. Basis sets are expected to
@@ -44,7 +44,7 @@ class AcousticBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-class ScalarSphericalWaveBasis(AcousticBasisSet):
+class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     r"""Basis of scalar spherical waves.
 
@@ -229,8 +229,6 @@ class ScalarSphericalWaveBasis(AcousticBasisSet):
             for m in range(-l, l + 1)
         ]
         return cls(modes, positions=positions)
-    
-    #without ebcm
 
     @staticmethod
     def defaultlmax(dim, nmax=1):
@@ -285,7 +283,7 @@ class ScalarSphericalWaveBasis(AcousticBasisSet):
         return obj    
     
 
-class ScalarCylindricalWaveBasis(AcousticBasisSet):
+class ScalarCylindricalWaveBasis(ScalarBasisSet):
     r"""Basis of scalar cylindrical waves.
 
     Functions of the cylindrical wave basis are defined by the z-components of the wave
@@ -562,7 +560,7 @@ class ScalarCylindricalWaveBasis(AcousticBasisSet):
         return (2 * mmax + 1) * nkz * nmax
     
     
-class ScalarPlaneWaveBasis(AcousticBasisSet):
+class ScalarPlaneWaveBasis(ScalarBasisSet):
     """Scalar plane wave basis parent class."""
 
     isglobal = True
@@ -664,7 +662,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
             kvecs (array-like): Wave vectors in Cartesian coordinates.
         """
         kvecs = np.atleast_2d(kvecs)
-        modes = np.empty((kvecs.shape[0], 3), kvecs.dtype)                            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        modes = np.empty((kvecs.shape[0], 3), kvecs.dtype)                           
         modes = kvecs
         return cls(modes)
 
@@ -1015,17 +1013,17 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
 
 def _raise_basis_error(*args):
-    raise TypeError("'basis' must be AcousticBasisSet")
+    raise TypeError("'basis' must be ScalarBasisSet")
 
 
-class AcousticPhysicsDict(util.AnnotationDict):
+class ScalarPhysicsDict(util.AnnotationDict):
     """Physics dictionary (for acoustics).
 
     Derives from :class:`treams.util.AnnotationDict`. This dictionary has additionally
     several properties defined.
 
     Attributes:
-        basis (:class:`AcousticBasisSet`): Basis set.
+        basis (:class:`ScalarBasisSet`): Basis set.
         k0 (float): Wave number.
         kpar (list): Parallel wave vector components. Usually, this is a list of length
             3 with its items corresponding to the Cartesian axes. Unspecified items are
@@ -1039,8 +1037,8 @@ class AcousticPhysicsDict(util.AnnotationDict):
 
     properties = {
         "basis": (
-            ":class:`AcousticBasisSet`.",
-            lambda x: isinstance(x, AcousticBasisSet),
+            ":class:`ScalarBasisSet`.",
+            lambda x: isinstance(x, ScalarBasisSet),
             _raise_basis_error,
         ),
         "k0": ("Wave number.", lambda x: isinstance(x, float), float),
@@ -1050,7 +1048,7 @@ class AcousticPhysicsDict(util.AnnotationDict):
             WaveVector,
         ),
         "lattice": (
-            ":class:`~treams.Lattice`.",
+            ":class:`~acoutreams.Lattice`.",
             lambda x: isinstance(x, Lattice),
             Lattice,
         ),
@@ -1061,7 +1059,7 @@ class AcousticPhysicsDict(util.AnnotationDict):
         ),
         "modetype": ("Mode type.", lambda x: isinstance(x, str), str),
     }
-    """Special properties tracked by the AcousticPhysicsDict."""
+    """Special properties tracked by the ScalarPhysicsDict."""
 
     def __setitem__(self, key, val):
         """Set item specified by key to the defined value.
@@ -1132,12 +1130,12 @@ class AcousticPhysicsArray(util.AnnotatedArray):
         try:
             return super().__getattr__(key)
         except AttributeError as err:
-            if key in AcousticPhysicsDict.properties:
+            if key in ScalarPhysicsDict.properties:
                 return None
             raise err from None
 
     def __setattr__(self, key, val):
-        if key in AcousticPhysicsDict.properties:
+        if key in ScalarPhysicsDict.properties:
             val = (val,) * self.ndim if not isinstance(val, tuple) else val
             self.ann.as_dict[key] = val
         else:
@@ -1149,7 +1147,7 @@ class AcousticPhysicsArray(util.AnnotatedArray):
 
         See also :meth:`treams.util.AnnotatedArray.__setitem__`.
         """
-        self._ann = util.AnnotationSequence(*(({},) * self.ndim), mapping=AcousticPhysicsDict)
+        self._ann = util.AnnotationSequence(*(({},) * self.ndim), mapping=ScalarPhysicsDict)
         self._ann.update(ann)
 
     def __repr__(self):
@@ -1158,8 +1156,8 @@ class AcousticPhysicsArray(util.AnnotatedArray):
         For a more managable output only the special physics properties are shown
         alongside the array itself.
         """
-        repr_arr = "    " + repr(self._array)[5:-1].replace("\n  ", "\n") + ","        #!!!!!!!!!!!!!!!
-        for key in AcousticPhysicsDict.properties:
+        repr_arr = "    " + repr(self._array)[5:-1].replace("\n  ", "\n") + ","        
+        for key in ScalarPhysicsDict.properties:
             if getattr(self, key) is not None:
                 repr_arr += f"\n    {key}={repr(getattr(self, key))},"
         return f"{self.__class__.__name__}(\n{repr_arr}\n)"
@@ -1184,7 +1182,7 @@ class AcousticPhysicsArray(util.AnnotatedArray):
         """Implement ufunc API.
 
         Additionally to keeping track of the annotations the special properties of an
-        AcousticPhysicsArray are also "transparent" in matrix multiplications.
+        ScalarPhysicsArray are also "transparent" in matrix multiplications.
         """
         res = super().__array_ufunc__(ufunc, method, *inputs, **kwargs)
         if (
@@ -1199,7 +1197,7 @@ class AcousticPhysicsArray(util.AnnotatedArray):
                 i.ann[ax] if hasattr(i, "ann") else [{}, {}]
                 for i, ax in zip(inputs, axes)
             ]
-            for name in AcousticPhysicsDict.properties:
+            for name in ScalarPhysicsDict.properties:
                 if name in anns[0][-1] and all(name not in a for a in anns[1]):
                     res.ann[axes[-1][-1]].setdefault(name, anns[0][-1][name])
                 if name in anns[1][0] and all(name not in a for a in anns[0]):

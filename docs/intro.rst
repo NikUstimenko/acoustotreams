@@ -36,4 +36,5 @@ for scalar plane wave solutions.
 .. toctree::
     :maxdepth: 1
 
+    params
     tmatrix
