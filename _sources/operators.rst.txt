@@ -548,7 +548,7 @@ Evaluate the far-field amplitude
 Similarly, we can also calculate the far-field amplitudes of the scattered pressure and velocity fields
 defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0` and :math:`\boldsymbol v = \frac{\mathrm e^{\mathrm i k r}}{r}\boldsymbol v_0` for spherical waves,
 and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0` and :math:`\boldsymbol v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\boldsymbol v_0`
-for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\boldsymbol v_0` can be calculated
+for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\boldsymbol v_0` are calculated
 using :func:`acoutreams.ssw_psi` and :func:`acoutreams.ssw_l`, respectively; for a singular cylindrical wave, 
 using :func:`acoutreams.scw_psi` and :func:`acoutreams.scw_l`.
 
