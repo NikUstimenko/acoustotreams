@@ -269,7 +269,7 @@ def _ssw_scw_expand(basis, to_basis, k0, material, where):
     """Expand scalar cylindrical waves into scalar spherical waves."""
     where = np.logical_and(where, to_basis.pidx[:, None] == basis.pidx)
     ks = material.ks(k0)
-    res = scw.to_sw(
+    res = scw.to_ssw(
         *(m[:, None] for m in to_basis.lm),
         *basis.zm,
         ks,
@@ -423,7 +423,7 @@ def expand(
             )
         if isinstance(to_basis, core.ScalarSphericalWaveBasis):
             if modetype != "regular" and to_modetype not in (None, "regular"):
-                raise ValueError("invalid modetype")
+                raise ValueError(f"invalid expansion from {modetype} to {to_modetype}")
             return _ssw_scw_expand(basis, to_basis, k0, material, where)
     if isinstance(basis, core.ScalarPlaneWaveBasis):
         if isinstance(to_basis, core.ScalarPlaneWaveBasis):

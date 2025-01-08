@@ -29,20 +29,21 @@ _translate_r = np.vectorize(_translate_r)
 
 
 def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
-    """Translation coefficient for spherical modes.
+    """Translation coefficient for cylindrical modes.
 
     Returns the correct translation coefficient from :func:acoutreams.tl_scw,
     and :func:acoutreams.tl_scw_r or a combination thereof for the specified mode and
     basis.
 
     Args:
-        lambda_ (int, array_like): Degree of the destination mode
+        kz (float, array_like): Z component of the destination mode's wave vector
         mu (int, array_like): Order of the destination mode
-        l (int, array_like): Degree of the source mode
+        qz (float, array_like): Z component of the source mode's wave vector
         m (int, array_like): Order of the source mode
-        kr (float or complex, array_like): Translation distance in units of the wave number
-        theta (float, array_like): Polar angle
+        krr (float or complex, array_like): Translation distance in units of 
+            the radial component of the wave vector
         phi (float, array_like): Azimuthal angle
+        z (float, array_like): Z coordinate
         singular (bool, optional): If true, singular translation coefficients are used,
             else regular coefficients. Defaults to ``True``.
 
@@ -84,7 +85,7 @@ _periodic_to_spw = np.vectorize(_periodic_to_spw)
 def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
     return _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs)
 
-def _to_sw(l, m, kz, mu, k, *args, **kwargs):
+def _to_ssw(l, m, kz, mu, k, *args, **kwargs):
     if m == mu:
         return (
             np.power(1j, l - m, *args, **kwargs)
@@ -94,10 +95,25 @@ def _to_sw(l, m, kz, mu, k, *args, **kwargs):
             )
     return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)
 
-_to_sw = np.vectorize(_to_sw)
+_to_ssw = np.vectorize(_to_ssw)
 
-def to_sw(l, m, kz, mu, k, *args, **kwargs):
-    return _to_sw(l, m, kz, mu, k, *args, **kwargs)
+def to_ssw(l, m, kz, mu, k, *args, **kwargs):
+    """Coefficient for the expansion of a cylindrical wave in spherical waves.
+
+    Returns the coefficient for the basis change from a cylindrical wave to a spherical wave. 
+    For multiple positions only diagonal values (with respect to the position) are returned.
+
+    Args:
+        l (int, array_like): Degree of the spherical wave
+        m (int, array_like): Order of the spherical wave
+        kz (int, array_like): Z component of the cylindrical wave's wave vector
+        mu (int, array_like): Order of the cylindrical wave
+        k (float or complex, array_like): Wave number
+    
+    Returns:
+        complex array
+    """
+    return _to_ssw(l, m, kz, mu, k, *args, **kwargs)
 
 
 def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0):
