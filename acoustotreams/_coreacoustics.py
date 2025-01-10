@@ -1017,7 +1017,7 @@ def _raise_basis_error(*args):
 
 
 class ScalarPhysicsDict(util.AnnotationDict):
-    """Physics dictionary (for acoustics).
+    """Physics dictionary (for scalar waves).
 
     Derives from :class:`treams.util.AnnotationDict`. This dictionary has additionally
     several properties defined.
@@ -1083,10 +1083,10 @@ class ScalarPhysicsDict(util.AnnotationDict):
         super().__setitem__(key, val)
 
 
-class AcousticPhysicsArray(util.AnnotatedArray):
-    """Physics-aware array (for acoustics).
+class AcousticsArray(util.AnnotatedArray):
+    """Acoustics-aware array.
 
-    A physics aware array is a special type of :class`~treams.util.AnnotatedArray`.
+    An acoustics aware array is a special type of :class`~treams.util.AnnotatedArray`.
     Additionally to keeping track of the annotations, it is enhanced by the ability to
     create suiting linear operators to perform tasks like rotations, translations, or
     expansions into different basis sets and by applying special rules for the

@@ -3,7 +3,7 @@ import copy
 import numpy as np
 
 from treams import util
-from acoustotreams._coreacoustics import AcousticPhysicsArray
+from acoustotreams._coreacoustics import AcousticsArray
 from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
 from acoustotreams._materialacoustics import AcousticMaterial
 from acoustotreams._operatorsacoustics import translate
@@ -11,7 +11,7 @@ from acoustotreams._tmatrixacoustics import AcousticTMatrixC
 from acoustotreams.coeffsacoustics import fresnel_acoustics
 
 
-class AcousticSMatrix(AcousticPhysicsArray):
+class AcousticSMatrix(AcousticsArray):
     """Acoustic S-matrix for a scalar plane wave."""
 
     def _check(self):

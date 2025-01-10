@@ -10,7 +10,7 @@ from acoustotreams._coreacoustics import ScalarCylindricalWaveBasis as SCWB
 from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByUnitVector as SPWBUV
 from acoustotreams._materialacoustics import AcousticMaterial
 from acoustotreams.coeffsacoustics import mie_acoustics, mie_acoustics_cyl
-from acoustotreams._coreacoustics import AcousticPhysicsArray
+from acoustotreams._coreacoustics import AcousticsArray
 import acoustotreams._operatorsacoustics as opa
 import acoustotreams._wavesacoustics as wv
 
@@ -180,7 +180,7 @@ class _LatticeInteractionApprox:
         return [res, order_curr]
 
 
-class AcousticTMatrix(AcousticPhysicsArray):
+class AcousticTMatrix(AcousticsArray):
     """Acoustic T-matrix with a spherical basis.
 
     The acoustic T-matrix is a square relating incident (regular) fields
@@ -397,9 +397,9 @@ class AcousticTMatrix(AcousticPhysicsArray):
             inc (complex, array): Incident wave or its expansion coefficients
 
         Returns:
-            AcousticsPhysicsArray
+            AcousticsArray
         """
-        inc = AcousticPhysicsArray(inc)
+        inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
         if (not isinstance(inc_basis, SSWB)) or (isinstance(inc_basis, SSWB) and inc.modetype == "singular"):
@@ -441,7 +441,7 @@ class AcousticTMatrix(AcousticPhysicsArray):
         """
         if not self.material.isreal:
             raise NotImplementedError
-        inc = AcousticPhysicsArray(inc)
+        inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
         if (not isinstance(inc_basis, SSWB)) or (isinstance(inc_basis, SSWB) and inc.modetype == "singular"):
@@ -487,7 +487,7 @@ class AcousticTMatrix(AcousticPhysicsArray):
         return super().__getitem__(key)
     
 
-class AcousticTMatrixC(AcousticPhysicsArray):
+class AcousticTMatrixC(AcousticsArray):
     """T-matrix with a scalar cylindrical basis.
 
     The acoustic T-matrix is square relating incident (regular) fields
@@ -737,9 +737,9 @@ class AcousticTMatrixC(AcousticPhysicsArray):
             inc (complex, array): Incident wave or its expansion coefficients
 
         Returns:
-            AcousticsPhysicsArray
+            AcousticsArray
         """
-        inc = AcousticPhysicsArray(inc)
+        inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
         if (not isinstance(inc_basis, SCWB)) or (isinstance(inc_basis, SCWB) and inc.modetype == "singular"):
@@ -781,7 +781,7 @@ class AcousticTMatrixC(AcousticPhysicsArray):
         """
         if not self.material.isreal:
             raise NotImplementedError
-        inc = AcousticPhysicsArray(inc)
+        inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
         if (not isinstance(inc_basis, SCWB)) or (isinstance(inc_basis, SCWB) and inc.modetype == "singular"):
@@ -823,7 +823,7 @@ def _plane_wave_partial_scalar(
     kzs = AcousticMaterial(material).kzs(k0, *kpar)
     pol = wv.spw_Psi(*kpar, kzs, 0, 0, 0)
     res = [pol * (np.abs(np.array(kpar) - x[:2]) < 1e-14).all() for x in basis]
-    return AcousticPhysicsArray(
+    return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype
     )
 
@@ -841,7 +841,7 @@ def _plane_wave_scalar(
         kvec = qvec
     pol = wv.spw_Psi(*kvec, 0, 0, 0)
     res = [pol * (np.abs(qvec - x[:3]) < 1e-14).all() for x in basis]
-    return AcousticPhysicsArray(
+    return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype
     )
 
@@ -897,7 +897,7 @@ def spherical_wave_scalar(
         raise ValueError("basis must be global")
     res = [0] * len(basis)
     res[basis.index((0, l, m))] = 1
-    return AcousticPhysicsArray(
+    return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype
     )
 
@@ -911,6 +911,6 @@ def cylindrical_wave_scalar(
         raise ValueError("basis must be global")
     res = [0] * len(basis)
     res[basis.index((0, kz, m))] = 1
-    return AcousticPhysicsArray(
+    return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype
     )

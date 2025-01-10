@@ -21,14 +21,14 @@ def _ssw_rotate(phi, theta, psi, basis, to_basis, where):
         *(m[:, None] for m in to_basis.lm), *basis.lm, phi, theta, psi, where=where
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(res, basis=(to_basis, basis))
+    return core.AcousticsArray(res, basis=(to_basis, basis))
 
 def _scw_rotate(phi, basis, to_basis, where):
     """Rotate scalar cylindrical waves."""
     where = np.logical_and(where, to_basis.pidx[:, None] == basis.pidx)
     res = scw.rotate(*(m[:, None] for m in to_basis.zm), *basis.zm, phi, where=where)
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(res, basis=(to_basis, basis))
+    return core.AcousticsArray(res, basis=(to_basis, basis))
 
 
 def _spwa_rotate(phi, basis, where):
@@ -43,7 +43,7 @@ def _spwa_rotate(phi, basis, where):
         newbasis.lattice = basis.lattice.rotate(phi)
     if basis.kpar is not None:
         newbasis.kpar = basis.kpar.rotate(phi)
-    return core.AcousticPhysicsArray(res, basis=(newbasis, basis))
+    return core.AcousticsArray(res, basis=(newbasis, basis))
 
 
 def _spwp_rotate(phi, basis, where):
@@ -60,7 +60,7 @@ def _spwp_rotate(phi, basis, where):
         newbasis.lattice = basis.lattice.rotate(phi)
     if basis.kpar is not None:
         newbasis.kpar = basis.kpar.rotate(phi)
-    return core.AcousticPhysicsArray(res, basis=(newbasis, basis))
+    return core.AcousticsArray(res, basis=(newbasis, basis))
 
 
 def rotate(phi, theta=0, psi=0, *, basis, where=True):
@@ -73,7 +73,7 @@ def rotate(phi, theta=0, psi=0, *, basis, where=True):
         phi (float): First Euler angle (rotation about z)
         theta (float, optional): Second Euler angle (rotation about y)
         psi (float, optional): Third Euler angle (rotation about z)
-        basis (:class:`AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         where (array-like, bool, optional): Only evaluate parts of the rotation matrix,
@@ -127,7 +127,7 @@ def _ssw_translate(r, basis, to_basis, k0, material, where):
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=(k0, k0),
         basis=(to_basis, basis),
@@ -151,7 +151,7 @@ def _scw_translate(r, basis, k0, to_basis, material, where):
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res, k0=(k0, k0), basis=(to_basis, basis), material=(material, material)
     )
 
@@ -173,7 +173,7 @@ def _spw_translate(r, basis, k0, to_basis, material, modetype, where):
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=(k0,) * 2,
         basis=(to_basis, basis),
@@ -190,7 +190,7 @@ def translate(
 
     Args:
         r (array-like): Translation vector
-        basis (:class:`AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         k0 (float, optional): Wave number.
@@ -258,7 +258,7 @@ def _ssw_ssw_expand(basis, to_basis, to_modetype, k0, material, modetype, where)
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    res = core.AcousticPhysicsArray(
+    res = core.AcousticsArray(
         res, k0=k0, basis=(to_basis, basis), material=material
     )
     if modetype == "singular" and to_modetype == "regular":
@@ -276,7 +276,7 @@ def _ssw_scw_expand(basis, to_basis, k0, material, where):
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=k0,
         basis=(to_basis, basis),
@@ -300,7 +300,7 @@ def _ssw_spw_expand(basis, to_basis, k0, material, modetype, where):
         to_basis.positions[to_basis.pidx, None, 2],
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         basis=(to_basis, basis),
         k0=k0,
@@ -310,10 +310,6 @@ def _ssw_spw_expand(basis, to_basis, k0, material, modetype, where):
 
 def _scw_scw_expand(basis, to_basis, to_modetype, k0, material, modetype, where):
     """Expand scalar cylindrical waves into scalar cylindrical waves."""
-    if modetype == "regular" == to_modetype or modetype == "singular" == to_modetype:
-        modetype = to_modetype = None
-    elif modetype != "singular" or to_modetype != "regular":
-        raise ValueError(f"invalid expansion from {modetype} to {to_modetype}")
     rs = sc.car2cyl(to_basis.positions[:, None, :] - basis.positions)
     krhos = material.krhos(k0, basis.kz)
     res = scw.translate(
@@ -326,7 +322,7 @@ def _scw_scw_expand(basis, to_basis, to_modetype, k0, material, modetype, where)
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    res = core.AcousticPhysicsArray(res, k0=k0, basis=(to_basis, basis), material=material)
+    res = core.AcousticsArray(res, k0=k0, basis=(to_basis, basis), material=material)
     if modetype == "singular" and to_modetype == "regular":
         res.modetype = (to_modetype, modetype)
     return res
@@ -345,7 +341,7 @@ def _scw_spw_expand(basis, to_basis, k0, material, modetype, where):
         to_basis.positions[to_basis.pidx, None, 2],
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         basis=(to_basis, basis),
         k0=k0,
@@ -369,7 +365,7 @@ def _spw_spw_expand(basis, to_basis, k0, material, modetype, where):
         & (kz[:, None] == kvecs[2]),
         int,
     )
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res, basis=(to_basis, basis), k0=k0, material=material, modetype=modetype
     )
 
@@ -387,7 +383,7 @@ def expand(
     plane waves.
 
     Args:
-        basis (:class:`AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         modetype (str, optional): Wave mode, used for
@@ -537,7 +533,7 @@ def _sswl_expand(basis, to_basis, eta, k0, kpar, lattice, material, where):
         eta=eta,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=k0,
         basis=(to_basis, basis),
@@ -561,7 +557,7 @@ def _scw_ssw_expand(basis, to_basis, k0, kpar, lattice, material, where):
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=k0,
         basis=(to_basis, basis),
@@ -593,7 +589,7 @@ def _spw_ssw_expand(
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         basis=(to_basis, basis),
         k0=k0,
@@ -647,7 +643,7 @@ def _scwl_expand(basis, to_basis, eta, k0, kpar, lattice, material, where):
     for b in (to_basis, basis):
         if b.kpar is not None:
             kpar = kpar & b.kpar
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=k0,
         basis=(to_basis, basis),
@@ -679,7 +675,7 @@ def _spw_scw_expand(basis, to_basis, k0, lattice, kpar, material, modetype, wher
         where=where,
     )
     res[..., np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(
+    return core.AcousticsArray(
         res,
         k0=k0,
         basis=(to_basis, basis),
@@ -712,7 +708,7 @@ def expandlattice(
         kpar (sequence, optional): The components of the wave vector tangential to the
             lattice. In some cases this argument can be omitted, when the lattice can be
             inferred from the basis.
-        basis (:class:`~acoustotreams.AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         k0 (float, optional): Wave number.
@@ -857,7 +853,7 @@ def _spwp_permute(basis, n, k0, material, modetype):
     else:
         res = np.eye(len(basis))
     res[np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(res, basis=(basis.permute(n), basis))    
+    return core.AcousticsArray(res, basis=(basis.permute(n), basis))    
 
 
 def _spwa_permute(basis, n):
@@ -879,7 +875,7 @@ def _spwa_permute(basis, n):
     elif n == 0:
         res = np.eye(len(basis))
     res[np.logical_not(where)] = 0
-    return core.AcousticPhysicsArray(res, basis=(basis.permute(n), basis))
+    return core.AcousticsArray(res, basis=(basis.permute(n), basis))
 
 
 def permute(n=1, *, basis, k0=None, material=None, modetype=None):
@@ -889,7 +885,7 @@ def permute(n=1, *, basis, k0=None, material=None, modetype=None):
 
     Args:
         n (int, optional): Number of permutations, defaults to 1.
-        basis (:class:`~acoustotreams.AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         k0 (float, optional): Wave number.
@@ -1023,7 +1019,7 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Wave number.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
@@ -1137,7 +1133,7 @@ def pfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Wave number.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
@@ -1227,7 +1223,7 @@ def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Wave number.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
@@ -1321,7 +1317,7 @@ def vamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Wave number.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.

@@ -18,7 +18,7 @@ Basis sets
 Matrices and Arrays
 -------------------
 
-   AcousticPhysicsArray
+   AcousticsArray
    AcousticSMatrix
    AcousticSMatrices
    AcousticTMatrix
@@ -49,7 +49,7 @@ Functions
 
 """
 
-_version__ = "0.1.29"
+_version__ = "0.1.1"
 
 from scipy.special import (  # noqa: F401
     hankel1,
@@ -114,7 +114,7 @@ from acoustotreams.scw import *
 
 from acoustotreams._coreacoustics import (  # noqa: F401
     ScalarCylindricalWaveBasis,
-    AcousticPhysicsArray,
+    AcousticsArray,
     ScalarPlaneWaveBasisByComp,
     ScalarPlaneWaveBasisByUnitVector,
     ScalarSphericalWaveBasis,
