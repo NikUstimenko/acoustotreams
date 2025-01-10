@@ -42,7 +42,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
-    "matplotlib.sphinxext.plot_directive",
+    "matplotlib.sphinx.ext.plot_directive",
 ]
 
 autosectionlabel_prefix_document = True

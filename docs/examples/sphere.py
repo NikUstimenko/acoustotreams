@@ -79,7 +79,7 @@ ax.annotate(
 )
 fig.show()
 
-plt.figure()
+fig, ax = plt.figure()
 ax = plt.subplot(111, polar=True) 
 ax.plot(theta, radpattern = radpattern / np.max(radpattern))
 ax.set_theta_offset(np.pi / 2)
