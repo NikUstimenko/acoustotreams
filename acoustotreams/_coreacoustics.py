@@ -6,11 +6,11 @@ from collections import namedtuple
 import numpy as np
 
 import treams._operators as op
-import acoutreams._operatorsacoustics as opa
+import acoustotreams._operatorsacoustics as opa
 import treams.lattice as la
 from treams import util
 from treams._lattice import Lattice, WaveVector
-from acoutreams._materialacoustics import AcousticMaterial
+from acoustotreams._materialacoustics import AcousticMaterial
 
 class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
     """Scalar basis set base class.
@@ -57,7 +57,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     Spherical waves can be separated into incident and scattered fields. Depending 
     on these combinations the basis modes refer to one of the functions :
-    func:`~acoutreams.ssw_rPsi`, :func:`~acoutreams.ssw_Psi`.
+    func:`~acoustotreams.ssw_rPsi`, :func:`~acoustotreams.ssw_Psi`.
 
     Args:
         modes (array-like): A tuple containing a list for each of ``l``, and ``m``
@@ -202,14 +202,14 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         :math:`m = l`.
 
         Example:
-            >>> acoutreams.ScalarSphericalWaveBasis.default(2)
+            >>> acoustotreams.ScalarSphericalWaveBasis.default(2)
             ScalarSphericalWaveBasis(
                 pidx=[0 0 0 0 0 0 0 0 0],
                 l=[0 1 1 1 2 2 2 2 2],
                 m=[ 0 -1  0  1 -2 -1  0  1  2],
                 positions=[[0. 0. 0.]],
             )
-            >>> acoutreams.ScalarSphericalWaveBasis.default(0, 2, [[0, 0, 1.], [0, 0, -1.]])
+            >>> acoustotreams.ScalarSphericalWaveBasis.default(0, 2, [[0, 0, 1.], [0, 0, -1.]])
             ScalarSphericalWaveBasis(
                 pidx=[0 1],
                 l=[0 0],
@@ -239,7 +239,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         T-matrices.
 
         Example:
-            >>> acoutreams.ScalarSphericalWaveBasis.defaultlmax(len(acoutreams.ScalarSphericalWaveBasis.default(3)))
+            >>> acoustotreams.ScalarSphericalWaveBasis.defaultlmax(len(acoustotreams.ScalarSphericalWaveBasis.default(3)))
             3
 
         Args:
@@ -295,7 +295,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     Cylindrical can be separated into incident and scattered fields. 
     Depending on these combinations the basis modes refer to one of the functions
-    :func:`~acoutreams.scw_rPsi`, or :func:`~acoutreams.scw_Psi`.
+    :func:`~acoustotreams.scw_rPsi`, or :func:`~acoustotreams.scw_Psi`.
 
     Args:
         modes (array-like): A tuple containing a list for each of ``kz``, and ``m``,
@@ -435,14 +435,14 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         angular momentum is placed in ascending order.
 
         Example:
-            >>> acoutreams.ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)
+            >>> acoustotreams.ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)
             ScalarCylindricalWaveBasis(
                 pidx=[0 0 0 0 0 0],
                 kz=[-0.5 -0.5 -0.5 0.5  0.5  0.5],
                 m=[-1  0  1 -1  0  1],
                 positions=[[0. 0. 0.]],
             )
-            >>> acoutreams.ScalarCylindricalWaveBasis.default([0], 1, 2, [[1., 0, 0], [-1., 0, 0]])
+            >>> acoustotreams.ScalarCylindricalWaveBasis.default([0], 1, 2, [[1., 0, 0], [-1., 0, 0]])
             ScalarCylindricalWaveBasis(
                 pidx=[0 0 0 1 1 1],
                 kz=[0. 0. 0. 0. 0. 0.],
@@ -472,7 +472,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         """Create a basis set for a system periodic in the z-direction.
 
         Example:
-           >>> acoutreams.ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2 * np.pi, 1)
+           >>> acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2 * np.pi, 1)
            ScalarCylindricalWaveBasis(
                pidx=[0 0 0 0 0 0 0 0 0],
                kz=[-0.9 -0.9 -0.9  0.1  0.1  0.1  1.1  1.1  1.1],
@@ -522,7 +522,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         T-matrices.
 
         Example:
-            >>> acoutreams.ScalarCylindricalWaveBasis.defaultmmax(len(acoutreams.ScalarCylindricalWaveBasis.default([0], 2)), 1)
+            >>> acoustotreams.ScalarCylindricalWaveBasis.defaultmmax(len(acoustotreams.ScalarCylindricalWaveBasis.default([0], 2)), 1)
             2
 
         Args:
@@ -573,7 +573,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     Cartesian wave vector components ``qx``, ``qy``, and ``qz`` normalized to
     :math:`q_x^2 + q_y^2 + q_z^2 = 1`.
 
-    Plane waves can refer to:func:`~acoutreams.spw_Psi`.
+    Plane waves can refer to:func:`~acoustotreams.spw_Psi`.
 
     Args:
         modes (array-like): A tuple containing a list for each of ``qx``, ``qy``,
@@ -651,7 +651,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         """Default basis from the given wave vectors.
 
         Example:
-            >>> acoutreams.ScalarPlaneWaveBasisByUnitVector.default([[0, 0, 5], [0, 3, 4]])
+            >>> acoustotreams.ScalarPlaneWaveBasisByUnitVector.default([[0, 0, 5], [0, 3, 4]])
             ScalarPlaneWaveBasisByUnitVector(
                 qx=[0. 0.],
                 qy=[0.  0.6],
@@ -708,7 +708,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
                 "zx".
             k0 (float, optional): Wave number. If given, it is checked that the current
                 basis fulfils the dispersion relation.
-            material (:class:`acoutreams.AcousticMaterial` or tuple): Material definition. Defaults
+            material (:class:`acoustotreams.AcousticMaterial` or tuple): Material definition. Defaults
                 to air.
         """
         ks = material.ks(k0)
@@ -726,7 +726,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
 
         Args:
             k0 (float): Wave number.
-            material (:class:`acoutreams.AcousticMaterial` or tuple, optional): Material
+            material (:class:`acoustotreams.AcousticMaterial` or tuple, optional): Material
                 definition. Defaults to air.
             modetype (optional): Currently unused for this class.
         """
@@ -757,7 +757,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     alignment directions, such that the given wave vector components correspond to the
     diffraction orders.
 
-    Scalar plane waves can refer to :func:`~acoutreams.spw_Psi`.
+    Scalar plane waves can refer to :func:`~acoustotreams.spw_Psi`.
 
     Args:
         modes (array-like): A tuple containing a list for each of ``k1``, and ``k2``.
@@ -881,7 +881,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         """Default basis from the given wave vectors.
 
         Example:
-            >>> acoutreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 3]])
+            >>> acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 3]])
             ScalarPlaneWaveBasisByComp(
                 kx=[0 0],
                 ky=[0 3],
@@ -905,7 +905,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         orders that lie within the defined maximal radius (in reciprocal space).
 
         Example:
-            >>> acoutreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], acoutreams.Lattice.square(2 * np.pi), 1)
+            >>> acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], acoustotreams.Lattice.square(2 * np.pi), 1)
             ScalarPlaneWaveBasisByComp(
                 kx=[ 0.  0.  0.  1. -1.],
                 ky=[ 0.  1. -1.  0.  0.],
@@ -914,7 +914,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         Args:
             kpar (float): Tangential wave vector components. Ideally they are in the
                 first Brillouin zone (use :func:`misc.firstbrillouin2d`).
-            lattice (:class:`acoutreams.Lattice` or float): Lattice definition or pitch.
+            lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
             bmax (float): Maximal change of tangential wave vector components. So,
                 this defines a maximal momentum transfer.
         """
@@ -971,7 +971,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
         Args:
             k0 (float): Wave number.
-            material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material
+            material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material
                 definition. Defaults to air.
             modetype (str, optional): Propagation direction. Defaults to "up".
         """
@@ -995,7 +995,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
         Args:
             k0 (float): Wave number.
-            material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material
+            material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material
                 definition. Defaults to air.
             modetype (str, optional): Propagation direction. Defaults to "up".
         """
@@ -1028,8 +1028,8 @@ class ScalarPhysicsDict(util.AnnotationDict):
         kpar (list): Parallel wave vector components. Usually, this is a list of length
             3 with its items corresponding to the Cartesian axes. Unspecified items are
             set to `nan`.
-        lattice (:class:`~acoutreams.Lattice`): Lattice definition.
-        material (:class:`~acoutreams.AcousticMaterial`): Material definition.
+        lattice (:class:`~acoustotreams.Lattice`): Lattice definition.
+        material (:class:`~acoustotreams.AcousticMaterial`): Material definition.
         modetype (str): Mode type, for spherical and cylindrical waves this can be
             "incident" and "scattered", for partial plane waves it can be "up" or
             "down".
@@ -1048,7 +1048,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
             WaveVector,
         ),
         "lattice": (
-            ":class:`~acoutreams.Lattice`.",
+            ":class:`~acoustotreams.Lattice`.",
             lambda x: isinstance(x, Lattice),
             Lattice,
         ),
@@ -1097,23 +1097,23 @@ class AcousticPhysicsArray(util.AnnotatedArray):
     _scales = {"basis"}
 
     pfield = op.OperatorAttribute(opa.PField)
-    """Pressure field evaluation matrix, see also :class:`acoutreams.PField`."""
+    """Pressure field evaluation matrix, see also :class:`acoustotreams.PField`."""
     vfield = op.OperatorAttribute(opa.VField)
-    """Velocity field evaluation matrix, see also :class:`acoutreams.VField`."""
+    """Velocity field evaluation matrix, see also :class:`acoustotreams.VField`."""
     pamplitudeff = op.OperatorAttribute(opa.PAmplitudeFF)
-    """Far-field amplitude of pressure field evaluation matrix, see also :class:`acoutreams.PAmplitudeFF`."""
+    """Far-field amplitude of pressure field evaluation matrix, see also :class:`acoustotreams.PAmplitudeFF`."""
     vamplitudeff = op.OperatorAttribute(opa.VAmplitudeFF)
-    """Far-field amplitude of velocity field evaluation matrix, see also :class:`acoutreams.VAmplitudeFF`."""
+    """Far-field amplitude of velocity field evaluation matrix, see also :class:`acoustotreams.VAmplitudeFF`."""
     expand = op.OperatorAttribute(opa.Expand)
-    """Expansion matrix, see also :class:`acoutreams.Expand`."""
+    """Expansion matrix, see also :class:`acoustotreams.Expand`."""
     expandlattice = op.OperatorAttribute(opa.ExpandLattice)
-    """Lattice expansion matrix, see also :class:`acoutreams.ExpandLattice`."""
+    """Lattice expansion matrix, see also :class:`acoustotreams.ExpandLattice`."""
     permute = op.OperatorAttribute(opa.Permute)
-    """Permutation matrix, see also :class:`acoutreams.Permute`."""
+    """Permutation matrix, see also :class:`acoustotreams.Permute`."""
     rotate = op.OperatorAttribute(opa.Rotate)
-    """Rotation matrix, see also :class:`acoutreams.Rotate`."""
+    """Rotation matrix, see also :class:`acoustotreams.Rotate`."""
     translate = op.OperatorAttribute(opa.Translate)
-    """Translation matrix, see also :class:`acoutreams.Translate`."""
+    """Translation matrix, see also :class:`acoustotreams.Translate`."""
 
     def __init__(self, arr, ann=(), /, **kwargs):
         """Initialization."""

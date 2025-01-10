@@ -2,21 +2,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 from joblib import Parallel, delayed
 
-import acoutreams
+import acoustotreams
 
 k0 =  2 * np.pi * 50000 / 343
-materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
-            acoutreams.AcousticMaterial(998, 1497)]
+materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
+            acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 3
 radii = [0.0075, 0.0075]
 positions = [[-0.004, 0, -0.0075], [0.004, 0, 0.0075]]
 lattice = 0.035
 kz = 0
 
-spheres = [acoutreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
-tm = acoutreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz)
+spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
+tm = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz)
 
-inc = acoutreams.plane_wave_scalar([tm.k0, 0, 0], k0=tm.k0, material=tm.material)
+inc = acoustotreams.plane_wave_scalar([tm.k0, 0, 0], k0=tm.k0, material=tm.material)
 sca = tm.sca(inc)
 
 x = np.linspace(-0.5*lattice, 0.5*lattice, 101)
@@ -24,7 +24,7 @@ z = np.linspace(-0.5*lattice, 0.5*lattice, 101)
 def compute_intensity(i, j, tm, radii, inc, sca):
     r = [x[j], 0, z[i]]  
     if tm.valid_points(r, radii):
-        swb = acoutreams.ScalarSphericalWaveBasis.default(0, positions=[r])
+        swb = acoustotreams.ScalarSphericalWaveBasis.default(0, positions=[r])
         field = sca.expandlattice(basis=swb).pfield(r) 
         result = np.abs(inc.pfield(r) + field)**2  
     else:
@@ -65,7 +65,7 @@ fig.show()
 def compute_velocity(i, j, tm, radii, inc, sca):
     r = [x[j], 0, z[i]]  
     if tm.valid_points(r, radii):
-        swb = acoutreams.ScalarSphericalWaveBasis.default(1, positions=[r])
+        swb = acoustotreams.ScalarSphericalWaveBasis.default(1, positions=[r])
         field = sca.expandlattice(basis=swb).vfield(r) 
         result = np.abs(inc.vfield(r)[0] + field[0])**2  
     else:

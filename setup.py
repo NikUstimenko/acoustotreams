@@ -4,15 +4,15 @@ from setuptools import setup, find_packages
 
 setup(
 
-    name='acoutreams',
+    name='acoustotreams',
 
-    version='0.1.29',
+    version='0.1.0',
 
     author='Nikita Ustimenko',
 
     author_email='nikita.ustimenko@kit.edu',
 
-    description='A Python package for acoustic scattering based on the T-matrix method',
+    description='A Python package for acoustic wave scattering based on the T-matrix method',
 
     license = 'MIT',
 
@@ -20,10 +20,10 @@ setup(
 
     long_description_content_type='text/markdown',
 
-    url='https://github.com/NikUstimenko/acoutreams',
+    url='https://github.com/NikUstimenko/acoustotreams',
 
     project_urls={
-        "Bug Tracker": "https://github.com/NikUstimenko/acoutreams/issues",
+        "Bug Tracker": "https://github.com/NikUstimenko/acoustotreams/issues",
     },  
 
     packages=find_packages(),

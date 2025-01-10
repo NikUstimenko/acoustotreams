@@ -9,7 +9,7 @@ Acoustic T-Matrices
 .. contents:: Table of contents
    :local:
 
-One of the main objects for acoustic scattering calculations within *acoutreams* are
+One of the main objects for acoustic scattering calculations within *acoustotreams* are
 acoustic T-matrices. They describe the scattering response of an object by encoding the linear
 relationship between incident and scattered fields. These fields are expanded using
 the scalar spherical waves.
@@ -21,7 +21,7 @@ calculated efficiently. Such clusters can be analyzed in their local description
 the field expansions are centered at each particle of the cluster, or in a global
 description treating the whole cluster as a single object.
 
-*acoutreams* is particularly aimed at analyzing scattering within lattices. These lattices
+*acoustotreams* is particularly aimed at analyzing scattering within lattices. These lattices
 can be periodic in one, two, or all three spatial dimensions. The unit cell of those
 lattices can consist of an arbitrary number of objects described by the acoustic T-matrix.
 
@@ -29,14 +29,14 @@ Spheres
 =======
 
 It's possible to calculate the acoustic T-matrix of a single sphere with the
-method :meth:`~acoutreams.AcousticTMatrix.sphere`. We start by defining the relevant parameters for
+method :meth:`~acoustotreams.AcousticTMatrix.sphere`. We start by defining the relevant parameters for
 our calculation and creating the acoustic T-matrices themselves.
 
 .. literalinclude:: examples/sphere.py
    :language: python
    :lines: 7-12
 
-Here we define a material using the class :meth:`~acoutreams.AcousticMaterial`.
+Here we define a material using the class :meth:`~acoustotreams.AcousticMaterial`.
 To create an instance of this class, we pass three arguments: mass density,
 longitudinal speed of sound, and transverse speed of sound. The acoustic
 material parameters can be complex. The imaginary part of the density must be
@@ -204,7 +204,7 @@ xy plane.
 
 With a few changes we computed the fields in a square array of the same spheres as in the
 previous examples. Most importantly we changed the value of the variable :code:`lattice`
-to an instance of a two-dimensional :class:`~acoutreams.Lattice` and set :code:`kpar`
+to an instance of a two-dimensional :class:`~acoustotreams.Lattice` and set :code:`kpar`
 accordingly. Most other changes are just resulting from the change of the coordinate
 system.
 

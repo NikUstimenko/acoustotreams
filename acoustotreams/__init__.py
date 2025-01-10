@@ -1,6 +1,6 @@
-"""ACOUTREAMS: A Python package for acoustic scattering based on the T-matrix method.
+"""acoustotreams: A Python package for acoustic wave scattering based on the T-matrix method.
 
-.. currentmodule:: acoutreams
+.. currentmodule:: acoustotreams
 
 Classes
 =======
@@ -35,11 +35,15 @@ Functions
 
    vfield
    pfield
-   ffamplitude
+   pamplitudeff
+   vamplitudeff
    expand
    expandlattice
    permute
-   plane_wave
+   cylindrical_wave_scalar
+   plane_wave_scalar
+   plane_wave_angle_scalar
+   spherical_wave_scalar
    rotate
    translate
 
@@ -96,19 +100,19 @@ from treams.misc import(  # noqa: F401
 
 from treams._lattice import *   # noqa: F401
 
-from acoutreams._wavesacoustics import *  # noqa: F401
+from acoustotreams._wavesacoustics import *  # noqa: F401
 
-from acoutreams._materialacoustics import AcousticMaterial  # noqa: F401
+from acoustotreams._materialacoustics import AcousticMaterial  # noqa: F401
 
-from acoutreams._smatrixacoustics import (  # noqa: F401
+from acoustotreams._smatrixacoustics import (  # noqa: F401
     AcousticSMatrices,
     AcousticSMatrix,
     poynting_avg_z,
 )
 
-from acoutreams.scw import *
+from acoustotreams.scw import *
 
-from acoutreams._coreacoustics import (  # noqa: F401
+from acoustotreams._coreacoustics import (  # noqa: F401
     ScalarCylindricalWaveBasis,
     AcousticPhysicsArray,
     ScalarPlaneWaveBasisByComp,
@@ -116,7 +120,7 @@ from acoutreams._coreacoustics import (  # noqa: F401
     ScalarSphericalWaveBasis,
 )
 
-from acoutreams._tmatrixacoustics import (  # noqa: F401
+from acoustotreams._tmatrixacoustics import (  # noqa: F401
     AcousticTMatrix,
     AcousticTMatrixC,
     cylindrical_wave_scalar,
@@ -125,11 +129,11 @@ from acoutreams._tmatrixacoustics import (  # noqa: F401
     spherical_wave_scalar,
 )
 
-from acoutreams.coeffsacoustics import *  # noqa: F401 
+from acoustotreams.coeffsacoustics import *  # noqa: F401 
 
-from acoutreams.spw import *  # noqa: F401
+from acoustotreams.spw import *  # noqa: F401
 
-from acoutreams._operatorsacoustics import (  # noqa: F401
+from acoustotreams._operatorsacoustics import (  # noqa: F401
     PField,
     VField,
     PAmplitudeFF,
@@ -150,4 +154,4 @@ from acoutreams._operatorsacoustics import (  # noqa: F401
     translate,
 )
 
-from acoutreams.ssw import *
+from acoustotreams.ssw import *

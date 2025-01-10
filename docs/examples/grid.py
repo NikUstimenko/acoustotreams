@@ -2,23 +2,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 from joblib import Parallel, delayed
 
-import acoutreams
+import acoustotreams
 
 k0 =  2 * np.pi * 50000 / 343
-materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
-            acoutreams.AcousticMaterial(998, 1497)]
+materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
+            acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 3
 radii = [0.0075, 0.0075]
 positions = [[-0.004, 0, -0.0075], [0.004, 0, 0.0075]]
 period = 0.035
-lattice = acoutreams.Lattice.square(period)
+lattice = acoustotreams.Lattice.square(period)
 kpar = [0, 0]
 
-spheres = [acoutreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
-tm = acoutreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(
+spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
+tm = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(
     lattice, kpar
     )
-inc = acoutreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
+inc = acoustotreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
 sca = tm.sca(inc)
 
 x = np.linspace(-0.5*period, 0.5*period, 101)
@@ -26,7 +26,7 @@ z = np.linspace(-0.5*period, 0.5*period, 101)
 def compute_intensity(i, j, tm, radii, inc, sca):
     r = [x[j], 0, z[i]]  
     if tm.valid_points(r, radii):
-        swb = acoutreams.ScalarSphericalWaveBasis.default(0, positions=[r])
+        swb = acoustotreams.ScalarSphericalWaveBasis.default(0, positions=[r])
         field = sca.expandlattice(basis=swb).pfield(r) 
         result = np.real(inc.pfield(r) + field)  
     else:

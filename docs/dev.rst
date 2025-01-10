@@ -10,25 +10,25 @@ Setting up the development environment
 1.
 Clone the repository with ::
 
-   git clone git@github.com:NikUstimenko/acoutreams.git
+   git clone git@github.com:NikUstimenko/acoustotreams.git
 
 or ::
 
-   git clone https://github.com/NikUstimenko/acoutreams.git
+   git clone https://github.com/NikUstimenko/acoustotreams.git
 
 and enter the directory ::
 
-   cd acoutreams
+   cd acoustotreams
 
 2.
-This step is optional, but you might want to create an environment where acoutreams and the
+This step is optional, but you might want to create an environment where acoustotreams and the
 development tools are created ::
 
-   conda env create --name acoutreams-dev python
+   conda env create --name acoustotreams-dev python
 
 Activate the environment with::
 
-   conda activate acoutreams-dev
+   conda activate acoustotreams-dev
 
 3.
 Setup the package with ::

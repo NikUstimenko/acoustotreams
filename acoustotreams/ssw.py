@@ -11,7 +11,7 @@
 
 """
 
-import acoutreams._wavesacoustics as wv
+import acoustotreams._wavesacoustics as wv
 import treams.special as sc
 import numpy as np
 from treams import lattice
@@ -33,8 +33,8 @@ _translate_r = np.vectorize(_translate_r)
 def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs):
     """Translation coefficient for spherical modes.
 
-    Returns the correct translation coefficient from :func:acoutreams.tl_ssw,
-    and :func:acoutreams.tl_ssw_r or a combination thereof for the specified mode and
+    Returns the correct translation coefficient from :func:acoustotreams.tl_ssw,
+    and :func:acoustotreams.tl_ssw_r or a combination thereof for the specified mode and
     basis.
 
     Args:

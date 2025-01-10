@@ -4,15 +4,15 @@ import numpy as np
 
 from treams.util import AnnotationError
 
-from acoutreams._coreacoustics import ScalarSphericalWaveBasis as SSWB
-from acoutreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
-from acoutreams._coreacoustics import ScalarCylindricalWaveBasis as SCWB
-from acoutreams._coreacoustics import ScalarPlaneWaveBasisByUnitVector as SPWBUV
-from acoutreams._materialacoustics import AcousticMaterial
-from acoutreams.coeffsacoustics import mie_acoustics, mie_acoustics_cyl
-from acoutreams._coreacoustics import AcousticPhysicsArray
-import acoutreams._operatorsacoustics as opa
-import acoutreams._wavesacoustics as wv
+from acoustotreams._coreacoustics import ScalarSphericalWaveBasis as SSWB
+from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
+from acoustotreams._coreacoustics import ScalarCylindricalWaveBasis as SCWB
+from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByUnitVector as SPWBUV
+from acoustotreams._materialacoustics import AcousticMaterial
+from acoustotreams.coeffsacoustics import mie_acoustics, mie_acoustics_cyl
+from acoustotreams._coreacoustics import AcousticPhysicsArray
+import acoustotreams._operatorsacoustics as opa
+import acoustotreams._wavesacoustics as wv
 
 
 class _Interaction:
@@ -184,7 +184,7 @@ class AcousticTMatrix(AcousticPhysicsArray):
     """Acoustic T-matrix with a spherical basis.
 
     The acoustic T-matrix is a square relating incident (regular) fields
-    func:`acoutreams.ssw_rPsi` to the corresponding scattered fields :func:`acoutreams.ssw_Psi`. 
+    func:`acoustotreams.ssw_rPsi` to the corresponding scattered fields :func:`acoustotreams.ssw_Psi`. 
     The modes themselves are defined in :attr:`basis`. 
     Moreover, the wave number :attr:`k0` and, if not air, the material :attr:`material` are
     specified.
@@ -491,7 +491,7 @@ class AcousticTMatrixC(AcousticPhysicsArray):
     """T-matrix with a scalar cylindrical basis.
 
     The acoustic T-matrix is square relating incident (regular) fields
-    :func:`acoutreams.scw_rPsi` to the scattered fields :func:`acoutreams.scw_Psi`. The modes themselves
+    :func:`acoustotreams.scw_rPsi` to the scattered fields :func:`acoustotreams.scw_Psi`. The modes themselves
     are defined in :attr:`basis`. Also, the wave number :attr:`k0` and, if not air, 
     the material :attr:`material` are specified.
 

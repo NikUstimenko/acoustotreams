@@ -3,12 +3,12 @@ import copy
 import numpy as np
 
 from treams import util
-from acoutreams._coreacoustics import AcousticPhysicsArray
-from acoutreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
-from acoutreams._materialacoustics import AcousticMaterial
-from acoutreams._operatorsacoustics import translate
-from acoutreams._tmatrixacoustics import AcousticTMatrixC
-from acoutreams.coeffsacoustics import fresnel_acoustics
+from acoustotreams._coreacoustics import AcousticPhysicsArray
+from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
+from acoustotreams._materialacoustics import AcousticMaterial
+from acoustotreams._operatorsacoustics import translate
+from acoustotreams._tmatrixacoustics import AcousticTMatrixC
+from acoustotreams.coeffsacoustics import fresnel_acoustics
 
 
 class AcousticSMatrix(AcousticPhysicsArray):
@@ -65,7 +65,7 @@ class AcousticSMatrices:
     r"""Collection of four acoustic S-matrices with a scalar plane wave basis.
 
     The S-matrix describes the scattering of incoming into outgoing modes using a plane
-    wave basis, with functions :func:`acoutreams.spw_Psi`. The primary
+    wave basis, with functions :func:`acoustotreams.spw_Psi`. The primary
     direction of propagation is parallel or anti-parallel to the z-axis. The scattering
     object itself is infinitely extended in the x- and y-directions. The S-matrix is
     divided into four submatrices :math:`S_{\uparrow \uparrow}`,

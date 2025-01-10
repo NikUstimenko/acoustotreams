@@ -1,6 +1,6 @@
 import treams.special
 import numpy as np
-from acoutreams._materialacoustics import AcousticMaterial
+from acoustotreams._materialacoustics import AcousticMaterial
 
 def mie_acoustics(l, x, *materials):
     

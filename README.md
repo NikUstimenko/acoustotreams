@@ -1,10 +1,10 @@
-[![PyPI](https://img.shields.io/pypi/v/acoutreams)](https://pypi.org/project/acoutreams)
-![License](https://img.shields.io/github/license/NikUstimenko/acoutreams)
-[![Documentation Status](https://img.shields.io/badge/docs-online-brightgreen)](https://NikUstimenko.github.io/acoutreams)
+[![PyPI](https://img.shields.io/pypi/v/acoustotreams)](https://pypi.org/project/acoustotreams)
+![License](https://img.shields.io/github/license/NikUstimenko/acoustotreams)
+[![Documentation Status](https://img.shields.io/badge/docs-online-brightgreen)](https://NikUstimenko.github.io/acoustotreams)
 
-# acoutreams
+# acoustotreams
 
-The package `acoutreams` adopts the framework of the `treams` package for acoustic wave scattering in finite and periodic arrangements of particles, based on the T-matrix method.
+The package `acoustotreams` adopts the framework of the `treams` package for acoustic wave scattering in finite and periodic arrangements of particles, based on the T-matrix method.
 
 ## Installation
 
@@ -13,7 +13,7 @@ The package `acoutreams` adopts the framework of the `treams` package for acoust
 To install the package with pip, use
 
 ```sh
-pip install acoutreams
+pip install acoustotreams
 ```
 Preliminarily, you have to also install original `treams` as well as `numpy` and `scipy`
 ```sh
@@ -22,7 +22,7 @@ pip install treams
 
 ## Documentation
 
-The documentation can be found at https://NikUstimenko.github.io/acoutreams.
+The documentation can be found at https://NikUstimenko.github.io/acoustotreams.
 
 ## Publications
 

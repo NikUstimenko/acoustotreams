@@ -20,10 +20,10 @@ import numpy as np
 
 # -- Project information -----------------------------------------------------
 
-project = "acoutreams"
+project = "acoustotreams"
 copyright = "2024, Nikita Ustimenko"
 author = "Nikita Ustimenko"
-release = version("acoutreams")
+release = version("acoustotreams")
 version = ".".join(release.split(".")[:3])
 
 
@@ -48,7 +48,7 @@ extensions = [
 autosectionlabel_prefix_document = True
 doctest_global_setup = """
 import numpy as np
-from acoutreams import *
+from acoustotreams import *
 
 np.set_printoptions(precision=3, suppress=True)
 """

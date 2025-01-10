@@ -5,13 +5,13 @@ import numpy as np
 import treams.special as sc
 from treams import util
 from treams._lattice import Lattice, WaveVector
-from acoutreams._materialacoustics import AcousticMaterial
-import acoutreams._coreacoustics as core
+from acoustotreams._materialacoustics import AcousticMaterial
+import acoustotreams._coreacoustics as core
 from treams._operators import Operator,FieldOperator
-import acoutreams._wavesacoustics as wv
-import acoutreams.ssw as ssw
-import acoutreams.spw as spw
-import acoutreams.scw as scw
+import acoustotreams._wavesacoustics as wv
+import acoustotreams.ssw as ssw
+import acoustotreams.spw as spw
+import acoustotreams.scw as scw
 
 
 def _ssw_rotate(phi, theta, psi, basis, to_basis, where):
@@ -194,7 +194,7 @@ def translate(
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         k0 (float, optional): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode, only used for
             :class:`ScalarPlaneWaveBasisByComp`.
         where (array-like, bool, optional): Only evaluate parts of the translation
@@ -393,7 +393,7 @@ def expand(
         modetype (str, optional): Wave mode, used for
             :class:`ScalarSphericalWaveBasis` (and :class:`ScalarCylindricalWaveBasis`).
         k0 (float, optional): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         where (array-like, bool, optional): Only evaluate parts of the expansion matrix,
             the given array must have a shape that matches the output shape.
     """
@@ -712,14 +712,14 @@ def expandlattice(
         kpar (sequence, optional): The components of the wave vector tangential to the
             lattice. In some cases this argument can be omitted, when the lattice can be
             inferred from the basis.
-        basis (:class:`~acoutreams.AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`~acoustotreams.AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         k0 (float, optional): Wave number.
         eta (float or complex, optional): Split parameter used when the Ewald summation
             is applied for the lattice sums. By setting it to 0 the split is set
             automatically.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode, used for
             :class:`ScalarPlaneWaveBasisByComp`.
         where (array-like, bool, optional): Only evaluate parts of the expansion matrix,
@@ -889,11 +889,11 @@ def permute(n=1, *, basis, k0=None, material=None, modetype=None):
 
     Args:
         n (int, optional): Number of permutations, defaults to 1.
-        basis (:class:`~acoutreams.AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
+        basis (:class:`~acoustotreams.AcousticBasisSet` or tuple): Basis set, if it is a tuple of two
             basis sets the output and input modes are taken accordingly, else both sets
             of modes are the same.
         k0 (float, optional): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
     """
     if n != int(n):
@@ -1023,9 +1023,9 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoutreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
         k0 (float): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
     """
     material = AcousticMaterial(material)
@@ -1137,9 +1137,9 @@ def pfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoutreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
         k0 (float): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
     """
     material = AcousticMaterial(material)
@@ -1227,9 +1227,9 @@ def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoutreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
         k0 (float): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
     """
     material = AcousticMaterial(material)
@@ -1321,9 +1321,9 @@ def vamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 
     Args:
         r (array-like): Evaluation points
-        basis (:class:`~acoutreams.AcousticBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.AcousticBasisSet`): Basis set.
         k0 (float): Wave number.
-        material (:class:`~acoutreams.AcousticMaterial` or tuple, optional): Material parameters.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
         modetype (str, optional): Wave mode.
     """
     material = AcousticMaterial(material)
