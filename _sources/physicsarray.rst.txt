@@ -5,19 +5,19 @@ Acoustic physics-aware arrays
 .. testsetup::
 
    import numpy as np
-   import acoutreams
+   import acoustotreams
 
-A core building block of the underlying features of *acoutreams* are acoustic-physics-aware arrays.
+A core building block of the underlying features of *acoustotreams* are acoustic-physics-aware arrays.
 In most of their properties they behave similar to numpy arrays and one can easily
 change the type and mix them
 
 .. doctest::
 
-    >>> np.array([1, 2]) * acoutreams.AcousticPhysicsArray([2, 3])
+    >>> np.array([1, 2]) * acoustotreams.AcousticPhysicsArray([2, 3])
     AcousticPhysicsArray(
         [2, 6],
     )
-    >>> np.array([1, 2]) @ acoutreams.AcousticPhysicsArray([2, 3])
+    >>> np.array([1, 2]) @ acoustotreams.AcousticPhysicsArray([2, 3])
     8
 
 but they have mainly two features added. First, they derive from
@@ -31,7 +31,7 @@ Special properties
 
 .. doctest::
 
-    >>> acoutreams.AcousticPhysicsArray([[0, 1], [2, 3]], k0=(1, 2))
+    >>> acoustotreams.AcousticPhysicsArray([[0, 1], [2, 3]], k0=(1, 2))
     AcousticPhysicsArray(
         [[0, 1],
          [2, 3]],
@@ -40,14 +40,14 @@ Special properties
 
 In this example you can notice that the values for the air wave number ``k0`` were
 converted from integers to floats. Thus, trying to use
-:code:`acoutreams.AcousticPhysicsArray([1], k0=1j)` will raise an error, because the complex number
+:code:`acoustotreams.AcousticPhysicsArray([1], k0=1j)` will raise an error, because the complex number
 cannot be interpreted as a float. Additional special keywords are `basis`, `kpar`,
 `lattice`, `material`, and `modetype`. These properties can also be accessed
 by setting the corresponding attribute
 
 .. doctest:: 
 
-    >>> m = acoutreams.AcousticPhysicsArray([1, 2])
+    >>> m = acoustotreams.AcousticPhysicsArray([1, 2])
     >>> m.material = [4000, 1000]
     >>> m
     AcousticPhysicsArray(
@@ -60,7 +60,7 @@ As with its parent class these properties are also compared and merged when usin
 
 .. doctest::
 
-    >>> acoutreams.AcousticPhysicsArray([0, 1], k0=1) + acoutreams.AcousticPhysicsArray([2, 3], material=[2000, 1000, 0])
+    >>> acoustotreams.AcousticPhysicsArray([0, 1], k0=1) + acoustotreams.AcousticPhysicsArray([2, 3], material=[2000, 1000, 0])
     AcousticPhysicsArray(
         [2, 4],
         k0=1.0,
@@ -68,7 +68,7 @@ As with its parent class these properties are also compared and merged when usin
     )
 
 and using conflicting values will raise a warning, for example
-:code:`acoutreams.AcousticPhysicsArray([0, 1], k0=1) + acoutreams.AcousticPhysicsArray([2, 3], k0=2)`
+:code:`acoustotreams.AcousticPhysicsArray([0, 1], k0=1) + acoustotreams.AcousticPhysicsArray([2, 3], k0=2)`
 emits :code:`treams/util.py:249: AnnotationWarning: at index 0: overwriting key 'k0'`.
 The special properties have also a unique behavior when appearing in matrix
 multiplications. If one of the two matrices has the special property not set, it becomes
@@ -76,7 +76,7 @@ multiplications. If one of the two matrices has the special property not set, it
 
 .. doctest::
 
-    >>> np.ones((2, 2)) @ acoutreams.AcousticPhysicsArray([1, 2], k0=1.0)
+    >>> np.ones((2, 2)) @ acoustotreams.AcousticPhysicsArray([1, 2], k0=1.0)
     AcousticPhysicsArray(
         [3., 3.],
         k0=1.0,
@@ -101,8 +101,8 @@ Name     Description
 ======== ===========================================================
 basis    Basis set: spherical, cylindrical, planar
 k0       Wave number in air (at the room temperature)
-kpar     Phase relation in lattices (:class:`acoutreams.WaveVector`)
-lattice  Definition of a lattice (:class:`acoutreams.Lattice`)
+kpar     Phase relation in lattices (:class:`acoustotreams.WaveVector`)
+lattice  Definition of a lattice (:class:`acoustotreams.Lattice`)
 modetype Modetype, depends on wave (:ref:`params:Mode types`)
-material Embedding material (:class:`acoutreams.AcousticMaterial`)
+material Embedding material (:class:`acoustotreams.AcousticMaterial`)
 ======== ===========================================================

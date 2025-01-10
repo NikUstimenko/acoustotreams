@@ -1,13 +1,13 @@
 .. testsetup::
 
    import numpy as np
-   import acoutreams
+   import acoustotreams
 
 ===========================================
 Scalar basis sets and other core parameters
 ===========================================
 
-Throughout the high-level functions and classes of *acoutreams* a set of parameters appear
+Throughout the high-level functions and classes of *acoustotreams* a set of parameters appear
 that define important underlying quantities for the calculation. First, these are the
 different scalar basis sets that are used to solve scattering processes: the spherical,
 cylindrical, and plane wave solutions. The word "scalar" emphasizes that the basis sets
@@ -23,9 +23,9 @@ As described in :doc:`theory` it is possible to solve linear-acoustics equations
 coordinate systems. While being in principle equivalent, for different scenarios it is
 beneficial to use suitable solution sets that represent the waves with sufficient
 precision when truncated to a finite number of modes. The chosen finite number of
-modes is given in the classes :class:`~acoutreams.ScalarSphericalWaveBasis`,
-:class:`~acoutreams.ScalarCylindricalWaveBasis`, and :class:`~acoutreams._core.ScalarPlaneWaveBasis`, which
-are all children of the base call :class:`~acoutreams._core.ScalarBasisSet`.
+modes is given in the classes :class:`~acoustotreams.ScalarSphericalWaveBasis`,
+:class:`~acoustotreams.ScalarCylindricalWaveBasis`, and :class:`~acoustotreams._core.ScalarPlaneWaveBasis`, which
+are all children of the base call :class:`~acoustotreams._core.ScalarBasisSet`.
 
 The modes of the spherical basis can are defined by their degree ``l``, and the order ``m``. 
 The basis is then simply the collection of multiple of these modes, 
@@ -33,7 +33,7 @@ each given in a tuple with exactly that order, for example
 
 .. doctest::
 
-    >>> acoutreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)])
+    >>> acoustotreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)])
     ScalarSphericalWaveBasis(
         pidx=[0 0 0],
         l=[0 1 1 1],
@@ -53,7 +53,7 @@ like regular Python sets, we can check for example if a mode is in our basis set
 
 .. doctest::
 
-    >>> (0, 1, 0) in acoutreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)])
+    >>> (0, 1, 0) in acoustotreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)])
     True
 
 Equally, it is possible to use the regular comparisons and binary operators of Python
@@ -61,9 +61,9 @@ sets
 
 .. doctest::
 
-    >>> acoutreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)]) > {(0, 1, 0)}
+    >>> acoustotreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)]) > {(0, 1, 0)}
     True
-    >>> acoutreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)]) & {(0, 1, 0)}
+    >>> acoustotreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)]) & {(0, 1, 0)}
     ScalarSphericalWaveBasis(
         pidx=[0],
         l=[1],
@@ -78,7 +78,7 @@ in the same order and the same positions.
 
 .. doctest::
 
-    >>> acoutreams.ScalarSphericalWaveBasis([(0, 0), (1, 0)]) == acoutreams.ScalarSphericalWaveBasis([(1, 0), (0, 0)])
+    >>> acoustotreams.ScalarSphericalWaveBasis([(0, 0), (1, 0)]) == acoustotreams.ScalarSphericalWaveBasis([(1, 0), (0, 0)])
     False
 
 For convenience it is possible to create a default order up to a maximal multipolar
@@ -86,7 +86,7 @@ order
 
 .. doctest::
 
-    >>> acoutreams.ScalarSphericalWaveBasis.default(2)
+    >>> acoustotreams.ScalarSphericalWaveBasis.default(2)
     ScalarSphericalWaveBasis(
         pidx=[0 0 0 0 0 0 0 0 0],
         l=[0 1 1 1 2 2 2 2 2],
@@ -101,7 +101,7 @@ multipole degree ``l``, the z component of the wave vector ``kz`` is used
 
 .. doctest::
 
-    >>> acoutreams.ScalarCylindricalWaveBasis([(.1, -1), (.1, 0), (.1, 1)])
+    >>> acoustotreams.ScalarCylindricalWaveBasis([(.1, -1), (.1, 0), (.1, 1)])
     ScalarCylindricalWaveBasis(
         pidx=[0 0 0],
         kz=[0.1 0.1 0.1],
@@ -114,7 +114,7 @@ absolute value of ``m``.
 
 .. doctest::
 
-    >>> acoutreams.ScalarCylindricalWaveBasis.default([-.5, .5], 1)
+    >>> acoustotreams.ScalarCylindricalWaveBasis.default([-.5, .5], 1)
     ScalarCylindricalWaveBasis(
         pidx=[0 0 0 0 0 0],
         kz=[-0.5 -0.5 -0.5  0.5  0.5  0.5],
@@ -128,7 +128,7 @@ by running
 
 .. doctest::
 
-    >>> acoutreams.ScalarCylindricalWaveBasis.diffr_orders(kz=.1, mmax=1, lattice=2 * np.pi, bmax=1.05)
+    >>> acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz=.1, mmax=1, lattice=2 * np.pi, bmax=1.05)
     ScalarCylindricalWaveBasis(
         pidx=[0 0 0 0 0 0 0 0 0],
         kz=[-0.9 -0.9 -0.9  0.1  0.1  0.1  1.1  1.1  1.1],
@@ -148,13 +148,13 @@ Cartesian component is defined such that it fulfils the dispersion relation.
 
 . doctest::
 
-    >>> acoutreams.ScalarPlaneWaveBasisByUnitVector([(4, 0, 3)])
+    >>> acoustotreams.ScalarPlaneWaveBasisByUnitVector([(4, 0, 3)])
     ScalarPlaneWaveBasisByUnitVector(
         qx=[0.8],
         qy=[0.],
         qz=[0.6],
     )
-    >>> acoutreams.ScalarPlaneWaveBasisByComp([(1, 0)])
+    >>> acoustotreams.ScalarPlaneWaveBasisByComp([(1, 0)])
     ScalarPlaneWaveBasisByComp(
         kx=[1],
         ky=[0],
@@ -168,14 +168,14 @@ functions
 
 .. doctest::
 
-    >>> pwbc = acoutreams.ScalarPlaneWaveBasisByComp([(3, 0)])
+    >>> pwbc = acoustotreams.ScalarPlaneWaveBasisByComp([(3, 0)])
     >>> pwbc.byunitvector(5)
     ScalarPlaneWaveBasisByUnitVector(
         qx=[0.6+0.j],
         qy=[0.+0.j],
         qz=[0.8+0.j],
     )
-    >>> pwbuv = acoutreams.ScalarPlaneWaveBasisByUnitVector([(0, 0, 1)])    
+    >>> pwbuv = acoustotreams.ScalarPlaneWaveBasisByUnitVector([(0, 0, 1)])    
     >>> pwbuv.bycomp(1)
     ScalarPlaneWaveBasisByComp(
         kx=[0.],
@@ -185,7 +185,7 @@ functions
 Additionally, similar to the case of cylindrical waves, the basis by components can be
 used for a range of diffraction orders
 
->>> acoutreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], np.eye(2), 7)
+>>> acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], np.eye(2), 7)
     ScalarPlaneWaveBasisByComp(
         kx=[ 0.          0.          0.          6.28318531 -6.28318531],
         ky=[ 0.          6.28318531 -6.28318531  0.          0.        ],
@@ -195,12 +195,12 @@ used for a range of diffraction orders
 Polarization
 ============
 
-In *acoutreams* we consider acoustic waves that can be described by scalar pressure fields. 
-The scalar waves are defined in :func:`acoutreams.ssw_Psi`, :func:`acoutreams.ssw_rPsi`,
-:func:`acoutreams.scw_Psi`, :func:`acoutreams.scw_rPsi`, and :func:`acoutreams.spw_Psi`.
-Those scalar waves correspond to the longitudinal vector fields: :func:`acoutreams.vsw_L`, 
-:func:`acoutreams.vsw_rL`, :func:`acoutreams.vcw_L`, :func:`acoutreams.vcw_rL`, 
-and :func:`acoutreams.vpw_L`. For spherical waves, they are longitudinal with respect to
+In *acoustotreams* we consider acoustic waves that can be described by scalar pressure fields. 
+The scalar waves are defined in :func:`acoustotreams.ssw_Psi`, :func:`acoustotreams.ssw_rPsi`,
+:func:`acoustotreams.scw_Psi`, :func:`acoustotreams.scw_rPsi`, and :func:`acoustotreams.spw_Psi`.
+Those scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.vsw_L`, 
+:func:`acoustotreams.vsw_rL`, :func:`acoustotreams.vcw_L`, :func:`acoustotreams.vcw_rL`, 
+and :func:`acoustotreams.vpw_L`. For spherical waves, they are longitudinal with respect to
 the radial direction, while for cylindrical and plane waves, they are relative to the z axis.
 
 Mode types
@@ -214,7 +214,7 @@ regular modes are finite in the whole space. Thus, they are suitable for describ
 incident modes or to expand a plane wave. The singular modes fulfil the radiation
 condition and as such are used for the scattered fields.
 
-For the plane wave basis of type (:class:`~acoutreams.ScalarPlaneWaveBasisByComp`) only two
+For the plane wave basis of type (:class:`~acoustotreams.ScalarPlaneWaveBasisByComp`) only two
 components of the wave vector are given and the third component is only implicitly
 defined by the wave number and the material parameters. The application for this basis
 is mostly within stratified media that are uniform or periodic in the two other
@@ -228,7 +228,7 @@ Wave number in air
 ==================
 
 All calculations are executed in frequency domain. Instead of defining the frequency
-:math:`\nu` or the angular frequency :math:`\omega` itself, *acoutreams* works by using the
+:math:`\nu` or the angular frequency :math:`\omega` itself, *acoustotreams* works by using the
 wave number in air
 
 .. math::
@@ -243,25 +243,25 @@ unit of (inverse) length.
 Materials
 =========
 
-For materials there exists the class :class:`~acoutreams.AcousticMaterial`, which holds the values
+For materials there exists the class :class:`~acoustotreams.AcousticMaterial`, which holds the values
 of the mass density, longitudinal speed of sound, and transverse speed of sound. The
 default material is air (room temperature) and can be initialized without any parameters. For other cases,
 the parameters can be given in the order above.
 
 .. doctest::
 
-    >>> acoutreams.AcousticMaterial()
+    >>> acoustotreams.AcousticMaterial()
     Material(1.3, 343.0, 0.0)
-    >>> acoutreams.AcousticMaterial(1300, 2000, 1000)
+    >>> acoustotreams.AcousticMaterial(1300, 2000, 1000)
     Material(1300, 2000, 1000)
 
 It is also possible to calculate the impedance for longitudinal and transverse waves
 
 .. doctest::
 
-    >>> acoutreams.AcousticMaterial().impedance
+    >>> acoustotreams.AcousticMaterial().impedance
     '445.90000000000003'
-    >>> acoutreams.AcousticMaterial().impedancet
+    >>> acoustotreams.AcousticMaterial().impedancet
     '0.0'
 
 Moreover, we can get the speeds from the Lamé parameters or Poisson's ratio
@@ -270,16 +270,16 @@ Lattices
 ========
 
 The periodicity of arrangements is given by defining an instance of the class
-:class:`~acoutreams.Lattice`. A lattice can be one-, two-, or three-dimensional.
+:class:`~acoustotreams.Lattice`. A lattice can be one-, two-, or three-dimensional.
 
 .. doctest::
 
-    >>> acoutreams.Lattice(1)
+    >>> acoustotreams.Lattice(1)
     Lattice(1.0, alignment='z')
-    >>> acoutreams.Lattice([[1, .5], [-.5, 1]])
+    >>> acoustotreams.Lattice([[1, .5], [-.5, 1]])
     Lattice([[ 1.   0.5]
              [-0.5  1. ]], alignment='xy')
-    >>> acoutreams.Lattice([1, 2, 3])
+    >>> acoustotreams.Lattice([1, 2, 3])
     Lattice([[1. 0. 0.]
              [0. 2. 0.]
              [0. 0. 3.]], alignment='xyz')
@@ -292,7 +292,7 @@ create lattices with special unit cells, for example
 
 .. doctest::
 
-    >>> acoutreams.Lattice.hexagonal(2)
+    >>> acoustotreams.Lattice.hexagonal(2)
     Lattice([[2.    0.   ]
              [1.    1.732]], alignment='xy')
 
@@ -301,8 +301,8 @@ lower-dimensional sublattice
 
 .. doctest::
 
-    >>> lat_3d = acoutreams.Lattice([1, 2, 3])
-    >>> acoutreams.Lattice(lat_3d, "zx")
+    >>> lat_3d = acoustotreams.Lattice([1, 2, 3])
+    >>> acoustotreams.Lattice(lat_3d, "zx")
     Lattice([[0. 1.]
              [3. 0.]], alignment='zx')
 
@@ -310,21 +310,21 @@ or to combine and compare lattices
 
 .. doctest::
 
-    >>> acoutreams.Lattice(1, "x") | acoutreams.Lattice(2, "y")
+    >>> acoustotreams.Lattice(1, "x") | acoustotreams.Lattice(2, "y")
     Lattice([[1. 0.]
              [0. 2.]], alignment='xy')
-    >>> acoutreams.Lattice([1, 2], "xy") & acoutreams.Lattice([2, 3], "yz")
+    >>> acoustotreams.Lattice([1, 2], "xy") & acoustotreams.Lattice([2, 3], "yz")
     Lattice(2.0, alignment='y')
-    >>> acoutreams.Lattice(1, "x") <= acoutreams.Lattice([1, 2], "xy")
+    >>> acoustotreams.Lattice(1, "x") <= acoustotreams.Lattice([1, 2], "xy")
     True
 
 The volume of the lattice can also be obtained
 
 .. doctest::
 
-    >>> acoutreams.Lattice([[1, 0], [0, 1]]).volume
+    >>> acoustotreams.Lattice([[1, 0], [0, 1]]).volume
     1.0
-    >>> acoutreams.Lattice([[0, 1], [1, 0]]).volume
+    >>> acoustotreams.Lattice([[0, 1], [1, 0]]).volume
     -1.0
 
 as we see the volume is "signed", i.e. it shows if the lattice vectors are in a
@@ -332,7 +332,7 @@ right-handed order, and the reciprocal lattice vectors can be computed
 
 .. doctest::
 
-    >>> acoutreams.Lattice([1, 1]).reciprocal
+    >>> acoustotreams.Lattice([1, 1]).reciprocal
     array([[ 6.283, -0.   ],
            [-0.   ,  6.283]])
 
@@ -344,15 +344,15 @@ different lattice sites :math:`\exp(\mathrm i \boldsymbol k_\parallel \boldsymbo
 
 .. doctest::
 
-    >>> acoutreams.WaveVector()
+    >>> acoustotreams.WaveVector()
     WaveVector(nan, nan, nan)
-    >>> acoutreams.WaveVector(1)
+    >>> acoustotreams.WaveVector(1)
     WaveVector(nan, nan, 1)
-    >>> acoutreams.WaveVector(1, "x")
+    >>> acoustotreams.WaveVector(1, "x")
     WaveVector(1, nan, nan)
-    >>> acoutreams.WaveVector((1, 2))
+    >>> acoustotreams.WaveVector((1, 2))
     WaveVector(1, 2, nan)
-    >>> acoutreams.WaveVector((1, 2, 3))
+    >>> acoustotreams.WaveVector((1, 2, 3))
     WaveVector(1, 2, 3)
 
 where unspecified directions are represented as ``nan``. The wave vectors can be
@@ -360,11 +360,11 @@ combined and compared.
 
 .. doctest::
 
-    >>> acoutreams.WaveVector((1, 2)) | acoutreams.WaveVector((2, 3), "yz")
+    >>> acoustotreams.WaveVector((1, 2)) | acoustotreams.WaveVector((2, 3), "yz")
     WaveVector(nan, 2, nan)
-    >>> acoutreams.WaveVector(1, "x") & acoutreams.WaveVector(2, "y")
+    >>> acoustotreams.WaveVector(1, "x") & acoustotreams.WaveVector(2, "y")
     WaveVector(1, 2, nan)
-    >>> acoutreams.WaveVector(1, "x") >= acoutreams.WaveVector((1, 2))
+    >>> acoustotreams.WaveVector(1, "x") >= acoustotreams.WaveVector((1, 2))
     True
 
 Note that the ordering is from less strict wave vector to the stricter one.

@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from joblib import Parallel, delayed
 
-import acoutreams
+import acoustotreams
 
 k0 = 2 * np.pi * 150000 / 343
-materials = [acoutreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
-             acoutreams.AcousticMaterial(998, 1497)]
+materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
+             acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 3
 radii = [0.005, 0.005]
 positions = np.array(
@@ -16,10 +16,10 @@ positions = np.array(
     ]
 )
 
-spheres = [acoutreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
-tm = acoutreams.AcousticTMatrix.cluster(spheres, positions).interaction.solve()
+spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
+tm = acoustotreams.AcousticTMatrix.cluster(spheres, positions).interaction.solve()
 
-inc = acoutreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
+inc = acoustotreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
 sca = tm.sca(inc)
 xs = tm.xs(inc)
 
@@ -72,7 +72,7 @@ ax.annotate(
 )
 fig.show()
 
-tm_global = tm.expand(acoutreams.ScalarSphericalWaveBasis.default(10))
+tm_global = tm.expand(acoustotreams.ScalarSphericalWaveBasis.default(10))
 sca = tm_global.sca(inc)
 xs = tm_global.xs(inc)
 
@@ -113,7 +113,7 @@ ax.annotate(
 )
 fig.show()
 
-inc = acoutreams.plane_wave_scalar([k0, 0, 0], k0=tm.k0, material=tm.material)
+inc = acoustotreams.plane_wave_scalar([k0, 0, 0], k0=tm.k0, material=tm.material)
 tm_rotate = tm_global.rotate(0, np.pi / 2)
 sca = tm_rotate.sca(inc)
 

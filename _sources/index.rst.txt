@@ -1,9 +1,9 @@
-.. acoutreams documentation master file, created by
+.. acoustotreams documentation master file, created by
    sphinx-quickstart on Thu Dec 19 15:58:08 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to acoutreams's documentation!
+Welcome to acoustotreams's documentation!
 ======================================
 
 .. toctree::
@@ -16,7 +16,7 @@ Welcome to acoutreams's documentation!
    about
    
 
-The package **acoutreams** adopts the framework of the package **treams** for
+The package **acoustotreams** adopts the framework of the package **treams** for
 electromagnetic scattering computations to simplify computations of the
 scattering of acoustic waves in acoustic metamaterials. The supported geometries 
 include single particles as well as finite and periodically infinite arrangements. 

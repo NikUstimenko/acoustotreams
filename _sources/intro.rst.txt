@@ -2,8 +2,8 @@
 Examples
 ========
 
-*acoutreams* is a program that covers various aspects of T-matrix calculations and
-associated topics in acoustic scattering scenarios. *acoutreams* adopts the functionality 
+*acoustotreams* is a program that covers various aspects of T-matrix calculations and
+associated topics in acoustic scattering scenarios. *acoustotreams* adopts the functionality 
 introduced, for the first time, in *treams* in the electromagnetic domain.
 The functionality involves three levels: low-level functions, intermediate-level functions, 
 and high-level functions and classes.
@@ -15,7 +15,7 @@ the extensions of mathematical functions in :mod:`scipy.special`, the
 second subpackage contains functions that are associated with computations in lattices.
 All functions necessary in acoustic computations, e.g., the various solutions 
 to the Helmholtz equation and their translation coefficients, implemented within
-:mod:`acoutreams`.
+:mod:`acoustotreams`.
 
 On the intermediate-level those underlying functions are combined to provide functions
 as they are often needed for T-matrix calculations, e.g., the acoustic Mie coefficients 

@@ -9,18 +9,18 @@ Installation
 
 To install the package with pip, use ::
 
-   pip install acoutreams
+   pip install acoustotreams
 
 
-How to use acoutreams
+How to use acoustotreams
 =====================
 
-Import *acoutreams*, create acoustic T-matrices and start calculating.
+Import *acoustotreams*, create acoustic T-matrices and start calculating.
 
 .. doctest::
 
-   >>> import acoutreams
-   >>> tm = acoutreams.AcousticTMatrix.sphere(3, 600, 0.01, [(1.29, 343), (1500, 1000)])
+   >>> import acoustotreams
+   >>> tm = acoustotreams.AcousticTMatrix.sphere(3, 600, 0.01, [(1.29, 343), (1500, 1000)])
    >>> f"{tm.xs_ext_avg:.6f}"
    '0.000941'
 
