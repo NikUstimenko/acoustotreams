@@ -649,7 +649,7 @@ class AcousticTMatrixC(AcousticsArray):
     def from_array(cls, tm, basis, *, eta=0):
         """1d array of spherical T-matrices."""
         return cls(
-            (tm @ opa.AcousticExpand(basis).inv).expandlattice(basis=basis, eta=eta),
+            (tm @ opa.Expand(basis).inv).expandlattice(basis=basis, eta=eta),
             lattice=tm.lattice,
             kpar=tm.kpar,
         )

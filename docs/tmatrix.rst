@@ -72,8 +72,9 @@ of the fields as a superposition of incident and scattered fields.
 Here, we also accelerate the computations using paralyzation by
 :mod:`Parallel` in :mod:`joblib`. 
 
-Finally, we compute the radiation pattern of the sphere at the same frequency.
-The red arrow indicates the direction of incidence of the plane wave.
+Finally, we compute the radiation pattern of the sphere at the same frequency
+as a function of the polar angle :math:`\theta`. The red arrow indicates 
+the direction of incidence of the plane wave.
 
 .. literalinclude:: examples/sphere.py
    :language: python
