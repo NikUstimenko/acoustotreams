@@ -115,18 +115,19 @@ def vcw_l(kz, m, krhox, krhoy, phi, z, krho, k):
      """Far-field amplitude of longitudinal singular vector cylindrical wave"""
      return np.transpose(
          np.array(
-             np.exp(-1j * np.pi/4) *
              [
                 np.sqrt(2 / (np.pi * krho)) *
                 np.exp(-1j * ((krhox * np.cos(phi) + krhoy * np.sin(phi)))) *
                 np.power(-1j, m) * 
-                np.exp(1j * (m * phi + kz * z)) * 
+                np.exp(1j * (m * phi + kz * z)) *
+                np.exp(-1j * np.pi/4) *  
                 1j * krho / k,
                 np.zeros(len(krho)).T,
                 np.sqrt(2 / (np.pi * krho)) *
                 np.exp(-1j * ((krhox * np.cos(phi) + krhoy * np.sin(phi)))) *
                 np.power(-1j, m) * 
-                np.exp(1j * (m * phi + kz * z)) * 
+                np.exp(1j * (m * phi + kz * z)) *
+                np.exp(-1j * np.pi/4) *  
                 1j * kz / k,
              ]
          )

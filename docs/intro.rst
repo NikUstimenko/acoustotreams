@@ -37,7 +37,7 @@ for scalar plane wave solutions.
     :maxdepth: 1
 
     params
-    physicsarray
+    acousticsarray
     operators
     tmatrix
     tmatrixc

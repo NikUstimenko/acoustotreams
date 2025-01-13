@@ -30,7 +30,7 @@ structure.
 
 However, to be able to replicate the above mathematical notation, it is also possible to
 use the matrix multiplication operator between an array and the operator. The array
-needs to have the necessary keywords as attributes, this is for what :doc:`physicsarray`
+needs to have the necessary keywords as attributes, this is for what :doc:`acousticsarray`
 come in handy. For such an array :code:`arr` it is possible to type :code:`op @ arr` or
 :code:`op @ arr @ op.inv`. The inverse of operators is implemented for many operators
 but some have no inverse defined.
@@ -61,7 +61,7 @@ which can then be converted to a representation by calling it with the basis arg
 .. doctest::
 
     >>> r(basis=acoustotreams.ScalarSphericalWaveBasis.default(1))
-    AcousticPhysicsArray(
+    AcousticsArray(
         [[...]],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -76,9 +76,9 @@ automatically take that attribute.
 
 .. doctest::
 
-    >>> t = acoustotreams.AcousticPhysicsArray(np.eye(4), basis=acoustotreams.ScalarSphericalWaveBasis.default(1))
+    >>> t = acoustotreams.AcousticsArray(np.eye(4), basis=acoustotreams.ScalarSphericalWaveBasis.default(1))
     >>> r @ t @ r.inv
-    AcousticPhysicsArray(
+    AcousticsArray(
         [[...]],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -89,7 +89,7 @@ automatically take that attribute.
     )
 
 Here, we also use the property `inv` to get the inverse rotation. Moreover, for
-instances of :class:`~acoustotreams.AcousticPhysicsArray`, we can get the same result by calling the
+instances of :class:`~acoustotreams.AcousticsArray`, we can get the same result by calling the
 correspondingly named attribute
 
     >>> phi = 1
@@ -109,9 +109,9 @@ Cartesian translation vector.
 
 .. doctest::
 
-    >>> t = acoustotreams.AcousticPhysicsArray(np.eye(6), basis=acoustotreams.ScalarSphericalWaveBasis.default(1), k0=1)
+    >>> t = acoustotreams.AcousticsArray(np.eye(6), basis=acoustotreams.ScalarSphericalWaveBasis.default(1), k0=1)
     >>> t.translate([1, 2, 3])
-    AcousticPhysicsArray(
+    AcousticsArray(
         [[...]],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -156,7 +156,7 @@ is basically just a matching of the wave vectors.
 
     >>> plw = acoustotreams.plane_wave_scalar([0, 3, 4], k0=5, material=1.3)
     >>> acoustotreams.Expand(acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 3]])) @ plw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [1.+0.j],
         basis=ScalarPlaneWaveBasisByComp(
         kx=[0.],
@@ -177,7 +177,7 @@ Next, we can expand this plane wave also in cylindrical and in spherical waves.
 .. doctest::
 
     >>> acoustotreams.Expand(acoustotreams.ScalarCylindricalWaveBasis.default([4], 1)) @ plw
-    PhysicsArray(
+    AcousticsArray(
         [1.+0.j 1.+0.j 1.+0.j],
         basis=ScalarCylindricalWaveBasis(
         pidx=[0 0 0],
@@ -190,7 +190,7 @@ Next, we can expand this plane wave also in cylindrical and in spherical waves.
         modetype='regular',
     )
     >>> acoustotreams.Expand(acoustotreams.ScalarSphericalWaveBasis.default(1)) @ plw
-    PhysicsArray(
+    AcousticsArray(
         [ 3.5449077 +0.00000000e+00j -2.60496452+1.59508073e-16j
           0.        +4.91196820e+00j -2.60496452-1.59508073e-16j   ],
         basis=ScalarSphericalWaveBasis(
@@ -220,7 +220,7 @@ and expand it around the origin
     >>> sssw = acoustotreams.spherical_wave_scalar(1, 0, basis=off_centered_swb, k0=1, material=1.3, modetype="singular")
     >>> ex = acoustotreams.Expand(acoustotreams.ScalarSphericalWaveBasis.default(1))
     >>> ex @ sssw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [ 0.+0.j 0.+0.j 0.90350604+0.j 0.+0.j ],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -243,7 +243,7 @@ around a different origin
 
     >>> ex = acoustotreams.Expand(acoustotreams.ScalarSphericalWaveBasis.default(1), "regular")
     >>> ex @ sssw
-    PhysicsArray(
+    AcousticsArray(
         [ 0.+0.j 0.+0.j 0.90350604-4.14531987j 0.+0.j ],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -266,7 +266,7 @@ origins, which works quite similarly
     >>> ssw_global = acoustotreams.spherical_wave_scalar(1, 0, k0=1, material=1.3, modetype="regular")
     >>> local_swb = acoustotreams.ScalarSphericalWaveBasis.default(1, 2, positions=[[0, 0, 1], [0, 0, -1]])
     >>> ssw_global.expand.apply_left(local_swb)
-    AcousticPhysicsArray(
+    AcousticsArray(
         [ 0.52163945+0.j  0.+0.j  0.71740088+0.j  0.+0.j
          -0.52163945+0.j  0.+0.j  0.71740088+0.j  0.+0.j],
         basis=ScalarSphericalWaveBasis(
@@ -287,7 +287,7 @@ unit matrix.
 .. doctest::
 
     >>> sw_global.expand(acoustotreams.ScalarSphericalWaveBasis.default(1))
-    PhysicsArray(
+    AcousticsArray(
         [0.+0.j 0.+0.j 1.+0.j 0.+0.j],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -306,7 +306,7 @@ zero matrix is returned.
 .. doctest::
 
     >>> ssw_global.expand.apply_right(acoustotreams.ScalarSphericalWaveBasis.default(1), "singular")
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.+0.j 0.+0.j 0.+0.j 0.+0.j],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -339,7 +339,7 @@ same properties than spherical waves.
     >>> sscw = acoustotreams.cylindrical_wave_scalar(0, 1, basis=off_centered_cwb, k0=1, material=1.3, modetype="singular")
     >>> ex =  acoustotreams.Expand(acoustotreams.ScalarCylindricalWaveBasis.default([0], 1))
     >>> ex @ sscw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.11490348-1.40716185e-17j -0.44005059+5.38906541e-17j 0.76519769+0.00000000e+00j],
         basis=ScalarCylindricalWaveBasis(
         pidx=[0 0 0],
@@ -360,7 +360,7 @@ of the spherical and cylindrical waves must be equal.
 
     >>> sscw = acoustotreams.cylindrical_wave_scalar(0, 1, k0=1, material=1, modetype="regular")
     >>> sscw.expand(acoustotreams.ScalarSphericalWaveBasis.default(1))
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.+0.j  0.+0.j  0.+0.j -4.34160753+0.j],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
@@ -391,7 +391,7 @@ structure. Then, these fields are expanded as regular fields in a single unit ce
 
     >>> sscw = acoustotreams.cylindrical_wave_scalar(0, 1, k0=1, material=1.3, modetype="singular")
     >>> sscw.expandlattice(1, 0)
-    AcousticPhysicsArray(
+    AcousticsArray(
         [2.-3.8655259j  0.+0.j  1.+1.23397896j],
         basis=ScalarCylindricalWaveBasis(
         pidx=[0 0 0],
@@ -407,7 +407,7 @@ structure. Then, these fields are expanded as regular fields in a single unit ce
     )
     >>> sssw = acoustotreams.spherical_wave_scalar(1, 0, k0=1, material=1.3)
     >>> sssw.expandlattice([1, 2], [0, 0])
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.+0.j        0.+0.j        8.42477796-8.5237243j
          0.+0.j       ],
         basis=ScalarSphericalWaveBasis(
@@ -433,7 +433,7 @@ lattice along the z axis can be expanded in cylindrical waves
     >>> sssw = acoustotreams.spherical_wave_scalar(1, 0, k0=1, material=1.3)
     >>> ex = acoustotreams.ExpandLattice(basis=acoustotreams.ScalarCylindricalWaveBasis.diffr_orders([.1], 0, 7, 1))
     >>> ex @ sssw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.+0.17490069j 0.-0.02192843j 0.-0.21875755j],
         basis=ScalarCylindricalWaveBasis(
         pidx=[0 0 0 0 0 0],
@@ -456,7 +456,7 @@ waves in a two-dimensional lattice in the xy plane can be expanded in plane wave
 
     >>> ex = acoustotreams.ExpandLattice(basis= acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([.1, 0], [7, 7], 1))
     >>> ex @ sssw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.-0.06265266j 0.-0.06265266j 0.-0.06265266j 0.-0.06265266j 0.-0.06265266j],
         basis=ScalarPlaneWaveBasisByComp(
         kx=[ 0.1        0.1        0.1        0.9975979 -0.7975979],
@@ -478,7 +478,7 @@ lattice along the x axis can also be expanded in plane waves.
     >>> sscw = acoustotreams.cylindrical_wave_scalar(0, 1, k0=1, material=1.3)
     >>> ex = acoustotreams.ExpandLattice(basis=acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, .1], acoustotreams.Lattice([7, 7], "zx"), 1))
     >>> ex @ sscw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.28571429-0.02871537j 0.28571429-4.1146983j  0.28571429+0.37780019j
          0.        +0.j         0.        +0.j        ]
         basis=ScalarPlaneWaveBasisByComp(
@@ -505,7 +505,7 @@ permutation, meaning the axes labels get permuted.
 
     >>> plw = acoustotreams.plane_wave_scalar([2, 3, 6])
     >>> plw
-    AcousticPhysicsArray(
+    AcousticsArray(
         [1.+0.j],
         basis=ScalarPlaneWaveBasisByUnitVector(
         qx=[0.286],
@@ -514,7 +514,7 @@ permutation, meaning the axes labels get permuted.
     ),
     )
     >>> plw.permute()
-    AcousticPhysicsArray(
+    AcousticsArray(
         [1.+0.j],
         basis=ScalarPlaneWaveBasisByUnitVector(
         qx=[0.857],
@@ -534,11 +534,11 @@ the velocity field :math:`\boldsymbol v` in Cartesian coordinates can be compute
 
     >>> sssw = acoustotreams.spherical_wave_scalar(1, 0, k0=1, material=1.3, modetype="regular")
     >>> sssw.pfield([0, 0, 1])
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.14715177+0.j],
     )
     >>> sssw.vfield([0, 0, 1])
-    AcousticPhysicsArray(
+    AcousticsArray(
         [0.+0.j         0.+0.j         0.-0.00026203j],
     )
 
@@ -556,11 +556,11 @@ using :func:`acoustotreams.scw_psi` and :func:`acoustotreams.scw_l`.
 
     >>> sssw = acoustotreams.spherical_wave_scalar(1, 0, k0=1, material=1.3, modetype="singular")
     >>> sssw.pamplitudeff([0, 0, 1])
-    AcousticPhysicsArray(
+    AcousticsArray(
         [-0.48860251+0.j],
     )
     >>> sssw.vamplitudeff([0, 0, 1])
-    AcousticPhysicsArray(
+    AcousticsArray(
         [-0.00109577+0.j  0.+0.j  0.+0.j],
     )
 
