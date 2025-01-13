@@ -5,19 +5,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.1.1 documentation</title>
+    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.1.7 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="_static/documentation_options.js?v=ca7ad2ea"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Acoustic physics-aware arrays" href="physicsarray.html" />
+    <link rel="next" title="Acoustics-aware arrays" href="acousticsarray.html" />
     <link rel="prev" title="Examples" href="intro.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -34,12 +34,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="physicsarray.html" title="Acoustic physics-aware arrays"
+          <a href="acousticsarray.html" title="Acoustics-aware arrays"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>
@@ -260,9 +260,9 @@ of the mass density, longitudinal speed of sound, and transverse speed of sound.
 default material is air (room temperature) and can be initialized without any parameters. For other cases,
 the parameters can be given in the order above.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span>
-<span class="go">Material(1.3, 343.0, 0.0)</span>
+<span class="go">AcousticMaterial(1.3, 343.0, 0.0)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1300</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="go">Material(1300, 2000, 1000)</span>
+<span class="go">AcousticMaterial(1300, 2000, 1000)</span>
 </pre></div>
 </div>
 <p>It is also possible to calculate the impedance for longitudinal and transverse waves</p>
@@ -272,7 +272,17 @@ the parameters can be given in the order above.</p>
 <span class="go">&#39;0.0&#39;</span>
 </pre></div>
 </div>
-<p>Moreover, we can get the speeds from the Lamé parameters or Poisson’s ratio</p>
+<p>Moreover, we can get the speeds from the Lamé parameters as</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="o">.</span><span class="n">from_params</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.6e7</span><span class="p">,</span> <span class="mf">2e6</span><span class="p">))</span>
+<span class="go">AcousticMaterial(1000, 141.421+0j, 44.7213+0j)</span>
+</pre></div>
+</div>
+<p>where the first is agrument is density and the second one is tuple <span class="math notranslate nohighlight">\((\lambda, \mu)\)</span>.</p>
+<p>We can also get the speed of transverse waves from Poisson’s ratio as</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="o">.</span><span class="n">from_pratio</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mf">141.421</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.44444</span><span class="p">)</span>
+<span class="go">    AcousticMaterial(1000, 141.421+0j, 44.7228+0j)</span>
+</pre></div>
+</div>
 </section>
 <section id="lattices">
 <h2>Lattices<a class="headerlink" href="#lattices" title="Link to this heading">¶</a></h2>
@@ -385,8 +395,8 @@ combined and compared.</p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="physicsarray.html"
-                          title="next chapter">Acoustic physics-aware arrays</a></p>
+    <p class="topless"><a href="acousticsarray.html"
+                          title="next chapter">Acoustics-aware arrays</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -416,12 +426,12 @@ combined and compared.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="physicsarray.html" title="Acoustic physics-aware arrays"
+          <a href="acousticsarray.html" title="Acoustics-aware arrays"
              >next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>

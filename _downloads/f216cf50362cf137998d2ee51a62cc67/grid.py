@@ -15,11 +15,11 @@ lattice = acoustotreams.Lattice.square(period)
 kpar = [0, 0]
 
 spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
-tm = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(
+array = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(
     lattice, kpar
     )
-inc = acoustotreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
-sca = tm.sca(inc)
+inc = acoustotreams.plane_wave_scalar([0, 0, array.k0], k0=array.k0, material=array.material)
+sca = array.sca(inc)
 
 x = np.linspace(-0.5*period, 0.5*period, 101)
 z = np.linspace(-0.5*period, 0.5*period, 101)
@@ -33,7 +33,7 @@ def compute_intensity(i, j, tm, radii, inc, sca):
         result = np.nan
     return i, j, result  
 results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm, radii, inc, sca) 
+    delayed(compute_intensity)(i, j, array, radii, inc, sca) 
     for i in range(len(z)) 
     for j in range(len(x))
 )

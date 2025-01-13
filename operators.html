@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Operators &#8212; acoustotreams 0.1.1 documentation</title>
+    <title>Operators &#8212; acoustotreams 0.1.7 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="_static/documentation_options.js?v=ca7ad2ea"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Acoustic T-Matrices" href="tmatrix.html" />
-    <link rel="prev" title="Acoustic physics-aware arrays" href="physicsarray.html" />
+    <link rel="prev" title="Acoustics-aware arrays" href="acousticsarray.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -37,9 +37,9 @@
           <a href="tmatrix.html" title="Acoustic T-Matrices"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="physicsarray.html" title="Acoustic physics-aware arrays"
+          <a href="acousticsarray.html" title="Acoustics-aware arrays"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Operators</a></li> 
       </ul>
@@ -72,7 +72,7 @@ arguments, e.g. <code class="code docutils literal notranslate"><span class="pre
 structure.</p>
 <p>However, to be able to replicate the above mathematical notation, it is also possible to
 use the matrix multiplication operator between an array and the operator. The array
-needs to have the necessary keywords as attributes, this is for what <a class="reference internal" href="physicsarray.html"><span class="doc">Acoustic physics-aware arrays</span></a>
+needs to have the necessary keywords as attributes, this is for what <a class="reference internal" href="acousticsarray.html"><span class="doc">Acoustics-aware arrays</span></a>
 come in handy. For such an array <code class="code docutils literal notranslate"><span class="pre">arr</span></code> it is possible to type <code class="code docutils literal notranslate"><span class="pre">op</span> <span class="pre">&#64;</span> <span class="pre">arr</span></code> or
 <code class="code docutils literal notranslate"><span class="pre">op</span> <span class="pre">&#64;</span> <span class="pre">arr</span> <span class="pre">&#64;</span> <span class="pre">op.inv</span></code>. The inverse of operators is implemented for many operators
 but some have no inverse defined.</p>
@@ -95,7 +95,7 @@ abstract rotation operator by using <code class="xref py py-class docutils liter
 </div>
 <p>which can then be converted to a representation by calling it with the basis argument.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [[...]],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -108,9 +108,9 @@ abstract rotation operator by using <code class="xref py py-class docutils liter
 </div>
 <p>If it is multiplied with an array that defines the attribute <cite>basis</cite> it will
 automatically take that attribute.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">@</span> <span class="n">t</span> <span class="o">@</span> <span class="n">r</span><span class="o">.</span><span class="n">inv</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [[...]],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -122,7 +122,7 @@ automatically take that attribute.</p>
 </pre></div>
 </div>
 <p>Here, we also use the property <cite>inv</cite> to get the inverse rotation. Moreover, for
-instances of <code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticPhysicsArray</span></code>, we can get the same result by calling the
+instances of <code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticsArray</span></code>, we can get the same result by calling the
 correspondingly named attribute</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Rotate</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
@@ -138,9 +138,9 @@ other basis sets allow rotations including all three Euler angles.</p>
 <h2>Translation<a class="headerlink" href="#translation" title="Link to this heading">¶</a></h2>
 <p>The next transformation that is implemented are translations where the parameter is the
 Cartesian translation vector.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">translate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [[...]],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -179,7 +179,7 @@ spherical and cylindrical waves. The expansion into a different set of plane wav
 is basically just a matching of the wave vectors.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">default</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]))</span> <span class="o">@</span> <span class="n">plw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [1.+0.j],</span>
 <span class="go">    basis=ScalarPlaneWaveBasisByComp(</span>
 <span class="go">    kx=[0.],</span>
@@ -197,7 +197,7 @@ For such a basis change, it is necessary that the material and the wave number i
 specified.</p>
 <p>Next, we can expand this plane wave also in cylindrical and in spherical waves.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">plw</span>
-<span class="go">PhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [1.+0.j 1.+0.j 1.+0.j],</span>
 <span class="go">    basis=ScalarCylindricalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0],</span>
@@ -210,7 +210,7 @@ specified.</p>
 <span class="go">    modetype=&#39;regular&#39;,</span>
 <span class="go">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="n">plw</span>
-<span class="go">PhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [ 3.5449077 +0.00000000e+00j -2.60496452+1.59508073e-16j</span>
 <span class="go">      0.        +4.91196820e+00j -2.60496452-1.59508073e-16j   ],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
@@ -237,7 +237,7 @@ and expand it around the origin</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">off_centered_swb</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;singular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">@</span> <span class="n">sssw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [ 0.+0.j 0.+0.j 0.90350604+0.j 0.+0.j ],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -258,7 +258,7 @@ regular modes. However, we can also change the type of mode, when the field is e
 around a different origin</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;regular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">@</span> <span class="n">sssw</span>
-<span class="go">PhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [ 0.+0.j 0.+0.j 0.90350604-4.14531987j 0.+0.j ],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -278,7 +278,7 @@ origins, which works quite similarly</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssw_global</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;regular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">local_swb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ssw_global</span><span class="o">.</span><span class="n">expand</span><span class="o">.</span><span class="n">apply_left</span><span class="p">(</span><span class="n">local_swb</span><span class="p">)</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [ 0.52163945+0.j  0.+0.j  0.71740088+0.j  0.+0.j</span>
 <span class="go">     -0.52163945+0.j  0.+0.j  0.71740088+0.j  0.+0.j],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
@@ -297,7 +297,7 @@ origins, which works quite similarly</p>
 expand back into the same basis set in this case corresponds to the multiplication by a
 unit matrix.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sw_global</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="go">PhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.+0.j 0.+0.j 1.+0.j 0.+0.j],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -314,7 +314,7 @@ unit matrix.</p>
 <p>For translations from singular to regular waves, the same basis set means that a
 zero matrix is returned.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssw_global</span><span class="o">.</span><span class="n">expand</span><span class="o">.</span><span class="n">apply_right</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;singular&quot;</span><span class="p">)</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.+0.j 0.+0.j 0.+0.j 0.+0.j],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -343,7 +343,7 @@ same properties than spherical waves.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sscw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">cylindrical_wave_scalar</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">off_centered_cwb</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;singular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">=</span>  <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">@</span> <span class="n">sscw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.11490348-1.40716185e-17j -0.44005059+5.38906541e-17j 0.76519769+0.00000000e+00j],</span>
 <span class="go">    basis=ScalarCylindricalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0],</span>
@@ -362,7 +362,7 @@ that waves defined with multiple origins get each expanded separately. The posit
 of the spherical and cylindrical waves must be equal.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sscw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">cylindrical_wave_scalar</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;regular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sscw</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.+0.j  0.+0.j  0.+0.j -4.34160753+0.j],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0],</span>
@@ -390,7 +390,7 @@ given basis with singular modes are repeated periodically in the given lattice
 structure. Then, these fields are expanded as regular fields in a single unit cell.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sscw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">cylindrical_wave_scalar</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;singular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sscw</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [2.-3.8655259j  0.+0.j  1.+1.23397896j],</span>
 <span class="go">    basis=ScalarCylindricalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0],</span>
@@ -406,7 +406,7 @@ structure. Then, these fields are expanded as regular fields in a single unit ce
 <span class="go">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.+0.j        0.+0.j        8.42477796-8.5237243j</span>
 <span class="go">     0.+0.j       ],</span>
 <span class="go">    basis=ScalarSphericalWaveBasis(</span>
@@ -430,7 +430,7 @@ lattice along the z axis can be expanded in cylindrical waves</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ExpandLattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">([</span><span class="mf">.1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">@</span> <span class="n">sssw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.+0.17490069j 0.-0.02192843j 0.-0.21875755j],</span>
 <span class="go">    basis=ScalarCylindricalWaveBasis(</span>
 <span class="go">    pidx=[0 0 0 0 0 0],</span>
@@ -451,7 +451,7 @@ class method <code class="xref py py-func docutils literal notranslate"><span cl
 waves in a two-dimensional lattice in the xy plane can be expanded in plane waves.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ExpandLattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">([</span><span class="mf">.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">@</span> <span class="n">sssw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.-0.06265266j 0.-0.06265266j 0.-0.06265266j 0.-0.06265266j 0.-0.06265266j],</span>
 <span class="go">    basis=ScalarPlaneWaveBasisByComp(</span>
 <span class="go">    kx=[ 0.1        0.1        0.1        0.9975979 -0.7975979],</span>
@@ -471,7 +471,7 @@ lattice along the x axis can also be expanded in plane waves.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sscw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">cylindrical_wave_scalar</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ExpandLattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">.1</span><span class="p">],</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="s2">&quot;zx&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ex</span> <span class="o">@</span> <span class="n">sscw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.28571429-0.02871537j 0.28571429-4.1146983j  0.28571429+0.37780019j</span>
 <span class="go">     0.        +0.j         0.        +0.j        ]</span>
 <span class="go">    basis=ScalarPlaneWaveBasisByComp(</span>
@@ -496,7 +496,7 @@ rotations then do not include a relabeling of the Cartesian axes, for example
 permutation, meaning the axes labels get permuted.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plw</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [1.+0.j],</span>
 <span class="go">    basis=ScalarPlaneWaveBasisByUnitVector(</span>
 <span class="go">    qx=[0.286],</span>
@@ -505,7 +505,7 @@ permutation, meaning the axes labels get permuted.</p>
 <span class="go">),</span>
 <span class="go">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plw</span><span class="o">.</span><span class="n">permute</span><span class="p">()</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [1.+0.j],</span>
 <span class="go">    basis=ScalarPlaneWaveBasisByUnitVector(</span>
 <span class="go">    qx=[0.857],</span>
@@ -523,11 +523,11 @@ is also implemented by a couple of operators. The pressure field <span class="ma
 the velocity field <span class="math notranslate nohighlight">\(\boldsymbol v\)</span> in Cartesian coordinates can be computed.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;regular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">pfield</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.14715177+0.j],</span>
 <span class="go">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">vfield</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [0.+0.j         0.+0.j         0.-0.00026203j],</span>
 <span class="go">)</span>
 </pre></div>
@@ -543,11 +543,11 @@ using <code class="xref py py-func docutils literal notranslate"><span class="pr
 using <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_psi()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_l()</span></code>.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;singular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">pamplitudeff</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [-0.48860251+0.j],</span>
 <span class="go">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">vamplitudeff</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [-0.00109577+0.j  0.+0.j  0.+0.j],</span>
 <span class="go">)</span>
 </pre></div>
@@ -575,8 +575,8 @@ cylindrical coordinates for the cylindrical wave basis.</p>
 
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="physicsarray.html"
-                          title="previous chapter">Acoustic physics-aware arrays</a></p>
+    <p class="topless"><a href="acousticsarray.html"
+                          title="previous chapter">Acoustics-aware arrays</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
@@ -614,9 +614,9 @@ cylindrical coordinates for the cylindrical wave basis.</p>
           <a href="tmatrix.html" title="Acoustic T-Matrices"
              >next</a> |</li>
         <li class="right" >
-          <a href="physicsarray.html" title="Acoustic physics-aware arrays"
+          <a href="acousticsarray.html" title="Acoustics-aware arrays"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Operators</a></li> 
       </ul>

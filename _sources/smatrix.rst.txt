@@ -22,6 +22,13 @@ which exactly collects those four individual S-matrices. For simple interfaces a
 propagation in a homogeneous medium these S-matrices can be obtained analytically.
 Combining these two objects then allows the description of simple slabs.
 
+.. literalinclude:: examples/slab.py
+   :language: python
+   :lines: 7-19
+
+The setup is fairly simple. The materials are given in order from negative to positive
+z coordinates. We simply loop over the wave number and calculate transmission and reflection.
+
 From T-matrix arrays
 ====================
 
@@ -29,6 +36,25 @@ While this example is simple we can build more complicated structures from
 two-dimensional arrays of T-matrices. We take spheres on an thin film as an example.
 This means we first calculate the S-matrices for the thin film and the array
 individually and then couple those two systems.
+
+.. literalinclude:: examples/array_spheres.py
+   :language: python
+   :lines: 7-15
+
+Beforehand, we define all the necessary parameters. First the wave numbers, then the
+parameters of the slab, and finally those for the lattice and the spheres. Then, we can
+use a simple loop to solve the system for all wave numbers.
+
+.. literalinclude:: examples/array_spheres.py
+   :language: python
+   :lines: 18-36
+
+We set some oblique incidence and the array of spheres. Then, we define a 
+plane wave and the needed S-matrices: a slab, the distance between the
+top interface of the slab to the center of the sphere array, and the array in the
+S-matrix representation itself.
+
+.. plot:: examples/array_spheres.py
 
 From cylindrical T-matrix gratings
 ==================================

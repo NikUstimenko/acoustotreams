@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic physics-aware arrays &#8212; acoustotreams 0.1.1 documentation</title>
+    <title>Acoustics-aware arrays &#8212; acoustotreams 0.1.7 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="_static/documentation_options.js?v=ca7ad2ea"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -39,9 +39,9 @@
         <li class="right" >
           <a href="params.html" title="Scalar basis sets and other core parameters"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Acoustic physics-aware arrays</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Acoustics-aware arrays</a></li> 
       </ul>
     </div>  
 
@@ -50,16 +50,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="acoustic-physics-aware-arrays">
-<h1>Acoustic physics-aware arrays<a class="headerlink" href="#acoustic-physics-aware-arrays" title="Link to this heading">¶</a></h1>
-<p>A core building block of the underlying features of <em>acoustotreams</em> are acoustic-physics-aware arrays.
+  <section id="acoustics-aware-arrays">
+<h1>Acoustics-aware arrays<a class="headerlink" href="#acoustics-aware-arrays" title="Link to this heading">¶</a></h1>
+<p>A core building block of the underlying features of <em>acoustotreams</em> are acoustics-aware arrays.
 In most of their properties they behave similar to numpy arrays and one can easily
 change the type and mix them</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [2, 6],</span>
 <span class="go">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">@</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">@</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="go">8</span>
 </pre></div>
 </div>
@@ -70,8 +70,8 @@ Secondly, they offer special methods to create matrices for common transformatio
 rotations and translations, which are described in more detail in <a class="reference internal" href="operators.html"><span class="doc">Operators</span></a>.</p>
 <section id="special-properties">
 <h2>Special properties<a class="headerlink" href="#special-properties" title="Link to this heading">¶</a></h2>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">k0</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">AcousticPhysicsArray(</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">k0</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [[0, 1],</span>
 <span class="go">     [2, 3]],</span>
 <span class="go">    k0=(1.0, 2.0),</span>
@@ -80,14 +80,14 @@ rotations and translations, which are described in more detail in <a class="refe
 </div>
 <p>In this example you can notice that the values for the air wave number <code class="docutils literal notranslate"><span class="pre">k0</span></code> were
 converted from integers to floats. Thus, trying to use
-<code class="code docutils literal notranslate"><span class="pre">acoustotreams.AcousticPhysicsArray([1],</span> <span class="pre">k0=1j)</span></code> will raise an error, because the complex number
+<code class="code docutils literal notranslate"><span class="pre">acoustotreams.AcousticsArray([1],</span> <span class="pre">k0=1j)</span></code> will raise an error, because the complex number
 cannot be interpreted as a float. Additional special keywords are <cite>basis</cite>, <cite>kpar</cite>,
 <cite>lattice</cite>, <cite>material</cite>, and <cite>modetype</cite>. These properties can also be accessed
 by setting the corresponding attribute</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
-<span class="go">AcousticPhysicsArray(</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [1, 2],</span>
 <span class="go">    material=AcousticMaterial(4000, 1000, 0),</span>
 <span class="go">)</span>
@@ -95,8 +95,8 @@ by setting the corresponding attribute</p>
 </div>
 <p>where we now have a material with the mass density <span class="math notranslate nohighlight">\(4000 kg/m^3\)</span> and speed of sound <span class="math notranslate nohighlight">\(1000 m/s\)</span>.
 As with its parent class these properties are also compared and merged when using operations on these objects</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">material</span><span class="o">=</span><span class="p">[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="go">AcousticPhysicsArray(</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">material</span><span class="o">=</span><span class="p">[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [2, 4],</span>
 <span class="go">    k0=1.0,</span>
 <span class="go">    material=AcousticMaterial(2000, 1000, 0),</span>
@@ -104,13 +104,13 @@ As with its parent class these properties are also compared and merged when usin
 </pre></div>
 </div>
 <p>and using conflicting values will raise a warning, for example
-<code class="code docutils literal notranslate"><span class="pre">acoustotreams.AcousticPhysicsArray([0,</span> <span class="pre">1],</span> <span class="pre">k0=1)</span> <span class="pre">+</span> <span class="pre">acoustotreams.AcousticPhysicsArray([2,</span> <span class="pre">3],</span> <span class="pre">k0=2)</span></code>
+<code class="code docutils literal notranslate"><span class="pre">acoustotreams.AcousticsArray([0,</span> <span class="pre">1],</span> <span class="pre">k0=1)</span> <span class="pre">+</span> <span class="pre">acoustotreams.AcousticsArray([2,</span> <span class="pre">3],</span> <span class="pre">k0=2)</span></code>
 emits <code class="code docutils literal notranslate"><span class="pre">treams/util.py:249:</span> <span class="pre">AnnotationWarning:</span> <span class="pre">at</span> <span class="pre">index</span> <span class="pre">0:</span> <span class="pre">overwriting</span> <span class="pre">key</span> <span class="pre">'k0'</span></code>.
 The special properties have also a unique behavior when appearing in matrix
 multiplications. If one of the two matrices has the special property not set, it becomes
 “transparent” to it. Check out the difference between</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">@</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticPhysicsArray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="go">AcousticPhysicsArray(</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">@</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="go">AcousticsArray(</span>
 <span class="go">    [3., 3.],</span>
 <span class="go">    k0=1.0,</span>
 <span class="go">)</span>
@@ -185,7 +185,7 @@ multiplications. If one of the two matrices has the special property not set, it
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/physicsarray.rst.txt"
+      <li><a href="_sources/acousticsarray.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -215,9 +215,9 @@ multiplications. If one of the two matrices has the special property not set, it
         <li class="right" >
           <a href="params.html" title="Scalar basis sets and other core parameters"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.7 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Acoustic physics-aware arrays</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Acoustics-aware arrays</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

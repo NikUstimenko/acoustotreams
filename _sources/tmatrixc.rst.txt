@@ -34,11 +34,54 @@ infinitely long cylinder. Due to the rotation symmetry about the z axis this mat
 is diagonal with respect to :code:`m` and due to the translation symmetry 
 it is also diagonal with respect to :code:`kz`.
 
+
+.. literalinclude:: examples/cylinder_tmatrixc.py
+    :language: python
+    :lines: 7-13
+
+For such infinitely long structures it makes more sense to talk about cross width
+instead of cross section. We obtain the averaged scattering and extinction cross width
+by 
+
+.. literalinclude:: examples/cylinder_tmatrixc.py
+    :language: python
+    :lines: 15-16
+
+Again, we can also select specific modes only, for example the modes with :math:`m = 0` and :math:`m = \pm 1`.
+
+.. literalinclude:: examples/cylinder_tmatrixc.py
+    :language: python
+    :lines: 18-21
+
+to calculate their cross width. Evaluating the field intensity in the xy plane is similar to the case of a sphere.
+
+.. literalinclude:: examples/cylinder_tmatrixc.py
+    :language: python
+    :lines: 23-42
+
+For the infinite cylinder we can also calculate the radiation pattern as a function of the angle :math:`\varphi`.
+The red arrow indicates the direction of incidence of the plane wave.
+
+.. plot:: examples/cylinder_tmatrixc.py
+
 Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices
 =========================================================================
+
+Clusters
+========
 
 One-dimensional arrays (along the x axis)
 =========================================
 
 Two-dimensional arrays (in the xy plane)
-=========================================
+========================================
+
+As the last example, we want to examine a structure that is a crystal consisting
+of infinitely long cylinders in a square array in the xy plane.
+
+.. literalinclude:: examples/crystal_tmatrixc.py
+    :language: python
+    :lines: 7-24
+
+Similarly to the case of spheres and a three-dimensional lattice, we can check the
+smallest singular value.

@@ -251,9 +251,9 @@ the parameters can be given in the order above.
 .. doctest::
 
     >>> acoustotreams.AcousticMaterial()
-    Material(1.3, 343.0, 0.0)
+    AcousticMaterial(1.3, 343.0, 0.0)
     >>> acoustotreams.AcousticMaterial(1300, 2000, 1000)
-    Material(1300, 2000, 1000)
+    AcousticMaterial(1300, 2000, 1000)
 
 It is also possible to calculate the impedance for longitudinal and transverse waves
 
@@ -264,7 +264,20 @@ It is also possible to calculate the impedance for longitudinal and transverse w
     >>> acoustotreams.AcousticMaterial().impedancet
     '0.0'
 
-Moreover, we can get the speeds from the Lamé parameters or Poisson's ratio
+Moreover, we can get the speeds from the Lamé parameters as
+
+.. doctest::
+
+    >>> acoustotreams.AcousticMaterial.from_params(1000, (1.6e7, 2e6))
+    AcousticMaterial(1000, 141.421+0j, 44.7213+0j)
+
+where the first is agrument is density and the second one is tuple :math:`(\lambda, \mu)`.
+
+We can also get the speed of transverse waves from Poisson's ratio as
+
+>>> acoustotreams.AcousticMaterial.from_pratio(1000, 141.421+0j, 0.44444)
+    AcousticMaterial(1000, 141.421+0j, 44.7228+0j)
+
 
 Lattices
 ========
