@@ -14,10 +14,10 @@ lattice = 0.035
 kz = 0
 
 spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
-tm = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz)
+chain = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz)
 
-inc = acoustotreams.plane_wave_scalar([tm.k0, 0, 0], k0=tm.k0, material=tm.material)
-sca = tm.sca(inc)
+inc = acoustotreams.plane_wave_scalar([chain.k0, 0, 0], k0=chain.k0, material=chain.material)
+sca = chain.sca(inc)
 
 x = np.linspace(-0.5*lattice, 0.5*lattice, 101)
 z = np.linspace(-0.5*lattice, 0.5*lattice, 101)
@@ -31,7 +31,7 @@ def compute_intensity(i, j, tm, radii, inc, sca):
         result = np.nan
     return i, j, result  
 results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm, radii, inc, sca) 
+    delayed(compute_intensity)(i, j, chain, radii, inc, sca) 
     for i in range(len(z)) 
     for j in range(len(x))
 )
@@ -72,7 +72,7 @@ def compute_velocity(i, j, tm, radii, inc, sca):
         result = np.nan
     return i, j, result  
 results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm, radii, inc, sca) 
+    delayed(compute_intensity)(i, j, chain, radii, inc, sca) 
     for i in range(len(z)) 
     for j in range(len(x))
 )

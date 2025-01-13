@@ -67,49 +67,21 @@ The red arrow indicates the direction of incidence of the plane wave.
 Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices
 =========================================================================
 
-For the next example let us look at the system of spheres on a one-dimensional
-lattice again (:ref:`tmatrix:One-dimensional arrays (along z)`). They fulfil all
-properties that define structures where the use of cylindrical waves is beneficial,
-namely they have a finite extent in the xy plane and they are periodic along the
-z direction. 
-
-The initial setup of our calculation begins with spheres in the spherical wave
-basis and placing them in a chain. This is the same procedure as in
-:ref:`tmatrix:One-dimensional arrays (along z)`.
-
-.. literalinclude:: examples/chain_tmatrixc.py
-    :language: python
-    :lines: 
-
-Next, we convert this chain in the spherical wave basis to a suitable cylindrical wave
-basis.
-
-.. literalinclude:: examples/chain_tmatrixc.py
-    :language: python
-    :lines: 
-
-We chose to add the first three diffraction orders (plus a 0.1 margin to avoid problems
-with floating point comparisons).
-
-Further, we set up the illumination and calculate the scattering by the usual
-procedure.
-
-.. literalinclude:: examples/chain_tmatrixc.py
-    :language: python
-    :lines: 
-
-We evaluate the fields in two regions. Outside of the circumscribing cylinders we can
-use the fast cylindrical wave expansion. Inside of the circumscribing cylinders but
-outside of the spheres we can use the method of
-:ref:`tmatrix:One-dimensional arrays (along z)`.
-
-Finally, we can plot the results. To illustrate the periodicity better, three unit cells
-are shown.
-
-.. plot:: examples/chain_tmatrixc.py
+Clusters
+========
 
 One-dimensional arrays (along the x axis)
 =========================================
 
 Two-dimensional arrays (in the xy plane)
-=========================================
+========================================
+
+As the last example, we want to examine a structure that is a crystal consisting
+of infinitely long cylinders in a square array in the xy plane.
+
+.. literalinclude:: examples/crystal_tmatrixc.py
+    :language: python
+    :lines: 7-24
+
+Similarly to the case of spheres and a three-dimensional lattice, we can check the
+smallest singular value.

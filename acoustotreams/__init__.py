@@ -49,7 +49,7 @@ Functions
 
 """
 
-_version__ = "0.1.6"
+_version__ = "0.1.7"
 
 from scipy.special import (  # noqa: F401
     hankel1,
