@@ -8,3 +8,7 @@ the
 
 Publications
 ============
+
+The following publications document the use of the code.
+
+1. `N. Ustimenko, C. Rockstuhl, and A. V. Kildishev, Optimal multipole center for subwavelength acoustic scatterers, arXiv (preprint), 2501.06168 (2025). <https://arxiv.org/abs/2501.06168>`_
