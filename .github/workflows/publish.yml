@@ -1,75 +1,33 @@
-name: build and publish
+name: Publish Python Package
 
 on:
-  workflow_dispatch:
   push:
-    tags:
-      - v*
+    branches:
+      - main
 
 jobs:
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-      #fail-fast: false
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup msys2
-        if: matrix.os == 'windows-latest'
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: mingw-w64-x86_64-gcc
-      - name: Set path
-        if: matrix.os == 'windows-latest'
-        run: echo "$env:RUNNER_TEMP\msys64\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      # - name: Add CC=gcc environment variable
-      #   if: matrix.os == 'windows-latest'
-      #   run: |
-      #     echo "CC=gcc" | Out-File -FilePath $env:GITHUB_ENV -Append
-      #     echo "LDSHARED='gcc -shared'" | Out-File -FilePath $env:GITHUB_ENV -Append
-      #     echo "AR=gcc-ar" | Out-File -FilePath $env:GITHUB_ENV -Append
-      #     echo "ARFLAGS=' '" | Out-File -FilePath $env:GITHUB_ENV -Append
-      #     echo "CCFLAGS=' '" | Out-File -FilePath $env:GITHUB_ENV -Append
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-      #   if: ${{ github.event_name == 'workflow_dispatch' }}
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21.3
-      - uses: actions/upload-artifact@v3
-        with:
-          path: ./wheelhouse/*.whl
-
-  build_sdist:
-    name: Build source distribution
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Build sdist
-        run: pipx run build --sdist
-      - uses: actions/upload-artifact@v3
-        with:
-          path: dist/*.tar.gz
-
   publish:
-    name: Publish to PyPi
     runs-on: ubuntu-latest
-    needs: build_wheels
-    if: success() || failure()
     steps:
-      - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
-      - name: Use Twine to Publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          pip install twine
-          twine upload ./artifact/*.whl
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        pip install build twine
+
+    - name: Build package
+      run: python -m build
+
+    - name: Publish to PyPI
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      run: python -m twine upload dist/*
+
 
