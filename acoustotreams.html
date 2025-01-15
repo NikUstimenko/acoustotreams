@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reference &#8212; acoustotreams 0.1.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
+    <script src="_static/documentation_options.js?v=1e825a29"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="acoustotreams.ssw" href="generated/acoustotreams.ssw.html" />
+    <link rel="prev" title="Theory" href="theory.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/acoustotreams.ssw.html" title="acoustotreams.ssw"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="theory.html" title="Theory"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Reference</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-acoustotreams">
+<span id="reference"></span><h1>Reference<a class="headerlink" href="#module-acoustotreams" title="Link to this heading">¶</a></h1>
+<p>acoustotreams: A Python package for acoustic wave scattering based on the T-matrix method.</p>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h2>
+<p>The top-level classes and functions allow a high-level access to the functionality.</p>
+<section id="basis-sets">
+<h3>Basis sets<a class="headerlink" href="#basis-sets" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>ScalarCylindricalWaveBasis
+ScalarPlaneWaveBasisByUnitVector
+ScalarPlaneWaveBasisByComp
+ScalarSphericalWaveBasis</p>
+</div></blockquote>
+</section>
+<section id="matrices-and-arrays">
+<h3>Matrices and Arrays<a class="headerlink" href="#matrices-and-arrays" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>AcousticsArray
+AcousticSMatrix
+AcousticSMatrices
+AcousticTMatrix
+AcousticTMatrixC</p>
+</div></blockquote>
+</section>
+<section id="other">
+<h3>Other<a class="headerlink" href="#other" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>Lattice
+AcousticMaterial</p>
+</div></blockquote>
+</section>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><p>vfield
+pfield
+pamplitudeff
+vamplitudeff
+expand
+expandlattice
+permute
+cylindrical_wave_scalar
+plane_wave_scalar
+plane_wave_angle_scalar
+spherical_wave_scalar
+rotate
+translate</p>
+</div></blockquote>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Link to this heading">¶</a></h2>
+<p>These modules provide basic functionality for transformations within one basis set, i.e.
+one module, like translations and rotations as well as transformations among them.
+The functions in there provide an intermediate stage between the purely mathematical
+functions found in the two subpackages <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code> and the
+higher-level classes and functions.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.ssw.html#module-acoustotreams.ssw" title="acoustotreams.ssw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw</span></code></a></p></td>
+<td><p>Scalar spherical wave module.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.scw.html#module-acoustotreams.scw" title="acoustotreams.scw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw</span></code></a></p></td>
+<td><p>Scalar cylindrical wave module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.spw.html#module-acoustotreams.spw" title="acoustotreams.spw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spw</span></code></a></p></td>
+<td><p>Scalar plane wave module.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Finally, a module for calculating scattering coefficients.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.coeffsacoustics.html#module-acoustotreams.coeffsacoustics" title="acoustotreams.coeffsacoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coeffsacoustics</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="theory.html"
+                          title="previous chapter">Theory</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="generated/acoustotreams.ssw.html"
+                          title="next chapter">acoustotreams.ssw</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/acoustotreams.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/acoustotreams.ssw.html" title="acoustotreams.ssw"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="theory.html" title="Theory"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Reference</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

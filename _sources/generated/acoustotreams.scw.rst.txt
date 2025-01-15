@@ -1,0 +1,5 @@
+﻿acoustotreams.scw
+=================
+
+.. automodule:: acoustotreams.scw
+   :no-members:

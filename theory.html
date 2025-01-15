@@ -5,18 +5,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Theory &#8212; acoustotreams 0.1.10 documentation</title>
+    <title>Theory &#8212; acoustotreams 0.1.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=bafade30"></script>
+    <script src="_static/documentation_options.js?v=1e825a29"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Development and contributing" href="dev.html" />
+    <link rel="next" title="Reference" href="acoustotreams.html" />
     <link rel="prev" title="Acoustic S-Matrices for plane waves" href="smatrix.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,12 +34,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="dev.html" title="Development and contributing"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.html" title="Reference"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="smatrix.html" title="Acoustic S-Matrices for plane waves"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.10 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.11 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Theory</a></li> 
       </ul>
     </div>  
@@ -51,7 +55,71 @@
   <section id="theory">
 <h1>Theory<a class="headerlink" href="#theory" title="Link to this heading">¶</a></h1>
 <p>These sections give an overview over theory that underlies the different aspects of acoustotreams.
-For more in-depth information, there is also a list of associated Publications.</p>
+For more in-depth information, there is also a list of associated <a class="reference internal" href="about.html#publications"><span class="std std-ref">Publications</span></a>.</p>
+<section id="master-equations-of-linear-monochromatic-acoustics">
+<h2>Master equations of linear monochromatic acoustics<a class="headerlink" href="#master-equations-of-linear-monochromatic-acoustics" title="Link to this heading">¶</a></h2>
+<p>The master equations that describe propagation of pressure waves can be written
+in frequency domain in the absence of external sources and shear (transverse)
+waves as <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+\boldsymbol{\nabla}&amp; 0 \\
+0&amp; \boldsymbol{\nabla} \cdot
+\end{pmatrix}
+\begin{pmatrix}
+p\\
+\boldsymbol{v}
+\end{pmatrix} =
+\mathrm i \omega
+\begin{pmatrix}
+0&amp;  \rho\\
+\frac{1}{\rho c^2}&amp; 0
+\end{pmatrix}
+\begin{pmatrix}
+p\\
+\boldsymbol{v}
+\end{pmatrix}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p = p(\boldsymbol{r}, \omega)\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol v = \boldsymbol v(\boldsymbol r, \omega)\)</span>
+are the pressure and velocity fields (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.pfield()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vfield()</span></code>).
+All these quantities are complex valued fields, that depend on the angular frequency <span class="math notranslate nohighlight">\(\omega\)</span> and
+the position <span class="math notranslate nohighlight">\(\boldsymbol r\)</span>. The material parameters are the speed of sound <span class="math notranslate nohighlight">\(c\)</span>, and
+the mass density <span class="math notranslate nohighlight">\(\rho\)</span>. Conventionally, within acoustotreams the (air) wave number
+<span class="math notranslate nohighlight">\(k_0 = \frac{\omega}{c_0}\)</span> is generally used to express the frequency. Here <span class="math notranslate nohighlight">\(c_0\)</span> is
+the speed of sound in air being 343 m/s.</p>
+<p>In acoustotreams we can also find the pressure and velocity fields in the presence of objects
+that support both pressure and shear waves while the background media support <em>no</em> shear waves.
+In this case we explicitly solve the equation  for the displacement field <span class="math notranslate nohighlight">\(\boldsymbol u\)</span> <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<div class="math notranslate nohighlight">
+\[\omega^2 \boldsymbol u + c^2 \boldsymbol \Delta \boldsymbol u + (c^2 - c_t^2) \nabla (\nabla \cdot \boldsymbol u)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the mass density, <span class="math notranslate nohighlight">\(c\)</span> is the speed of longitudinal pressure waves,
+and <span class="math notranslate nohighlight">\(c_t\)</span> is the speed of transverse shear waves (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial()</span></code>).
+Due to the requirement of isotropy these quantities are all scalar.</p>
+<p>For the transformation to the time domain we use for a general function
+<span class="math notranslate nohighlight">\(f(\omega)\)</span></p>
+<div class="math notranslate nohighlight">
+\[f(t) = \int_{-\infty}^\infty \mathrm d t f(\omega) \mathrm e^{-\mathrm i \omega t}\]</div>
+<p>as Fourier transformation convention, and thus the inverse transformation is</p>
+<div class="math notranslate nohighlight">
+\[f(\omega)
+= \int_{-\infty}^\infty \frac{\mathrm d \omega}{2 \pi}
+f(t) \mathrm e^{\mathrm i \omega t}\]</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>H. Bruus, Acoustofluidics 2: Perturbation theory and
+ultrasound resonance modes  Lab Chip 12, 20 (2012).</p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>L. D. Landau and E. M. Lifshitz, Fluid Mechanics: Landau
+and Lifshitz: Course of Theoretical Physics, Volume 6 (Elsevier,
+Amsterdam, 2013).</p>
+</aside>
+</aside>
+</section>
 </section>
 
 
@@ -66,6 +134,7 @@ For more in-depth information, there is also a list of associated Publications.<
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acoustotreams.html">Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dev.html">Development and contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>
@@ -77,8 +146,8 @@ For more in-depth information, there is also a list of associated Publications.<
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="dev.html"
-                          title="next chapter">Development and contributing</a></p>
+    <p class="topless"><a href="acoustotreams.html"
+                          title="next chapter">Reference</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -108,12 +177,15 @@ For more in-depth information, there is also a list of associated Publications.<
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="dev.html" title="Development and contributing"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.html" title="Reference"
              >next</a> |</li>
         <li class="right" >
           <a href="smatrix.html" title="Acoustic S-Matrices for plane waves"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.10 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.11 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Theory</a></li> 
       </ul>
     </div>

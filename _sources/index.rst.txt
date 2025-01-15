@@ -12,6 +12,7 @@ Welcome to acoustotreams's documentation!
    gettingstarted
    intro
    theory
+   acoustotreams
    dev
    about
    

@@ -1,0 +1,6 @@
+acoustotreams.ssw.translate
+===========================
+
+.. currentmodule:: acoustotreams.ssw
+
+.. autofunction:: translate
