@@ -4,31 +4,35 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s =  2 * np.pi * np.linspace(10000, 50000, 200) / 343
+k0s =  2 * np.pi * np.linspace(10000, 75000, 200) / 343
 material_slab = acoustotreams.AcousticMaterial(698, 950)
 thickness = 0.0025
-materials = [acoustotreams.AcousticMaterial(1050, 2350), 
-            acoustotreams.AcousticMaterial(998, 1497)]
-lmax = 4
-radius = 0.0075
 period = 0.025
 lattice = acoustotreams.Lattice.square(period)
+materials = [acoustotreams.AcousticMaterial(1050, 2350), 
+            acoustotreams.AcousticMaterial(998, 1497)]
+radius = 0.0075
+lmax = 3
 
+n = 343 / materials[1].c 
 
 tr = np.zeros((len(k0s), 2))
 def compute_coeffs(k0):
-    kpar = [0, 0.1 * k0]
+    kpar = np.array([0, 0.1 * k0])
+
     spheres = acoustotreams.AcousticTMatrix.sphere(
         lmax, k0, radius, materials
-        ).latticeinteraction.solve(lattice, kpar)
+        ).latticeinteraction.solve(lattice, kpar * n)
     
-    pwb = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders(kpar, lattice, 0.02)
-    plw = acoustotreams.plane_wave_scalar(kpar, k0=k0, basis=pwb, material=materials[1])
-    slab = acoustotreams.AcousticSMatrices.slab(thickness, pwb, k0, [materials[1], material_slab, materials[1]])
-    dist = acoustotreams.AcousticSMatrices.propagation([0, 0, radius], pwb, k0, materials[1])
-    array = acoustotreams.AcousticSMatrices.from_array(spheres, pwb)
+    bmax = 2.1 * np.pi / period
+    bmax = 0
+    spwb = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders(kpar, lattice, bmax)
+    splw = acoustotreams.plane_wave_scalar(kpar, k0=k0, basis=spwb, material=materials[1])
+    slab = acoustotreams.AcousticSMatrices.slab(thickness, spwb, k0, [materials[1], material_slab, materials[1]])
+    dist = acoustotreams.AcousticSMatrices.propagation([0, 0, radius], spwb, k0, materials[1])
+    array = acoustotreams.AcousticSMatrices.from_array(spheres, spwb)
     total = acoustotreams.AcousticSMatrices.stack([slab, dist, array])
-    return total.tr(plw)
+    return total.tr(splw)
 
 res = Parallel(n_jobs=-1)(delayed(compute_coeffs)(k0s[i]) for i in range(len(k0s)))
 for i in range(len(k0s)):
