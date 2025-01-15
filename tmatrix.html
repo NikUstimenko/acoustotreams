@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoustotreams 0.1.8 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoustotreams 0.1.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=22607128"></script>
+    <script src="_static/documentation_options.js?v=bafade30"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="operators.html" title="Operators"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.8 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -150,7 +150,7 @@ the direction of incidence of the plane wave.</p>
 <span class="n">radpattern</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_radpattern</span><span class="p">)(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)))</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="_downloads/4db7961589a8b659add9c6c298e2527d/sphere.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/ffac72f8ff42bee317f7ecb436a64a02/sphere.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="clusters">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
@@ -217,7 +217,7 @@ basis can be more efficient in terms of matrix size.</p>
 </div>
 <p>A comparison of the calculated near-fields and the cross sections show good agreement
 between the results of both, local and global, T-matrices.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/2f373c568a269e5847e11c539f9854f1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/acdce4ee8fd3701bf7ca9ae68d6672e1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 <p>In the last figure, the T-matrix is rotated by 90 degrees about the y axis and the
 illumination is set accordingly to be a plane wave propagating in the x direction,
 such that the whole system remains the same. It shows how the rotate operator
@@ -227,7 +227,7 @@ produces consistent results.</p>
 <span class="n">sca</span> <span class="o">=</span> <span class="n">tm_rotate</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="_downloads/2f373c568a269e5847e11c539f9854f1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/acdce4ee8fd3701bf7ca9ae68d6672e1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="clusters-born-approximations">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Clusters (Born approximations)</a><a class="headerlink" href="#clusters-born-approximations" title="Link to this heading">¶</a></h2>
@@ -310,7 +310,7 @@ however, in the dipole approximation.</p>
     <span class="n">intensity</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="_downloads/167b5e31fa3a68f5d93cabfb9bd977c6/chain.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/a02ea8c2ba18258fe811e93c331ca534/chain.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="two-dimensional-arrays-in-the-xy-plane">
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Two-dimensional arrays (in the xy plane)</a><a class="headerlink" href="#two-dimensional-arrays-in-the-xy-plane" title="Link to this heading">¶</a></h2>
@@ -360,7 +360,7 @@ previous examples. Most importantly we changed the value of the variable <code c
 to an instance of a two-dimensional <code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code> and set <code class="code docutils literal notranslate"><span class="pre">kpar</span></code>
 accordingly. Most other changes are just resulting from the change of the coordinate
 system.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/f216cf50362cf137998d2ee51a62cc67/grid.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/f71a90d80aa80eed4c2b9ec5e856bbba/grid.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="three-dimensional-arrays">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Three-dimensional arrays</a><a class="headerlink" href="#three-dimensional-arrays" title="Link to this heading">¶</a></h2>
@@ -384,7 +384,7 @@ additional modes at higher frequencies in the chosen range.</p>
 <span class="n">res</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_svd</span><span class="p">)(</span><span class="n">k0s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">)))</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="_downloads/74a26a1e14b5c1e9b33c709b7481ee12/crystal.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/39e22a2011006891a22db4047cb077c6/crystal.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 </section>
 
@@ -447,7 +447,7 @@ additional modes at higher frequencies in the chosen range.</p>
         <li class="right" >
           <a href="operators.html" title="Operators"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.8 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.10 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
