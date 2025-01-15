@@ -484,7 +484,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
             kz (float): Wave vector z-component. Ideally it is in the first Brillouin
                 zone (use :func:`treams.misc.firstbrillouin1d`).
             mmax (int): Maximal value for the z-component of the angular momentum.
-            lattice (:class:`treams.Lattice` or float): Lattice definition or pitch.
+            lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
             bmax (float): Maximal change of the z-component of the wave vector. So,
                 this defines a maximal momentum transfer from the given value `kz`.
             nmax (int, optional): Number of positions.

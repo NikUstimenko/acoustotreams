@@ -11,10 +11,9 @@ period = 0.025
 lattice = acoustotreams.Lattice.square(period)
 materials = [acoustotreams.AcousticMaterial(1050, 2350), 
             acoustotreams.AcousticMaterial(998, 1497)]
-radius = 0.0075
-lmax = 3
-
 n = 343 / materials[1].c 
+radius = 0.0075
+lmax = mmax = 3
 
 tr = np.zeros((len(k0s), 2))
 def compute_coeffs(k0):
@@ -22,15 +21,18 @@ def compute_coeffs(k0):
 
     spheres = acoustotreams.AcousticTMatrix.sphere(
         lmax, k0, radius, materials
-        ).latticeinteraction.solve(lattice, kpar * n)
-    
+        ).latticeinteraction.solve(period, kpar[0] * n)
     bmax = 2.1 * np.pi / period
     bmax = 0
+    scwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kpar[0], mmax, period, bmax)
+    spheres_scw = acoustotreams.AcousticTMatrixC.from_array(spheres, scwb)
+    chain_scw = spheres_scw.latticeinteraction.solve(period, kpar[1] * n)
+
     spwb = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders(kpar, lattice, bmax)
     splw = acoustotreams.plane_wave_scalar(kpar, k0=k0, basis=spwb, material=materials[1])
     slab = acoustotreams.AcousticSMatrices.slab(thickness, spwb, k0, [materials[1], material_slab, materials[1]])
     dist = acoustotreams.AcousticSMatrices.propagation([0, 0, radius], spwb, k0, materials[1])
-    array = acoustotreams.AcousticSMatrices.from_array(spheres, spwb)
+    array = acoustotreams.AcousticSMatrices.from_array(chain_scw, spwb)
     total = acoustotreams.AcousticSMatrices.stack([slab, dist, array])
     return total.tr(splw)
 

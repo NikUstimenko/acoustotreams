@@ -47,7 +47,7 @@ use a simple loop to solve the system for all wave numbers.
 
 .. literalinclude:: examples/array_spheres.py
    :language: python
-   :lines: 18-36
+   :lines: 17-35
 
 We set some oblique incidence and the array of spheres. Then, we define a 
 plane wave and the needed S-matrices: a slab, the distance between the
@@ -56,11 +56,34 @@ S-matrix representation itself.
 
 .. plot:: examples/array_spheres.py
 
-From cylindrical T-matrix gratings
-==================================
+Band structure
+==============
 
-Now, we want to perform a small test of the methods. Instead of creating the
-two-dimensional sphere array right away, we intermediately create a one-dimensional
-array, then calculate cylindrical T-matrices, and place them in a second
-one-dimensional lattice, thereby, obtaining the S-matrix from the previous section.
+Finally, we want to compute the band structure of a system consisting of the periodic
+repetition of an S-matrix along the z direction. In principle, one can obtain this
+band structure also from the lattice interaction in the T-matrix, but calculating it
+from the S-matrix has two benefits. First, more complex systems can be analyzed, because
+slabs and objects described by cylindrical T-matrices can be included. Second, one only
+defines :math:`k_0`, :math:`k_x`, and :math:`k_y`. Then, the result of the calculation
+are all values :math:`k_z` and the plane wave decomposition from an eigenvalue decomposition. 
+So, instead of a 4-dimensional parameter sweep only a 3-dimensional sweep is necessary 
+decreasing the computation time. The downside is, that one is restricted to unit cells, 
+where one vector points along the z axis and is perpendicular to the other two.
 
+We take the array of spheres on top of a slab and continue this one infinitely along the
+z axis. Thus, the setup is
+
+.. literalinclude:: examples/band_structure.py
+   :language: python
+   :lines: 7-17
+
+where :code:`az` is the length of the lattice vector pointing in the z direction. With a
+simple loop we can get the band structure for :math:`k_x = k_y = 0`.
+
+.. literalinclude:: examples/band_structure.py
+   :language: python
+   :lines: 27-44
+
+which looks as follows, after a cut on the imaginary part of the :math:`k_z` component.
+
+.. plot:: examples/band_structure.py

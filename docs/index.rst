@@ -46,6 +46,7 @@ Features
 * Scattering from clusters of particles
 * Scattering from particles and clusters arranged in 3d-, 2d-, and 1d-lattices
 * Calculation of sound propagation in stratified media
+* Band calculation in crystal structures
 
 Indices and tables
 ==================
