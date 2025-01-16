@@ -5,19 +5,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.spw &#8212; acoustotreams 0.1.14 documentation</title>
+    <title>acoustotreams.spw &#8212; acoustotreams 0.1.16 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=468bc497"></script>
+    <script src="../_static/documentation_options.js?v=d50bcae4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="acoustotreams.coeffsacoustics" href="acoustotreams.coeffsacoustics.html" />
-    <link rel="prev" title="acoustotreams.scw" href="acoustotreams.scw.html" />
+    <link rel="next" title="acoustotreams.spw.to_scw" href="acoustotreams.spw.to_scw.html" />
+    <link rel="prev" title="acoustotreams.scw.translate_periodic" href="acoustotreams.scw.translate_periodic.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -36,12 +37,12 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.coeffsacoustics.html" title="acoustotreams.coeffsacoustics"
+          <a href="acoustotreams.spw.to_scw.html" title="acoustotreams.spw.to_scw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.scw.html" title="acoustotreams.scw"
+          <a href="acoustotreams.scw.translate_periodic.html" title="acoustotreams.scw.translate_periodic"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.spw</a></li> 
       </ul>
@@ -55,9 +56,22 @@
   <section id="module-acoustotreams.spw">
 <span id="acoustotreams-spw"></span><h1>acoustotreams.spw<a class="headerlink" href="#module-acoustotreams.spw" title="Link to this heading">¶</a></h1>
 <p>Scalar plane wave module.</p>
-<p>to_scw
-to_ssw
-translate</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.spw.to_scw.html#acoustotreams.spw.to_scw" title="acoustotreams.spw.to_scw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_scw</span></code></a>(kzcw, m, kx, ky, kzpw, *args, **kwargs)</p></td>
+<td><p>Coefficient for the expansion of a scalar plane wave in scalar cylindricrical waves</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.spw.to_ssw.html#acoustotreams.spw.to_ssw" title="acoustotreams.spw.to_ssw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ssw</span></code></a>(l, m, kx, ky, kz, *args, **kwargs)</p></td>
+<td><p>Coefficient for the expansion of a scalar plane wave in scalar spherical waves</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.spw.translate.html#acoustotreams.spw.translate" title="acoustotreams.spw.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a>(kx, ky, kz, x, y, z, *args, **kwargs)</p></td>
+<td><p>Translation coefficient for scalar plane wave modes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.spw.permute_xyz.html#acoustotreams.spw.permute_xyz" title="acoustotreams.spw.permute_xyz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permute_xyz</span></code></a>(kx, ky, kz[, inverse])</p></td>
+<td><p>Change the coordinate system of the plane wave</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
@@ -79,13 +93,13 @@ translate</p>
 
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="acoustotreams.scw.html"
-                          title="previous chapter">acoustotreams.scw</a></p>
+    <p class="topless"><a href="acoustotreams.scw.translate_periodic.html"
+                          title="previous chapter">acoustotreams.scw.translate_periodic</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="acoustotreams.coeffsacoustics.html"
-                          title="next chapter">acoustotreams.coeffsacoustics</a></p>
+    <p class="topless"><a href="acoustotreams.spw.to_scw.html"
+                          title="next chapter">acoustotreams.spw.to_scw</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -118,12 +132,12 @@ translate</p>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.coeffsacoustics.html" title="acoustotreams.coeffsacoustics"
+          <a href="acoustotreams.spw.to_scw.html" title="acoustotreams.spw.to_scw"
              >next</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.scw.html" title="acoustotreams.scw"
+          <a href="acoustotreams.scw.translate_periodic.html" title="acoustotreams.scw.translate_periodic"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.spw</a></li> 
       </ul>

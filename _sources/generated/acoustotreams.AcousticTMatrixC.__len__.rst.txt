@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.\_\_len\_\_
+==========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.__len__

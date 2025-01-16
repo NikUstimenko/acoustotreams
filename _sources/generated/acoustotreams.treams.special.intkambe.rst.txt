@@ -1,0 +1,6 @@
+﻿acoustotreams.treams.special.intkambe
+=====================================
+
+.. currentmodule:: acoustotreams
+
+.. autodata:: treams.special.intkambe

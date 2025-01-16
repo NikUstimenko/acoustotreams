@@ -1,0 +1,6 @@
+﻿acoustotreams.treams.misc.firstbrillouin3d
+==========================================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: treams.misc.firstbrillouin3d

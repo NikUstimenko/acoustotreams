@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.conjugate
+=======================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.conjugate

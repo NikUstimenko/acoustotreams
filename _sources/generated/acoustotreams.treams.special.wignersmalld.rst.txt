@@ -1,0 +1,6 @@
+﻿acoustotreams.treams.special.wignersmalld
+=========================================
+
+.. currentmodule:: acoustotreams
+
+.. autodata:: treams.special.wignersmalld

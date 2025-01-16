@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.\_\_lshift\_\_
+============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.__lshift__

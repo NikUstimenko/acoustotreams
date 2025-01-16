@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.\_\_floordiv\_\_
+===============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.__floordiv__

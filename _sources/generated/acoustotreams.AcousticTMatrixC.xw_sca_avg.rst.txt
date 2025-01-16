@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.xw\_sca\_avg
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticTMatrixC.xw_sca_avg

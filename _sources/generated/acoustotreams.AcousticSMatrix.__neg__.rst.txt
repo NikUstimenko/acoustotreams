@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.\_\_neg\_\_
+=========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.__neg__

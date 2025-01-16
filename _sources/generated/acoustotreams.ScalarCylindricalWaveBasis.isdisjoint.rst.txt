@@ -1,0 +1,6 @@
+acoustotreams.ScalarCylindricalWaveBasis.isdisjoint
+===================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarCylindricalWaveBasis.isdisjoint

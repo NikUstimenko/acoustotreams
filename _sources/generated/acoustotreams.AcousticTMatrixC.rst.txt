@@ -1,0 +1,137 @@
+﻿acoustotreams.AcousticTMatrixC
+==============================
+
+.. currentmodule:: acoustotreams
+
+.. autoclass:: AcousticTMatrixC
+
+  
+  
+      .. rubric:: Attributes
+
+      .. autosummary::
+         :toctree:
+      
+         ~AcousticTMatrixC.T
+         ~AcousticTMatrixC.ann
+         ~AcousticTMatrixC.expand
+         ~AcousticTMatrixC.expandlattice
+         ~AcousticTMatrixC.imag
+         ~AcousticTMatrixC.interaction
+         ~AcousticTMatrixC.interactionapprox
+         ~AcousticTMatrixC.isglobal
+         ~AcousticTMatrixC.krhos
+         ~AcousticTMatrixC.ks
+         ~AcousticTMatrixC.latticeinteraction
+         ~AcousticTMatrixC.latticeinteractionapprox
+         ~AcousticTMatrixC.ndim
+         ~AcousticTMatrixC.pamplitudeff
+         ~AcousticTMatrixC.permute
+         ~AcousticTMatrixC.pfield
+         ~AcousticTMatrixC.real
+         ~AcousticTMatrixC.rotate
+         ~AcousticTMatrixC.shape
+         ~AcousticTMatrixC.size
+         ~AcousticTMatrixC.translate
+         ~AcousticTMatrixC.vamplitudeff
+         ~AcousticTMatrixC.vfield
+         ~AcousticTMatrixC.xw_ext_avg
+         ~AcousticTMatrixC.xw_sca_avg
+  
+  
+
+  
+      .. rubric:: Methods
+
+      .. autosummary::
+         :toctree:
+
+      
+         ~AcousticTMatrixC.__abs__
+         ~AcousticTMatrixC.__add__
+         ~AcousticTMatrixC.__and__
+         ~AcousticTMatrixC.__array__
+         ~AcousticTMatrixC.__array_function__
+         ~AcousticTMatrixC.__array_ufunc__
+         ~AcousticTMatrixC.__divmod__
+         ~AcousticTMatrixC.__eq__
+         ~AcousticTMatrixC.__floordiv__
+         ~AcousticTMatrixC.__ge__
+         ~AcousticTMatrixC.__getitem__
+         ~AcousticTMatrixC.__gt__
+         ~AcousticTMatrixC.__invert__
+         ~AcousticTMatrixC.__le__
+         ~AcousticTMatrixC.__len__
+         ~AcousticTMatrixC.__lshift__
+         ~AcousticTMatrixC.__lt__
+         ~AcousticTMatrixC.__matmul__
+         ~AcousticTMatrixC.__mod__
+         ~AcousticTMatrixC.__mul__
+         ~AcousticTMatrixC.__ne__
+         ~AcousticTMatrixC.__neg__
+         ~AcousticTMatrixC.__or__
+         ~AcousticTMatrixC.__pos__
+         ~AcousticTMatrixC.__pow__
+         ~AcousticTMatrixC.__repr__
+         ~AcousticTMatrixC.__rshift__
+         ~AcousticTMatrixC.__setitem__
+         ~AcousticTMatrixC.__str__
+         ~AcousticTMatrixC.__sub__
+         ~AcousticTMatrixC.__truediv__
+         ~AcousticTMatrixC.__xor__
+         ~AcousticTMatrixC.all
+         ~AcousticTMatrixC.any
+         ~AcousticTMatrixC.astype
+         ~AcousticTMatrixC.cluster
+         ~AcousticTMatrixC.conj
+         ~AcousticTMatrixC.conjugate
+         ~AcousticTMatrixC.cumprod
+         ~AcousticTMatrixC.cumsum
+         ~AcousticTMatrixC.cylinder
+         ~AcousticTMatrixC.diagonal
+         ~AcousticTMatrixC.flatten
+         ~AcousticTMatrixC.from_array
+         ~AcousticTMatrixC.max
+         ~AcousticTMatrixC.min
+         ~AcousticTMatrixC.prod
+         ~AcousticTMatrixC.relax
+         ~AcousticTMatrixC.sca
+         ~AcousticTMatrixC.sum
+         ~AcousticTMatrixC.swapaxes
+         ~AcousticTMatrixC.trace
+         ~AcousticTMatrixC.transpose
+         ~AcousticTMatrixC.valid_points
+         ~AcousticTMatrixC.xw
+      
+         ~AcousticTMatrixC.__mod__
+         ~AcousticTMatrixC.__pow__
+         ~AcousticTMatrixC.__add__
+         ~AcousticTMatrixC.__array_ufunc__
+         ~AcousticTMatrixC.__xor__
+         ~AcousticTMatrixC.__le__
+         ~AcousticTMatrixC.__invert__
+         ~AcousticTMatrixC.__mul__
+         ~AcousticTMatrixC.__rshift__
+         ~AcousticTMatrixC.__and__
+         ~AcousticTMatrixC.__floordiv__
+         ~AcousticTMatrixC.__pos__
+         ~AcousticTMatrixC.__eq__
+         ~AcousticTMatrixC.__gt__
+         ~AcousticTMatrixC.__or__
+         ~AcousticTMatrixC.__str__
+         ~AcousticTMatrixC.__divmod__
+         ~AcousticTMatrixC.__len__
+         ~AcousticTMatrixC.__abs__
+         ~AcousticTMatrixC.__array__
+         ~AcousticTMatrixC.__setitem__
+         ~AcousticTMatrixC.__neg__
+         ~AcousticTMatrixC.__ge__
+         ~AcousticTMatrixC.__sub__
+         ~AcousticTMatrixC.__array_function__
+         ~AcousticTMatrixC.__matmul__
+         ~AcousticTMatrixC.__lshift__
+         ~AcousticTMatrixC.__ne__
+         ~AcousticTMatrixC.__truediv__
+         ~AcousticTMatrixC.__lt__
+         ~AcousticTMatrixC.__repr__
+  

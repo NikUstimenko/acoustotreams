@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.stack
+=====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.stack

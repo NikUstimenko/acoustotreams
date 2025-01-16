@@ -1,0 +1,6 @@
+acoustotreams.ScalarPlaneWaveBasisByComp.kz
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: ScalarPlaneWaveBasisByComp.kz

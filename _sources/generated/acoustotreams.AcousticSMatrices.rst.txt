@@ -1,0 +1,56 @@
+﻿acoustotreams.AcousticSMatrices
+===============================
+
+.. currentmodule:: acoustotreams
+
+.. autoclass:: AcousticSMatrices
+
+  
+  
+      .. rubric:: Attributes
+
+      .. autosummary::
+         :toctree:
+      
+         ~AcousticSMatrices.permute
+         ~AcousticSMatrices.rotate
+         ~AcousticSMatrices.translate
+  
+  
+
+  
+      .. rubric:: Methods
+
+      .. autosummary::
+         :toctree:
+
+      
+         ~AcousticSMatrices.__eq__
+         ~AcousticSMatrices.__ge__
+         ~AcousticSMatrices.__getitem__
+         ~AcousticSMatrices.__gt__
+         ~AcousticSMatrices.__le__
+         ~AcousticSMatrices.__len__
+         ~AcousticSMatrices.__lt__
+         ~AcousticSMatrices.__ne__
+         ~AcousticSMatrices.__repr__
+         ~AcousticSMatrices.__str__
+         ~AcousticSMatrices.add
+         ~AcousticSMatrices.bands_kz
+         ~AcousticSMatrices.double
+         ~AcousticSMatrices.from_array
+         ~AcousticSMatrices.illuminate
+         ~AcousticSMatrices.interface
+         ~AcousticSMatrices.periodic
+         ~AcousticSMatrices.propagation
+         ~AcousticSMatrices.slab
+         ~AcousticSMatrices.stack
+         ~AcousticSMatrices.tr
+      
+         ~AcousticSMatrices.__ne__
+         ~AcousticSMatrices.__le__
+         ~AcousticSMatrices.__lt__
+         ~AcousticSMatrices.__ge__
+         ~AcousticSMatrices.__gt__
+         ~AcousticSMatrices.__str__
+  

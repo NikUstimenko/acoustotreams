@@ -1,0 +1,6 @@
+acoustotreams.scw.translate\_periodic
+=====================================
+
+.. currentmodule:: acoustotreams.scw
+
+.. autofunction:: translate_periodic

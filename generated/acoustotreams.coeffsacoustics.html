@@ -5,19 +5,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.coeffsacoustics &#8212; acoustotreams 0.1.14 documentation</title>
+    <title>acoustotreams.coeffsacoustics &#8212; acoustotreams 0.1.16 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=468bc497"></script>
+    <script src="../_static/documentation_options.js?v=d50bcae4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="acoustotreams.coeffsacoustics.fresnel_acoustics" href="acoustotreams.coeffsacoustics.fresnel_acoustics.html" />
-    <link rel="prev" title="acoustotreams.spw" href="acoustotreams.spw.html" />
+    <link rel="next" title="acoustotreams.coeffsacoustics.mie_acoustics" href="acoustotreams.coeffsacoustics.mie_acoustics.html" />
+    <link rel="prev" title="acoustotreams.spw.permute_xyz" href="acoustotreams.spw.permute_xyz.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -36,12 +37,12 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.coeffsacoustics.fresnel_acoustics.html" title="acoustotreams.coeffsacoustics.fresnel_acoustics"
+          <a href="acoustotreams.coeffsacoustics.mie_acoustics.html" title="acoustotreams.coeffsacoustics.mie_acoustics"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.spw.html" title="acoustotreams.spw"
+          <a href="acoustotreams.spw.permute_xyz.html" title="acoustotreams.spw.permute_xyz"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.coeffsacoustics</a></li> 
       </ul>
@@ -54,6 +55,24 @@
             
   <section id="module-acoustotreams.coeffsacoustics">
 <span id="acoustotreams-coeffsacoustics"></span><h1>acoustotreams.coeffsacoustics<a class="headerlink" href="#module-acoustotreams.coeffsacoustics" title="Link to this heading">¶</a></h1>
+<p>Scattering coefficients for high-symmetry cases.</p>
+<p>Calculate the scattering coefficients for cases where they can be obtained analytically
+easily. This is a sphere using spherical waves (Mie coefficients), a
+cylinder using cylindrical waves, and an infinitely extended planar
+interface (Fresnel coefficients).</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.coeffsacoustics.mie_acoustics.html#acoustotreams.coeffsacoustics.mie_acoustics" title="acoustotreams.coeffsacoustics.mie_acoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics</span></code></a>(l, x, *materials)</p></td>
+<td><p>Mie scattering coefficient of degree l.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.coeffsacoustics.mie_acoustics_cyl.html#acoustotreams.coeffsacoustics.mie_acoustics_cyl" title="acoustotreams.coeffsacoustics.mie_acoustics_cyl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics_cyl</span></code></a>(kz, m, k0, radii, *materials)</p></td>
+<td><p>Scattering coefficient at an infinite cylinder</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.coeffsacoustics.fresnel_acoustics.html#acoustotreams.coeffsacoustics.fresnel_acoustics" title="acoustotreams.coeffsacoustics.fresnel_acoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fresnel_acoustics</span></code></a>(kzs, rhos)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
@@ -61,10 +80,10 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.coeffsacoustics.mie_acoustics.html#acoustotreams.coeffsacoustics.mie_acoustics" title="acoustotreams.coeffsacoustics.mie_acoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics</span></code></a>(l, x, *materials)</p></td>
-<td><p></p></td>
+<td><p>Mie scattering coefficient of degree l.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.coeffsacoustics.mie_acoustics_cyl.html#acoustotreams.coeffsacoustics.mie_acoustics_cyl" title="acoustotreams.coeffsacoustics.mie_acoustics_cyl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics_cyl</span></code></a>(kz, m, k0, radii, *materials)</p></td>
-<td><p></p></td>
+<td><p>Scattering coefficient at an infinite cylinder</p></td>
 </tr>
 </tbody>
 </table>
@@ -89,13 +108,13 @@
 
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="acoustotreams.spw.html"
-                          title="previous chapter">acoustotreams.spw</a></p>
+    <p class="topless"><a href="acoustotreams.spw.permute_xyz.html"
+                          title="previous chapter">acoustotreams.spw.permute_xyz</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="acoustotreams.coeffsacoustics.fresnel_acoustics.html"
-                          title="next chapter">acoustotreams.coeffsacoustics.fresnel_acoustics</a></p>
+    <p class="topless"><a href="acoustotreams.coeffsacoustics.mie_acoustics.html"
+                          title="next chapter">acoustotreams.coeffsacoustics.mie_acoustics</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -128,12 +147,12 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.coeffsacoustics.fresnel_acoustics.html" title="acoustotreams.coeffsacoustics.fresnel_acoustics"
+          <a href="acoustotreams.coeffsacoustics.mie_acoustics.html" title="acoustotreams.coeffsacoustics.mie_acoustics"
              >next</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.spw.html" title="acoustotreams.spw"
+          <a href="acoustotreams.spw.permute_xyz.html" title="acoustotreams.spw.permute_xyz"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.coeffsacoustics</a></li> 
       </ul>

@@ -1,0 +1,6 @@
+﻿acoustotreams.treams.misc.wave\_vec\_z
+======================================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: treams.misc.wave_vec_z

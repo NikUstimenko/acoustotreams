@@ -1,0 +1,6 @@
+acoustotreams.AcousticMaterial.from\_params
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticMaterial.from_params

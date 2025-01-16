@@ -1,0 +1,6 @@
+acoustotreams.ScalarCylindricalWaveBasis.isglobal
+=================================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: ScalarCylindricalWaveBasis.isglobal

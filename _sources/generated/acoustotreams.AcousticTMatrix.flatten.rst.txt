@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.flatten
+=====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.flatten

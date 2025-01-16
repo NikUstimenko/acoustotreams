@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Theory &#8212; acoustotreams 0.1.14 documentation</title>
+    <title>Theory &#8212; acoustotreams 0.1.16 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=468bc497"></script>
+    <script src="_static/documentation_options.js?v=d50bcae4"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="smatrix.html" title="Acoustic S-Matrices for plane waves"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Theory</a></li> 
       </ul>
     </div>  
@@ -58,9 +58,9 @@
 For more in-depth information, there is also a list of associated <a class="reference internal" href="about.html#publications"><span class="std std-ref">Publications</span></a>.</p>
 <section id="master-equations-of-linear-monochromatic-acoustics">
 <h2>Master equations of linear monochromatic acoustics<a class="headerlink" href="#master-equations-of-linear-monochromatic-acoustics" title="Link to this heading">¶</a></h2>
-<p>The master equations that describe propagation of pressure waves can be written
-in frequency domain in the absence of external sources and shear (transverse)
-waves as <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<p>The master equations that describe propagation of pressure waves in nonelastic media
+can be written  in frequency domain in the absence of external sources and shear (transverse)
+waves as <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{pmatrix}
 \boldsymbol{\nabla}&amp; 0 \\
@@ -80,21 +80,12 @@ p\\
 \boldsymbol{v}
 \end{pmatrix}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p = p(\boldsymbol{r}, \omega)\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol v = \boldsymbol v(\boldsymbol r, \omega)\)</span>
-are the pressure and velocity fields (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.pfield()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vfield()</span></code>).
+are the pressure and velocity fields (<a class="reference internal" href="generated/acoustotreams.pfield.html#acoustotreams.pfield" title="acoustotreams.pfield"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.pfield()</span></code></a>, <a class="reference internal" href="generated/acoustotreams.vfield.html#acoustotreams.vfield" title="acoustotreams.vfield"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vfield()</span></code></a>).
 All these quantities are complex valued fields, that depend on the angular frequency <span class="math notranslate nohighlight">\(\omega\)</span> and
 the position <span class="math notranslate nohighlight">\(\boldsymbol r\)</span>. The material parameters are the speed of sound <span class="math notranslate nohighlight">\(c\)</span>, and
 the mass density <span class="math notranslate nohighlight">\(\rho\)</span>. Conventionally, within acoustotreams the (air) wave number
 <span class="math notranslate nohighlight">\(k_0 = \frac{\omega}{c_0}\)</span> is generally used to express the frequency. Here <span class="math notranslate nohighlight">\(c_0\)</span> is
 the speed of sound in air being 343 m/s.</p>
-<p>In acoustotreams we can also find the pressure and velocity fields in the presence of objects
-that support both pressure and shear waves while the background media support <em>no</em> shear waves.
-In this case we explicitly solve the equation  for the displacement field <span class="math notranslate nohighlight">\(\boldsymbol u\)</span> <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
-<div class="math notranslate nohighlight">
-\[\omega^2 \boldsymbol u + c^2 \boldsymbol \Delta \boldsymbol u + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \boldsymbol u) = 0\]</div>
-<p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the mass density, <span class="math notranslate nohighlight">\(c\)</span> is the speed of longitudinal pressure waves,
-and <span class="math notranslate nohighlight">\(c_t\)</span> is the speed of transverse shear waves (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial()</span></code>).
-Due to the requirement of isotropy these quantities are all scalar. In a medium with <span class="math notranslate nohighlight">\(c_t \equiv 0\)</span>
-the last equation coincides with the second equation from the first set.</p>
 <p>For the transformation to the time domain we use for a general function
 <span class="math notranslate nohighlight">\(f(\omega)\)</span></p>
 <div class="math notranslate nohighlight">
@@ -104,20 +95,172 @@ the last equation coincides with the second equation from the first set.</p>
 \[f(\omega)
 = \int_{-\infty}^\infty \frac{\mathrm d \omega}{2 \pi}
 f(t) \mathrm e^{\mathrm i \omega t}\]</div>
+<section id="equation-of-motion-for-elastic-objects">
+<h3>Equation of motion for elastic objects<a class="headerlink" href="#equation-of-motion-for-elastic-objects" title="Link to this heading">¶</a></h3>
+<p>In acoustotreams we can also find the pressure and velocity fields in the presence of elastic objects
+that support both pressure and shear waves while the background media support <em>no</em> shear waves.
+In this case we explicitly solve the equation for the displacement field <span class="math notranslate nohighlight">\(\boldsymbol u = \frac{\mathrm i}{\omega}\boldsymbol v\)</span> <a class="footnote-reference brackets" href="#id5" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<div class="math notranslate nohighlight">
+\[\omega^2 \boldsymbol u
++ c_t^2 \boldsymbol \Delta \boldsymbol u
++ (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \boldsymbol u)
+= 0\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the mass density, <span class="math notranslate nohighlight">\(c\)</span> is the speed of longitudinal pressure waves,
+and <span class="math notranslate nohighlight">\(c_t\)</span> is the speed of transverse shear waves (<a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial()</span></code></a>).
+Due to the requirement of isotropy these quantities are all scalar. In a medium with <span class="math notranslate nohighlight">\(c_t \equiv 0\)</span>
+the last equation coincides with the Helmholtz equations below and we can use the scalar description
+of the waves.</p>
+</section>
+</section>
+<section id="solutions-to-the-scalar-helmholtz-equation">
+<h2>Solutions to the scalar Helmholtz equation<a class="headerlink" href="#solutions-to-the-scalar-helmholtz-equation" title="Link to this heading">¶</a></h2>
+<p>Instead of immediatly solving equations from above, we will study the
+Helmholtz equation which is commonly encountered when studying wave phenomena first.
+This section mainly relies on <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<p>The scalar Helmholtz equation is</p>
+<div class="math notranslate nohighlight">
+\[\left(\Delta + k^2 \right) p
+= \boldsymbol{\nabla} \cdot (\boldsymbol{\nabla} p) - k^2 p
+= 0\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta\)</span> is the Laplace operator. Note, that by applying the divergence operator
+on equation <span class="math notranslate nohighlight">\(\boldsymbol{\nabla}p=\mathrm i \omega \boldsymbol{v}\)</span> and using the equation
+<span class="math notranslate nohighlight">\(\boldsymbol{\nabla} \cdot \boldsymbol{v} = \frac{\mathrm i \omega}{\rho c^2}p\)</span>, the scalar
+Helmholtz equation can be obtained. Alternatively, we can apply the gradient to the second equation
+and get the vector Helmholtz equation</p>
+<div class="math notranslate nohighlight">
+\[\left(\boldsymbol \Delta + k^2 \right) \boldsymbol{v} = \boldsymbol{\nabla} (\boldsymbol{\nabla} \cdot \boldsymbol v)
+- \boldsymbol{\nabla} \times \boldsymbol{\nabla} \times \boldsymbol \boldsymbol{v}
++ k^2 \boldsymbol v
+= 0\]</div>
+<p>If we denote <span class="math notranslate nohighlight">\(\psi\)</span> as a solution to the scalar Helmholtz equation, solutions to the vector Helmholtz equation
+can be constructed as follows</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\boldsymbol L = k^{-1} \boldsymbol{\nabla} \psi \\
+\boldsymbol M = \boldsymbol{\nabla} \times (\boldsymbol c \psi) \\
+\boldsymbol N = \boldsymbol{\nabla} \times k^{-1} \boldsymbol{\nabla} \times (\boldsymbol c \psi)\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol c\)</span> is a steering vector that depends on the coordinate system
+used for the solution <span class="math notranslate nohighlight">\(\psi\)</span>. We will focus the following discussion on the three
+cases of planar, cylindrical, and spherical solutions, where the coordinate systems are
+chosen to be Cartesian, cylindrical, and spherical.</p>
+<p>The first type of solution is longitudinal waves that obey constraint <span class="math notranslate nohighlight">\(\boldsymbol{\nabla} \times \boldsymbol L = 0\)</span>,
+while the second and third ones are transverse waves with the constraint <span class="math notranslate nohighlight">\(\boldsymbol{\nabla} \cdot {\boldsymbol M,\boldsymbol N} = 0\)</span>.
+In the following, we will limit the discussion of the transverse waves, because acoustic waves in a medium with <span class="math notranslate nohighlight">\(c_t \equiv 0\)</span> can
+be described by scalar pressure fields and corresponding longitudinal fields.</p>
+<section id="plane-waves">
+<h3>Plane waves<a class="headerlink" href="#plane-waves" title="Link to this heading">¶</a></h3>
+<p>In Cartesian coordinates the solution to the scalar Helmholtz equation are simple
+plane waves</p>
+<div class="math notranslate nohighlight">
+\[\psi_{\boldsymbol k}(k, \boldsymbol r) = \mathrm e^{\mathrm i \boldsymbol k \boldsymbol r}\]</div>
+<p>given by <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_Psi()</span></code> where the wave vector fulfils
+<span class="math notranslate nohighlight">\(|\boldsymbol k|^2 = k_x^2 + k_y^2 + k_z^2 = k^2\)</span>. The corresponding
+longitudinal vector plane wave is</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol L_{\boldsymbol k}(k, \boldsymbol r)
+= \frac{k_x \boldsymbol{\hat x} + k_y \boldsymbol{\hat y} + k_z \boldsymbol{\hat z}}{k}
+= \boldsymbol{\hat r}_{\boldsymbol k}
+\mathrm e^{\mathrm i \boldsymbol k \boldsymbol r}\]</div>
+<p>given by <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vpw_L()</span></code>. We normalized this wave by <span class="math notranslate nohighlight">\(k\)</span> in the medium
+such that it has unit strength for real-valued wave vectors.</p>
+</section>
+<section id="cylindrical-waves">
+<h3>Cylindrical waves<a class="headerlink" href="#cylindrical-waves" title="Link to this heading">¶</a></h3>
+<p>The cylindrical solutions can be constructed mostly analogously to the plane waves.
+The solutions in cylindrical coordinates are</p>
+<div class="math notranslate nohighlight">
+\[\psi^{(n)}_{k_z, m}(k, \boldsymbol r)
+=
+Z_m^{(n)}(k_\rho \rho) \mathrm e^{\mathrm i (m \varphi + k_z z})\]</div>
+<p>where <span class="math notranslate nohighlight">\(k_z \in \mathbb R\)</span> and <span class="math notranslate nohighlight">\(m \in \mathbb Z\)</span> are the parameters of the
+solution (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_rPsi()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_Psi()</span></code>). The radial part
+of the wave vector is defined as <span class="math notranslate nohighlight">\(k_\rho = \sqrt{k^2 - k_z^2}\)</span> with the imaginary part
+of the square root to be taken non-negative. Note that here <span class="math notranslate nohighlight">\(\rho\)</span> is a radial distance
+of cylindrical coordinates. The functions <span class="math notranslate nohighlight">\(Z_m^{(n)}\)</span> are the Bessel and Hankel functions.
+For a complete set of solutions, it is necessary to select two of them. We generally use the (regular)
+Bessel functions <span class="math notranslate nohighlight">\(J_m = Z_m^{(1)}\)</span> and the Hankel functions of the first kind
+<span class="math notranslate nohighlight">\(H_m^{(1)} = Z_m^{(3)}\)</span>, which are singular at <span class="math notranslate nohighlight">\(\rho \to 0\)</span> and correspond to radiating waves,
+(<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.jv()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.hankel1()</span></code>). The vector cylindrical waves are then</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{L}_{k_z, m}^{(n)}(k, \mathbf{r})
+=
+\left[\frac{k_{\rho}}{k} Z'_{m}(k_{\rho}\rho) \hat{\boldsymbol{\rho}}
++ \mathrm{i}\frac{m k_{\rho}}{k}\frac{Z_{m}(k_{\rho}\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}}
++ \frac{\mathrm{i} k_z}{k}Z_{m}(k_{\rho}\rho) \hat{\mathbf{z}} \right]
+\mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}\]</div>
+<p>where we, again, normalized the functions by by <span class="math notranslate nohighlight">\(k\)</span> in the medium (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vcw_rL()</span></code>,
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vcw_L()</span></code>).</p>
+</section>
+<section id="spherical-waves">
+<h3>Spherical waves<a class="headerlink" href="#spherical-waves" title="Link to this heading">¶</a></h3>
+<p>Finally, we define the spherical wave solutions</p>
+<div class="math notranslate nohighlight">
+\[\psi_{lm}^{(n)}(k, \mathbf{r}) = z_l^{(n)}(kr) Y_{lm}(\theta, \phi)\]</div>
+<p>given by (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_rPsi()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_Psi()</span></code>)
+where <span class="math notranslate nohighlight">\(z_l^{(n)}\)</span> are the spherical Bessel and Hankel functions.
+We choose <span class="math notranslate nohighlight">\(j_l = z_l^{(1)}\)</span> and <span class="math notranslate nohighlight">\(h_l^{(1)} = z_l^{(3)}\)</span> in complete analogy
+to the cylindrical waves case (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.spherical_jn()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">treams.special.spherical_hankel1()</span></code>). <span class="math notranslate nohighlight">\(Y_{lm}\)</span> are the spherical harmonics
+(<a class="reference internal" href="generated/acoustotreams.treams.special.sph_harm.html#treams.special.sph_harm" title="treams.special.sph_harm"><code class="xref py py-func docutils literal notranslate"><span class="pre">treams.special.sph_harm()</span></code></a>). The value <span class="math notranslate nohighlight">\(l \in \mathbb N \cup {0}\)</span> refers to
+the angular momentum or degree. The projection of the angular momentum onto the z axis or order is
+<span class="math notranslate nohighlight">\(m \in \mathbb Z\)</span> with <span class="math notranslate nohighlight">\(|m| \leq l\)</span>. Hence, the vector spherical waves are defined as</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{L}_{lm}^{(n)} (k, \mathbf{r})
+ = -\mathrm{i} \left[{z_l^{(n)}}' (kr) \mathbf{Z}_{lm}(\theta, \varphi) + \frac{z_l^{(n)}(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
+<p>(<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsw_rL()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsw_L()</span></code>) where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\boldsymbol X_{lm} (\theta, \varphi)
+= \mathrm i \sqrt{\frac{2 l + 1}{4 \pi l (l + 1)} \frac{(l - m)!}{(l + m)!}}
+\left(\mathrm i \pi_l^m(\cos\theta) \boldsymbol{\hat\theta}
+- \tau_l^m (\cos\theta) \boldsymbol{\hat\varphi}\right)
+\mathrm e^{\mathrm i m \varphi}
+\\
+\boldsymbol Y_{lm} (\theta, \varphi)
+= \mathrm i \sqrt{\frac{2 l + 1}{4 \pi l (l + 1)} \frac{(l - m)!}{(l + m)!}}
+\left(\tau_l^m (\cos\theta) \boldsymbol{\hat\theta}
++ \mathrm i \pi_l^m (\cos\theta) \boldsymbol{\hat\varphi}\right)
+\mathrm e^{\mathrm i m \varphi}
+\\
+\boldsymbol Z_{lm} (\theta, \varphi)
+= \mathrm i Y_{lm}(\theta, \varphi) \boldsymbol{\hat r}\end{split}\]</div>
+<p>are the vector spherical harmonics (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsh_X()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsh_Y()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsh_Z()</span></code>) imported from <cite>treams.special</cite>.
+These are themselves defined by the functions <span class="math notranslate nohighlight">\(\pi_l^m(x) = \frac{m P_l^m(x)}{\sqrt{1 - x^2}}\)</span>,
+<span class="math notranslate nohighlight">\(\tau_l^m(x) = \frac{\mathrm d}{\mathrm d \theta}P_l^m(x = \cos\theta)\)</span>, and
+the associated Legendre polynomials <span class="math notranslate nohighlight">\(P_l^m\)</span> (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.pi_fun()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.tau_fun()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.lpmv()</span></code> are also imported from <cite>treams.special</cite>).
+The vector spherical harmonics are orthogonal to each other and normalized to 1 upon integration over the
+solid angle.</p>
+</section>
+</section>
+<section id="solutions-to-the-acoustic-master-equations">
+<h2>Solutions to the acoustic master equations<a class="headerlink" href="#solutions-to-the-acoustic-master-equations" title="Link to this heading">¶</a></h2>
+<p>Up to now, we set up the acoustic master equations and found solutions to the scalar Helmholtz equation.
+The solutions to the acoustic master equations are then</p>
+<div class="math notranslate nohighlight">
+\[p(k, \mathbf{r}) = \sum_\nu p_{\nu} \psi_\nu(k, \mathbf{r})
+\mathbf{v}(k, \mathbf{r}) = \frac{-\mathrm{i}}{\rho c} \sum_\nu p_{\nu} \mathbf{L}_\nu(k, \mathbf{r})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu\)</span> is just a placeholder for the actual parameters that index a concrete set of solutions.
+The multiplication <span class="math notranslate nohighlight">\(Z = \rho c\)</span> is also called acoustic impedance.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id3" role="doc-footnote">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>H. Bruus, Acoustofluidics 2: Perturbation theory and
 ultrasound resonance modes  Lab Chip 12, 20 (2012).</p>
 </aside>
-<aside class="footnote brackets" id="id4" role="doc-footnote">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>L. D. Landau and E. M. Lifshitz, Fluid Mechanics: Landau
-and Lifshitz: Course of Theoretical Physics, Volume 6 (Elsevier,
-Amsterdam, 2013).</p>
+<p>L. D. Landau and E. M. Lifshitz, Theory of Elasticity:
+Course of Theoretical Physics, Volume 7,
+edited by E. M. Lifshitz, A. M. Kosevich, and  L. P. Pitaevskii
+(Butterworth-Heinemann, Oxford, England, UK, 1986).</p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>P. M. Morse and H. Feshbach, Methods of Theoretical Physics
+(McGraw-Hill, New York, 1953).</p>
 </aside>
 </aside>
 </section>
@@ -186,7 +329,7 @@ Amsterdam, 2013).</p>
         <li class="right" >
           <a href="smatrix.html" title="Acoustic S-Matrices for plane waves"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Theory</a></li> 
       </ul>
     </div>

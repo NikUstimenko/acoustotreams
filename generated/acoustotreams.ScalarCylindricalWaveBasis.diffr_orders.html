@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>acoustotreams.ScalarCylindricalWaveBasis.diffr_orders &#8212; acoustotreams 0.1.16 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
+    <script src="../_static/documentation_options.js?v=d50bcae4"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="acoustotreams.ScalarCylindricalWaveBasis.index" href="acoustotreams.ScalarCylindricalWaveBasis.index.html" />
+    <link rel="prev" title="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax" href="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.ScalarCylindricalWaveBasis.index.html" title="acoustotreams.ScalarCylindricalWaveBasis.index"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax.html" title="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarCylindricalWaveBasis.html" accesskey="U">acoustotreams.ScalarCylindricalWaveBasis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarCylindricalWaveBasis.diffr_orders</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="acoustotreams-scalarcylindricalwavebasis-diffr-orders">
+<h1>acoustotreams.ScalarCylindricalWaveBasis.diffr_orders<a class="headerlink" href="#acoustotreams-scalarcylindricalwavebasis-diffr-orders" title="Link to this heading">¶</a></h1>
+<dl class="py method">
+<dt class="sig sig-object py" id="acoustotreams.ScalarCylindricalWaveBasis.diffr_orders">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ScalarCylindricalWaveBasis.</span></span><span class="sig-name descname"><span class="pre">diffr_orders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#acoustotreams.ScalarCylindricalWaveBasis.diffr_orders" title="Link to this definition">¶</a></dt>
+<dd><p>Create a basis set for a system periodic in the z-direction.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">ScalarCylindricalWaveBasis(</span>
+<span class="go">    pidx=[0 0 0 0 0 0 0 0 0],</span>
+<span class="go">    kz=[-0.9 -0.9 -0.9  0.1  0.1  0.1  1.1  1.1  1.1],</span>
+<span class="go">    m=[-1  0  1 -1  0  1 -1  0  1],</span>
+<span class="go">    positions=[[0. 0. 0.]],</span>
+<span class="go">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kz</strong> (<em>float</em>) – Wave vector z-component. Ideally it is in the first Brillouin
+zone (use <a class="reference internal" href="acoustotreams.treams.misc.firstbrillouin1d.html#treams.misc.firstbrillouin1d" title="treams.misc.firstbrillouin1d"><code class="xref py py-func docutils literal notranslate"><span class="pre">treams.misc.firstbrillouin1d()</span></code></a>).</p></li>
+<li><p><strong>mmax</strong> (<em>int</em>) – Maximal value for the z-component of the angular momentum.</p></li>
+<li><p><strong>lattice</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">acoustotreams.Lattice</span></code> or float) – Lattice definition or pitch.</p></li>
+<li><p><strong>bmax</strong> (<em>float</em>) – Maximal change of the z-component of the wave vector. So,
+this defines a maximal momentum transfer from the given value <cite>kz</cite>.</p></li>
+<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of positions.</p></li>
+<li><p><strong>positions</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Positions of the origins.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../acoustotreams.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax.html"
+                          title="previous chapter">acoustotreams.ScalarCylindricalWaveBasis.defaultmmax</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="acoustotreams.ScalarCylindricalWaveBasis.index.html"
+                          title="next chapter">acoustotreams.ScalarCylindricalWaveBasis.index</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/generated/acoustotreams.ScalarCylindricalWaveBasis.diffr_orders.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.ScalarCylindricalWaveBasis.index.html" title="acoustotreams.ScalarCylindricalWaveBasis.index"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax.html" title="acoustotreams.ScalarCylindricalWaveBasis.defaultmmax"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarCylindricalWaveBasis.html" >acoustotreams.ScalarCylindricalWaveBasis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarCylindricalWaveBasis.diffr_orders</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

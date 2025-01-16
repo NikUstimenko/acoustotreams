@@ -1,0 +1,6 @@
+acoustotreams.spw.to\_scw
+=========================
+
+.. currentmodule:: acoustotreams.spw
+
+.. autofunction:: to_scw

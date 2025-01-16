@@ -454,7 +454,7 @@ waves in a two-dimensional lattice in the xy plane can be expanded in plane wave
 
 .. doctest::
 
-    >>> ex = acoustotreams.ExpandLattice(basis= acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([.1, 0], [7, 7], 1))
+    >>> ex = acoustotreams.ExpandLattice(basis=acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([.1, 0], [7, 7], 1))
     >>> ex @ sssw
     AcousticsArray(
         [0.-0.06265266j 0.-0.06265266j 0.-0.06265266j 0.-0.06265266j 0.-0.06265266j],

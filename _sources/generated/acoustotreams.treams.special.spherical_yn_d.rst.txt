@@ -1,0 +1,6 @@
+﻿acoustotreams.treams.special.spherical\_yn\_d
+=============================================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: treams.special.spherical_yn_d

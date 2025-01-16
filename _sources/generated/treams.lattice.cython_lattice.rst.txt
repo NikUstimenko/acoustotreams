@@ -1,0 +1,6 @@
+treams.lattice.cython\_lattice
+==============================
+
+.. currentmodule:: treams.lattice.cython_lattice
+
+.. automodule:: treams.lattice.cython_lattice

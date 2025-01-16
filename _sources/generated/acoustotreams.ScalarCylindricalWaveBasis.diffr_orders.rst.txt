@@ -1,0 +1,6 @@
+acoustotreams.ScalarCylindricalWaveBasis.diffr\_orders
+======================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarCylindricalWaveBasis.diffr_orders

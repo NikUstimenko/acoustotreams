@@ -5,18 +5,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Reference &#8212; acoustotreams 0.1.14 documentation</title>
+    <title>Reference &#8212; acoustotreams 0.1.16 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=468bc497"></script>
+    <script src="_static/documentation_options.js?v=d50bcae4"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="acoustotreams.ssw" href="generated/acoustotreams.ssw.html" />
+    <link rel="next" title="acoustotreams.ScalarCylindricalWaveBasis" href="generated/acoustotreams.ScalarCylindricalWaveBasis.html" />
     <link rel="prev" title="Theory" href="theory.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -36,12 +37,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="generated/acoustotreams.ssw.html" title="acoustotreams.ssw"
+          <a href="generated/acoustotreams.ScalarCylindricalWaveBasis.html" title="acoustotreams.ScalarCylindricalWaveBasis"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="theory.html" title="Theory"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Reference</a></li> 
       </ul>
     </div>  
@@ -53,61 +54,319 @@
             
   <section id="module-acoustotreams">
 <span id="reference"></span><h1>Reference<a class="headerlink" href="#module-acoustotreams" title="Link to this heading">¶</a></h1>
-<p>acoustotreams: A Python package for acoustic wave scattering based on the T-matrix method.</p>
+<p>ACOUSTOTREAMS: A Python package for acoustic wave scattering based on the T-matrix method.</p>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h2>
 <p>The top-level classes and functions allow a high-level access to the functionality.</p>
 <section id="basis-sets">
 <h3>Basis sets<a class="headerlink" href="#basis-sets" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>ScalarCylindricalWaveBasis
-ScalarPlaneWaveBasisByUnitVector
-ScalarPlaneWaveBasisByComp
-ScalarSphericalWaveBasis</p>
-</div></blockquote>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.ScalarCylindricalWaveBasis.html#acoustotreams.ScalarCylindricalWaveBasis" title="acoustotreams.ScalarCylindricalWaveBasis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScalarCylindricalWaveBasis</span></code></a>(modes[, positions])</p></td>
+<td><p>Basis of scalar cylindrical waves.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector" title="acoustotreams.ScalarPlaneWaveBasisByUnitVector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByUnitVector</span></code></a>(modes)</p></td>
+<td><p>Scalar plane wave basis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp" title="acoustotreams.ScalarPlaneWaveBasisByComp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code></a>(modes[, alignment])</p></td>
+<td><p>Partial scalar plane wave basis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.ScalarSphericalWaveBasis.html#acoustotreams.ScalarSphericalWaveBasis" title="acoustotreams.ScalarSphericalWaveBasis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScalarSphericalWaveBasis</span></code></a>(modes[, positions])</p></td>
+<td><p>Basis of scalar spherical waves.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="matrices-and-arrays">
 <h3>Matrices and Arrays<a class="headerlink" href="#matrices-and-arrays" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>AcousticsArray
-AcousticSMatrix
-AcousticSMatrices
-AcousticTMatrix
-AcousticTMatrixC</p>
-</div></blockquote>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.AcousticsArray.html#acoustotreams.AcousticsArray" title="acoustotreams.AcousticsArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcousticsArray</span></code></a>(arr[, ann])</p></td>
+<td><p>Acoustics-aware array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.AcousticSMatrix.html#acoustotreams.AcousticSMatrix" title="acoustotreams.AcousticSMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcousticSMatrix</span></code></a>(arr[, ann])</p></td>
+<td><p>Acoustic S-matrix for a scalar plane wave.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.AcousticSMatrices.html#acoustotreams.AcousticSMatrices" title="acoustotreams.AcousticSMatrices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcousticSMatrices</span></code></a>(smats, **kwargs)</p></td>
+<td><p>Collection of four acoustic S-matrices with a scalar plane wave basis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.AcousticTMatrix.html#acoustotreams.AcousticTMatrix" title="acoustotreams.AcousticTMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcousticTMatrix</span></code></a>(arr[, ann])</p></td>
+<td><p>Acoustic T-matrix with a spherical basis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.AcousticTMatrixC.html#acoustotreams.AcousticTMatrixC" title="acoustotreams.AcousticTMatrixC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcousticTMatrixC</span></code></a>(arr[, ann])</p></td>
+<td><p>T-matrix with a scalar cylindrical basis.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="other">
 <h3>Other<a class="headerlink" href="#other" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>Lattice
-AcousticMaterial</p>
-</div></blockquote>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a>([rho, c, ct])</p></td>
+<td><p>Material definition.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><p>vfield
-pfield
-pamplitudeff
-vamplitudeff
-expand
-expandlattice
-permute
-cylindrical_wave_scalar
-plane_wave_scalar
-plane_wave_angle_scalar
-spherical_wave_scalar
-rotate
-translate</p>
-</div></blockquote>
+<section id="operators">
+<h3>Operators<a class="headerlink" href="#operators" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.pfield.html#acoustotreams.pfield" title="acoustotreams.pfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pfield</span></code></a>(r, *, basis, k0[, material, modetype])</p></td>
+<td><p>Pressure field.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.vfield.html#acoustotreams.vfield" title="acoustotreams.vfield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vfield</span></code></a>(r, *, basis, k0[, material, modetype])</p></td>
+<td><p>Velocity field.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.pamplitudeff.html#acoustotreams.pamplitudeff" title="acoustotreams.pamplitudeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pamplitudeff</span></code></a>(r, *, basis, k0[, material, ...])</p></td>
+<td><p>Far-field amplitude of pressure field.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.vamplitudeff.html#acoustotreams.vamplitudeff" title="acoustotreams.vamplitudeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vamplitudeff</span></code></a>(r, *, basis, k0[, material, ...])</p></td>
+<td><p>Far-field amplitude of velocity field.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.expand.html#acoustotreams.expand" title="acoustotreams.expand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expand</span></code></a>(basis[, modetype, k0, material, where])</p></td>
+<td><p>Expansion matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.expandlattice.html#acoustotreams.expandlattice" title="acoustotreams.expandlattice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expandlattice</span></code></a>([lattice, kpar, basis, ...])</p></td>
+<td><p>Expansion matrix in lattices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.permute.html#acoustotreams.permute" title="acoustotreams.permute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permute</span></code></a>([n, k0, material, modetype])</p></td>
+<td><p>Permutation matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.rotate.html#acoustotreams.rotate" title="acoustotreams.rotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate</span></code></a>(lambda_, mu, l, m, phi[, theta, psi])</p></td>
+<td><p>Rotation coefficient for scalar spherical modes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.translate.html#acoustotreams.translate" title="acoustotreams.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a>(lambda_, mu, l, m, kr, theta, phi)</p></td>
+<td><p>Translation coefficient for spherical modes.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scalar-wave-functions">
+<h3>Scalar wave functions<a class="headerlink" href="#scalar-wave-functions" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.cylindrical_wave_scalar.html#acoustotreams.cylindrical_wave_scalar" title="acoustotreams.cylindrical_wave_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylindrical_wave_scalar</span></code></a>(kz, m, *[, k0, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.plane_wave_scalar.html#acoustotreams.plane_wave_scalar" title="acoustotreams.plane_wave_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plane_wave_scalar</span></code></a>(kvec, *[, k0, basis, ...])</p></td>
+<td><p>Array describing a scalar plane wave.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.plane_wave_angle_scalar.html#acoustotreams.plane_wave_angle_scalar" title="acoustotreams.plane_wave_angle_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plane_wave_angle_scalar</span></code></a>(theta, phi, **kwargs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.spherical_wave_scalar.html#acoustotreams.spherical_wave_scalar" title="acoustotreams.spherical_wave_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spherical_wave_scalar</span></code></a>(l, m, *[, k0, basis, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>Spherical waves and translation coefficients</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+<p>Cylindrical waves</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+<p>Plane waves</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+<section id="functions-imported-from-scipy">
+<h3>Functions imported from SciPy<a class="headerlink" href="#functions-imported-from-scipy" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel1.html#scipy.special.hankel1" title="(in SciPy v1.15.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1</span></code></a>(v, z[, out])</p></td>
+<td><p>Hankel function of the
+first kind.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel2.html#scipy.special.hankel2" title="(in SciPy v1.15.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel2</span></code></a>(v, z[, out])</p></td>
+<td><p>Hankel function of the
+second kind.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.jv.html#scipy.special.jv" title="(in SciPy v1.15.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">jv</span></code></a>(v, z[, out])</p></td>
+<td><p>Bessel function of the
+first kind of real
+order and complex
+argument.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.yv.html#scipy.special.yv" title="(in SciPy v1.15.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">yv</span></code></a>(v, z[, out])</p></td>
+<td><p>Bessel function of the
+second kind of real
+order and complex
+argument.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_jn.html#scipy.special.spherical_jn" title="(in SciPy v1.15.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">spherical_jn</span></code></a>(n,
+z[, derivative])</div>
+</div>
+</td>
+<td><p>Spherical Bessel
+function of the first
+kind or its derivative.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_yn.html#scipy.special.spherical_yn" title="(in SciPy v1.15.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">spherical_yn</span></code></a>(n,
+z[, derivative])</div>
+</div>
+</td>
+<td><p>Spherical Bessel
+function of the second
+kind or its derivative.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions-imported-from-treams-special-treams-misc-and-treams-lattice">
+<h3>Functions imported from treams.special, treams.misc, and treams.lattice<a class="headerlink" href="#functions-imported-from-treams-special-treams-misc-and-treams-lattice" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td colspan="2"><dl>
+<dt><a class="reference internal" href="generated/acoustotreams.treams.special.spherical_jn_d.html#treams.special.spherical_jn_d" title="treams.special.spherical_jn_d"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code></a>(n, z)            | Derivative of the spherical</dt><dd><div class="line-block">
+<div class="line">Bessel function of the</div>
+<div class="line">first kind.</div>
+</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td colspan="2"><dl>
+<dt><a class="reference internal" href="generated/acoustotreams.treams.special.spherical_yn_d.html#treams.special.spherical_yn_d" title="treams.special.spherical_yn_d"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code></a>(n, z)            | Derivative of the spherical</dt><dd><div class="line-block">
+<div class="line">Bessel function of the</div>
+<div class="line">second kind.</div>
+</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.spherical_jn_d</span></code></p></td>
+<td><p>Derivative of the spherical Bessel function of the first kind.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.spherical_yn_d</span></code></p></td>
+<td><p>Derivative of the spherical Bessel function of the second kind.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.sph_harm</span></code></p></td>
+<td><p>sph_harm(x1, x2, x3, x4, /, out=None, <a href="#id1"><span class="problematic" id="id2">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.lpmv</span></code></p></td>
+<td><p>lpmv(x1, x2, x3, /, out=None, <a href="#id3"><span class="problematic" id="id4">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.incgamma</span></code></p></td>
+<td><p>incgamma(x1, x2, /, out=None, <a href="#id5"><span class="problematic" id="id6">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.intkambe</span></code></p></td>
+<td><p>intkambe(x1, x2, x3, /, out=None, <a href="#id7"><span class="problematic" id="id8">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.wignersmalld</span></code></p></td>
+<td><p>wignersmalld(x1, x2, x3, x4, /, out=None, <a href="#id9"><span class="problematic" id="id10">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.wignerd</span></code></p></td>
+<td><p>wignerd(x1, x2, x3, x4, x5, x6, /, out=None, <a href="#id11"><span class="problematic" id="id12">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.wigner3j</span></code></p></td>
+<td><p>wigner3j(x1, x2, x3, x4, x5, x6, /, out=None, <a href="#id13"><span class="problematic" id="id14">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.pi_fun</span></code></p></td>
+<td><p>pi_fun(x1, x2, x3, /, out=None, <a href="#id15"><span class="problematic" id="id16">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.tau_fun</span></code></p></td>
+<td><p>tau_fun(x1, x2, x3, /, out=None, <a href="#id17"><span class="problematic" id="id18">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_X</span></code></p></td>
+<td><p>vsh_X(x1, x2, x3, x4, /, out=None, <a href="#id19"><span class="problematic" id="id20">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Y</span></code></p></td>
+<td><p>vsh_Y(x1, x2, x3, x4, /, out=None, <a href="#id21"><span class="problematic" id="id22">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Z</span></code></p></td>
+<td><p>vsh_Z(x1, x2, x3, x4, /, out=None, <a href="#id23"><span class="problematic" id="id24">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.car2cyl</span></code></p></td>
+<td><p>car2cyl(x, /, out=None, <a href="#id25"><span class="problematic" id="id26">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.car2sph</span></code></p></td>
+<td><p>car2sph(x, /, out=None, <a href="#id27"><span class="problematic" id="id28">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.cyl2car</span></code></p></td>
+<td><p>cyl2car(x, /, out=None, <a href="#id29"><span class="problematic" id="id30">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.cyl2sph</span></code></p></td>
+<td><p>cyl2sph(x, /, out=None, <a href="#id31"><span class="problematic" id="id32">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.sph2car</span></code></p></td>
+<td><p>sph2car(x, /, out=None, <a href="#id33"><span class="problematic" id="id34">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.sph2cyl</span></code></p></td>
+<td><p>sph2cyl(x, /, out=None, <a href="#id35"><span class="problematic" id="id36">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vcar2cyl</span></code></p></td>
+<td><p>vcar2cyl(x1, x2, /, out=None, <a href="#id37"><span class="problematic" id="id38">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vcar2sph</span></code></p></td>
+<td><p>vcar2sph(x1, x2, /, out=None, <a href="#id39"><span class="problematic" id="id40">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vcyl2car</span></code></p></td>
+<td><p>vcyl2car(x1, x2, /, out=None, <a href="#id41"><span class="problematic" id="id42">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vcyl2sph</span></code></p></td>
+<td><p>vcyl2sph(x1, x2, /, out=None, <a href="#id43"><span class="problematic" id="id44">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsph2car</span></code></p></td>
+<td><p>vsph2car(x1, x2, /, out=None, <a href="#id45"><span class="problematic" id="id46">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsph2cyl</span></code></p></td>
+<td><p>vsph2cyl(x1, x2, /, out=None, <a href="#id47"><span class="problematic" id="id48">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.car2pol</span></code></p></td>
+<td><p>car2pol(x, /, out=None, <a href="#id49"><span class="problematic" id="id50">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.pol2car</span></code></p></td>
+<td><p>pol2car(x, /, out=None, <a href="#id51"><span class="problematic" id="id52">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vcar2pol</span></code></p></td>
+<td><p>vcar2pol(x1, x2, /, out=None, <a href="#id53"><span class="problematic" id="id54">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vpol2car</span></code></p></td>
+<td><p>vpol2car(x1, x2, /, out=None, <a href="#id55"><span class="problematic" id="id56">*</span></a>, casting='same_kind', order='K', dtype=None, subok=True[, signature, axes, axis])</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.misc.wave_vec_z</span></code></p></td>
+<td><p>Z component of the wave vector with positive imaginary part.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.misc.firstbrillouin1d</span></code></p></td>
+<td><p>Map wave vector to first Brillouin zone in 1D.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.misc.firstbrillouin2d</span></code></p></td>
+<td><p>Map wave vector to first Brillouin zone in 2D.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.misc.firstbrillouin3d</span></code></p></td>
+<td><p>Map wave vector to first Brillouin zone in 3D.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.treams.lattice.html#module-acoustotreams.treams.lattice" title="acoustotreams.treams.lattice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.lattice</span></code></a></p></td>
+<td><p>Lattice sums.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="modules">
 <h2>Modules<a class="headerlink" href="#modules" title="Link to this heading">¶</a></h2>
 <p>These modules provide basic functionality for transformations within one basis set, i.e.
 one module, like translations and rotations as well as transformations among them.
 The functions in there provide an intermediate stage between the purely mathematical
-functions found in the two subpackages <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code> and the
+functions, either implemented within <a class="reference internal" href="#module-acoustotreams" title="acoustotreams"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams</span></code></a> or imported from
+<code class="xref py py-data docutils literal notranslate"><span class="pre">special</span></code> and <a class="reference internal" href="generated/acoustotreams.treams.lattice.html#module-acoustotreams.treams.lattice" title="acoustotreams.treams.lattice"><code class="xref py py-data docutils literal notranslate"><span class="pre">lattice</span></code></a>, and the
 higher-level classes and functions.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
@@ -126,7 +385,7 @@ higher-level classes and functions.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.coeffsacoustics.html#module-acoustotreams.coeffsacoustics" title="acoustotreams.coeffsacoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coeffsacoustics</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Scattering coefficients for high-symmetry cases.</p></td>
 </tr>
 </tbody>
 </table>
@@ -157,8 +416,8 @@ higher-level classes and functions.</p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="generated/acoustotreams.ssw.html"
-                          title="next chapter">acoustotreams.ssw</a></p>
+    <p class="topless"><a href="generated/acoustotreams.ScalarCylindricalWaveBasis.html"
+                          title="next chapter">acoustotreams.ScalarCylindricalWaveBasis</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -191,12 +450,12 @@ higher-level classes and functions.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="generated/acoustotreams.ssw.html" title="acoustotreams.ssw"
+          <a href="generated/acoustotreams.ScalarCylindricalWaveBasis.html" title="acoustotreams.ScalarCylindricalWaveBasis"
              >next</a> |</li>
         <li class="right" >
           <a href="theory.html" title="Theory"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.14 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.16 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Reference</a></li> 
       </ul>
     </div>

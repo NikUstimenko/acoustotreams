@@ -1,0 +1,6 @@
+acoustotreams.ScalarSphericalWaveBasis.default
+==============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarSphericalWaveBasis.default

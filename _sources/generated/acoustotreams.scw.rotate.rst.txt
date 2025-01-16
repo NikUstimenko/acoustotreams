@@ -1,0 +1,6 @@
+acoustotreams.scw.rotate
+========================
+
+.. currentmodule:: acoustotreams.scw
+
+.. autofunction:: rotate

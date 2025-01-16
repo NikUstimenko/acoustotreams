@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.size
+==================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticTMatrix.size

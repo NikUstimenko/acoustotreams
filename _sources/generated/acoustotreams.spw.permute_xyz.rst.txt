@@ -1,0 +1,6 @@
+acoustotreams.spw.permute\_xyz
+==============================
+
+.. currentmodule:: acoustotreams.spw
+
+.. autofunction:: permute_xyz

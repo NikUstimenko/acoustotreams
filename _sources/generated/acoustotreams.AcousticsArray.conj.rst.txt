@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.conj
+=================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.conj

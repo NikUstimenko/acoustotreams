@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.cumprod
+======================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.cumprod

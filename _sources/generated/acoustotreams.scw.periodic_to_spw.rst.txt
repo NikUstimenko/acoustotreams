@@ -1,0 +1,6 @@
+acoustotreams.scw.periodic\_to\_spw
+===================================
+
+.. currentmodule:: acoustotreams.scw
+
+.. autofunction:: periodic_to_spw

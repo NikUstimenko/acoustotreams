@@ -1,0 +1,6 @@
+acoustotreams.treams.lattice.diffr\_orders\_circle
+==================================================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: treams.lattice.diffr_orders_circle

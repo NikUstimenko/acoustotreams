@@ -1,0 +1,6 @@
+﻿acoustotreams.treams.special.incgamma
+=====================================
+
+.. currentmodule:: acoustotreams
+
+.. autodata:: treams.special.incgamma

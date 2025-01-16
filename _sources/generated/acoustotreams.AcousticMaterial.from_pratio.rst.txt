@@ -1,0 +1,6 @@
+acoustotreams.AcousticMaterial.from\_pratio
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticMaterial.from_pratio
