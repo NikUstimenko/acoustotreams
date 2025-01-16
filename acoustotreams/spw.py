@@ -1,8 +1,12 @@
 """Scalar plane wave module.
 
+.. autosummary::
+   :toctree:
+
    to_scw
    to_ssw
    translate
+   permute_xyz
 
 """
 
@@ -28,6 +32,7 @@ def translate(kx, ky, kz, x, y, z, *args, **kwargs):
 
 
 def _to_ssw(l, m, kx, ky, kz, *args, **kwargs):
+    """Coefficient for the expansion of a scalar plane wave in scalar spherical waves"""
     phi = np.arctan2(ky, kx)
     k = np.sqrt(kx * kx + ky * ky + kz * kz)
     pref = (
@@ -60,7 +65,8 @@ def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
     return _to_ssw(l, m, kx, ky, kz, *args, **kwargs)
 
     
-def _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):  
+def _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
+    """Coefficient for the expansion of a scalar plane wave in scalar cylindricrical waves"""  
     krho = np.sqrt(kx * kx + ky * ky)
     if np.abs(kzcw - kzpw) <= 1e-12:
         if m == 0:

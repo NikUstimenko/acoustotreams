@@ -1,15 +1,45 @@
+"""Scattering coefficients for high-symmetry cases.
+
+Calculate the scattering coefficients for cases where they can be obtained analytically
+easily. This is a sphere using spherical waves (Mie coefficients), a
+cylinder using cylindrical waves, and an infinitely extended planar
+interface (Fresnel coefficients).
+
+.. autosummary::
+   :toctree:
+
+   mie_acoustics
+   mie_cyl_acoustics
+   fresnel_acoustics
+
+"""
+
 import treams.special
 import numpy as np
 from acoustotreams._materialacoustics import AcousticMaterial
 
 def mie_acoustics(l, x, *materials):
-    
-    # Returns acoustical Mie coefficients for a sphere
+    """Mie scattering coefficient of degree l.
 
-    # l - order
-    # x = k0 * radius - size parameter (k0 is in air)
-    # *materials - list of tuples of material parameters
+    The sphere is defined by its size parameter :math:`k_0 r`, where :math:`r` is the
+    radius and :math:`k_0` the wave number in air. 
 
+    Likewise, the material parameters are given from inside to outside. These arrays
+    are expected to be exactly one unit larger then the array `x`.
+
+    The result is a complex number relating incident with the scattered modes, which are 
+    index in the same way.
+
+    Args:
+        l (integer): Degree :math:`l \geq 0`
+        x (float, array_like): Size parameters
+        rho (float or complex, array_like): Mass density
+        c (float or complex, array_like): Longitudinal speed of sound
+        c_t (float or complex, array_like): Transverse speed of sound
+
+    Returns:
+        complex
+    """
     mat_sphere, mat_env = zip(*materials) 
     x_env = x * AcousticMaterial().c / mat_env[1]
     j = treams.special.spherical_jn(l, x_env, derivative=False)
@@ -40,18 +70,30 @@ def mie_acoustics(l, x, *materials):
             zeta = (d44*d33 - d34*d43) / (d24*d33 - d34*d23)
             res = (-(mat_env[0]/mat_sphere[0] * 0.5 * x_sphere_t**2/x_env * j + zeta * j_d) / 
                 (mat_env[0]/mat_sphere[0] * 0.5 * x_sphere_t**2/x_env * h + zeta * h_d))
-
-    return res * np.ones(2*l+1)
+    return res
 
 def mie_acoustics_cyl(kz, m, k0, radii, *materials):
-    
-    # Returns acoustical Mie coefficients for an infinite cylinder (along z-axis)
+    """Scattering coefficient at an infinite cylinder
 
-    # kz - z-component of the wave vector
-    # m - angular momentum
-    # k0 - wave number in air
-    # radii - radius of a cylinder
-    # *materials - list of tuples of material parameters
+    The cylinder is defined by its radii.
+    Likewise, the material parameters are given from inside to outside. These arrays
+    are expected to be exactly one unit larger then the array `radii`.
+
+    The result is a complex number relating incident with the scattered modes, 
+    which are index in the same way.
+
+    Args:
+        kz (float): Z component of the wave
+        m (integer): Order
+        k0 (float or complex): Wave number in vacuum
+        radii (float, array_like): Size parameters
+        rho (float or complex, array_like): Mass density
+        c (float or complex, array_like): Longitudinal speed of sound
+        c_t (float or complex, array_like): Transverse speed of sound
+
+    Returns:
+        complex
+    """
 
     mat_cyl, mat_env = zip(*materials) 
     k_env = k0 * AcousticMaterial().c / mat_env[1]
@@ -103,6 +145,29 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
     return res
 
 def fresnel_acoustics(kzs, rhos):
+    """Fresnel coefficients for a planar interface.
+
+    The first two dimensions index the two media, the second two dimensions
+    are added to meet the *treams* convention.
+
+    The result is an array relating incoming with the outgoing modes, which 
+    are indexed in the same way. The first dimension of the array are the outgoing 
+    and the second dimension the incoming modes
+
+    .. math::
+
+        \begin{pmatrix}
+            t_{\uparrow \uparrow} & r_{\uparrow \downarrow} \\
+            r_{\downarrow \uparrow} & t_{\downarrow \downarrow}
+        \end{pmatrix}\,.
+
+    Args:
+        kzs (float): Z component of the waves
+        rhos (float or complex): Mass densities
+
+    Returns:
+        complex (2, 2, 1, 1)-array
+    """,
     res = np.zeros((2, 2, 1, 1), complex)
     res[0][0][0][0] = 2 * rhos[0] * kzs[1] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
     res[1][1][0][0] = 2 * rhos[1] * kzs[0] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])

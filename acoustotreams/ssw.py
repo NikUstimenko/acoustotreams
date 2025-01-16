@@ -18,11 +18,13 @@ from treams import lattice
 import scipy.special as ss
 
 def _translate_s(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
+    """Regular translation coefficient for spherical modes"""
     if abs(kr) < 1e-16:
         return 0.0j
     return wv.tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs)
 
 def _translate_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
+    """Singular translation coefficient for spherical modes"""
     return wv.tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs)
 
 
@@ -94,6 +96,7 @@ def rotate(lambda_, mu, l, m, phi, theta=0, psi=0, *args, **kwargs):
 
 
 def _transl_a_lattice(lambda_, mu, l, m, dlms):
+    """Singular translation coefficients in a lattice"""
     pref = np.power(-1, np.abs(m)) * np.sqrt(4 * np.pi * (2 * l + 1) * (2 * lambda_ + 1)) * np.power(1.0j, lambda_ - l)
     dlm = 0
     res = 0
@@ -103,6 +106,7 @@ def _transl_a_lattice(lambda_, mu, l, m, dlms):
     return res * pref
 
 def _transl_a_lattice_r(lambda_, mu, l, m, dlms):
+    """Regular translation coefficients in a lattice"""
     pref = np.power(-1, np.abs(m)) * np.sqrt(4 * np.pi * (2 * l + 1) * (2 * lambda_ + 1)) * np.power(1.0j, lambda_ - l)
     dlm = 0
     res = 0
@@ -117,7 +121,7 @@ def translate_periodic_r(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=
     """Regular translation coefficients in a lattice.
 
     Returns the translation coefficents for the given modes in a lattice. The calculation
-    uses the fast converging sums of :mod:`treams.lattice`.
+    uses the fast converging sums of :py:data:`~treams.lattice`.
 
 
     Args:
@@ -181,7 +185,7 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
     """Translation coefficients in a lattice.
 
     Returns the translation coefficents for the given modes in a lattice. The calculation
-    uses the fast converging sums of :mod:`treams.lattice`.
+    uses the fast converging sums of :py:data:`~treams.lattice`.
 
 
     Args:
@@ -240,6 +244,7 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
          
 
 def _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
+    """Convert periodic spherical wave to plane wave"""
     k = np.sqrt(kx * kx + ky * ky + kz * kz)
     phi = np.arctan2(ky, kx)
     kz_s = kz
@@ -281,6 +286,7 @@ def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
     return _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs)
 
 def _periodic_to_scw(kz, mu, l, m, k, a, *args, **kwargs):
+    """Convert periodic spherical wave to cylindrical wave"""
     if mu != -m:
         return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)
     prefactor = (
@@ -297,12 +303,11 @@ _periodic_to_scw = np.vectorize(_periodic_to_scw)
 
 
 def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):
-    """Convert periodic spherical wave to plane wave.
+    """Convert periodic spherical wave to cylindrical wave.
 
     Returns the coefficient for the basis change in a periodic arrangement of spherical
-    modes to plane waves. For multiple positions only diagonal values (with respect to
-    the position) are returned. A correct phase factor is still necessary for the full
-    result.
+    modes to cylindrical waves. For multiple positions only diagonal values (with respect to
+    the position) are returned. 
 
     Args:
         kz (float, array_like): Z component of destination mode wave vector

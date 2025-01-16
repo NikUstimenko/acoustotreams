@@ -1173,9 +1173,9 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
     res = wv.ssw_psi(
             basis.l,
             basis.m,
-            ks * rsph[..., basis.pidx, 0],
-            ks * rsph[..., basis.pidx, 1],
-            ks * rsph[..., basis.pidx, 2],
+            rsph[..., basis.pidx, 0],
+            rsph[..., basis.pidx, 1],
+            rsph[..., basis.pidx, 2],
             r[..., basis.pidx, 1],
             r[..., basis.pidx, 2],
             ks
@@ -1200,8 +1200,8 @@ def _scw_pamplitudeff(r, basis, k0, material, modetype):
     res = wv.scw_psi(
             basis.kz,
             basis.m,
-            krhos * rcyl[..., basis.pidx, 0],
-            krhos * rcyl[..., basis.pidx, 1],
+            rcyl[..., basis.pidx, 0],
+            rcyl[..., basis.pidx, 1],
             r[..., basis.pidx, 1],
             r[..., basis.pidx, 2],
             krhos,

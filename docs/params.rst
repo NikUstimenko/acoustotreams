@@ -198,10 +198,9 @@ Polarization
 In *acoustotreams* we consider acoustic waves that can be described by scalar pressure fields. 
 The scalar waves are defined in :func:`acoustotreams.ssw_Psi`, :func:`acoustotreams.ssw_rPsi`,
 :func:`acoustotreams.scw_Psi`, :func:`acoustotreams.scw_rPsi`, and :func:`acoustotreams.spw_Psi`.
-Those scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.vsw_L`, 
+These scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.vsw_L`, 
 :func:`acoustotreams.vsw_rL`, :func:`acoustotreams.vcw_L`, :func:`acoustotreams.vcw_rL`, 
-and :func:`acoustotreams.vpw_L`. For spherical waves, they are longitudinal with respect to
-the radial direction, while for cylindrical and plane waves, they are relative to the z axis.
+and :func:`acoustotreams.vpw_L`.
 
 Mode types
 ==========

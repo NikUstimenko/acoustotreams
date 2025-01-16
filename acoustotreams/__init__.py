@@ -1,4 +1,4 @@
-"""acoustotreams: A Python package for acoustic wave scattering based on the T-matrix method.
+"""ACOUSTOTREAMS: A Python package for acoustic wave scattering based on the T-matrix method.
 
 .. currentmodule:: acoustotreams
 
@@ -10,6 +10,9 @@ The top-level classes and functions allow a high-level access to the functionali
 Basis sets
 ----------
 
+.. autosummary::
+   :toctree: generated/
+
    ScalarCylindricalWaveBasis
    ScalarPlaneWaveBasisByUnitVector
    ScalarPlaneWaveBasisByComp
@@ -17,6 +20,9 @@ Basis sets
 
 Matrices and Arrays
 -------------------
+
+.. autosummary::
+   :toctree: generated/
 
    AcousticsArray
    AcousticSMatrix
@@ -27,37 +33,151 @@ Matrices and Arrays
 Other
 -----
 
-   Lattice
+.. autosummary::
+   :toctree: generated/
+
    AcousticMaterial
 
 Functions
 =========
 
-   vfield
+Operators
+---------
+
+.. autosummary::
+   :toctree: generated/
+
    pfield
+   vfield
    pamplitudeff
    vamplitudeff
    expand
    expandlattice
    permute
+   rotate
+   translate
+
+Scalar wave functions
+---------------------
+
+.. autosummary::
+   :toctree: generated/
+
    cylindrical_wave_scalar
    plane_wave_scalar
    plane_wave_angle_scalar
    spherical_wave_scalar
-   rotate
-   translate
+
+Spherical waves and translation coefficients
+
+.. autosummary::
+   :toctree:
+
+Cylindrical waves
+
+.. autosummary::
+   :toctree:
+
+Plane waves
+
+.. autosummary::
+   :toctree:
+
+Functions imported from SciPy
+-----------------------------
+
++------------------------------------------------------------+-------------------------+
+| :py:data:`~scipy.special.hankel1`\(v, z[, out])            | Hankel function of the  |
+|                                                            | first kind.             |
++------------------------------------------------------------+-------------------------+
+| :py:data:`~scipy.special.hankel2`\(v, z[, out])            | Hankel function of the  |
+|                                                            | second kind.            |
++------------------------------------------------------------+-------------------------+
+| :py:data:`~scipy.special.jv`\(v, z[, out])                 | Bessel function of the  |
+|                                                            | first kind of real      |
+|                                                            | order and complex       |
+|                                                            | argument.               |
++------------------------------------------------------------+-------------------------+
+| :py:data:`~scipy.special.yv`\(v, z[, out])                 | Bessel function of the  |
+|                                                            | second kind of real     |
+|                                                            | order and complex       |
+|                                                            | argument.               |
++------------------------------------------------------------+-------------------------+
+| | :py:func:`spherical_jn <scipy.special.spherical_jn>`\(n, | Spherical Bessel        |
+|   z[, derivative])                                         | function of the first   |
+|                                                            | kind or its derivative. |
++------------------------------------------------------------+-------------------------+
+| | :py:func:`spherical_yn <scipy.special.spherical_yn>`\(n, | Spherical Bessel        |
+|   z[, derivative])                                         | function of the second  |
+|                                                            | kind or its derivative. |
++------------------------------------------------------------+-------------------------+
+
+Functions imported from treams.special, treams.misc, and treams.lattice
+-----------------------------------------------------------------------
+
++------------------------------------------------------------+------------------------------+
+| :py:data:`~treams.special.spherical_jn_d`\(n, z)            | Derivative of the spherical | 
+|                                                             | Bessel function of the      |
+|                                                             | first kind.                 |   
++------------------------------------------------------------+------------------------------+
+| :py:data:`~treams.special.spherical_yn_d`\(n, z)            | Derivative of the spherical | 
+|                                                             | Bessel function of the      |
+|                                                             | second kind.                |   
++------------------------------------------------------------+------------------------------+
+
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   treams.special.spherical_jn_d
+   treams.special.spherical_yn_d
+   treams.special.sph_harm
+   treams.special.lpmv
+   treams.special.incgamma
+   treams.special.intkambe
+   treams.special.wignersmalld
+   treams.special.wignerd
+   treams.special.wigner3j
+   treams.special.pi_fun
+   treams.special.tau_fun
+   treams.special.vsh_X
+   treams.special.vsh_Y
+   treams.special.vsh_Z
+   treams.special.car2cyl
+   treams.special.car2sph
+   treams.special.cyl2car
+   treams.special.cyl2sph
+   treams.special.sph2car
+   treams.special.sph2cyl
+   treams.special.vcar2cyl
+   treams.special.vcar2sph
+   treams.special.vcyl2car
+   treams.special.vcyl2sph
+   treams.special.vsph2car
+   treams.special.vsph2cyl
+   treams.special.car2pol
+   treams.special.pol2car
+   treams.special.vcar2pol
+   treams.special.vpol2car
+   treams.misc.wave_vec_z
+   treams.misc.firstbrillouin1d
+   treams.misc.firstbrillouin2d
+   treams.misc.firstbrillouin3d
+   treams.lattice
+
+
 
 """
 
-_version__ = "0.1.14"
+_version__ = "0.1.15"
 
 from scipy.special import (  # noqa: F401
     hankel1,
     hankel2,
     jv,
+    yv,
     spherical_jn,
     spherical_yn,
-    yv,
 )
 
 from treams.special import(   # noqa: F401
@@ -72,6 +192,9 @@ from treams.special import(   # noqa: F401
     wigner3j,
     pi_fun,
     tau_fun,
+    vsh_X,
+    vsh_Y,
+    vsh_Z,
     car2cyl,
     car2sph,
     cyl2car,
@@ -90,8 +213,7 @@ from treams.special import(   # noqa: F401
     vpol2car,
     )
 
-from treams.misc import(  # noqa: F401
-    pickmodes,
+from treams.misc import(  # noqa: F401,
     wave_vec_z,
     firstbrillouin1d,
     firstbrillouin2d,

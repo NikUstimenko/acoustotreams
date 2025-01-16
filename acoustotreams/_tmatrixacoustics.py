@@ -255,9 +255,9 @@ class AcousticTMatrix(AcousticsArray):
         tmat = np.zeros((dim, dim), np.complex128)
         for l in range(lmax + 1):  # noqa: E741
             miecoeffs = mie_acoustics(l, k0 * radii, *zip(*materials))
-            pos = SSWB.defaultdim(l - 1)                                                          #!!!!!!!!!!
+            pos = SSWB.defaultdim(l - 1)                                                         
             for i in range(2 * l + 1):
-                tmat[pos + i, pos + i] = miecoeffs[i]
+                tmat[pos + i, pos + i] = miecoeffs
         return cls(tmat, k0=k0, basis=SSWB.default(lmax), material=materials[-1])
     
     @classmethod

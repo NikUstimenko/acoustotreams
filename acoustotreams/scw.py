@@ -1,5 +1,8 @@
 """Scalar cylindrical wave module.
 
+.. autosummary::
+   :toctree:
+   
    periodic_to_spw
    rotate
    to_ssw
