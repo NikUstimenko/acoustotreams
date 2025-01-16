@@ -46,11 +46,12 @@ In this case we explicitly solve the equation  for the displacement field :math:
 
 .. math::
 
-    \omega^2 \boldsymbol u + c^2 \boldsymbol \Delta \boldsymbol u + (c^2 - c_t^2) \nabla (\nabla \cdot \boldsymbol u)
+    \omega^2 \boldsymbol u + c^2 \boldsymbol \Delta \boldsymbol u + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \boldsymbol u) = 0
 
 where :math:`\rho` is the mass density, :math:`c` is the speed of longitudinal pressure waves, 
 and :math:`c_t` is the speed of transverse shear waves (:func:`acoustotreams.AcousticMaterial`).
-Due to the requirement of isotropy these quantities are all scalar.
+Due to the requirement of isotropy these quantities are all scalar. In a medium with :math:`c_t \equiv 0`
+the last equation coincides with the second equation from the first set.
 
 For the transformation to the time domain we use for a general function
 :math:`f(\omega)`

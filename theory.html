@@ -90,10 +90,11 @@ the speed of sound in air being 343 m/s.</p>
 that support both pressure and shear waves while the background media support <em>no</em> shear waves.
 In this case we explicitly solve the equation  for the displacement field <span class="math notranslate nohighlight">\(\boldsymbol u\)</span> <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
 <div class="math notranslate nohighlight">
-\[\omega^2 \boldsymbol u + c^2 \boldsymbol \Delta \boldsymbol u + (c^2 - c_t^2) \nabla (\nabla \cdot \boldsymbol u)\]</div>
+\[\omega^2 \boldsymbol u + c^2 \boldsymbol \Delta \boldsymbol u + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \boldsymbol u) = 0\]</div>
 <p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the mass density, <span class="math notranslate nohighlight">\(c\)</span> is the speed of longitudinal pressure waves,
 and <span class="math notranslate nohighlight">\(c_t\)</span> is the speed of transverse shear waves (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial()</span></code>).
-Due to the requirement of isotropy these quantities are all scalar.</p>
+Due to the requirement of isotropy these quantities are all scalar. In a medium with <span class="math notranslate nohighlight">\(c_t \equiv 0\)</span>
+the last equation coincides with the second equation from the first set.</p>
 <p>For the transformation to the time domain we use for a general function
 <span class="math notranslate nohighlight">\(f(\omega)\)</span></p>
 <div class="math notranslate nohighlight">
