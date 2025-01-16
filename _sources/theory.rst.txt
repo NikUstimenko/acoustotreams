@@ -99,7 +99,7 @@ and get the vector Helmholtz equation
 .. math::
 
     \left(\boldsymbol \Delta + k^2 \right) \boldsymbol{v} = \boldsymbol{\nabla} (\boldsymbol{\nabla} \cdot \boldsymbol v)
-    - \boldsymbol{\nabla} \times \boldsymbol{\nabla} \times \boldsymbol \boldsymbol{v}
+    - \boldsymbol{\nabla} \times \boldsymbol{\nabla} \times \boldsymbol{v}
     + k^2 \boldsymbol v
     = 0
 
@@ -156,7 +156,7 @@ The solutions in cylindrical coordinates are
     
     \psi^{(n)}_{k_z, m}(k, \boldsymbol r) 
     = 
-    Z_m^{(n)}(k_\rho \rho) \mathrm e^{\mathrm i (m \varphi + k_z z})
+    Z_m^{(n)}(k_\rho \rho) \mathrm e^{\mathrm i (m \varphi + k_z z)}
 
 where :math:`k_z \in \mathbb R` and :math:`m \in \mathbb Z` are the parameters of the
 solution (:func:`acoustotreams.scw_rPsi`, and :func:`acoustotreams.scw_Psi`). The radial part 
@@ -239,7 +239,7 @@ The solutions to the acoustic master equations are then
 
 .. math::
 
-    p(k, \mathbf{r}) = \sum_\nu p_{\nu} \psi_\nu(k, \mathbf{r})
+    p(k, \mathbf{r}) = \sum_\nu p_{\nu} \psi_\nu(k, \mathbf{r}) \\
     \mathbf{v}(k, \mathbf{r}) = \frac{-\mathrm{i}}{\rho c} \sum_\nu p_{\nu} \mathbf{L}_\nu(k, \mathbf{r})
 
 where :math:`\nu` is just a placeholder for the actual parameters that index a concrete set of solutions.
