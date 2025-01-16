@@ -73,6 +73,9 @@ Spherical waves and translation coefficients
 .. autosummary::
    :toctree:
 
+   ssw_Psi
+   ssw_rPsi
+
 Cylindrical waves
 
 .. autosummary::
@@ -115,15 +118,15 @@ Functions imported from SciPy
 Functions imported from treams.special, treams.misc, and treams.lattice
 -----------------------------------------------------------------------
 
-+------------------------------------------------------------+------------------------------+
-| :py:data:`~treams.special.spherical_jn_d`\(n, z)            | Derivative of the spherical | 
-|                                                             | Bessel function of the      |
-|                                                             | first kind.                 |   
-+------------------------------------------------------------+------------------------------+
-| :py:data:`~treams.special.spherical_yn_d`\(n, z)            | Derivative of the spherical | 
-|                                                             | Bessel function of the      |
-|                                                             | second kind.                |   
-+------------------------------------------------------------+------------------------------+
++------------------------------------------------------------+-----------------------------+
+| :py:data:`~treams.special.spherical_jn_d`\(n, z)           | Derivative of the spherical | 
+|                                                            | Bessel function of the      |
+|                                                            | first kind.                 |   
++------------------------------------------------------------+-----------------------------+
+| :py:data:`~treams.special.spherical_yn_d`\(n, z)           | Derivative of the spherical | 
+|                                                            | Bessel function of the      |
+|                                                            | second kind.                |   
++------------------------------------------------------------+-----------------------------+
 
 .. autosummary::
    :toctree: generated/
@@ -169,7 +172,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.16"
+_version__ = "0.1.17"
 
 from scipy.special import (  # noqa: F401
     hankel1,
