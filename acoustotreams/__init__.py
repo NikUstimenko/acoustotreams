@@ -68,23 +68,42 @@ Scalar wave functions
    plane_wave_angle_scalar
    spherical_wave_scalar
 
-Spherical waves and translation coefficients
+Spherical waves
 
 .. autosummary::
    :toctree:
 
    ssw_Psi
+   ssw_psi
+   vsw_L
+   vsw_l
    ssw_rPsi
+   vsw_rL
+   tl_ssw
+   tl_ssw_r
 
 Cylindrical waves
 
 .. autosummary::
    :toctree:
 
+   scw_Psi
+   scw_psi
+   vcw_L
+   vcw_l
+   scw_rPsi
+   vcw_rL
+   tl_scw
+   tl_scw_r
+
+
 Plane waves
 
 .. autosummary::
    :toctree:
+
+   spw_Psi
+   vpw_L
 
 Functions imported from SciPy
 -----------------------------
@@ -132,9 +151,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
    :toctree: generated/
    :nosignatures:
 
-   treams.special.spherical_jn_d
-   treams.special.spherical_yn_d
-   treams.special.sph_harm
+   sph_harm
    treams.special.lpmv
    treams.special.incgamma
    treams.special.intkambe
@@ -172,7 +189,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.17"
+_version__ = "0.1.18"
 
 from scipy.special import (  # noqa: F401
     hankel1,
@@ -235,7 +252,7 @@ from acoustotreams._smatrixacoustics import (  # noqa: F401
     poynting_avg_z,
 )
 
-from acoustotreams.scw import *
+import acoustotreams.scw  # noqa: F401
 
 from acoustotreams._coreacoustics import (  # noqa: F401
     ScalarCylindricalWaveBasis,
@@ -256,7 +273,7 @@ from acoustotreams._tmatrixacoustics import (  # noqa: F401
 
 from acoustotreams.coeffsacoustics import *  # noqa: F401 
 
-from acoustotreams.spw import *  # noqa: F401
+import acoustotreams.spw  # noqa: F401
 
 from acoustotreams._operatorsacoustics import (  # noqa: F401
     PField,
@@ -279,4 +296,4 @@ from acoustotreams._operatorsacoustics import (  # noqa: F401
     translate,
 )
 
-from acoustotreams.ssw import *
+import acoustotreams.ssw # noqa: F401
