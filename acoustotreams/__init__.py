@@ -71,7 +71,7 @@ Scalar wave functions
 Spherical waves
 
 .. autosummary::
-   :toctree:
+   :toctree: generated/
 
    ssw_Psi
    ssw_psi
@@ -85,7 +85,7 @@ Spherical waves
 Cylindrical waves
 
 .. autosummary::
-   :toctree:
+   :toctree: generated/
 
    scw_Psi
    scw_psi
@@ -100,7 +100,7 @@ Cylindrical waves
 Plane waves
 
 .. autosummary::
-   :toctree:
+   :toctree: generated/
 
    spw_Psi
    vpw_L
@@ -152,6 +152,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
    :nosignatures:
 
    treams.special.spherical_jn_d
+   treams.special.spherical_yn_d
    treams.special.sph_harm
    treams.special.lpmv
    treams.special.incgamma
@@ -190,7 +191,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.23"
+_version__ = "0.1.24"
 
 from scipy.special import (  # noqa: F401
     hankel1,
