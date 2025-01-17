@@ -147,8 +147,9 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
 def fresnel_acoustics(kzs, rhos):
     r"""Fresnel coefficients for a planar interface.
 
-    The first two dimensions index the two media, the second two dimensions
-    are added to meet the treams convention.
+    The first two dimensions index the two media for the above
+    and below the S-matrix, the second two dimensions are added 
+    to meet the treams convention.
 
     The result is an array relating incoming with the outgoing modes, which 
     are indexed in the same way. The first dimension of the array are the outgoing 
@@ -169,8 +170,8 @@ def fresnel_acoustics(kzs, rhos):
         complex (2, 2, 1, 1)-array
     """,
     res = np.zeros((2, 2, 1, 1), complex)
-    res[0][0][0][0] = 2 * rhos[0] * kzs[1] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
-    res[1][1][0][0] = 2 * rhos[1] * kzs[0] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
-    res[0][1][0][0] = (-rhos[0] * kzs[1] + rhos[1] * kzs[0]) / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
-    res[1][0][0][0] = -res[0][1]
+    res[1][1][0][0] = 2 * rhos[0] * kzs[1] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
+    res[0][0][0][0] = 2 * rhos[1] * kzs[0] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
+    res[1][0][0][0] = (-rhos[0] * kzs[1] + rhos[1] * kzs[0]) / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
+    res[0][1][0][0] = -res[1][0][0][0]
     return res

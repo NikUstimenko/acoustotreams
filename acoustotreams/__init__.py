@@ -147,29 +147,6 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 |                                                            | second kind.                |   
 +------------------------------------------------------------+-----------------------------+
 
-Functions imported from `treams.special`
----------------------------------------
-
-.. function:: wave_vec_z
-   :module: treams.misc
-
-   Computes the z-component of a wave vector.
-
-.. function:: firstbrillouin1d
-   :module: treams.misc
-
-   Finds points in the first Brillouin zone in 1D.
-
-.. function:: firstbrillouin2d
-   :module: treams.misc
-
-   Finds points in the first Brillouin zone in 2D.
-
-.. function:: firstbrillouin3d
-   :module: treams.misc
-
-   Finds points in the first Brillouin zone in 3D.
-
 """
 
 _version__ = "0.1.28"

@@ -96,7 +96,7 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
 
     .. math::
 
-        \psi_{lm}(x, y, z, \theta, \varphi, k)
+        \psi_{lm}(x, y, z, \theta, \varphi)
         = \frac{\mathrm{i}^{-l-1}}{k} 
         Y_{lm}(\theta, \varphi)
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
@@ -187,7 +187,7 @@ def scw_psi(kz, m, x, y, phi, z, krho):
 
     .. math::
 
-        \psi_{k_z m}(x, y, \varphi, z, k_{\rho})
+        \psi_{k_z m}(x, y, \varphi)
         = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-m} \mathrm{e}^{-\mathrm{i} \pi/4}
         \mathrm{e}^{-\mathrm{i} k_{\rho} \left(x \cos \varphi + y \sin \varphi\right)}
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
@@ -280,7 +280,7 @@ def vsw_l(l, m, x, y, z, theta, phi, k):
 
     .. math::
 
-        \mathbf{l}_{lm}(x, y, z, \theta, \varphi, k)
+        \mathbf{l}_{lm}(x, y, z, \theta, \varphi)
         = \frac{\mathrm{i}^{-l}}{k} 
         Y_{lm}(\theta, \varphi)\hat{\mathbf{r}}
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
@@ -374,7 +374,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
 
      .. math::
 
-         \mathbf{L}_{k_z m}^{(3)}(x_\rho, \varphi, z, k_{\rho}, k)
+         \mathbf{L}_{k_z m}^{(3)}(x_\rho, \varphi, z)
         = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}'(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
         + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
         + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] 
@@ -414,7 +414,7 @@ def vcw_l(kz, m, x, y, phi, z, krho, k):
 
     .. math::
 
-        \mathbf{l}_{k_z m}(x, y, \varphi, z, k_{\rho}, k)
+        \mathbf{l}_{k_z m}(x, y, \varphi, z,)
         = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{1-m} \mathrm{e}^{-\mathrm{i} \pi/4}
         \left(\frac{k_{\rho}}{k} \hat{\boldsymbol{\rho}} 
          + \frac{k_{z}}{k} \hat{\mathbf{z}} \right)
@@ -542,9 +542,11 @@ def _tl_ssw_helper(l, m, lambda_, mu, p, q):
 
 
 def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
-    r"""Singular translation coefficient of scalar and longitudinal vector spherical waves
+    r"""tl_ssw(lambda_, mu, l, m, kr, theta, phi)
+    
+    Singular translation coefficient of scalar and longitudinal vector spherical waves
 
-        Definded by
+    Definded by
 
     .. math::
 
@@ -592,7 +594,9 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
 
 
 def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
-    r"""Regular translation coefficient of scalar and longitudinal vector spherical waves
+    r"""tl_ssw_r(lambda_, mu, l, m, kr, theta, phi)
+    
+    Regular translation coefficient of scalar and longitudinal vector spherical waves
 
     Definded by
 
@@ -642,7 +646,9 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     return res * pref
 
 def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
-    r"""Singular translation coefficient of scalar and longitudinal vector cylindrical waves
+    r"""tl_scw(kz1, mu, kz2, m, krr, phi, z)
+    
+    Singular translation coefficient of scalar and longitudinal vector cylindrical waves
 
     Definded by
 
@@ -677,7 +683,9 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
 
 
 def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
-    r"""Regular translation coefficient of scalar and longitudinal vector cylindrical waves
+    r"""tl_scw_r(kz1, mu, kz2, m, krr, phi, z)
+    
+    Regular translation coefficient of scalar and longitudinal vector cylindrical waves
 
     Definded by
 

@@ -140,7 +140,7 @@ class AcousticSMatrices:
 
     def __eq__(self, other):
         return all(
-            (np.abs(self[i, j] - other[i][j]) < 1e-14).all()           #!!!!!!!!!!!!!!!!!!!!!!
+            (np.abs(self[i, j] - other[i][j]) < 1e-14).all()           
             for i in range(2)
             for j in range(2)
         )
@@ -384,12 +384,12 @@ class AcousticSMatrices:
             trans, refl = refl, trans
             paz.reverse()
         illu = np.asarray(illu)
-        s_t = np.real(trans.conjugate().T @ trans * paz[-1])              #!!!!!!!!!!!!!!!!!!
-        s_r = np.real(refl.conjugate().T @ refl * paz[0])
-        s_i = np.real(np.conjugate(illu).T @ illu * paz[0])
+        s_t = np.real(trans.conjugate().T @ paz[0] @ trans)             
+        s_r = np.real(refl.conjugate().T @ paz[1] @ refl)
+        s_i = np.real(np.conjugate(illu).T @ paz[1] @ illu)
         s_ir = np.real(
-            refl.conjugate().T @ illu * paz[0]
-            - np.conjugate(illu).T @ refl * paz[0]
+            refl.conjugate().T @ paz[1] @ illu
+            - np.conjugate(illu).T @ paz[1] @ refl
         )
         return s_t / (s_i + s_ir), s_r / (s_i + s_ir)
 
@@ -477,6 +477,7 @@ def poynting_avg_z(basis, k0, material=AcousticMaterial()):
         tuple
     """
     material = AcousticMaterial(material)
-    _, _, kzs = basis.kvecs(k0, material)
+    kx, ky, kzs = basis.kvecs(k0, material)
+    selection = (kx[:, None] == kx) & (ky[:, None] == ky)
     gamma = kzs / (material.ks(k0) * material.impedance)
-    return 0.5 * np.real(gamma)
+    return 0.5 * np.real(selection * gamma)
