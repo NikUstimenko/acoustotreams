@@ -31,4 +31,4 @@ Finally, a module for calculating scattering coefficients.
 .. autosummary::
    :toctree: generated/
 
-   ~acoustotreams.coeffsacoustics
+   ~acoustotreams.coeffs

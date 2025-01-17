@@ -19,7 +19,7 @@ import numpy as np
 from acoustotreams._materialacoustics import AcousticMaterial
 
 def mie_acoustics(l, x, *materials):
-    """Mie scattering coefficient of degree l.
+    r"""Mie scattering coefficient of degree l.
 
     The sphere is defined by its size parameter :math:`k_0 r`, where :math:`r` is the
     radius and :math:`k_0` the wave number in air. 
@@ -73,7 +73,7 @@ def mie_acoustics(l, x, *materials):
     return res
 
 def mie_acoustics_cyl(kz, m, k0, radii, *materials):
-    """Scattering coefficient at an infinite cylinder
+    r"""Scattering coefficient at an infinite cylinder
 
     The cylinder is defined by its radii.
     Likewise, the material parameters are given from inside to outside. These arrays
@@ -145,7 +145,7 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
     return res
 
 def fresnel_acoustics(kzs, rhos):
-    """Fresnel coefficients for a planar interface.
+    r"""Fresnel coefficients for a planar interface.
 
     The first two dimensions index the two media, the second two dimensions
     are added to meet the treams convention.
