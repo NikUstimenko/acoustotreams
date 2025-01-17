@@ -148,7 +148,7 @@ def fresnel_acoustics(kzs, rhos):
     """Fresnel coefficients for a planar interface.
 
     The first two dimensions index the two media, the second two dimensions
-    are added to meet the *treams* convention.
+    are added to meet the treams convention.
 
     The result is an array relating incoming with the outgoing modes, which 
     are indexed in the same way. The first dimension of the array are the outgoing 
@@ -159,7 +159,7 @@ def fresnel_acoustics(kzs, rhos):
         \begin{pmatrix}
             t_{\uparrow \uparrow} & r_{\uparrow \downarrow} \\
             r_{\downarrow \uparrow} & t_{\downarrow \downarrow}
-        \end{pmatrix}\,.
+        \end{pmatrix}\,
 
     Args:
         kzs (float): Z component of the waves

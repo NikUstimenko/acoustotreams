@@ -194,7 +194,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.20"
+_version__ = "0.1.21"
 
 from scipy.special import (  # noqa: F401
     hankel1,
@@ -276,7 +276,7 @@ from acoustotreams._tmatrixacoustics import (  # noqa: F401
     spherical_wave_scalar,
 )
 
-from acoustotreams.coeffsacoustics import *  # noqa: F401 
+import acoustotreams.coeffs  # noqa: F401 
 
 import acoustotreams.spw  # noqa: F401
 

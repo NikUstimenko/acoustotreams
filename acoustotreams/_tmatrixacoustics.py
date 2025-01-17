@@ -9,7 +9,7 @@ from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
 from acoustotreams._coreacoustics import ScalarCylindricalWaveBasis as SCWB
 from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByUnitVector as SPWBUV
 from acoustotreams._materialacoustics import AcousticMaterial
-from acoustotreams.coeffsacoustics import mie_acoustics, mie_acoustics_cyl
+from acoustotreams.coeffs import mie_acoustics, mie_acoustics_cyl
 from acoustotreams._coreacoustics import AcousticsArray
 import acoustotreams._operatorsacoustics as opa
 import acoustotreams._wavesacoustics as wv

@@ -8,7 +8,7 @@ from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
 from acoustotreams._materialacoustics import AcousticMaterial
 from acoustotreams._operatorsacoustics import translate
 from acoustotreams._tmatrixacoustics import AcousticTMatrixC
-from acoustotreams.coeffsacoustics import fresnel_acoustics
+from acoustotreams.coeffs import fresnel_acoustics
 
 
 class AcousticSMatrix(AcousticsArray):
