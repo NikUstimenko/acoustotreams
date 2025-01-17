@@ -1015,6 +1015,8 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The resulting matrix maps the pressure field coefficients of the given basis to the
     velocity field in Cartesian coordinates.
 
+    The velocity field is given in units of :math:`\frac{1}{\rho c}p`.
+
     Args:
         r (array-like): Evaluation points
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.

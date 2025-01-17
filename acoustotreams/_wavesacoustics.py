@@ -98,7 +98,7 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
 
         \psi_{lm}(x, y, z, \theta, \varphi, k)
         = \frac{\mathrm{i}^{-l-1}}{k} 
-        Y_{lm}(\theta, \varphi)\hat{\mathbf{r}}
+        Y_{lm}(\theta, \varphi)
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
 
     with :func:`acoustotreams.sph_harm`.

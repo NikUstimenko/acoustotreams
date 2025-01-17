@@ -32,7 +32,7 @@ waves as [1]_
     \mathbf{v}
     \end{pmatrix}
 
-where :math:`p = p(\mathbf{r}, \omega)` and :math:`\mathbf v = \mathbf v(mathbf r, \omega)`
+where :math:`p = p(\mathbf{r}, \omega)` and :math:`\mathbf v = \mathbf v(\mathbf r, \omega)`
 are the pressure and velocity fields (:func:`acoustotreams.pfield`, :func:`acoustotreams.vfield`).
 All these quantities are complex valued fields, that depend on the angular frequency :math:`\omega` and 
 the position :math:`\mathbf r`. The material parameters are the speed of sound :math:`c`, and
@@ -132,15 +132,16 @@ plane waves
 
     \psi_{\mathbf k}(k, \mathbf r) = \mathrm e^{\mathrm i \mathbf k \mathbf r} 
 
-given by :func:`acoustotreams.ssw_Psi` where the wave vector fulfils 
+given by :func:`acoustotreams.spw_Psi` where the wave vector fulfils 
 :math:`|\mathbf k|^2 = k_x^2 + k_y^2 + k_z^2 = k^2`. The corresponding 
 longitudinal vector plane wave is
 
 .. math::
 
     \mathbf L_{\mathbf k}(k, \mathbf r) 
-    = \frac{k_x \mathbf{\hat x} + k_y \mathbf{\hat y} + k_z \mathbf{\hat z}}{k}
-    = \mathbf{\hat r}_{\mathbf k}
+    = \frac{k_x \mathbf{\hat x} + k_y \mathbf{\hat y} + k_z \mathbf{\hat z}}{k} 
+    \mathrm e^{\mathrm i \mathbf k \mathbf r}
+    \equiv \mathbf{\hat r}_{\mathbf k}
     \mathrm e^{\mathrm i \mathbf k \mathbf r}
 
 given by :func:`acoustotreams.vpw_L`. We normalized this wave by :math:`k` in the medium
@@ -172,9 +173,9 @@ Bessel functions :math:`J_m = Z_m^{(1)}` and the Hankel functions of the first k
 
     \mathbf{L}_{k_z, m}^{(n)}(k, \mathbf{r}) 
     = 
-    \left[\frac{k_{\rho}}{k} Z'_{m}(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
-    + \mathrm{i}\frac{m k_{\rho}}{k}\frac{Z_{m}(k_{\rho}\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
-    + \frac{\mathrm{i} k_z}{k}Z_{m}(k_{\rho}\rho) \hat{\mathbf{z}} \right] 
+    \left[\frac{k_{\rho}}{k} {Z_{m}^{(n)}}'(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
+    + \mathrm{i}\frac{m k_{\rho}}{k}\frac{Z_{m}^{(n)}(k_{\rho}\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
+    + \frac{\mathrm{i} k_z}{k}Z_{m}^{(n)}(k_{\rho}\rho) \hat{\mathbf{z}} \right] 
     \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
 where we, again, normalized the functions by by :math:`k` in the medium (:func:`acoustotreams.vcw_rL`,
