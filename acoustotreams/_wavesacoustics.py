@@ -10,7 +10,7 @@ def spw_Psi(kx, ky, kz, x, y, z):
 
     .. math::
 
-        \psi_{\mathbf k}(\mathbfl r)
+        \psi_{\mathbf k}(\mathbf r)
         = \mathrm e^{\mathrm i \mathbf k \mathbf r}.
 
     This function describes a solution to the scalar Helmholtz wave

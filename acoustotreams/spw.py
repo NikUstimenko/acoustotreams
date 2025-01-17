@@ -16,7 +16,9 @@ import scipy.special as ss
 
 
 def translate(kx, ky, kz, x, y, z, *args, **kwargs):
-    r"""Translation coefficient for scalar plane wave modes
+    r"""translate(kx, ky, kz, x, y, z)
+    
+    Translation coefficient for scalar plane wave modes
 
     The translation coefficient is the phase factor
     :math:`\mathrm e^{\mathrm i \mathbf k \mathbf r}`.
@@ -46,7 +48,9 @@ def _to_ssw(l, m, kx, ky, kz, *args, **kwargs):
 _to_ssw = np.vectorize(_to_ssw)
 
 def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
-    """Coefficient for the expansion of a scalar plane wave in scalar spherical waves
+    """to_ssw(l, m, kx, ky, kz)
+    
+    Coefficient for the expansion of a scalar plane wave in scalar spherical waves
 
     Returns the coefficient for the basis change from a scalar plane wave to a scalar spherical wave.
     For multiple positions only diagonal values (with respect to the position) are
@@ -81,17 +85,19 @@ def _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
 _to_scw = np.vectorize(_to_scw)    
 
 def to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
-    """Coefficient for the expansion of a scalar plane wave in scalar cylindricrical waves
+    """to_scw(qz, m, kx, ky, kz)
+
+    Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves
 
     Returns the coefficient for the basis change from a scalar plane wave to a scalar cylindrical wave.
     For multiple positions only diagonal values (with respect to the position) are returned.
 
     Args:
-        kzcw (float, array_like): Z component of the scalar cylindrical wave
+        qz (float, array_like): Z component of the scalar cylindrical wave
         m (int, array_like): Order of the scalar cylindrical wave
         kx (float, array_like): X component of scalar plane wave's wave vector
         ky (float, array_like): Y component of scalar plane wave's wave vector
-        kzpw (float, array_like): Z component of scalar plane wave's wave vector
+        kz (float, array_like): Z component of scalar plane wave's wave vector
 
     Returns:
         complex
@@ -110,7 +116,9 @@ def _xyz_to_yzx(kx, ky, kz, *args, **kwargs):
 _xyz_to_yzx = np.vectorize(_xyz_to_yzx)
 
 def permute_xyz(kx, ky, kz, inverse=False, *args, **kwargs):
-    """Change the coordinate system of the plane wave
+    """permute_xyz(kx, ky, kz, inverse=False)
+    
+    Change the coordinate system of the plane wave
 
     A plane wave in the coordinate system :math:`(x, y, z)` with primary direction of
     propagation along the z-axis is described in the system :math:`(x', y', z') = (y, z, x)`. 

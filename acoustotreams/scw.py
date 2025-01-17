@@ -2,7 +2,7 @@
 
 .. autosummary::
    :toctree:
-   
+
    periodic_to_spw
    rotate
    to_ssw
@@ -32,7 +32,9 @@ _translate_r = np.vectorize(_translate_r)
 
 
 def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
-    """Translation coefficient for cylindrical modes.
+    """translate(kz, mu, qz, m, krr, phi, z, singular=True)
+    
+    Translation coefficient for cylindrical modes.
 
     Returns the correct translation coefficient from :func:acoustotreams.tl_scw,
     and :func:acoustotreams.tl_scw_r or a combination thereof for the specified mode and
@@ -66,6 +68,23 @@ def _rotate(kz, mu, qz, m, phi, *args, **kwargs):
 _rotate = np.vectorize(_rotate)
 
 def rotate(kz, mu, qz, m, phi, *args, **kwargs):
+    """rotate(kz, mu, qz, m, phi)
+
+    Rotation coefficient for cylindrical modes.
+
+    Returns the correct rotation coefficient or a combination thereof for the specified
+    mode.
+
+    Args:
+        kz (float, array_like): Z component of the destination mode
+        mu (int, array_like): Order of the destination mode
+        qz (float, array_like): Z component of the source mode
+        m (int, array_like): Order of the source mode
+        phi (float, array_like): Rotation angle
+
+    Returns:
+        complex
+    """
     return _rotate(kz, mu, qz, m, phi, *args, **kwargs)
 
    
@@ -86,6 +105,26 @@ def _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
 _periodic_to_spw = np.vectorize(_periodic_to_spw)
 
 def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
+    """periodic_to_spw(kx, ky, kz, qz, m, a)
+
+    Convert periodic cylindrical wave to plane wave.
+
+    Returns the coefficient for the basis change in a periodic arrangement of cylindrical
+    modes to plane waves. For multiple positions only diagonal values (with respect to
+    the position) are returned.
+
+    Args:
+        kx (float, array_like): X component of destination plane wave mode wave vector
+        ky (float or complex, array_like): Y component of destination plane wave mode wave vector
+        kz (float, array_like): Z component of destination plane wave mode wave vector
+        qz (float, array_like): Z component of the source cylindrical mode
+        m (int, array_like): Order of the source cylindrical mode
+        area (float, array_like): Unit cell area
+
+    Returns:
+        complex
+
+    """
     return _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs)
 
 def _to_ssw(l, m, kz, mu, k, *args, **kwargs):
@@ -101,7 +140,9 @@ def _to_ssw(l, m, kz, mu, k, *args, **kwargs):
 _to_ssw = np.vectorize(_to_ssw)
 
 def to_ssw(l, m, kz, mu, k, *args, **kwargs):
-    """Coefficient for the expansion of a cylindrical wave in spherical waves.
+    """to_ssw(l, m, kz, mu, k)
+    
+    Coefficient for the expansion of a cylindrical wave in spherical waves.
 
     Returns the coefficient for the basis change from a cylindrical wave to a spherical wave. 
     For multiple positions only diagonal values (with respect to the position) are returned.
@@ -109,7 +150,7 @@ def to_ssw(l, m, kz, mu, k, *args, **kwargs):
     Args:
         l (int, array_like): Degree of the spherical wave
         m (int, array_like): Order of the spherical wave
-        kz (int, array_like): Z component of the cylindrical wave's wave vector
+        kz (float, array_like): Z component of the cylindrical wave's wave vector
         mu (int, array_like): Order of the cylindrical wave
         k (float or complex, array_like): Wave number
     
@@ -119,14 +160,14 @@ def to_ssw(l, m, kz, mu, k, *args, **kwargs):
     return _to_ssw(l, m, kz, mu, k, *args, **kwargs)
 
 
-def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0):
+def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
     """Translation coefficients in a lattice.
 
     Returns the translation coefficents for the given modes in a lattice. The
     calculation uses the fast converging sums of :mod:`treams.lattice`.
 
     Args:
-        ks (float or complex): Wave number of longitudinal waves in the medium
+        k (float or complex): Wave number in the medium
         kpar (float, (D,)-array): Parallel component of the wave, defines the dimension
             with `1 <= D <= 2`
         a (float, (D,D)-array): Lattice vectors in each row of the array
@@ -157,9 +198,9 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0):
     if rsin is None:
         rsin = rs
     modes = -out[2][:, None] + in_[2]
-    ks = np.array(ks)
-    ks = ks.reshape((-1,))
-    krhos = np.sqrt((ks[0] * ks[0] - out[1][:, None] * in_[1]).astype(complex))  # todo: out not necessary this only simplifies krhos[compute] below
+    k = np.array(k)
+    k = k.reshape((-1,))
+    krhos = np.sqrt((k[0] * k[0] - out[1][:, None] * in_[1]).astype(complex))  # todo: out not necessary this only simplifies krhos[compute] below
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     compute = np.equal(out[1][:, None], in_[1])
     kpar = np.array(kpar)

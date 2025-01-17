@@ -33,7 +33,9 @@ _translate_r = np.vectorize(_translate_r)
 
 
 def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs):
-    """Translation coefficient for spherical modes.
+    """translate(lambda_, mu, l, m, kr, theta, phi, singular=True)
+
+    Translation coefficient for spherical modes.
 
     Returns the correct translation coefficient from :func:acoustotreams.tl_ssw,
     and :func:acoustotreams.tl_ssw_r or a combination thereof for the specified mode and
@@ -72,7 +74,9 @@ _rotate = np.vectorize(_rotate)
 
 
 def rotate(lambda_, mu, l, m, phi, theta=0, psi=0, *args, **kwargs):
-    """Rotation coefficient for scalar spherical modes.
+    """rotate(lambda_, mu, l, m, phi, theta=0, psi=0)
+    
+    Rotation coefficient for scalar spherical modes.
 
     Returns the correct rotation coefficient from :func:`treams.special.wignerd`. The
     angles are given as Euler angles in `z-y-z`-convention. In the intrinsic (object
@@ -105,81 +109,6 @@ def _transl_a_lattice(lambda_, mu, l, m, dlms):
         res += dlm * np.power(1.0j, p) * np.sqrt(2 * p + 1) * sc.wigner3j(l, lambda_, p, m, -mu, -m + mu) * sc.wigner3j(l, lambda_, p, 0, 0, 0)
     return res * pref
 
-def _transl_a_lattice_r(lambda_, mu, l, m, dlms):
-    """Regular translation coefficients in a lattice"""
-    pref = np.power(-1, np.abs(m)) * np.sqrt(4 * np.pi * (2 * l + 1) * (2 * lambda_ + 1)) * np.power(1.0j, lambda_ - l)
-    dlm = 0
-    res = 0
-    for p in range(l + lambda_, max(abs(lambda_ - l), abs(mu - m)) - 1, -2):
-        dlm = dlms[p * (p + 1) + m - mu]
-        if p == 0:
-            dlm += 1/np.sqrt(4*np.pi)
-        res += dlm * np.power(1.0j, p) * np.sqrt(2 * p + 1) * sc.wigner3j(l, lambda_, p, m, -mu, -m + mu) * sc.wigner3j(l, lambda_, p, 0, 0, 0)
-    return res * pref
-
-def translate_periodic_r(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=lattice.lsumsw):
-    """Regular translation coefficients in a lattice.
-
-    Returns the translation coefficents for the given modes in a lattice. The calculation
-    uses the fast converging sums of :py:data:`~treams.lattice`.
-
-
-    Args:
-        ks (float or complex): Wave number of longitudinal waves in the medium
-        kpar (float, (D,)-array): Parallel component of the wave, defines the dimension with `1 <= D <= 3`
-        a (float, (D,D)-array): Lattice vectors in each row of the array
-        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point
-        out (2- or 3-tuple of integer arrays): Output modes
-        in_ (2- or 3-tuple of integer arrays): Input modes, if none are given equal to
-            the output modes
-        rsin (float): Shift vectors to use with the input modes, if non are given equal
-            to `rs`
-        eta (float or complex, optional): Cut between real and reciprocal space
-            summation, if equal to zero, an estimation for the optimal value is done.
-
-    Returns:
-        complex array
-    """
-
-    if in_ is None:
-        in_ = out
-    out = (*(np.array(o) for o in out),)
-    in_ = (*(np.array(i) for i in in_),)
-    if len(out) < 2 or len(out) > 3:
-        raise ValueError(f"invalid length of output modes {len(out)}, must be 2 or 3")
-    elif len(out) == 2:
-        out = (np.zeros_like(out[0]),) + out
-    if len(in_) < 2 or len(in_) > 3:
-        raise ValueError(f"invalid length of input modes {len(in_)}, must be 2 or 3")
-    elif len(in_) == 2:
-        in_ = (np.zeros_like(in_[0]),) + in_
-    if rsin is None:
-        rsin = rs
-    modes = np.array([
-        [l, m]
-        for l in range(np.max(out[1]) + np.max(in_[1]) + 1)
-        for m in range(-l, l + 1)
-    ])
-    kpar = np.array(kpar)
-    rs = np.array(rs)
-    if rs.ndim == 1:
-        rs = rs.reshape((1, -1))
-    rsin = np.array(rsin)
-    if rsin.ndim == 1:
-        rsin = rsin.reshape((1, -1))
-    rsdiff = -rs[:, None, None, None, :] + rsin[:, None, None, :]
-
-    dim = 1 if kpar.ndim == 0 else kpar.shape[-1]
-    # The result has the shape (n_rs, n_rs, n_ks, n_modes)
-    dlms = func(dim, modes[:, 0], modes[:, 1], ks, kpar, a, rsdiff, eta)
-
-    res = np.zeros((out[1:][0].shape[-1], in_[1:][0].shape[-1]), np.complex128)
-     
-    for i in range(out[1:][0].shape[-1]):
-        for j in range(in_[1:][0].shape[-1]):
-                res[i][j] = _transl_a_lattice_r(in_[1:][0][j], in_[1:][1][j], out[1:][0][i], out[1:][1][i], dlms[0][0][0])
-    
-    return res
 
 def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=lattice.lsumsw):
     """Translation coefficients in a lattice.
@@ -265,7 +194,9 @@ _periodic_to_spw = np.vectorize(_periodic_to_spw)
 
 
 def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
-    """Convert periodic spherical wave to plane wave.
+    """periodic_to_spw(kx, ky, kz, l, m, area)
+    
+    Convert periodic spherical wave to plane wave.
 
     Returns the coefficient for the basis change in a periodic arrangement of spherical
     modes to plane waves. For multiple positions only diagonal values (with respect to
@@ -303,7 +234,9 @@ _periodic_to_scw = np.vectorize(_periodic_to_scw)
 
 
 def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):
-    """Convert periodic spherical wave to cylindrical wave.
+    """periodic_to_scw(kz, m, l, mu, k, area)
+    
+    Convert periodic spherical wave to cylindrical wave.
 
     Returns the coefficient for the basis change in a periodic arrangement of spherical
     modes to cylindrical waves. For multiple positions only diagonal values (with respect to
