@@ -122,7 +122,7 @@ class AcousticMaterial:
     def impedancet(self):
         r"""Relative impedance for transverse waves..
 
-        The relative impedance is defined by :math:`Z = \rho ct`.
+        The relative impedance is defined by :math:`Z = \rho c_t`.
 
         Returns:
             complex

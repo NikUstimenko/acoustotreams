@@ -15,7 +15,7 @@ These modules provide basic functionality for transformations within one basis s
 one module, like translations and rotations as well as transformations among them.
 The functions in there provide an intermediate stage between the purely mathematical
 functions, either implemented within :mod:`acoustotreams` or imported from 
-:py:data:`~treams.special` and :py:data:`~treams.lattice`, and the
+:mod:`treams.special` and :mod:`treams.lattice`, and the
 higher-level classes and functions.
 
 .. autosummary::

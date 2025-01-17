@@ -20,7 +20,7 @@ waves as [1]_
     \end{pmatrix}
     \begin{pmatrix}
     p\\
-    \boldsymbol{v}
+    \mathbf{v}
     \end{pmatrix} = 
     \mathrm i \omega
     \begin{pmatrix}
@@ -29,13 +29,13 @@ waves as [1]_
     \end{pmatrix}
     \begin{pmatrix}
     p\\
-    \boldsymbol{v}
+    \mathbf{v}
     \end{pmatrix}
 
-where :math:`p = p(\boldsymbol{r}, \omega)` and :math:`\boldsymbol v = \boldsymbol v(\boldsymbol r, \omega)`
+where :math:`p = p(\mathbf{r}, \omega)` and :math:`\mathbf v = \mathbf v(mathbf r, \omega)`
 are the pressure and velocity fields (:func:`acoustotreams.pfield`, :func:`acoustotreams.vfield`).
 All these quantities are complex valued fields, that depend on the angular frequency :math:`\omega` and 
-the position :math:`\boldsymbol r`. The material parameters are the speed of sound :math:`c`, and
+the position :math:`\mathbf r`. The material parameters are the speed of sound :math:`c`, and
 the mass density :math:`\rho`. Conventionally, within acoustotreams the (air) wave number
 :math:`k_0 = \frac{\omega}{c_0}` is generally used to express the frequency. Here :math:`c_0` is
 the speed of sound in air being 343 m/s.
@@ -60,13 +60,13 @@ Equation of motion for elastic objects
 
 In acoustotreams we can also find the pressure and velocity fields in the presence of elastic objects
 that support both pressure and shear waves while the background media support *no* shear waves. 
-In this case we explicitly solve the equation for the displacement field :math:`\boldsymbol u = \frac{\mathrm i}{\omega}\boldsymbol v` [2]_
+In this case we explicitly solve the equation for the displacement field :math:`\mathbf u = \frac{\mathrm i}{\omega}\mathbf v` [2]_
 
 .. math::
 
-    \omega^2 \boldsymbol u 
-    + c_t^2 \boldsymbol \Delta \boldsymbol u 
-    + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \boldsymbol u) 
+    \omega^2 \mathbf u 
+    + c_t^2 \boldsymbol \Delta \mathbf u 
+    + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \mathbf u) 
     = 0
 
 where :math:`\rho` is the mass density, :math:`c` is the speed of longitudinal pressure waves, 
@@ -91,16 +91,16 @@ The scalar Helmholtz equation is
     = 0
 
 where :math:`\Delta` is the Laplace operator. Note, that by applying the divergence operator
-on equation :math:`\boldsymbol{\nabla}p=\mathrm i \omega \boldsymbol{v}` and using the equation
-:math:`\boldsymbol{\nabla} \cdot \boldsymbol{v} = \frac{\mathrm i \omega}{\rho c^2}p`, the scalar
+on equation :math:`\boldsymbol{\nabla}p=\mathrm i \omega \mathbf{v}` and using the equation
+:math:`\boldsymbol{\nabla} \cdot \mathbf{v} = \frac{\mathrm i \omega}{\rho c^2}p`, the scalar
 Helmholtz equation can be obtained. Alternatively, we can apply the gradient to the second equation
 and get the vector Helmholtz equation
 
 .. math::
 
-    \left(\boldsymbol \Delta + k^2 \right) \boldsymbol{v} = \boldsymbol{\nabla} (\boldsymbol{\nabla} \cdot \boldsymbol v)
-    - \boldsymbol{\nabla} \times \boldsymbol{\nabla} \times \boldsymbol{v}
-    + k^2 \boldsymbol v
+    \left(\boldsymbol \Delta + k^2 \right) \mathbf{v} = \boldsymbol{\nabla} (\boldsymbol{\nabla} \cdot \mathbf v)
+    - \boldsymbol{\nabla} \times \boldsymbol{\nabla} \times \mathbf{v}
+    + k^2 \mathbf v
     = 0
 
 If we denote :math:`\psi` as a solution to the scalar Helmholtz equation, solutions to the vector Helmholtz equation
@@ -108,17 +108,17 @@ can be constructed as follows
 
 .. math::
 
-    \boldsymbol L = k^{-1} \boldsymbol{\nabla} \psi \\
-    \boldsymbol M = \boldsymbol{\nabla} \times (\boldsymbol c \psi) \\
-    \boldsymbol N = \boldsymbol{\nabla} \times k^{-1} \boldsymbol{\nabla} \times (\boldsymbol c \psi)
+    \mathbf L = k^{-1} \boldsymbol{\nabla} \psi \\
+    \mathbf M = \boldsymbol{\nabla} \times (\mathbf c \psi) \\
+    \mathbf N = \boldsymbol{\nabla} \times k^{-1} \boldsymbol{\nabla} \times (\mathbf c \psi)
 
-where :math:`\boldsymbol c` is a steering vector that depends on the coordinate system
+where :math:`\mathbf c` is a steering vector that depends on the coordinate system
 used for the solution :math:`\psi`. We will focus the following discussion on the three
 cases of planar, cylindrical, and spherical solutions, where the coordinate systems are
 chosen to be Cartesian, cylindrical, and spherical. 
 
-The first type of solution is longitudinal waves that obey constraint :math:`\boldsymbol{\nabla} \times \boldsymbol L = 0`,
-while the second and third ones are transverse waves with the constraint :math:`\boldsymbol{\nabla} \cdot {\boldsymbol M,\boldsymbol N} = 0`.
+The first type of solution is longitudinal waves that obey constraint :math:`\boldsymbol{\nabla} \times \mathbf L = 0`,
+while the second and third ones are transverse waves with the constraint :math:`\boldsymbol{\nabla} \cdot \{\mathbf M,\mathbf N\} = 0`.
 In the following, we will limit the discussion of the transverse waves, because acoustic waves in a medium with :math:`c_t \equiv 0` can
 be described by scalar pressure fields and corresponding longitudinal fields.
 
@@ -130,18 +130,18 @@ plane waves
 
 .. math::
 
-    \psi_{\boldsymbol k}(k, \boldsymbol r) = \mathrm e^{\mathrm i \boldsymbol k \boldsymbol r} 
+    \psi_{\mathbf k}(k, \mathbf r) = \mathrm e^{\mathrm i \mathbf k \mathbf r} 
 
 given by :func:`acoustotreams.ssw_Psi` where the wave vector fulfils 
-:math:`|\boldsymbol k|^2 = k_x^2 + k_y^2 + k_z^2 = k^2`. The corresponding 
+:math:`|\mathbf k|^2 = k_x^2 + k_y^2 + k_z^2 = k^2`. The corresponding 
 longitudinal vector plane wave is
 
 .. math::
 
-    \boldsymbol L_{\boldsymbol k}(k, \boldsymbol r) 
-    = \frac{k_x \boldsymbol{\hat x} + k_y \boldsymbol{\hat y} + k_z \boldsymbol{\hat z}}{k}
-    = \boldsymbol{\hat r}_{\boldsymbol k}
-    \mathrm e^{\mathrm i \boldsymbol k \boldsymbol r}
+    \mathbf L_{\mathbf k}(k, \mathbf r) 
+    = \frac{k_x \mathbf{\hat x} + k_y \mathbf{\hat y} + k_z \mathbf{\hat z}}{k}
+    = \mathbf{\hat r}_{\mathbf k}
+    \mathrm e^{\mathrm i \mathbf k \mathbf r}
 
 given by :func:`acoustotreams.vpw_L`. We normalized this wave by :math:`k` in the medium
 such that it has unit strength for real-valued wave vectors.
@@ -154,7 +154,7 @@ The solutions in cylindrical coordinates are
 
 .. math::
     
-    \psi^{(n)}_{k_z, m}(k, \boldsymbol r) 
+    \psi^{(n)}_{k_z, m}(k, \mathbf r) 
     = 
     Z_m^{(n)}(k_\rho \rho) \mathrm e^{\mathrm i (m \varphi + k_z z)}
 
@@ -194,7 +194,7 @@ where :math:`z_l^{(n)}` are the spherical Bessel and Hankel functions.
 We choose :math:`j_l = z_l^{(1)}` and :math:`h_l^{(1)} = z_l^{(3)}` in complete analogy 
 to the cylindrical waves case (:func:`acoustotreams.spherical_jn`,
 :func:`treams.special.spherical_hankel1`). :math:`Y_{lm}` are the spherical harmonics 
-(:func:`treams.special.sph_harm`). The value :math:`l \in \mathbb N \cup {0}` refers to 
+(:func:`treams.special.sph_harm`). The value :math:`l \in \mathbb N \cup \{0\}` refers to 
 the angular momentum or degree. The projection of the angular momentum onto the z axis or order is 
 :math:`m \in \mathbb Z` with :math:`|m| \leq l`. Hence, the vector spherical waves are defined as
 
@@ -207,20 +207,20 @@ the angular momentum or degree. The projection of the angular momentum onto the 
 
 .. math::
 
-    \boldsymbol X_{lm} (\theta, \varphi)
+    \mathbf X_{lm} (\theta, \varphi)
     = \mathrm i \sqrt{\frac{2 l + 1}{4 \pi l (l + 1)} \frac{(l - m)!}{(l + m)!}}
     \left(\mathrm i \pi_l^m(\cos\theta) \boldsymbol{\hat\theta}
     - \tau_l^m (\cos\theta) \boldsymbol{\hat\varphi}\right)
     \mathrm e^{\mathrm i m \varphi}
     \\
-    \boldsymbol Y_{lm} (\theta, \varphi)
+    \mathbf Y_{lm} (\theta, \varphi)
     = \mathrm i \sqrt{\frac{2 l + 1}{4 \pi l (l + 1)} \frac{(l - m)!}{(l + m)!}}
     \left(\tau_l^m (\cos\theta) \boldsymbol{\hat\theta}
     + \mathrm i \pi_l^m (\cos\theta) \boldsymbol{\hat\varphi}\right)
     \mathrm e^{\mathrm i m \varphi}
     \\
-    \boldsymbol Z_{lm} (\theta, \varphi)
-    = \mathrm i Y_{lm}(\theta, \varphi) \boldsymbol{\hat r}
+    \mathbf Z_{lm} (\theta, \varphi)
+    = \mathrm i Y_{lm}(\theta, \varphi) \mathbf{\hat r}
 
 are the vector spherical harmonics (:func:`acoustotreams.vsh_X`,
 :func:`acoustotreams.vsh_Y`, and :func:`acoustotreams.vsh_Z`) imported from `treams.special`. 
@@ -243,7 +243,7 @@ The solutions to the acoustic master equations are then
     \mathbf{v}(k, \mathbf{r}) = \frac{-\mathrm{i}}{\rho c} \sum_\nu p_{\nu} \mathbf{L}_\nu(k, \mathbf{r})
 
 where :math:`\nu` is just a placeholder for the actual parameters that index a concrete set of solutions.
-The multiplication :math:`Z = \rho c` is also called acoustic impedance. 
+The inverse prefactor :math:`Z = \rho c` is called acoustic impedance. 
 
 
 References

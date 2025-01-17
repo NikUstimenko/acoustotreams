@@ -10,8 +10,8 @@ def spw_Psi(kx, ky, kz, x, y, z):
 
     .. math::
 
-        \psi_{\boldsymbol k}(\boldsymbol r)
-        = \mathrm e^{\mathrm i \boldsymbol k \boldsymbol r}.
+        \psi_{\mathbf k}(\mathbfl r)
+        = \mathrm e^{\mathrm i \mathbf k \mathbf r}.
 
     This function describes a solution to the scalar Helmholtz wave
     equation.
@@ -38,8 +38,8 @@ def vpw_L(kx, ky, kz, x, y, z):
 
     .. math::
 
-       \boldsymbol L{\boldsymbol k}(\boldsymbol r)
-        = \frac{\boldsymbol k}{k} \mathrm e^{\mathrm i \boldsymbol k \boldsymbol r}.
+       \mathbf L_{\mathbf k}(\mathbf r)
+        = \frac{\mathbf k}{k} \mathrm e^{\mathrm i \mathbf k \mathbf r}.
 
     This function describes a longitudinal solution to the vector Helmholtz wave
     equation.
@@ -90,13 +90,40 @@ def ssw_Psi(l, m, kr, theta, phi):
     """
     return sc.sph_harm(m, l, phi, theta) * sc.spherical_hankel1(l, kr)
 
-def ssw_psi(l, m, ksx, ksy, ksz, theta, phi, ks):
-     r"""Far-field amplitude of singular scalar spherical wave :math:`\psi`"""
+def ssw_psi(l, m, x, y, z, theta, phi, k):
+     r"""Far-field amplitude of singular scalar spherical wave :math:`\psi`
+     Defined by
+
+    .. math::
+
+        \psi_{lm}(x, y, z, \theta, \varphi, k)
+        = \frac{\mathrm{i}^{-l-1}}{k} 
+        Y_{lm}(\theta, \varphi)\hat{\mathbf{r}}
+        \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
+
+    with :func:`acoustotreams.sph_harm`.
+
+    This function describes a solution to the vector Helmholtz wave
+    equation in the limit of :math:`kr \to +\infty`.
+
+    Args:
+        l (int, array_like): Degree :math:`l \geq 0`
+        m (int, array_like): Order :math:`|m| \leq l`
+        x (float or complex, array_like): X coordinate of the source
+        y (float or complex, array_like): Y coordinate of the source
+        z (float or complex, array_like): Z coordinate of the source
+        theta (float or complex, array_like): Polar angle
+        phi (float, array_like): Azimuthal angle
+        k (float or complex, array_like): Wave number in the medium
+
+    Returns:
+        complex
+     """
      return (sc.sph_harm(m, l, phi, theta)
-             * np.exp(-1j * ((ksx * np.cos(phi) + ksy * np.sin(phi)) * np.sin(theta) 
-                             + ksz * np.cos(theta)))
+             * np.exp(-1j * ((k * x * np.cos(phi) + k * y * np.sin(phi)) * np.sin(theta) 
+                             + k * z * np.cos(theta)))
              * np.power(-1j, l + 1)
-             * 1 / ks)
+             * 1 / k)
 
 def ssw_rPsi(l, m, kr, theta, phi):
      r"""Regular scalar spherical wave :math:`\Psi`
@@ -153,11 +180,36 @@ def scw_Psi(kz, m, krr, phi, z):
       """
      return np.exp(1j * (m * phi + kz * z)) * sc.hankel1(m, krr)
 
-def scw_psi(kz, m, krhox, krhoy, phi, z, krho):
-     r"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`"""
+def scw_psi(kz, m, x, y, phi, z, krho):
+     r"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`
+
+     Defined by
+
+    .. math::
+
+        \psi_{k_z m}(x, y, \varphi, z, k_{\rho})
+        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-m} \mathrm{e}^{-\mathrm{i} \pi/4}
+        \mathrm{e}^{-\mathrm{i} k_{\rho} \left(x \cos \varphi + y \sin \varphi\right)}
+        \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
+
+    This function describes a solution to the vector Helmholtz wave
+    equation in the limit of :math:`k_{\rho} \rho \to +\infty`.
+
+    Args:
+        kz (float, array_like): Z component of the wave vector
+        m (int, array_like): Order
+        x (float or complex, array_like): X coordinate of the source
+        y (float or complex, array_like): Y coordinate of the source
+        phi (float, array_like): Azimuthal angle
+        z (float or complex, array_like): Z coordinate of the source
+        krho (float or complex, array_like): Radial component of the wave vector
+
+    Returns:
+        complex
+     """
      return (np.exp(1j * m * phi + 1j * kz * z) * 
              np.sqrt(2 / (np.pi * krho)) *
-             np.exp(-1j * ((krhox * np.cos(phi) + krhoy * np.sin(phi)))) *
+             np.exp(-1j * ((krho * x * np.cos(phi) + krho * y * np.sin(phi)))) *
              np.power(-1j, m) * 
              np.exp(-1j * np.pi/4))
 
@@ -201,7 +253,7 @@ def vsw_L(l, m, kr, theta, phi):
         + \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
     with :func:`acoustotreams.vsh_Z`, :func:`acoustotreams.vsh_Y`, 
-    and :func:`acoustotreams.spherical_hankel1`.
+    :func:`acoustotreams.spherical_hankel1`, and :func:`acoustotreams.spherical_hankel1`.
 
     This function describes a solution to the vector Helmholtz wave
     equation.
@@ -229,7 +281,7 @@ def vsw_l(l, m, x, y, z, theta, phi, k):
     .. math::
 
         \mathbf{l}_{lm}(x, y, z, \theta, \varphi, k)
-        = \frac{1}{k} \mathrm{i}^l
+        = \frac{\mathrm{i}^{-l}}{k} 
         Y_{lm}(\theta, \varphi)\hat{\mathbf{r}}
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
 
@@ -274,7 +326,7 @@ def vsw_rL(l, m, kr, theta, phi):
     .. math::
 
         \mathbf{L}_{lm}^{(1)}(x, \theta, \varphi)
-        = -\mathrm{i} \left[{j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
+        = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
         + \frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
     with :func:`acoustotreams.vsh_Z`, :func:`acoustotreams.vsh_Y`, 
@@ -323,7 +375,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
      .. math::
 
          \mathbf{L}_{k_z m}^{(3)}(x_\rho, \varphi, z, k_{\rho}, k)
-        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}'_{m}(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
+        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}'(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
         + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
         + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
@@ -413,7 +465,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
      .. math::
 
          \mathbf{L}_{k_z m}^{(1)}(x_\rho, \varphi, z)
-        = \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}'_{m}(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
+        = \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}'(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
         + \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
         + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}

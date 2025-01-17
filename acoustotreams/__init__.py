@@ -146,11 +146,16 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 |                                                            | Bessel function of the      |
 |                                                            | second kind.                |   
 +------------------------------------------------------------+-----------------------------+
+.. autosummary::
+   :toctree: 
+
+   sph_harm
 
 .. autosummary::
    :toctree: generated/
    :nosignatures:
 
+   treams.special.spherical_jn_d
    treams.special.sph_harm
    treams.special.lpmv
    treams.special.incgamma
@@ -189,7 +194,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.19"
+_version__ = "0.1.20"
 
 from scipy.special import (  # noqa: F401
     hankel1,

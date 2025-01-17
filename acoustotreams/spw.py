@@ -19,7 +19,7 @@ def translate(kx, ky, kz, x, y, z, *args, **kwargs):
     r"""Translation coefficient for scalar plane wave modes
 
     The translation coefficient is the phase factor
-    :math:`\mathrm e^{\mathrm i \boldsymbol k \boldsymbol r}`.
+    :math:`\mathrm e^{\mathrm i \mathbf k \mathbf r}`.
 
     Args:
         kx, ky, kz (float or complex, array_like): Wave vector components

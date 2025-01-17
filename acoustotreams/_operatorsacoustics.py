@@ -1015,8 +1015,6 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The resulting matrix maps the pressure field coefficients of the given basis to the
     velocity field in Cartesian coordinates.
 
-    The velocity field is given in units of :math:`\frac{1}{rho c} p`.
-
     Args:
         r (array-like): Evaluation points
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
@@ -1262,9 +1260,9 @@ def _ssw_vamplitudeff(r, basis, k0, material, modetype):
     res = wv.vsw_l(
             basis.l,
             basis.m,
-            ks * rsph[..., basis.pidx, 0],
-            ks * rsph[..., basis.pidx, 1],
-            ks * rsph[..., basis.pidx, 2],
+            rsph[..., basis.pidx, 0],
+            rsph[..., basis.pidx, 1],
+            rsph[..., basis.pidx, 2],
             r[..., basis.pidx, 1],
             r[..., basis.pidx, 2],
             ks
@@ -1291,8 +1289,8 @@ def _scw_vamplitudeff(r, basis, k0, material, modetype):
     res = wv.vcw_l(
             basis.kz,
             basis.m,
-            krhos * rcyl[..., basis.pidx, 0],
-            krhos * rcyl[..., basis.pidx, 1],
+            rcyl[..., basis.pidx, 0],
+            rcyl[..., basis.pidx, 1],
             r[..., basis.pidx, 1],
             r[..., basis.pidx, 2],
             krhos,
