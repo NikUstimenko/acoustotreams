@@ -549,8 +549,8 @@ Similarly, we can also calculate the far-field amplitudes of the scattered press
 defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0` and :math:`\mathbf v = \frac{\mathrm e^{\mathrm i k r}}{r}\mathbf v_0` for spherical waves,
 and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0` and :math:`\mathbf v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\mathbf v_0`
 for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\mathbf v_0` are calculated
-using :func:`acoustotreams.ssw_psi` and :func:`acoustotreams.ssw_l`, respectively; for a singular cylindrical wave, 
-using :func:`acoustotreams.scw_psi` and :func:`acoustotreams.scw_l`.
+using :func:`acoustotreams.ssw_psi` and :func:`acoustotreams.vsw_l`, respectively; for a singular cylindrical wave, 
+using :func:`acoustotreams.scw_psi` and :func:`acoustotreams.vcw_l`.
 
 .. doctest::
 

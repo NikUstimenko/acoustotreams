@@ -36,8 +36,8 @@ def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
     
     Translation coefficient for cylindrical modes.
 
-    Returns the correct translation coefficient from :func:acoustotreams.tl_scw,
-    and :func:acoustotreams.tl_scw_r or a combination thereof for the specified mode and
+    Returns the correct translation coefficient from :func:acoustotreams.scw.tl_scw,
+    and :func:acoustotreams.scw.tl_scw_r or a combination thereof for the specified mode and
     basis.
 
     Args:
