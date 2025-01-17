@@ -151,7 +151,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
    :toctree: generated/
    :nosignatures:
 
-   sph_harm
+   treams.special.sph_harm
    treams.special.lpmv
    treams.special.incgamma
    treams.special.intkambe
@@ -189,7 +189,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.18"
+_version__ = "0.1.19"
 
 from scipy.special import (  # noqa: F401
     hankel1,
