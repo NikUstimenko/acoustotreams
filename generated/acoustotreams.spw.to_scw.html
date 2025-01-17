@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.spw.to_scw &#8212; acoustotreams 0.1.26 documentation</title>
+    <title>acoustotreams.spw.to_scw &#8212; acoustotreams 0.1.27 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=785bba28"></script>
+    <script src="../_static/documentation_options.js?v=dc233e31"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="acoustotreams.spw.html" title="acoustotreams.spw"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.26 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.27 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.spw.html" accesskey="U">acoustotreams.spw</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.spw.to_scw</a></li> 
@@ -57,18 +57,18 @@
 <h1>acoustotreams.spw.to_scw<a class="headerlink" href="#acoustotreams-spw-to-scw" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="acoustotreams.spw.to_scw">
-<span class="sig-prename descclassname"><span class="pre">acoustotreams.spw.</span></span><span class="sig-name descname"><span class="pre">to_scw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kzcw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kzpw</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#acoustotreams.spw.to_scw" title="Link to this definition">¶</a></dt>
-<dd><p>Coefficient for the expansion of a scalar plane wave in scalar cylindricrical waves</p>
+<span class="sig-prename descclassname"><span class="pre">acoustotreams.spw.</span></span><span class="sig-name descname"><span class="pre">to_scw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kz</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#acoustotreams.spw.to_scw" title="Link to this definition">¶</a></dt>
+<dd><p>Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves</p>
 <p>Returns the coefficient for the basis change from a scalar plane wave to a scalar cylindrical wave.
 For multiple positions only diagonal values (with respect to the position) are returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>kzcw</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of the scalar cylindrical wave</p></li>
+<li><p><strong>qz</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of the scalar cylindrical wave</p></li>
 <li><p><strong>m</strong> (<em>int</em><em>, </em><em>array_like</em>) – Order of the scalar cylindrical wave</p></li>
 <li><p><strong>kx</strong> (<em>float</em><em>, </em><em>array_like</em>) – X component of scalar plane wave’s wave vector</p></li>
 <li><p><strong>ky</strong> (<em>float</em><em>, </em><em>array_like</em>) – Y component of scalar plane wave’s wave vector</p></li>
-<li><p><strong>kzpw</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of scalar plane wave’s wave vector</p></li>
+<li><p><strong>kz</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of scalar plane wave’s wave vector</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -142,7 +142,7 @@ For multiple positions only diagonal values (with respect to the position) are r
         <li class="right" >
           <a href="acoustotreams.spw.html" title="acoustotreams.spw"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.26 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.1.27 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.spw.html" >acoustotreams.spw</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.spw.to_scw</a></li> 

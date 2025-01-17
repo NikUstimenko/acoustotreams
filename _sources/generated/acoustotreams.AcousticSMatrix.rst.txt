@@ -88,36 +88,36 @@
          ~AcousticSMatrix.trace
          ~AcousticSMatrix.transpose
       
-         ~AcousticSMatrix.__lshift__
          ~AcousticSMatrix.__sub__
-         ~AcousticSMatrix.__setitem__
-         ~AcousticSMatrix.__le__
-         ~AcousticSMatrix.__xor__
-         ~AcousticSMatrix.__lt__
-         ~AcousticSMatrix.__ge__
-         ~AcousticSMatrix.__pos__
-         ~AcousticSMatrix.__array__
-         ~AcousticSMatrix.__add__
-         ~AcousticSMatrix.__or__
-         ~AcousticSMatrix.__invert__
-         ~AcousticSMatrix.__abs__
-         ~AcousticSMatrix.__getitem__
-         ~AcousticSMatrix.__gt__
-         ~AcousticSMatrix.__rshift__
-         ~AcousticSMatrix.__matmul__
-         ~AcousticSMatrix.__eq__
-         ~AcousticSMatrix.__repr__
-         ~AcousticSMatrix.__str__
-         ~AcousticSMatrix.__floordiv__
-         ~AcousticSMatrix.__divmod__
-         ~AcousticSMatrix.__pow__
          ~AcousticSMatrix.__mod__
-         ~AcousticSMatrix.__neg__
-         ~AcousticSMatrix.__mul__
-         ~AcousticSMatrix.__len__
-         ~AcousticSMatrix.__array_ufunc__
-         ~AcousticSMatrix.__truediv__
          ~AcousticSMatrix.__ne__
-         ~AcousticSMatrix.__and__
+         ~AcousticSMatrix.__gt__
+         ~AcousticSMatrix.__or__
          ~AcousticSMatrix.__array_function__
+         ~AcousticSMatrix.__xor__
+         ~AcousticSMatrix.__abs__
+         ~AcousticSMatrix.__pow__
+         ~AcousticSMatrix.__setitem__
+         ~AcousticSMatrix.__truediv__
+         ~AcousticSMatrix.__divmod__
+         ~AcousticSMatrix.__add__
+         ~AcousticSMatrix.__neg__
+         ~AcousticSMatrix.__le__
+         ~AcousticSMatrix.__array__
+         ~AcousticSMatrix.__rshift__
+         ~AcousticSMatrix.__lt__
+         ~AcousticSMatrix.__str__
+         ~AcousticSMatrix.__mul__
+         ~AcousticSMatrix.__floordiv__
+         ~AcousticSMatrix.__len__
+         ~AcousticSMatrix.__invert__
+         ~AcousticSMatrix.__eq__
+         ~AcousticSMatrix.__array_ufunc__
+         ~AcousticSMatrix.__matmul__
+         ~AcousticSMatrix.__ge__
+         ~AcousticSMatrix.__repr__
+         ~AcousticSMatrix.__getitem__
+         ~AcousticSMatrix.__lshift__
+         ~AcousticSMatrix.__and__
+         ~AcousticSMatrix.__pos__
   
