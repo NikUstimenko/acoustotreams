@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Reference &#8212; acoustotreams 0.1.17 documentation</title>
+    <title>Reference &#8212; acoustotreams 0.1.18 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=71734efd"></script>
+    <script src="_static/documentation_options.js?v=9969ed3f"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="theory.html" title="Theory"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.17 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.18 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Reference</a></li> 
       </ul>
     </div>  
@@ -137,11 +137,11 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.permute.html#acoustotreams.permute" title="acoustotreams.permute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permute</span></code></a>([n, k0, material, modetype])</p></td>
 <td><p>Permutation matrix.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.rotate.html#acoustotreams.rotate" title="acoustotreams.rotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate</span></code></a>(lambda_, mu, l, m, phi[, theta, psi])</p></td>
-<td><p>Rotation coefficient for scalar spherical modes.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.rotate.html#acoustotreams.rotate" title="acoustotreams.rotate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate</span></code></a>(phi[, theta, psi, where])</p></td>
+<td><p>Rotation matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.translate.html#acoustotreams.translate" title="acoustotreams.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a>(lambda_, mu, l, m, kr, theta, phi)</p></td>
-<td><p>Translation coefficient for spherical modes.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.translate.html#acoustotreams.translate" title="acoustotreams.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a>(r, *, basis[, k0, material, ...])</p></td>
+<td><p>Translation matrix.</p></td>
 </tr>
 </tbody>
 </table>
@@ -164,25 +164,73 @@
 </tr>
 </tbody>
 </table>
-<p>Spherical waves and translation coefficients</p>
+<p>Spherical waves</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ssw_Psi.html#acoustotreams.ssw_Psi" title="acoustotreams.ssw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_Psi</span></code></a>(l, m, kr, theta, phi)</p></td>
 <td><p>Singular scalar spherical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ssw_rPsi.html#acoustotreams.ssw_rPsi" title="acoustotreams.ssw_rPsi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_rPsi</span></code></a>(l, m, kr, theta, phi)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ssw_psi.html#acoustotreams.ssw_psi" title="acoustotreams.ssw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_psi</span></code></a>(l, m, ksx, ksy, ksz, theta, phi, ks)</p></td>
+<td><p>Far-field amplitude of singular scalar spherical wave <span class="math notranslate nohighlight">\(\psi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.vsw_L.html#acoustotreams.vsw_L" title="acoustotreams.vsw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_L</span></code></a>(l, m, kr, theta, phi)</p></td>
+<td><p>Singular longitudinal vector spherical wave L</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.vsw_l.html#acoustotreams.vsw_l" title="acoustotreams.vsw_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_l</span></code></a>(l, m, x, y, z, theta, phi, k)</p></td>
+<td><p>Far-field amplitude of singular longitudinal vector spherical wave l</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ssw_rPsi.html#acoustotreams.ssw_rPsi" title="acoustotreams.ssw_rPsi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_rPsi</span></code></a>(l, m, kr, theta, phi)</p></td>
 <td><p>Regular scalar spherical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.vsw_rL.html#acoustotreams.vsw_rL" title="acoustotreams.vsw_rL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_rL</span></code></a>(l, m, kr, theta, phi)</p></td>
+<td><p>Regular longitudinal vector spherical wave L</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.tl_ssw.html#acoustotreams.tl_ssw" title="acoustotreams.tl_ssw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_ssw</span></code></a>(lambda_, mu, l, m, kr, theta, phi, ...)</p></td>
+<td><p>Singular translation coefficient of scalar and longitudinal vector spherical waves</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.tl_ssw_r.html#acoustotreams.tl_ssw_r" title="acoustotreams.tl_ssw_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_ssw_r</span></code></a>(lambda_, mu, l, m, kr, theta, phi, ...)</p></td>
+<td><p>Regular translation coefficient of scalar and longitudinal vector spherical waves</p></td>
 </tr>
 </tbody>
 </table>
 <p>Cylindrical waves</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.scw_Psi.html#acoustotreams.scw_Psi" title="acoustotreams.scw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_Psi</span></code></a>(kz, m, krr, phi, z)</p></td>
+<td><p>Singular scalar cylindrical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.scw_psi.html#acoustotreams.scw_psi" title="acoustotreams.scw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_psi</span></code></a>(kz, m, krhox, krhoy, phi, z, krho)</p></td>
+<td><p>Far-field amplitude of singular scalar cylindrical wave <span class="math notranslate nohighlight">\(\psi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.vcw_L.html#acoustotreams.vcw_L" title="acoustotreams.vcw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_L</span></code></a>(kz, m, krr, phi, z, krho, k)</p></td>
+<td><p>Singular longitudinal vector cylindrical wave L</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.vcw_l.html#acoustotreams.vcw_l" title="acoustotreams.vcw_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_l</span></code></a>(kz, m, x, y, phi, z, krho, k)</p></td>
+<td><p>Far-field amplitude of longitudinal singular vector cylindrical wave l</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.scw_rPsi.html#acoustotreams.scw_rPsi" title="acoustotreams.scw_rPsi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_rPsi</span></code></a>(kz, m, krr, phi, z)</p></td>
+<td><p>Regular scalar cylindrical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.vcw_rL.html#acoustotreams.vcw_rL" title="acoustotreams.vcw_rL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_rL</span></code></a>(kz, m, krr, phi, z, krho, k)</p></td>
+<td><p>Regular longitudinal vector cylindrical wave L</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.tl_scw.html#acoustotreams.tl_scw" title="acoustotreams.tl_scw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_scw</span></code></a>(kz1, mu, kz2, m, krr, phi, z, *args, ...)</p></td>
+<td><p>Singular translation coefficient of scalar and longitudinal vector cylindrical waves</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.tl_scw_r.html#acoustotreams.tl_scw_r" title="acoustotreams.tl_scw_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_scw_r</span></code></a>(kz1, mu, kz2, m, krr, phi, z, ...)</p></td>
+<td><p>Regular translation coefficient of scalar and longitudinal vector cylindrical waves</p></td>
+</tr>
 </tbody>
 </table>
 <p>Plane waves</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.spw_Psi.html#acoustotreams.spw_Psi" title="acoustotreams.spw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spw_Psi</span></code></a>(kx, ky, kz, x, y, z)</p></td>
+<td><p>Scalar plane wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.vpw_L.html#acoustotreams.vpw_L" title="acoustotreams.vpw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vpw_L</span></code></a>(kx, ky, kz, x, y, z)</p></td>
+<td><p>Longitudinal vector plane wave L</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -235,12 +283,12 @@ kind or its derivative.</p></td>
 <h3>Functions imported from treams.special, treams.misc, and treams.lattice<a class="headerlink" href="#functions-imported-from-treams-special-treams-misc-and-treams-lattice" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.treams.special.spherical_jn_d.html#treams.special.spherical_jn_d" title="treams.special.spherical_jn_d"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code></a>(n, z)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code>(n, z)</p></td>
 <td><p>Derivative of the spherical
 Bessel function of the
 first kind.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.treams.special.spherical_yn_d.html#treams.special.spherical_yn_d" title="treams.special.spherical_yn_d"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code></a>(n, z)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code>(n, z)</p></td>
 <td><p>Derivative of the spherical
 Bessel function of the
 second kind.</p></td>
@@ -249,13 +297,7 @@ second kind.</p></td>
 </table>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.spherical_jn_d</span></code></p></td>
-<td><p>Derivative of the spherical Bessel function of the first kind.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.spherical_yn_d</span></code></p></td>
-<td><p>Derivative of the spherical Bessel function of the second kind.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.sph_harm</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.sph_harm.html#acoustotreams.sph_harm" title="acoustotreams.sph_harm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sph_harm</span></code></a></p></td>
 <td><p>sph_harm(x1, x2, x3, x4, /, out=None, <a href="#id1"><span class="problematic" id="id2">*</span></a>, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature])</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.lpmv</span></code></p></td>
@@ -453,7 +495,7 @@ higher-level classes and functions.</p>
         <li class="right" >
           <a href="theory.html" title="Theory"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.17 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.18 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Reference</a></li> 
       </ul>
     </div>

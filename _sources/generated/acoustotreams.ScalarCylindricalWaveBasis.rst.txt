@@ -46,14 +46,14 @@
          ~ScalarCylindricalWaveBasis.index
          ~ScalarCylindricalWaveBasis.isdisjoint
       
-         ~ScalarCylindricalWaveBasis.__or__
-         ~ScalarCylindricalWaveBasis.__lt__
-         ~ScalarCylindricalWaveBasis.__le__
-         ~ScalarCylindricalWaveBasis.__ne__
-         ~ScalarCylindricalWaveBasis.__and__
-         ~ScalarCylindricalWaveBasis.__ge__
          ~ScalarCylindricalWaveBasis.__str__
+         ~ScalarCylindricalWaveBasis.__or__
          ~ScalarCylindricalWaveBasis.__gt__
          ~ScalarCylindricalWaveBasis.__sub__
          ~ScalarCylindricalWaveBasis.__xor__
+         ~ScalarCylindricalWaveBasis.__le__
+         ~ScalarCylindricalWaveBasis.__ge__
+         ~ScalarCylindricalWaveBasis.__and__
+         ~ScalarCylindricalWaveBasis.__lt__
+         ~ScalarCylindricalWaveBasis.__ne__
   
