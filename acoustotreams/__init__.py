@@ -147,51 +147,9 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 |                                                            | second kind.                |   
 +------------------------------------------------------------+-----------------------------+
 
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
-
-   treams.special.spherical_jn_d
-   treams.special.spherical_yn_d
-   treams.special.sph_harm
-   treams.special.lpmv
-   treams.special.incgamma
-   treams.special.intkambe
-   treams.special.wignersmalld
-   treams.special.wignerd
-   treams.special.wigner3j
-   treams.special.pi_fun
-   treams.special.tau_fun
-   treams.special.vsh_X
-   treams.special.vsh_Y
-   treams.special.vsh_Z
-   treams.special.car2cyl
-   treams.special.car2sph
-   treams.special.cyl2car
-   treams.special.cyl2sph
-   treams.special.sph2car
-   treams.special.sph2cyl
-   treams.special.vcar2cyl
-   treams.special.vcar2sph
-   treams.special.vcyl2car
-   treams.special.vcyl2sph
-   treams.special.vsph2car
-   treams.special.vsph2cyl
-   treams.special.car2pol
-   treams.special.pol2car
-   treams.special.vcar2pol
-   treams.special.vpol2car
-   treams.misc.wave_vec_z
-   treams.misc.firstbrillouin1d
-   treams.misc.firstbrillouin2d
-   treams.misc.firstbrillouin3d
-   treams.lattice
-
-
-
 """
 
-_version__ = "0.1.24"
+_version__ = "0.1.25"
 
 from scipy.special import (  # noqa: F401
     hankel1,
