@@ -1,6 +1,0 @@
-﻿acoustotreams.treams.special.cyl2sph
-====================================
-
-.. currentmodule:: acoustotreams
-
-.. autodata:: treams.special.cyl2sph

@@ -1,6 +1,0 @@
-﻿acoustotreams.treams.special.wigner3j
-=====================================
-
-.. currentmodule:: acoustotreams
-
-.. autodata:: treams.special.wigner3j

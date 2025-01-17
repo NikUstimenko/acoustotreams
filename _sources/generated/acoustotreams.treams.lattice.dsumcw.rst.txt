@@ -1,6 +1,0 @@
-acoustotreams.treams.lattice.dsumcw
-===================================
-
-.. currentmodule:: acoustotreams
-
-.. autofunction:: treams.lattice.dsumcw

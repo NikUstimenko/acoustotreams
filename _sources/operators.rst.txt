@@ -528,7 +528,7 @@ Evaluate the field
 
 From a programming perspective, the evaluation of the field values at specified points
 is also implemented by a couple of operators. The pressure field :math:`p`, and
-the velocity field :math:`\boldsymbol v` in Cartesian coordinates can be computed.
+the velocity field :math:`\mathbf v` in Cartesian coordinates can be computed.
 
 .. doctest::
 
@@ -546,9 +546,9 @@ Evaluate the far-field amplitude
 ================================
 
 Similarly, we can also calculate the far-field amplitudes of the scattered pressure and velocity fields
-defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0` and :math:`\boldsymbol v = \frac{\mathrm e^{\mathrm i k r}}{r}\boldsymbol v_0` for spherical waves,
-and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0` and :math:`\boldsymbol v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\boldsymbol v_0`
-for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\boldsymbol v_0` are calculated
+defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0` and :math:`\mathbf v = \frac{\mathrm e^{\mathrm i k r}}{r}\mathbf v_0` for spherical waves,
+and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0` and :math:`\mathbf v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\mathbf v_0`
+for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\mathbf v_0` are calculated
 using :func:`acoustotreams.ssw_psi` and :func:`acoustotreams.ssw_l`, respectively; for a singular cylindrical wave, 
 using :func:`acoustotreams.scw_psi` and :func:`acoustotreams.scw_l`.
 

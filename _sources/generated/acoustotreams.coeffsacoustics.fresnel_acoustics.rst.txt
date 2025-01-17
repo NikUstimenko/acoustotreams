@@ -1,6 +1,0 @@
-acoustotreams.coeffsacoustics.fresnel\_acoustics
-================================================
-
-.. currentmodule:: acoustotreams.coeffsacoustics
-
-.. autofunction:: fresnel_acoustics

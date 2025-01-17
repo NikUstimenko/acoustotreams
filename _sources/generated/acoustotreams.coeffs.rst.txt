@@ -1,0 +1,32 @@
+﻿acoustotreams.coeffs
+====================
+
+.. automodule:: acoustotreams.coeffs
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      fresnel_acoustics
+      mie_acoustics
+      mie_acoustics_cyl
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

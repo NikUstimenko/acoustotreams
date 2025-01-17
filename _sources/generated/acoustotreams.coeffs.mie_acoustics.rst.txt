@@ -1,0 +1,6 @@
+acoustotreams.coeffs.mie\_acoustics
+===================================
+
+.. currentmodule:: acoustotreams.coeffs
+
+.. autofunction:: mie_acoustics

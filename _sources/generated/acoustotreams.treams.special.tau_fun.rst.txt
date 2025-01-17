@@ -1,6 +1,0 @@
-﻿acoustotreams.treams.special.tau\_fun
-=====================================
-
-.. currentmodule:: acoustotreams
-
-.. autodata:: treams.special.tau_fun

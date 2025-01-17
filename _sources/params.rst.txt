@@ -352,7 +352,7 @@ Phase vector
 ============
 
 The wave vector, often referred to as ``kpar``, specifies the phase relationship of
-different lattice sites :math:`\exp(\mathrm i \boldsymbol k_\parallel \boldsymbol R)`.
+different lattice sites :math:`\mathrm{e}^{\mathrm i \mathbf{k}_\parallel \mathbf R}`.
 
 .. doctest::
 

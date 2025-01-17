@@ -1,6 +1,0 @@
-﻿acoustotreams.treams.special.vsh\_Y
-===================================
-
-.. currentmodule:: acoustotreams
-
-.. autodata:: treams.special.vsh_Y
