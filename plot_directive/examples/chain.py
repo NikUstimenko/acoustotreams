@@ -19,35 +19,34 @@ chain = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinterac
 inc = acoustotreams.plane_wave_scalar([chain.k0, 0, 0], k0=chain.k0, material=chain.material)
 sca = chain.sca(inc)
 
-x = np.linspace(-0.5*lattice, 0.5*lattice, 101)
+x = np.linspace(-0.75*lattice, 0.75*lattice, 101)
 z = np.linspace(-0.5*lattice, 0.5*lattice, 101)
-def compute_intensity(i, j, tm, radii, inc, sca):
+def compute_pressure(i, j):
     r = [x[j], 0, z[i]]  
-    if tm.valid_points(r, radii):
+    if chain.valid_points(r, radii):
         swb = acoustotreams.ScalarSphericalWaveBasis.default(0, positions=[r])
-        field = sca.expandlattice(basis=swb).pfield(r) 
-        result = np.abs(inc.pfield(r) + field)**2  
+        result = sca.expandlattice(basis=swb).pfield(r) 
     else:
         result = np.nan
     return i, j, result  
 results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, chain, radii, inc, sca) 
+    delayed(compute_pressure)(i, j) 
     for i in range(len(z)) 
     for j in range(len(x))
 )
-intensity = np.zeros((len(z), len(x)))
+p = np.zeros((len(z), len(x)), complex)
 for i, j, result in results:
-    intensity[i, j] = result
+    p[i, j] = result
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
-    intensity,
+    p.real,
     extent = [x.min() * 100, x.max() * 100, z.min() * 100, z.max() * 100],
-    aspect='auto',
+    aspect='equal',
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity $|p/p_0|^2$")
+cb.set_label("Pressure")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(
@@ -60,35 +59,34 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
+plt.show()
 
-def compute_velocity(i, j, tm, radii, inc, sca):
+def compute_velocity(i, j):
     r = [x[j], 0, z[i]]  
-    if tm.valid_points(r, radii):
+    if chain.valid_points(r, radii):
         swb = acoustotreams.ScalarSphericalWaveBasis.default(1, positions=[r])
-        field = sca.expandlattice(basis=swb).vfield(r) 
-        result = np.abs(inc.vfield(r)[0] + field[0])**2  
+        result = sca.expandlattice(basis=swb).vfield(r)[0]  
     else:
         result = np.nan
     return i, j, result  
 results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, chain, radii, inc, sca) 
+    delayed(compute_velocity)(i, j) 
     for i in range(len(z)) 
     for j in range(len(x))
 )
-intensity = np.zeros((len(z), len(x)))
+vx = np.zeros((len(z), len(x)), complex)
 for i, j, result in results:
-    intensity[i, j] = result
+    vx[i, j] = result
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
-    intensity,
+    vx.real,
     extent = [x.min() * 100, x.max() * 100, z.min() * 100, z.max() * 100],
-    aspect='auto',
+    aspect='equal',
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity $|v_x/v_0|^2$")
+cb.set_label("Velocity $v_x$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(
@@ -101,4 +99,4 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
+plt.show()

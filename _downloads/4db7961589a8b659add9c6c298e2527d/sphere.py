@@ -28,7 +28,7 @@ def compute_intensity(i, j):
     r = [x[j], 0, z[i]]
     result = 0  
     if tm.valid_points(r, [radius]): 
-        result = np.abs(inc.pfield(r) + sca.pfield(r))**2  
+        result = np.abs(sca.pfield(r))**2  
     else:
         result = np.nan
     return i, j, result  
@@ -64,7 +64,7 @@ cax = ax.imshow(
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity")
+cb.set_label("Intensity $|p|^2/|p_0|^2$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(
@@ -79,9 +79,8 @@ ax.annotate(
 )
 fig.show()
 
-fig, ax = plt.figure()
-ax = plt.subplot(111, polar=True) 
-ax.plot(theta, radpattern = radpattern / np.max(radpattern))
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+ax.plot(theta, radpattern / np.max(radpattern))
 ax.set_theta_offset(np.pi / 2)
 ax.annotate(
     "", 

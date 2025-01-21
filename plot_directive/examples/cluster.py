@@ -44,13 +44,13 @@ for i, j, result in results:
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
-    intensity, vmin=0, vmax=1,
+    intensity, vmin=0, vmax=1.5,
     extent = [x.min() * 100, x.max() * 100, z.min() * 100, z.max() * 100],
     aspect='auto',
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity")
+cb.set_label("Intensity $|p|^2/|p_0|^2$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.text(
@@ -72,6 +72,7 @@ ax.annotate(
 )
 fig.show()
 
+
 tm_global = tm.expand(acoustotreams.ScalarSphericalWaveBasis.default(10))
 sca = tm_global.sca(inc)
 xs = tm_global.xs(inc)
@@ -85,13 +86,13 @@ for i, j, result in results_global:
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
-    intensity_global, vmin=0, vmax=1,
+    intensity_global, vmin=0, vmax=1.5,
     extent = [x.min() * 100, x.max() * 100, z.min() * 100, z.max() * 100],
     aspect='auto',
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity")
+cb.set_label("Intensity $|p|^2/|p_0|^2$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.text(
@@ -126,13 +127,13 @@ for i, j, result in results_rotate:
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
-    intensity_rotate, vmin=0, vmax=1,
+    intensity_rotate, vmin=0, vmax=1.5,
     extent = [x.min() * 100, x.max() * 100, z.min() * 100, z.max() * 100],
     aspect='auto',
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity")
+cb.set_label("Intensity $|p|^2/|p_0|^2$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.text(

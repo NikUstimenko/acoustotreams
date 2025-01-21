@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoustotreams 0.1.30 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoustotreams 0.1.31 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=73657eb8"></script>
+    <script src="_static/documentation_options.js?v=d71dfaa1"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="operators.html" title="Operators"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.30 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.31 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -124,7 +124,7 @@ Further, we visualize the total acoustic field intensity at frequency 163 kHz.</
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
     <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>  
     <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">[</span><span class="n">radius</span><span class="p">]):</span> 
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">sca</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>  
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sca</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>  
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
@@ -213,9 +213,9 @@ the incident and scattered fields in a basis with a single origin we can describ
 same object. Often, a larger number of multipoles is needed to do so and some
 information on fields between the particles is lost. But, the description in a global
 basis can be more efficient in terms of matrix size.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tm_global</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tm_global</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">sca</span> <span class="o">=</span> <span class="n">tm_global</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
-<span class="n">xs</span> <span class="o">=</span> <span class="n">tm_global</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>A comparison of the calculated near-fields and the cross sections show good agreement
@@ -225,9 +225,9 @@ between the results of both, local and global, T-matrices.</p>
 illumination is set accordingly to be a plane wave propagating in the x direction,
 such that the whole system remains the same. It shows how the rotate operator
 produces consistent results.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="n">k0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">material</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">inc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="n">k0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">material</span><span class="p">)</span>
 <span class="n">tm_rotate</span> <span class="o">=</span> <span class="n">tm_global</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">sca</span> <span class="o">=</span> <span class="n">tm_rotate</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>(<a class="reference download internal" download="" href="_downloads/2f373c568a269e5847e11c539f9854f1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
@@ -271,46 +271,46 @@ stay in the expression of the fields as scalar spherical waves. This allows the
 calculation of the fields in the domain between the spheres. To compute them accurately, we
 expand the scattered field coefficients in the whole lattice in monopole approximation at each point
 we want to calculate the pressure field.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">lattice</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lattice</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="o">*</span><span class="n">lattice</span><span class="p">,</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">lattice</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">lattice</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lattice</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">compute_intensity</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_pressure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
-    <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">chain</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
         <span class="n">swb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-        <span class="n">field</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> 
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">field</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>  
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
 <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span>
-    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_intensity</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">chain</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">)</span> 
+    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_pressure</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> 
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="p">)</span>
-<span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">complex</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="n">intensity</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+    <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
 </pre></div>
 </div>
 <p>To calculate the velocity field, we expand the scattered field coefficients,
 however, in the dipole approximation.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_velocity</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">):</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
-    <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
+    <span class="k">if</span> <span class="n">chain</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
         <span class="n">swb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-        <span class="n">field</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">vfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> 
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">vfield</span><span class="p">(</span><span class="n">r</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">field</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>  
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">vfield</span><span class="p">(</span><span class="n">r</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
 <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span>
-    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_intensity</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">chain</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">)</span> 
+    <span class="n">delayed</span><span class="p">(</span><span class="n">compute_velocity</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> 
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="p">)</span>
-<span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">vx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">complex</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="n">intensity</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+    <span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>(<a class="reference download internal" download="" href="_downloads/167b5e31fa3a68f5d93cabfb9bd977c6/chain.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
@@ -454,7 +454,7 @@ additional modes at higher frequencies in the chosen range.</p>
         <li class="right" >
           <a href="operators.html" title="Operators"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.30 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.31 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
