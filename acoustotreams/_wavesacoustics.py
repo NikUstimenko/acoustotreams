@@ -250,7 +250,7 @@ def vsw_L(l, m, kr, theta, phi):
 
         \mathbf{L}_{lm}^{(3)}(x, \theta, \varphi)
         = -\mathrm{i} \left[{h_l^{(1)}}'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
-        + \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
+        + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
     with :func:`acoustotreams.vsh_Z`, :func:`acoustotreams.vsh_Y`, 
     :func:`acoustotreams.spherical_hankel1`, and :func:`acoustotreams.spherical_hankel1`.
@@ -327,7 +327,7 @@ def vsw_rL(l, m, kr, theta, phi):
 
         \mathbf{L}_{lm}^{(1)}(x, \theta, \varphi)
         = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
-        + \frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
+        + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
     with :func:`acoustotreams.vsh_Z`, :func:`acoustotreams.vsh_Y`, 
     and :func:`acoustotreams.spherical_jn`.
@@ -375,7 +375,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
      .. math::
 
          \mathbf{L}_{k_z m}^{(3)}(x_\rho, \varphi, z)
-        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}'(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
+        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}' \hat{\boldsymbol{\rho}} 
         + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
         + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
@@ -465,7 +465,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
      .. math::
 
          \mathbf{L}_{k_z m}^{(1)}(x_\rho, \varphi, z)
-        = \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}'(k_{\rho}\rho) \hat{\boldsymbol{\rho}} 
+        = \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}' \hat{\boldsymbol{\rho}} 
         + \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
         + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
@@ -482,11 +482,12 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
          phi (float, array_like): Azimuthal angle
          z (float, array_like): Z coordinate
          krho (float or complex, array_like): Radial component of the wave vector
-         k (float or complex, array_like): Wavenumber in the medium 
+         k (float or complex): Wavenumber in the medium 
 
      Returns:
          complex, 3-array
      """
+     # todo: implement for k as array_like
      res = []
      for i, x in enumerate(krr):
             if x == 0:
@@ -496,8 +497,8 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
                 elif abs(m[i]) == 1:
                    val = np.array(
                                   [
-                       0.5 * krho[i] / k[i],
-                       0.5 * 1j * m[i] * krho[i] / k[i],
+                       0.5 * krho[i] / k,
+                       0.5 * 1j * m[i] * krho[i] / k,
                        0. 
                        ]).T * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
                    res.append(val)
@@ -506,16 +507,16 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
                         [
                             0., 
                             0., 
-                            1j * kz[i] / k[i] * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
+                            1j * kz[i] / k * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
                             ]
                             ).T
                     res.append(val)
             else:      
                 val = np.array(
                 [
-                    sc.jv_d(m[i], krr[i]) * krho[i] / k[i],
-                    1j * m[i] * sc.jv(m[i], krr[i]) / krr[i] * krho[i] / k[i],
-                    1j * kz[i] / k[i] * sc.jv(m[i], krr[i]),
+                    sc.jv_d(m[i], krr[i]) * krho[i] / k,
+                    1j * m[i] * sc.jv(m[i], krr[i]) / krr[i] * krho[i] / k,
+                    1j * kz[i] / k * sc.jv(m[i], krr[i]),
                 ] 
             ).T * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
                 res.append(val)

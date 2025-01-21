@@ -133,7 +133,6 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
     Returns:
         complex array
     """
-
     if in_ is None:
         in_ = out
     out = (*(np.array(o) for o in out),)
@@ -160,15 +159,15 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
     rsin = np.array(rsin)
     if rsin.ndim == 1:
         rsin = rsin.reshape((1, -1))
-    rsdiff = -rs[:, None, None, None, :] + rsin[:, None, None, :]
+    rsdiff = -rs[:, None, None, :] + rsin[:, None, :]
 
     dim = 1 if kpar.ndim == 0 else kpar.shape[-1]
-    # The result has the shape (n_rs, n_rs, n_ks, n_modes)
+    # The result has the shape (n_rs, n_rs, n_modes)
     dlms = func(dim, modes[:, 0], modes[:, 1], ks, kpar, a, rsdiff, eta)
-    res = np.zeros((out[1:][0].shape[-1], in_[1:][0].shape[-1]), np.complex128)
+    res = np.zeros((out[1:][0].shape[-1], in_[1:][0].shape[-1]), complex)
     for i in range(out[1:][0].shape[-1]):
         for j in range(in_[1:][0].shape[-1]):
-                res[i][j] = _transl_a_lattice(in_[1:][0][j], in_[1:][1][j], out[1:][0][i], out[1:][1][i], dlms[0][0][0])  
+                res[i][j] = _transl_a_lattice(in_[1:][0][j], in_[1:][1][j], out[1:][0][i], out[1:][1][i], dlms[out[0][i]][in_[0][j]])  
     return res
          
 
