@@ -167,7 +167,7 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
     res = np.zeros((out[1:][0].shape[-1], in_[1:][0].shape[-1]), complex)
     for i in range(out[1:][0].shape[-1]):
         for j in range(in_[1:][0].shape[-1]):
-                res[i][j] = _transl_a_lattice(in_[1:][0][j], in_[1:][1][j], out[1:][0][i], out[1:][1][i], dlms[out[0][i]][in_[0][j]])  
+                res[i][j] = _transl_a_lattice(out[1:][0][i], out[1:][1][i], in_[1:][0][j], in_[1:][1][j], dlms[out[0][i]][in_[0][j]])
     return res
          
 

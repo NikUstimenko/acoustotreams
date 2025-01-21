@@ -27,7 +27,7 @@ error prone than using the pure functions, while still integrating nicely with :
 functions. It consists of a combination of different classes and functions. At first,
 there are the different basis sets, that can be used together with other important
 parameters for the calculation, for example the embedding materials or the lattice
-definitions. Then, there are the "physics-aware arrays", which keep track of these
+definitions. Then, there are the "acoustics-aware arrays", which keep track of these
 parameters during the computation, and operators that can be applied to these arrays.
 Finally, we will introduce, how these previous concepts can be applied to acoustic T-Matrices 
 for scalar spherical and cylindrical solutions and to acoustic S-Matrices 
