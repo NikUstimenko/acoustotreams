@@ -52,9 +52,9 @@ for i, j, result in results:
 
 p = np.concatenate(
     (
-        np.real(p * np.exp(-1j * kz * lattice)),
+        np.real(p * np.exp(-1j * kz / n * lattice)),
         p.real,
-        np.real(p * np.exp(1j * kz * lattice)),
+        np.real(p * np.exp(1j * kz / n * lattice)),
     )
 )
 z = np.concatenate((z - lattice, z, z + lattice,))
