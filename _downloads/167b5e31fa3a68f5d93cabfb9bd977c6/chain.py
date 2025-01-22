@@ -8,7 +8,7 @@ k0 =  2 * np.pi * 50000 / 343
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
             acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 3
-radii = [0.0075, 0.0075]
+radii = [0.0075, 0.0065]
 positions = [[-0.004, 0, -0.0075], [0.004, 0, 0.0075]]
 lattice = 0.035
 kz = 0

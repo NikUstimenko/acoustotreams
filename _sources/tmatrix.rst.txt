@@ -118,7 +118,7 @@ sphere we can obtain the fields outside of the sphere.
 Up to here, we did all calculations for the cluster in the local basis. By expanding
 the incident and scattered fields in a basis with a single origin we can describe the
 same object. Often, a larger number of multipoles is needed to do so and some
-information on fields between the particles is lost. But, the description in a global
+information on fields between the particles is lost. However, the description in a global
 basis can be more efficient in terms of matrix size.
 
 .. literalinclude:: examples/cluster.py
@@ -149,9 +149,9 @@ One-dimensional arrays (along z)
 
 Next, we turn to systems that are periodic in the z direction. We calculate the
 scattering from an array of spheres. Intentionally, we choose a unit cell with two
-spheres that overlap along the z direction, but are not placed exactly along the same
-line. This is the most general case for the implemented lattice sums. After the common
-setup of the parameters, we simply create a cluster in a local basis.
+different spheres that overlap along the z direction, but are not placed exactly along 
+the same line. This is the most general case for the implemented lattice sums. 
+After the common setup of the parameters, we simply create a cluster in a local basis.
 
 .. literalinclude:: examples/chain.py
    :language: python
@@ -166,7 +166,7 @@ form a chain.
 
 Next, we choose set the illumination to be propagating along the x axis.
 The z component of the wave vector of the plane wave has to match to the wave vector
-component of the lattice interaction, i.e. the Bloch wave vector.
+component of the lattice interaction, i.e., the Bloch wave vector.
 
 .. literalinclude:: examples/chain.py
    :language: python
@@ -183,7 +183,7 @@ we want to calculate the pressure field.
    :language: python
    :lines: 22-40
 
-To calculate the velocity field, we expand the scattered field coefficients, 
+To calculate the velocity field, we again expand the scattered field coefficients, 
 however, in the dipole approximation.
 
 .. literalinclude:: examples/chain.py
