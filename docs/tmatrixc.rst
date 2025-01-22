@@ -67,8 +67,84 @@ The red arrow indicates the direction of incidence of the plane wave.
 Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices
 =========================================================================
 
+For our next example we want to look at the system of spheres on a one-dimensional
+lattice again (:ref:`tmatrix:One-dimensional arrays (along z)`). They fulfil all
+properties that define structures where the use of cylindrical waves is beneficial,
+namely they have a finite extent in the xy plane and they are periodic along the
+z direction.
+
+Thus, the initial setup of our calculation starts with spheres in the spherical wave
+basis and placing them in a chain. This is the same procedure as in
+:ref:`tmatrix:One-dimensional arrays (along z)`. We define a nonzero component of 
+the wave vector along the z axis :math:`k_z` in the air. 
+
+.. literalinclude:: examples/chain_tmatrixc.py
+    :language: python
+    :lines: 7-18
+
+Here we also define :math:`n` as a "refractive index" for the background medium of the spheres
+with respect to the air and divide :math:`k_z` by :math:`n` when it is needed. Next, we convert 
+this chain in the spherical wave basis to a suitable cylindrical wave basis.
+
+.. literalinclude:: examples/chain_tmatrixc.py
+    :language: python
+    :lines: 20-22
+
+We chose to add the first three diffraction orders (plus a 0.1 margin to avoid problems
+with floating point comparisons).
+
+Finally, we set-up the incident wave and calculate the scattering coeffcients by the usual
+procedure.
+
+.. literalinclude:: examples/chain_tmatrixc.py
+    :language: python
+    :lines: 24-30
+
+We evaluate the fields in two regions. Outside of the circumscribing cylinders we can
+use the fast cylindrical wave expansion. Inside of the circumscribing cylinders but
+outside of the spheres we can use the method of
+:ref:`tmatrix:One-dimensional arrays (along z)`.
+
+.. literalinclude:: examples/chain_tmatrixc.py
+    :language: python
+    :lines: 32-51
+
+Finally, we can plot the results. To illustrate the periodicity better, three unit cells
+are shown.
+
+.. plot:: examples/chain_tmatrixc.py
+
+
 Clusters
 ========
+
+Similarly to the case of spheres we can also calculate the response from a cluster of
+objects. As an example let us simulate a cylinder together with a chain of spheres
+in the cylindrical wave basis as described in the previous section.
+
+Hence, we set up first the spheres in the chain and convert them to the cylindrical wave
+basis as before
+
+.. literalinclude:: examples/cluster_tmatrixc.py
+    :language: python
+    :lines: 7-21
+
+Then, we create the T-matrix of the cylinder in the cylindrical wave basis.
+
+.. literalinclude:: examples/cluster_tmatrixc.py
+    :language: python
+    :lines: 23
+
+Finally, we construct the cluster, find the T-matrix of the interacting system,
+and then scattered field coeffcients for the incident plane wave.
+
+.. literalinclude:: examples/cluster_tmatrixc.py
+    :language: python
+    :lines: 25-31
+
+The scattered pressure field within three unit cells is shown below
+
+.. plot:: examples/cluster_tmatrixc.py
 
 One-dimensional arrays (along the x axis)
 =========================================
@@ -76,7 +152,7 @@ One-dimensional arrays (along the x axis)
 Two-dimensional arrays (in the xy plane)
 ========================================
 
-As the last example, we want to examine a structure that is a crystal consisting
+As the last example, let us examine a structure that is a crystal consisting
 of infinitely long cylinders in a square array in the xy plane.
 
 .. literalinclude:: examples/crystal_tmatrixc.py
