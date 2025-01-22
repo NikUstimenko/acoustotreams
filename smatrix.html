@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic S-Matrices for plane waves &#8212; acoustotreams 0.1.33 documentation</title>
+    <title>Acoustic S-Matrices for plane waves &#8212; acoustotreams 0.1.34 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=449df4d2"></script>
+    <script src="_static/documentation_options.js?v=8f14641f"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="tmatrixc.html" title="Acoustic cylindrical T-Matrices"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.33 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.34 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic S-Matrices for plane waves</a></li> 
       </ul>
@@ -92,13 +92,14 @@ z coordinates. We simply loop over the wave number and calculate transmission an
 two-dimensional arrays of T-matrices. We take spheres on an thin film as an example.
 This means we first calculate the S-matrices for the thin film and the array
 individually and then couple those two systems.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">75000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
 <span class="n">material_slab</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">698</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span>
 <span class="n">thickness</span> <span class="o">=</span> <span class="mf">0.0025</span>
 <span class="n">period</span> <span class="o">=</span> <span class="mf">0.025</span>
 <span class="n">lattice</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">2350</span><span class="p">),</span> 
             <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1497</span> <span class="o">/</span> <span class="mi">343</span>
 <span class="n">radius</span> <span class="o">=</span> <span class="mf">0.0075</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
 </pre></div>
@@ -106,32 +107,91 @@ individually and then couple those two systems.</p>
 <p>Beforehand, we define all the necessary parameters. First the wave numbers, then the
 parameters of the slab, and finally those for the lattice and the spheres. Then, we can
 use a simple loop to solve the system for all wave numbers.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">343</span> <span class="o">/</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">c</span> 
-
-<span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_coeffs</span><span class="p">(</span><span class="n">k0</span><span class="p">):</span>
     <span class="n">kpar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">k0</span><span class="p">])</span>
 
     <span class="n">spheres</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span>
         <span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">materials</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kpar</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kpar</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
     
-    <span class="n">bmax</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">period</span>
-    <span class="n">bmax</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">spwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kpar</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
-    <span class="n">splw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">(</span><span class="n">kpar</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">spwb</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">bmax</span> <span class="o">=</span> <span class="mf">3.1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">period</span>
+    <span class="n">spwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kpar</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
+    <span class="n">splw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">(</span><span class="n">kpar</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">spwb</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">slab</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">slab</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">spwb</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="p">[</span><span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">material_slab</span><span class="p">,</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">propagation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">radius</span><span class="p">],</span> <span class="n">spwb</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">array</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">spheres</span><span class="p">,</span> <span class="n">spwb</span><span class="p">)</span>
     <span class="n">total</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">slab</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">array</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">total</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="n">splw</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_coeffs</span><span class="p">)(</span><span class="n">k0s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">)):</span>
+    <span class="n">tr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>We set some oblique incidence and the array of spheres. Then, we define a
+<p>We set an oblique incidence and the array of spheres. Then, we define a
 plane wave and the needed S-matrices: a slab, the distance between the
 top interface of the slab to the center of the sphere array, and the array in the
 S-matrix representation itself.</p>
 <p>(<a class="reference download internal" download="" href="_downloads/f9e8c4e90a964ac64d9c669c057d91ef/array_spheres.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+</section>
+<section id="from-cylindrical-t-matrix-gratings">
+<h2>From cylindrical T-matrix gratings<a class="headerlink" href="#from-cylindrical-t-matrix-gratings" title="Link to this heading">¶</a></h2>
+<p>Now, we want to perform a small test of the methods. Instead of creating the
+two-dimensional sphere array right away, we intermediately create a one-dimensional
+array, then calculate cylindrical T-matrices, and place them in a second
+one-dimensional lattice, thereby, obtaining the S-matrix from the previous section.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">material_slab</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">698</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span>
+<span class="n">thickness</span> <span class="o">=</span> <span class="mf">0.0025</span>
+<span class="n">period</span> <span class="o">=</span> <span class="mf">0.025</span>
+<span class="n">lattice</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+<span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">2350</span><span class="p">),</span> 
+            <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1497</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="mf">0.0075</span>
+<span class="n">lmax</span> <span class="o">=</span> <span class="n">mmax</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>The definition of the parameters is quite similar. We store the lattice period for later
+use separately and define the maximal order <code class="code docutils literal notranslate"><span class="pre">mmax</span></code> also separately.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_coeffs</span><span class="p">(</span><span class="n">k0</span><span class="p">):</span>
+    <span class="n">kpar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">k0</span><span class="p">])</span>
+
+    <span class="n">spheres</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span>
+        <span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">materials</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">kpar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+    
+    <span class="n">bmax</span> <span class="o">=</span> <span class="mf">3.1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">period</span>
+    <span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kpar</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
+    <span class="n">spheres_tmc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrixC</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span>
+        <span class="n">spheres</span><span class="p">,</span> <span class="n">cwb</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">kpar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="n">spwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kpar</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
+    <span class="n">splw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">(</span><span class="n">kpar</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">spwb</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">slab</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">slab</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">spwb</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="p">[</span><span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">material_slab</span><span class="p">,</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">propagation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">radius</span><span class="p">],</span> <span class="n">spwb</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">spheres_tmc</span><span class="p">,</span> <span class="n">spwb</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticSMatrices</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">slab</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">array</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">total</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="n">splw</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_coeffs</span><span class="p">)(</span><span class="n">k0s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k0s</span><span class="p">)):</span>
+    <span class="n">tr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The first half of the loop is now a little bit different. After creating the spheres
+we solve the interaction along the z direction, then create the cylindrical T-matrix
+and finally calculate the interaction along the x direction. The second half is the
+same as in the previous calculation.</p>
+<p>The most important aspect to note here, is that the method
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">acoustotreams.AcousticSMatrix.from_array()</span></code> implicitly converts the lattice in the zx plane to
+a lattice in the xy plane.</p>
+<p>(<a class="reference download internal" download="" href="_downloads/7077b2112abbec34d4915b184e802ad3/array_spheres_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="band-structure">
 <h2>Band structure<a class="headerlink" href="#band-structure" title="Link to this heading">¶</a></h2>
@@ -250,7 +310,7 @@ simple loop we can get the band structure for <span class="math notranslate nohi
         <li class="right" >
           <a href="tmatrixc.html" title="Acoustic cylindrical T-Matrices"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.33 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.34 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic S-Matrices for plane waves</a></li> 
       </ul>

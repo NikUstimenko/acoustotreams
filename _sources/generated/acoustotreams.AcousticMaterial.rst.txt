@@ -49,7 +49,7 @@
       
          ~AcousticMaterial.__lt__
          ~AcousticMaterial.__le__
-         ~AcousticMaterial.__gt__
          ~AcousticMaterial.__ge__
+         ~AcousticMaterial.__gt__
          ~AcousticMaterial.__ne__
   

@@ -39,7 +39,7 @@ individually and then couple those two systems.
 
 .. literalinclude:: examples/array_spheres.py
    :language: python
-   :lines: 7-15
+   :lines: 7-16
 
 Beforehand, we define all the necessary parameters. First the wave numbers, then the
 parameters of the slab, and finally those for the lattice and the spheres. Then, we can
@@ -47,14 +47,44 @@ use a simple loop to solve the system for all wave numbers.
 
 .. literalinclude:: examples/array_spheres.py
    :language: python
-   :lines: 17-35
+   :lines: 18-38
 
-We set some oblique incidence and the array of spheres. Then, we define a 
+We set an oblique incidence and the array of spheres. Then, we define a 
 plane wave and the needed S-matrices: a slab, the distance between the
 top interface of the slab to the center of the sphere array, and the array in the
 S-matrix representation itself.
 
 .. plot:: examples/array_spheres.py
+
+From cylindrical T-matrix gratings
+==================================
+
+Now, we want to perform a small test of the methods. Instead of creating the
+two-dimensional sphere array right away, we intermediately create a one-dimensional
+array, then calculate cylindrical T-matrices, and place them in a second
+one-dimensional lattice, thereby, obtaining the S-matrix from the previous section.
+
+.. literalinclude:: examples/array_spheres_tmatrixc.py
+   :language: python
+   :lines: 7-16
+
+The definition of the parameters is quite similar. We store the lattice period for later
+use separately and define the maximal order :code:`mmax` also separately.
+
+.. literalinclude:: examples/array_spheres_tmatrixc.py
+   :language: python
+   :lines: 18-43
+
+The first half of the loop is now a little bit different. After creating the spheres
+we solve the interaction along the z direction, then create the cylindrical T-matrix
+and finally calculate the interaction along the x direction. The second half is the
+same as in the previous calculation.
+
+The most important aspect to note here, is that the method
+:meth:`acoustotreams.AcousticSMatrix.from_array` implicitly converts the lattice in the zx plane to
+a lattice in the xy plane.
+
+.. plot:: examples/array_spheres_tmatrixc.py
 
 Band structure
 ==============

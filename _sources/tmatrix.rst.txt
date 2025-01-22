@@ -155,14 +155,14 @@ After the common setup of the parameters, we simply create a cluster in a local 
 
 .. literalinclude:: examples/chain.py
    :language: python
-   :lines: 7-14
+   :lines: 7-15
 
 This time we let them interact specifying a one-dimensional lattice, so that the spheres
 form a chain.
 
 .. literalinclude:: examples/chain.py
    :language: python
-   :lines: 16-17
+   :lines: 17-18
 
 Next, we choose set the illumination to be propagating along the x axis.
 The z component of the wave vector of the plane wave has to match to the wave vector
@@ -170,7 +170,7 @@ component of the lattice interaction, i.e., the Bloch wave vector.
 
 .. literalinclude:: examples/chain.py
    :language: python
-   :lines: 19-20
+   :lines: 20-21
 
 There is an efficient way to calculate the acoustic response, especially in the far-field,
 using cylindrical acoustic T-matrices. That will be introduced in :doc:`tmatrixc`. Here, we will
@@ -181,14 +181,14 @@ we want to calculate the pressure field.
 
 .. literalinclude:: examples/chain.py
    :language: python
-   :lines: 22-40
+   :lines: 23-40
 
 To calculate the velocity field, we again expand the scattered field coefficients, 
 however, in the dipole approximation.
 
 .. literalinclude:: examples/chain.py
    :language: python
-   :lines: 65-81
+   :lines: 65-80
 
 .. plot:: examples/chain.py
 
