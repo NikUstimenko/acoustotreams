@@ -81,7 +81,7 @@ and finally calculate the interaction along the x direction. The second half is 
 same as in the previous calculation.
 
 The most important aspect to note here, is that the method
-:meth:`acoustotreams.AcousticSMatrix.from_array` implicitly converts the lattice in the zx plane to
+:meth:`~acoustotreams.AcousticSMatrix.from_array` implicitly converts the lattice in the zx plane to
 a lattice in the xy plane.
 
 .. plot:: examples/array_spheres_tmatrixc.py

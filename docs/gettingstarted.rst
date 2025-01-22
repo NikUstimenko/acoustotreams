@@ -13,7 +13,7 @@ To install the package with pip, use ::
 
 
 How to use acoustotreams
-=====================
+========================
 
 Import *acoustotreams*, create acoustic T-matrices and start calculating.
 

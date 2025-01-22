@@ -92,6 +92,8 @@ Here, we also use the property `inv` to get the inverse rotation. Moreover, for
 instances of :class:`~acoustotreams.AcousticsArray`, we can get the same result by calling the
 correspondingly named attribute
 
+.. doctest::
+    
     >>> phi = 1
     >>> r = acoustotreams.Rotate(phi)
     >>> (r @ t @ r.inv == t.rotate(phi)).all()

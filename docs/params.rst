@@ -146,7 +146,7 @@ vector which, multiplied by the wave number in the medium, provides the full wav
 In the second case, two components of the wave vector are given and the remaining third
 Cartesian component is defined such that it fulfils the dispersion relation.
 
-. doctest::
+.. doctest::
 
     >>> acoustotreams.ScalarPlaneWaveBasisByUnitVector([(4, 0, 3)])
     ScalarPlaneWaveBasisByUnitVector(
@@ -185,11 +185,13 @@ functions
 Additionally, similar to the case of cylindrical waves, the basis by components can be
 used for a range of diffraction orders
 
->>> acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], np.eye(2), 7)
-    ScalarPlaneWaveBasisByComp(
-        kx=[ 0.          0.          0.          6.28318531 -6.28318531],
-        ky=[ 0.          6.28318531 -6.28318531  0.          0.        ],
-    )
+.. doctest::
+
+    >>> acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], np.eye(2), 7)
+        ScalarPlaneWaveBasisByComp(
+            kx=[ 0.          0.          0.          6.28318531 -6.28318531],
+            ky=[ 0.          6.28318531 -6.28318531  0.          0.        ],
+        )
 
 
 Polarization
@@ -274,8 +276,10 @@ where the first is agrument is density and the second one is tuple :math:`(\lamb
 
 We can also get the speed of transverse waves from Poisson's ratio as
 
->>> acoustotreams.AcousticMaterial.from_pratio(1000, 141.421+0j, 0.44444)
-    AcousticMaterial(1000, 141.421+0j, 44.7228+0j)
+.. doctest::
+
+    >>> acoustotreams.AcousticMaterial.from_pratio(1000, 141.421+0j, 0.44444)
+        AcousticMaterial(1000, 141.421+0j, 44.7228+0j)
 
 
 Lattices
