@@ -91,7 +91,7 @@ def rotate(kz, mu, qz, m, phi, *args, **kwargs):
 def _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
    krho = np.sqrt(kx * kx + ky * ky)
    ky_s = ky
-   if np.abs(kzcw - kzpw) < 1e-14:
+   if np.abs(kzcw - kzpw) < 1e-12:
       if ky_s == 0:
             ky_s = 1e-20 + 1e-20j
       elif np.imag(ky_s) < 0 or (np.imag(ky_s) == 0 and np.real(ky_s) < 0):

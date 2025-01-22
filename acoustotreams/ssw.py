@@ -215,7 +215,7 @@ def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
     """
     return _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs)
 
-def _periodic_to_scw(kz, mu, l, m, k, a, *args, **kwargs):
+def _periodic_to_scw(kz, m, l, mu, k, a, *args, **kwargs):
     """Convert periodic spherical wave to cylindrical wave"""
     if mu != m:
         return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)

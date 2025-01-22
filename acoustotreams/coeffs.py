@@ -155,13 +155,6 @@ def fresnel_acoustics(kzs, rhos):
     are indexed in the same way. The first dimension of the array are the outgoing 
     and the second dimension the incoming modes
 
-    .. math::
-
-        \begin{pmatrix}
-            t_{\uparrow \uparrow} & r_{\uparrow \downarrow} \\
-            r_{\downarrow \uparrow} & t_{\downarrow \downarrow}
-        \end{pmatrix}\,
-
     Args:
         kzs (float): Z component of the waves
         rhos (float or complex): Mass densities

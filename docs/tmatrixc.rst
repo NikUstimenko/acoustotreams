@@ -80,7 +80,7 @@ the wave vector along the z axis :math:`k_z` in the air.
 
 .. literalinclude:: examples/chain_tmatrixc.py
     :language: python
-    :lines: 7-18
+    :lines: 7-19
 
 Here we also define :math:`n` as a "refractive index" for the background medium of the spheres
 with respect to the air and divide :math:`k_z` by :math:`n` when it is needed. Next, we convert 
@@ -88,7 +88,7 @@ this chain in the spherical wave basis to a suitable cylindrical wave basis.
 
 .. literalinclude:: examples/chain_tmatrixc.py
     :language: python
-    :lines: 20-22
+    :lines: 21-23
 
 We chose to add the first three diffraction orders (plus a 0.1 margin to avoid problems
 with floating point comparisons).
@@ -98,7 +98,7 @@ procedure.
 
 .. literalinclude:: examples/chain_tmatrixc.py
     :language: python
-    :lines: 24-30
+    :lines: 25-31
 
 We evaluate the fields in two regions. Outside of the circumscribing cylinders we can
 use the fast cylindrical wave expansion. Inside of the circumscribing cylinders but
@@ -107,7 +107,7 @@ outside of the spheres we can use the method of
 
 .. literalinclude:: examples/chain_tmatrixc.py
     :language: python
-    :lines: 32-51
+    :lines: 33-52
 
 Finally, we can plot the results. To illustrate the periodicity better, three unit cells
 are shown.
@@ -127,20 +127,20 @@ basis as before
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 7-21
+    :lines: 7-22
 
 Then, we create the T-matrix of the cylinder in the cylindrical wave basis.
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 23
+    :lines: 4
 
 Finally, we construct the cluster, find the T-matrix of the interacting system,
 and then scattered field coeffcients for the incident plane wave.
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 25-31
+    :lines: 26-32
 
 The scattered pressure field within three unit cells is shown below
 
@@ -148,6 +148,33 @@ The scattered pressure field within three unit cells is shown below
 
 One-dimensional arrays (along the x axis)
 =========================================
+
+Now, we take the chain of spheres and cylinder and place them in a grating structure
+along the x direction. We start again by defining the parameters and calculating the 
+relevant cylindrical T-matrices.
+
+.. literalinclude:: examples/grating_tmatrixc.py
+    :language: python
+    :lines: 7-25
+
+Next, we create the cluster and, as usual, let it interact within a lattice of the
+defined periodicity. Then, we simply calculate the scattering coefficients.
+
+.. literalinclude:: examples/grating_tmatrixc.py
+    :language: python
+    :lines: 27-35
+
+In the last step, we sum up the scattered fields at each point we want to calculate
+the pressure field.
+
+.. literalinclude:: examples/grating_tmatrixc.py
+    :language: python
+    :lines: 37-54
+
+and plot the results.
+
+.. plot:: examples/grating_tmatrixc.py
+
 
 Two-dimensional arrays (in the xy plane)
 ========================================
