@@ -2,9 +2,9 @@
 
 .. only:: builder_html
 
-==========
+===================
 Acoustic T-Matrices
-==========
+===================
 
 .. contents:: Table of contents
    :local:
