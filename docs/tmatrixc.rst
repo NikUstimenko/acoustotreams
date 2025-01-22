@@ -133,7 +133,7 @@ Then, we create the T-matrix of the cylinder in the cylindrical wave basis.
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 4
+    :lines: 24
 
 Finally, we construct the cluster, find the T-matrix of the interacting system,
 and then scattered field coeffcients for the incident plane wave.
