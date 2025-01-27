@@ -1168,6 +1168,7 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
     """Far-field amplitude of pressure field of singular scalar spherical waves."""
     ks = k0 * AcousticMaterial().c / material.c
     r = sc.car2sph(r)
+    r = np.broadcast_to(r, basis.positions.shape)
     rsph = basis.positions
     res = None
     res = wv.ssw_psi(
@@ -1192,6 +1193,7 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
 def _scw_pamplitudeff(r, basis, k0, material, modetype):
     """Far-field amplitude of pressure field of singular scalar cylindrical waves."""
     r = sc.car2cyl(r)
+    r = np.broadcast_to(r, basis.positions.shape)
     material = AcousticMaterial(material)
     krhos = material.krhos(k0, basis.kz)
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
@@ -1257,6 +1259,7 @@ def _ssw_vamplitudeff(r, basis, k0, material, modetype):
     """Far-field amplitude of velocity field of singular vector spherical waves L."""
     ks = k0 * AcousticMaterial().c / material.c
     r = sc.car2sph(r)
+    r = np.broadcast_to(r, basis.positions.shape)
     rsph = basis.positions
     res = None
     res = wv.vsw_l(
@@ -1283,6 +1286,7 @@ def _scw_vamplitudeff(r, basis, k0, material, modetype):
     """Far-field amplitude of pressure field of singular scalar cylindrical waves."""
     ks = k0 * AcousticMaterial().c / material.c
     r = sc.car2cyl(r)
+    r = np.broadcast_to(r, basis.positions.shape)
     material = AcousticMaterial(material)
     krhos = material.krhos(k0, basis.kz)
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
