@@ -61,6 +61,8 @@ def mie_acoustics(l, x, *materials):
             x_sphere_t = x * AcousticMaterial().c / mat_sphere[2]
             j1t = treams.special.spherical_jn(l, x_sphere_t, derivative=False)
             j1t_d = treams.special.spherical_jn(l, x_sphere_t, derivative=True)
+            if isinstance(l, (tuple, list)):
+                l = np.array(l)
             d44 = (l * (l + 1) - 0.5 * x_sphere_t**2) * j1 - 2 * x_sphere * j1_d
             d33 = (l * (l + 1) - 0.5 * x_sphere_t**2 - 1) * j1t - x_sphere_t * j1t_d
             d34 = x_sphere * j1_d - j1

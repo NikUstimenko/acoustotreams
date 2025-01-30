@@ -115,7 +115,7 @@ class Rotate(Operator):
 def _ssw_translate(r, basis, to_basis, k0, material, where):
     """Translate scalar spherical waves."""
     where = np.logical_and(where, to_basis.pidx[:, None] == basis.pidx)
-    ks = k0 * material.nmp
+    ks = k0 * AcousticMaterial().c / material.c
     r = sc.car2sph(r)
     res = ssw.translate(
         *(m[:, None] for m in to_basis.lm),
