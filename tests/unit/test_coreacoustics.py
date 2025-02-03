@@ -465,4 +465,68 @@ class TestAcousticsArray:
         x = [1, 2] @ p
         assert (x == [5, 5]).all() and x.basis == b
 
-        #do others
+    def test_pfield(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
+        x = p.pfield([1, 0, 0])
+        assert (np.abs(x - acoustotreams.ssw_rPsi(1, 0, 1, np.pi / 2, 0)) < 1e-15)
+
+    def test_expand(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
+        x = p.expand(b)
+        assert (np.abs(x - [1]) < 1e-14).all()
+
+    def test_expand_inv(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
+        x = p.expand.eval_inv(b)
+        assert (np.abs(x - np.eye(1)) < 1e-14).all()
+
+    def test_expandlattice(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
+        x = p.expandlattice.eval(lattice=[[1, 0], [0, 1]], kpar=[0, 0])
+        assert x.modetype == ("regular", "singular")
+
+    def test_expandlattice_inv(self):
+        with pytest.raises(NotImplementedError):
+            acoustotreams.AcousticsArray([0]).expandlattice.eval_inv(lattice=1)
+
+    def test_permute(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[1, 0, 0]])
+        c = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0, 1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b)
+        assert p.permute.eval().basis == (c, b)
+
+    def test_permute_inv(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[1, 0, 0]])
+        c = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0, 1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b)
+        assert p.permute.eval_inv().basis == (b, c)
+
+    def test_rotate(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b)
+        x = p.rotate.eval(1, 2, 3)
+        y = [acoustotreams.wignerd(1, 0, 0, 1, 2, 3)] * 2
+        assert (np.abs(x - y) < 1e-14).all()
+
+    def test_rotate_inv(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, -1], [1, 0], [1, 1]])
+        p = acoustotreams.AcousticsArray([1], basis=b)
+        x = p.rotate.eval_inv(1, 2, 3)
+        y = acoustotreams.wignerd(1, [[-1], [0], [1]], [-1, 0, 1], 1, 2, 3)
+        assert (np.abs(x - y.conj().T) < 1e-14).all()
+
+    def test_translate(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
+        x = p.translate.eval([0, 0, 0])
+        assert (np.abs(x - np.eye(1)) < 1e-14).all()
+
+    def test_translate_inv(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
+        p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
+        x = p.translate.eval_inv([0, 0, 0])
+        assert (np.abs(x - np.eye(1)) < 1e-14).all()
