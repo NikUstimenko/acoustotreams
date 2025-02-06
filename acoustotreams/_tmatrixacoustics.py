@@ -59,7 +59,7 @@ class _InteractionApprox:
             warnings.warn("the series diverges")
         dim = self._obj.shape[-1]
         identity = np.eye(dim)
-        res = np.zeros((dim, dim), np.complex128) + identity
+        res = np.zeros((dim, dim), complex) + identity
         res_prev = res
         for n in range(1, order + 1):
             res_prev = res
@@ -80,7 +80,7 @@ class _InteractionApprox:
         if order_max < 1:
             raise TypeError("maximal order must positive")
         dim = self._obj.shape[-1]
-        res = np.zeros((dim, dim), np.complex128) + np.eye(dim)
+        res = np.zeros((dim, dim), complex) + np.eye(dim)
         coupling = self()
         if np.abs(coupling).max() >= 1:
             warnings.warn("the series diverges")
@@ -142,7 +142,7 @@ class _LatticeInteractionApprox:
             warnings.warn("the series diverges")
         dim = self._obj.shape[-1]
         identity = np.eye(dim)
-        res = np.zeros((dim, dim), np.complex128) + identity
+        res = np.zeros((dim, dim), complex) + identity
         res_prev = res
         for n in range(1, order + 1):
             res_prev = res
@@ -163,7 +163,7 @@ class _LatticeInteractionApprox:
         if order_max < 1:
             raise TypeError("maximal order must positive")
         dim = self._obj.shape[-1]
-        res = np.zeros((dim, dim), np.complex128) + np.eye(dim)
+        res = np.zeros((dim, dim), complex) + np.eye(dim)
         coupling = self(lattice, kpar, eta=eta)
         if np.abs(coupling).max() >= 1:
             warnings.warn("the series diverges")
@@ -233,12 +233,20 @@ class AcousticTMatrix(AcousticsArray):
     def sphere(cls, lmax, k0, radii, materials):
         """T-Matrix of a sphere.
 
-        Construct the T-matrix of the given order and material for a sphere. 
+        Construct the T-matrix of the given order and material for a sphere. The object
+        can also consist of multiple concentric spherical shells with an arbitrary
+        number of layers.
+
+        Note:
+            1. :math:`c_t` of the last material must be zero. 
+            2. For the soft and hard spheres, only one radius must be given. 
 
         Args:
             lmax (int): Non-negative integer for the maximum degree of the T-matrix.
             k0 (float): Wave number in air.
-            radii (float): Radius of the sphere.
+            radii (float or array): Radii from inside to outside of the sphere. For a
+                simple sphere the radius can be given as a single number, for a multi-
+                layered sphere it is a list of increasing radii for all shells.
             material (list[AcousticMaterial]): The material parameters from the inside to the
                 outside. The last material in the list specifies the embedding medium.
 
@@ -251,13 +259,15 @@ class AcousticTMatrix(AcousticsArray):
         radii = np.atleast_1d(radii)
         if radii.size != len(materials) - 1:
             raise ValueError("incompatible lengths of radii and materials")
+        if materials[-1].c == 0 and materials[-1].ct == 0 and radii.size != 1:
+            raise ValueError("only one radius must be given for soft and hard spheres")
         dim = SSWB.defaultdim(lmax)
-        tmat = np.zeros((dim, dim), np.complex128)
+        tmat = np.zeros((dim, dim), complex)
         for l in range(lmax + 1):  # noqa: E741
             miecoeffs = mie_acoustics(l, k0 * radii, *zip(*materials))
             pos = SSWB.defaultdim(l - 1)                                                         
             for i in range(2 * l + 1):
-                tmat[pos + i, pos + i] = miecoeffs
+                tmat[pos + i, pos + i] = miecoeffs[0]
         return cls(tmat, k0=k0, basis=SSWB.default(lmax), material=materials[-1])
     
     @classmethod
@@ -556,6 +566,9 @@ class AcousticTMatrixC(AcousticsArray):
         Construct the T-matrix of the given order and material for an infinitely
         extended cylinder.
 
+        Note:
+            :math:`c_t` of the last material must be zero.  
+
         Args:
             kzs (float, array_like): Z component of the cylindrical wave.
             mmax (int): Positive integer for the maximum order of the T-matrix.
@@ -575,7 +588,7 @@ class AcousticTMatrixC(AcousticsArray):
         if radii.size != len(materials) - 1:
             raise ValueError("incompatible lengths of radii and materials")
         dim = SCWB.defaultdim(len(kzs), mmax)
-        tmat = np.zeros((dim, dim), np.complex128)
+        tmat = np.zeros((dim, dim), complex)
         idx = 0
         for kz in kzs:
             for m in range(-mmax, mmax + 1):
