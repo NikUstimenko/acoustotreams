@@ -231,7 +231,7 @@ class AcousticTMatrix(AcousticsArray):
 
     @classmethod
     def sphere(cls, lmax, k0, radii, materials):
-        """T-Matrix of a sphere.
+        """Acoustic T-Matrix of a sphere.
 
         Construct the T-matrix of the given order and material for a sphere. The object
         can also consist of multiple concentric spherical shells with an arbitrary
@@ -341,7 +341,7 @@ class AcousticTMatrix(AcousticsArray):
 
     @property
     def xs_ext_avg(self):
-        r"""Rotation and polarization averaged extinction cross section.
+        r"""Rotation averaged extinction cross section.
 
         The average is calculated as
 
@@ -367,7 +367,7 @@ class AcousticTMatrix(AcousticsArray):
 
     @property
     def xs_sca_avg(self):
-        r"""Rotation and polarization averaged scattering cross section.
+        r"""Rotation averaged scattering cross section.
 
         The average is calculated as
 
@@ -498,7 +498,7 @@ class AcousticTMatrix(AcousticsArray):
     
 
 class AcousticTMatrixC(AcousticsArray):
-    """T-matrix with a scalar cylindrical basis.
+    """Acoustic T-matrix with a scalar cylindrical basis.
 
     The acoustic T-matrix is square relating incident (regular) fields
     :func:`acoustotreams.scw_rPsi` to the scattered fields :func:`acoustotreams.scw_Psi`. The modes themselves
@@ -561,7 +561,7 @@ class AcousticTMatrixC(AcousticsArray):
 
     @classmethod
     def cylinder(cls, kzs, mmax, k0, radii, materials):
-        """T-Matrix of an infinite cylinder.
+        """Acoustic T-Matrix of an infinite cylinder.
 
         Construct the T-matrix of the given order and material for an infinitely
         extended cylinder.
@@ -669,7 +669,7 @@ class AcousticTMatrixC(AcousticsArray):
 
     @property
     def xw_ext_avg(self):
-        r"""Rotation and polarization averaged extinction cross width.
+        r"""Rotation averaged extinction cross width.
 
         The average is calculated as
 
@@ -696,7 +696,7 @@ class AcousticTMatrixC(AcousticsArray):
 
     @property
     def xw_sca_avg(self):
-        r"""Rotation and polarization averaged scattering cross width.
+        r"""Rotation averaged scattering cross width.
 
         The average is calculated as
 

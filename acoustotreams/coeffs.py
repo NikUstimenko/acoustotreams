@@ -298,6 +298,7 @@ def mie_acoustics(l, x, *materials):
     
     mat = list(zip(*materials))
     l = np.atleast_1d(l)
+    x = np.atleast_1d(x)
     res = []
     for j in l:
         mie = np.zeros(4, complex)
