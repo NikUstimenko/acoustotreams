@@ -1,8 +1,8 @@
 """Scattering coefficients for high-symmetry cases.
 
 Calculate the scattering coefficients for cases where they can be obtained analytically
-easily. This is a sphere using spherical waves (Mie coefficients), a
-cylinder using cylindrical waves, and an infinitely extended planar
+easily. This is a (multilayered) sphere using spherical waves (Mie coefficients), 
+a cylinder using cylindrical waves, and an infinitely extended planar
 interface (Fresnel coefficients).
 
 .. autosummary::
