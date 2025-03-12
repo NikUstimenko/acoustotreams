@@ -123,12 +123,10 @@ basis can be more efficient in terms of matrix size.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 75-77
+   :lines: 76-77
 
 A comparison of the calculated near-fields and the cross sections show good agreement
 between the results of both, local and global, T-matrices.
-
-.. plot:: examples/cluster.py
 
 In the last figure, the T-matrix is rotated by 90 degrees about the y axis and the
 illumination is set accordingly to be a plane wave propagating in the x direction, 
@@ -137,7 +135,7 @@ produces consistent results.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 116-118
+   :lines: 117-118
 
 .. plot:: examples/cluster.py
 

@@ -523,23 +523,23 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
      return np.array(res)
 
 
-def _tl_ssw_helper(l, m, lambda_, mu, p, q):
-    """Helper function for the translation coefficient of scalar and longitudinal spherical waves"""
-    if (
-        p < max(abs(m + mu), abs(l - lambda_))
-        or p > abs(l + lambda_)
-        or q < abs(l - lambda_)
-        or q > abs(l + lambda_)
-        or (q + l + lambda_) % 2 != 0
-    ):
-        return 0
-    return (
-        (2 * p + 1)
-        * np.power(1j, lambda_ - l + p)
-        * np.sqrt(ss.gamma(p - m - mu + 1) / ss.gamma(p + m + mu + 1))
-        * sc.wigner3j(l, lambda_, p, m, mu, -(m + mu))
-        * sc.wigner3j(l, lambda_, q, 0, 0, 0)
-    )
+#def _tl_ssw_helper(l, m, lambda_, mu, p, q):
+#    """Helper function for the translation coefficient of scalar and longitudinal spherical waves"""
+#    if (
+#        p < max(abs(m + mu), abs(l - lambda_))
+#        or p > abs(l + lambda_)
+#        or q < abs(l - lambda_)
+#        or q > abs(l + lambda_)
+#        or (q + l + lambda_) % 2 != 0
+#    ):
+#        return 0
+#    return (
+#        (2 * p + 1)
+#        * np.power(1j, lambda_ - l + p)
+#        * np.sqrt(ss.gamma(p - m - mu + 1) / ss.gamma(p + m + mu + 1))
+#        * sc.wigner3j(l, lambda_, p, m, mu, -(m + mu))
+#        * sc.wigner3j(l, lambda_, q, 0, 0, 0)
+#    )
 
 
 def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
@@ -587,7 +587,7 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     min_ = int(l) +  int(lambda_)
     for p in range(min_, max_ - 1, -2):
         res += (
-            _tl_ssw_helper(l, m, lambda_, -mu, p, p)
+            sc._tl_vsw_helper(l, m, lambda_, -mu, p, p)
             * sc.spherical_hankel1(p, kr)
             * sc.lpmv(m - mu, p, np.cos(theta), *args, **kwargs)
         )
@@ -640,7 +640,7 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     min_ = int(l) + int(lambda_)
     for p in range(min_, max_ - 1, -2):
         res += (
-            _tl_ssw_helper(l, m, lambda_, -mu, p, p)
+            sc._tl_vsw_helper(l, m, lambda_, -mu, p, p)
             * sc.spherical_jn(p, kr)
             * sc.lpmv(m - mu, p, np.cos(theta), *args, **kwargs)
         )
