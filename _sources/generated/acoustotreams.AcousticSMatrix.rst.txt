@@ -88,36 +88,36 @@
          ~AcousticSMatrix.trace
          ~AcousticSMatrix.transpose
       
-         ~AcousticSMatrix.__pow__
-         ~AcousticSMatrix.__getitem__
-         ~AcousticSMatrix.__mod__
-         ~AcousticSMatrix.__invert__
-         ~AcousticSMatrix.__repr__
-         ~AcousticSMatrix.__sub__
-         ~AcousticSMatrix.__add__
-         ~AcousticSMatrix.__str__
-         ~AcousticSMatrix.__neg__
-         ~AcousticSMatrix.__divmod__
-         ~AcousticSMatrix.__or__
-         ~AcousticSMatrix.__truediv__
-         ~AcousticSMatrix.__lt__
-         ~AcousticSMatrix.__and__
-         ~AcousticSMatrix.__lshift__
-         ~AcousticSMatrix.__abs__
-         ~AcousticSMatrix.__xor__
-         ~AcousticSMatrix.__array_function__
-         ~AcousticSMatrix.__pos__
-         ~AcousticSMatrix.__matmul__
-         ~AcousticSMatrix.__le__
-         ~AcousticSMatrix.__mul__
-         ~AcousticSMatrix.__len__
-         ~AcousticSMatrix.__gt__
-         ~AcousticSMatrix.__ge__
          ~AcousticSMatrix.__eq__
-         ~AcousticSMatrix.__setitem__
+         ~AcousticSMatrix.__add__
          ~AcousticSMatrix.__rshift__
+         ~AcousticSMatrix.__mod__
+         ~AcousticSMatrix.__mul__
          ~AcousticSMatrix.__array__
-         ~AcousticSMatrix.__floordiv__
-         ~AcousticSMatrix.__array_ufunc__
+         ~AcousticSMatrix.__invert__
+         ~AcousticSMatrix.__neg__
+         ~AcousticSMatrix.__and__
+         ~AcousticSMatrix.__or__
+         ~AcousticSMatrix.__array_function__
+         ~AcousticSMatrix.__matmul__
+         ~AcousticSMatrix.__len__
+         ~AcousticSMatrix.__lshift__
+         ~AcousticSMatrix.__ge__
+         ~AcousticSMatrix.__repr__
+         ~AcousticSMatrix.__pos__
+         ~AcousticSMatrix.__lt__
          ~AcousticSMatrix.__ne__
+         ~AcousticSMatrix.__getitem__
+         ~AcousticSMatrix.__truediv__
+         ~AcousticSMatrix.__xor__
+         ~AcousticSMatrix.__abs__
+         ~AcousticSMatrix.__pow__
+         ~AcousticSMatrix.__setitem__
+         ~AcousticSMatrix.__str__
+         ~AcousticSMatrix.__array_ufunc__
+         ~AcousticSMatrix.__divmod__
+         ~AcousticSMatrix.__gt__
+         ~AcousticSMatrix.__sub__
+         ~AcousticSMatrix.__le__
+         ~AcousticSMatrix.__floordiv__
   
