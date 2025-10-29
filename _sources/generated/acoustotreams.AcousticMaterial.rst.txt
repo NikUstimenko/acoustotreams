@@ -47,9 +47,9 @@
          ~AcousticMaterial.kzs
          ~AcousticMaterial.kzst
       
-         ~AcousticMaterial.__lt__
-         ~AcousticMaterial.__ge__
          ~AcousticMaterial.__gt__
          ~AcousticMaterial.__ne__
+         ~AcousticMaterial.__lt__
+         ~AcousticMaterial.__ge__
          ~AcousticMaterial.__le__
   
