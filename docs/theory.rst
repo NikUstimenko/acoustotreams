@@ -55,26 +55,6 @@ as Fourier transformation convention, and thus the inverse transformation is
     = \int_{-\infty}^\infty \frac{\mathrm d \omega}{2 \pi}
     f(t) \mathrm e^{\mathrm i \omega t}
 
-Equation of motion for elastic objects
---------------------------------------
-
-In acoustotreams we can also find the pressure and velocity fields in the presence of elastic objects
-that support both pressure and shear waves while the background media support *no* shear waves. 
-In this case we explicitly solve the equation for the displacement field :math:`\mathbf u = \frac{\mathrm i}{\omega}\mathbf v` [2]_
-
-.. math::
-
-    \omega^2 \mathbf u 
-    + c_t^2 \boldsymbol \Delta \mathbf u 
-    + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \mathbf u) 
-    = 0
-
-where :math:`\rho` is the mass density, :math:`c` is the speed of longitudinal pressure waves, 
-and :math:`c_t` is the speed of transverse shear waves (:func:`acoustotreams.AcousticMaterial`).
-Due to the requirement of isotropy these quantities are all scalar. In a medium with :math:`c_t \equiv 0`
-the last equation coincides with the Helmholtz equations below and we can use the scalar description
-of the waves.
-
 Solutions to the scalar Helmholtz equation
 ==========================================
 
