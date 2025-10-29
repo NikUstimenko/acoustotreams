@@ -14,10 +14,10 @@ spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, radius, materials) for
 xs_sca = np.array([tm.xs_sca_avg for tm in spheres]) / (np.pi * radius ** 2)
 xs_ext = np.array([tm.xs_ext_avg for tm in spheres]) / (np.pi * radius ** 2)
 
-swb_lmax0 = acoustotreams.ScalarSphericalWaveBasis.default(1)
-spheres_lmax0 = [tm[swb_lmax0] for tm in spheres]
-xs_sca_lmax0 = np.array([tm.xs_sca_avg for tm in spheres_lmax0]) / (np.pi * radius ** 2)
-xs_ext_lmax0 = np.array([tm.xs_ext_avg for tm in spheres_lmax0]) / (np.pi * radius ** 2)
+swb_lmax1 = acoustotreams.ScalarSphericalWaveBasis.default(1)
+spheres_lmax1 = [tm[swb_lmax1] for tm in spheres]
+xs_sca_lmax1 = np.array([tm.xs_sca_avg for tm in spheres_lmax1]) / (np.pi * radius ** 2)
+xs_ext_lmax1 = np.array([tm.xs_ext_avg for tm in spheres_lmax1]) / (np.pi * radius ** 2)
 
 tm = spheres[50]
 inc = acoustotreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.material)
@@ -49,8 +49,8 @@ radpattern = Parallel(n_jobs=-1)(delayed(compute_radpattern)(i) for i in range(l
 fig, ax = plt.subplots()
 ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext)
 ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca)
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext_lmax0, color="C0", linestyle=":")
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca_lmax0, color="C1", linestyle=":")
+ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext_lmax1, color="C0", linestyle=":")
+ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca_lmax1, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $l_{\\rm max}=1$", "Scattering $l_{\\rm max}=1$"])

@@ -10,33 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.x
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
-    - name: Install dependencies
-      run: |
-        pip install matplotlib
-        pip install sphinx sphinx-rtd-theme myst-parser
-        pip install -e . 
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx-rtd-theme myst-parser matplotlib
+          pip install -e .
 
-    - name: Build documentation
-      run: |
-        sphinx-build -b html docs docs/build/html
-#        make html
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: html-docs
-        path: docs/build/html/
+      - name: Build documentation
+        run: |
+          sphinx-build -b html docs docs/build/html
+          ls -R docs/build/html
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
-      with:
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-docs
+          path: docs/build/html/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/build/html

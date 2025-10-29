@@ -33,70 +33,6 @@ class _Interaction:
     def solve(self):
         return np.linalg.solve(self(), self._obj)
 
-
-class _InteractionApprox:
-    def __init__(self):
-        self._obj = self._objtype = None
-
-    def __get__(self, obj, objtype=None):
-        self._obj = obj
-        self._objtype = objtype
-        return self
-
-    def __call__(self):
-        basis = self._obj.basis
-        return self._obj @ opa.Expand(basis, "singular").inv
-    
-    def solve(self, order, error=np.inf):
-        order = int(order)
-        error = np.float64(error)
-        if order < 0:
-            raise TypeError("order must be non-negative")
-        if error <= 0.:
-            raise TypeError("error tolerance must be positive")
-        coupling = self()
-        if np.abs(coupling).max() >= 1:
-            warnings.warn("the series diverges")
-        dim = self._obj.shape[-1]
-        identity = np.eye(dim)
-        res = np.zeros((dim, dim), complex) + identity
-        res_prev = res
-        for n in range(1, order + 1):
-            res_prev = res
-            res = res @ coupling + identity
-        res = res @ self._obj
-        res_prev = res_prev @ self._obj
-        error_curr = np.linalg.norm(np.array(res - res_prev), np.inf)
-        if error < np.inf and error_curr > error and order >= 1:
-            warnings.warn("given order is not enough to solve with given error tolerance")
-        return [res, error_curr]
-   
-    def solve2(self, error, order_max=np.inf):
-        if order_max < np.inf:
-            order_max = int(order_max)
-        error = np.float64(error)
-        if error <= 0.:
-            raise TypeError("error tolerance must be positive")
-        if order_max < 1:
-            raise TypeError("maximal order must positive")
-        dim = self._obj.shape[-1]
-        res = np.zeros((dim, dim), complex) + np.eye(dim)
-        coupling = self()
-        if np.abs(coupling).max() >= 1:
-            warnings.warn("the series diverges")
-        error_curr = np.inf
-        order_curr = 0
-        while error_curr > error and order_curr < order_max:
-            res_prev = res
-            res = res @ coupling + np.eye(dim)
-            error_curr = np.max(np.abs((res - res_prev) @ self._obj))
-            order_curr += 1
-        res = res @ self._obj
-        if error_curr > error and order_curr >= order_max:
-            raise TypeError("given maximal order is not enough to solve with given error tolerance")
-        return [res, order_curr]
-    
-
 class _LatticeInteraction:
     def __init__(self):
         self._obj = self._objtype = None
@@ -113,72 +49,6 @@ class _LatticeInteraction:
 
     def solve(self, lattice, kpar, *, eta=0):
         return np.linalg.solve(self(lattice, kpar, eta=eta), self._obj)
-    
-
-class _LatticeInteractionApprox:
-    def __init__(self):
-        self._obj = self._objtype = None
-
-    def __get__(self, obj, objtype=None):
-        self._obj = obj
-        self._objtype = objtype
-        return self
-
-    def __call__(self, lattice, kpar, *, eta=0):
-        basis = self._obj.basis
-        return self._obj @ opa.ExpandLattice(
-            lattice=lattice, kpar=kpar, eta=eta
-        )
-    
-    def solve(self, lattice, kpar, *, eta=0, order, error=np.inf):
-        order = int(order)
-        error = np.float64(error)
-        if order < 0:
-            raise TypeError("order must be non-negative")
-        if error <= 0:
-            raise TypeError("error tolerance must be positive")
-        coupling = self(lattice, kpar, eta=eta)
-        if np.abs(coupling).max() >= 1:
-            warnings.warn("the series diverges")
-        dim = self._obj.shape[-1]
-        identity = np.eye(dim)
-        res = np.zeros((dim, dim), complex) + identity
-        res_prev = res
-        for n in range(1, order + 1):
-            res_prev = res
-            res = res @ coupling + identity
-        res = res @ self._obj
-        res_prev = res_prev @ self._obj
-        error_curr = np.linalg.norm(np.array(res - res_prev), np.inf)
-        if error < np.inf and error_curr > error and order >= 1:
-            warnings.warn("given order is not enough to solve with given error tolerance")
-        return [res, error_curr]
-    
-    def solve2(self, error, lattice, kpar, *, eta=0, order_max=np.inf):
-        if order_max < np.inf:
-            order_max = int(order_max)
-        error = np.float64(error)
-        if error <= 0:
-            raise TypeError("error tolerance must be positive")
-        if order_max < 1:
-            raise TypeError("maximal order must positive")
-        dim = self._obj.shape[-1]
-        res = np.zeros((dim, dim), complex) + np.eye(dim)
-        coupling = self(lattice, kpar, eta=eta)
-        if np.abs(coupling).max() >= 1:
-            warnings.warn("the series diverges")
-        error_curr = np.inf
-        order_curr = 0
-        while error_curr > error and order_curr <= order_max:
-            res_prev = res
-            res = res @ coupling + np.eye(dim)
-            error_curr = np.max(np.abs((res - res_prev) @ self._obj))
-            order_curr += 1
-        res = res @ self._obj
-        if error_curr > error and order_curr > order_max:
-            raise TypeError("given maximal order is not enough to solve with given error tolerance")
-        return [res, order_curr]
-
 
 class AcousticTMatrix(AcousticsArray):
     """Acoustic T-matrix with a spherical basis.
@@ -200,9 +70,7 @@ class AcousticTMatrix(AcousticsArray):
     """
 
     interaction = _Interaction()
-    interactionapprox = _InteractionApprox()
     latticeinteraction = _LatticeInteraction()
-    latticeinteractionapprox = _LatticeInteractionApprox()
     
     def _check(self):
         """Fill in default values or raise errors for missing attributes."""
