@@ -80,7 +80,7 @@ the direction of incidence of the plane wave.
    :language: python
    :lines: 42-47
 
-.. plot:: ../examples/sphere.py
+.. plot:: examples/sphere.py
 
 
 Clusters
@@ -138,9 +138,6 @@ produces consistent results.
    :lines: 117-118
 
 .. plot:: examples/cluster.py
-
-Clusters (Born approximations)
-==============================
 
 One-dimensional arrays (along z)
 ================================

@@ -47,6 +47,10 @@ extensions = [
     'matplotlib.sphinxext.plot_directive',
 ]
 
+plot_include_source = True
+#plot_html_show_source_link = False
+#plot_rcparams = {'figure.figsize': (5, 4), 'savefig.dpi': 100}
+
 autosectionlabel_prefix_document = True
 doctest_global_setup = """
 import numpy as np
