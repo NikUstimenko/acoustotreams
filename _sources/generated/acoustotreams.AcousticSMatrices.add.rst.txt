@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrices.add
-===================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrices.add

@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_rshift\_\_
-===========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__rshift__

@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_floordiv\_\_
-=============================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__floordiv__

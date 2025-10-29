@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.min
-================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.min

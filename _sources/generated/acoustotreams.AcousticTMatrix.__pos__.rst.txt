@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrix.\_\_pos\_\_
-=========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticTMatrix.__pos__

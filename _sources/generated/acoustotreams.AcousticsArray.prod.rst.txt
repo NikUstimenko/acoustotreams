@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.prod
-=================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.prod

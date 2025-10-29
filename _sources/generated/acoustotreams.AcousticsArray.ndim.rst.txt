@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.ndim
-=================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticsArray.ndim

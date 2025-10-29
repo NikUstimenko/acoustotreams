@@ -1,4 +1,0 @@
-acoustotreams.AcousticTMatrixC.permute
-======================================
-
-.. autoattribute:: acoustotreams.AcousticTMatrixC.permute

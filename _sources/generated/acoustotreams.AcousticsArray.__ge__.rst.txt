@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_ge\_\_
-=======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__ge__

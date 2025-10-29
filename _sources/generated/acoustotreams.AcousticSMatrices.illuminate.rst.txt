@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrices.illuminate
-==========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrices.illuminate

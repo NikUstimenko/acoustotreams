@@ -1,4 +1,0 @@
-acoustotreams.AcousticsArray.rotate
-===================================
-
-.. autoattribute:: acoustotreams.AcousticsArray.rotate

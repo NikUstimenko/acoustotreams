@@ -1,6 +1,0 @@
-﻿acoustotreams.pfield
-====================
-
-.. currentmodule:: acoustotreams
-
-.. autofunction:: pfield

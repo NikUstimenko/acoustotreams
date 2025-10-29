@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrixC.flatten
-======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticTMatrixC.flatten

@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.\_\_gt\_\_
-=========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticMaterial.__gt__

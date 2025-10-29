@@ -1,4 +1,0 @@
-acoustotreams.AcousticSMatrix.vfield
-====================================
-
-.. autoattribute:: acoustotreams.AcousticSMatrix.vfield

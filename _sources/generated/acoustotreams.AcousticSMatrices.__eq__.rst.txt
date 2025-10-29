@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrices.\_\_eq\_\_
-==========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrices.__eq__

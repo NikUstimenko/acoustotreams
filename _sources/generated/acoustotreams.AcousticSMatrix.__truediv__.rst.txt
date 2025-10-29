@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.\_\_truediv\_\_
-=============================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrix.__truediv__

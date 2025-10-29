@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_getitem\_\_
-============================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__getitem__

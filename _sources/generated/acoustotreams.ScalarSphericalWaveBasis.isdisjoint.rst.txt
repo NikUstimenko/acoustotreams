@@ -1,6 +1,0 @@
-acoustotreams.ScalarSphericalWaveBasis.isdisjoint
-=================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarSphericalWaveBasis.isdisjoint

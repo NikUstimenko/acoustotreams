@@ -1,6 +1,0 @@
-﻿acoustotreams.rotate
-====================
-
-.. currentmodule:: acoustotreams
-
-.. autofunction:: rotate

@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.\_\_eq\_\_
-=========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticMaterial.__eq__

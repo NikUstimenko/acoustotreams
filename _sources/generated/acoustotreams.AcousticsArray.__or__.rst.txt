@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_or\_\_
-=======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__or__

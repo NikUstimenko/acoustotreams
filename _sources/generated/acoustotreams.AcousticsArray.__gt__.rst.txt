@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_gt\_\_
-=======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__gt__

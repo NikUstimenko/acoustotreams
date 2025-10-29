@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.astype
-===================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.astype

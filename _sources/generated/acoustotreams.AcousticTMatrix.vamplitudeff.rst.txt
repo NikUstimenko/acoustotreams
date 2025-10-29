@@ -1,4 +1,0 @@
-acoustotreams.AcousticTMatrix.vamplitudeff
-==========================================
-
-.. autoattribute:: acoustotreams.AcousticTMatrix.vamplitudeff

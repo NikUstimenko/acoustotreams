@@ -1,4 +1,0 @@
-acoustotreams.AcousticsArray.vfield
-===================================
-
-.. autoattribute:: acoustotreams.AcousticsArray.vfield

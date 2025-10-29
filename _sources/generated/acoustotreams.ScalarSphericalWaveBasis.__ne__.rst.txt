@@ -1,6 +1,0 @@
-acoustotreams.ScalarSphericalWaveBasis.\_\_ne\_\_
-=================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarSphericalWaveBasis.__ne__

@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.\_\_call\_\_
-===========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticMaterial.__call__

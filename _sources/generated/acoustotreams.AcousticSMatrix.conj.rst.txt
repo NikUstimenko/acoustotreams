@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.conj
-==================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrix.conj

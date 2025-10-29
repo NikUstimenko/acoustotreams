@@ -61,17 +61,17 @@ and high-level functions and classes.</p>
 <p>The low-level functions implement the underlying mathematical functions, that build
 the foundation of T-matrix calculations. They are mainly imported from
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code>. The first one contains, e.g.,
-the extensions of mathematical functions in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.15.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a>, the
+the extensions of mathematical functions in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.16.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a>, the
 second subpackage contains functions that are associated with computations in lattices.
 All functions necessary in acoustic computations, e.g., the various solutions
 to the Helmholtz equation and their translation coefficients, implemented within
-<a class="reference internal" href="acoustotreams.html#module-acoustotreams" title="acoustotreams"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams</span></code></a>.</p>
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams</span></code>.</p>
 <p>On the intermediate-level those underlying functions are combined to provide functions
 as they are often needed for T-matrix calculations, e.g., the acoustic Mie coefficients
 or the expansion coefficients of scalar plane waves into spherical waves.</p>
 <p>The high-level functionality is more focused on the usability. We attempt to create an
 useful interface to the underlying functions, that reduces redundancy and that is less
-error prone than using the pure functions, while still integrating nicely with <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a>
+error prone than using the pure functions, while still integrating nicely with <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a>
 functions. It consists of a combination of different classes and functions. At first,
 there are the different basis sets, that can be used together with other important
 parameters for the calculation, for example the embedding materials or the lattice

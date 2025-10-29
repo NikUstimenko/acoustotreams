@@ -1,4 +1,0 @@
-acoustotreams.AcousticTMatrix.expandlattice
-===========================================
-
-.. autoattribute:: acoustotreams.AcousticTMatrix.expandlattice

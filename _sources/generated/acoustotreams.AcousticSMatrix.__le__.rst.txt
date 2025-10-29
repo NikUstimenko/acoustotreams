@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.\_\_le\_\_
-========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrix.__le__

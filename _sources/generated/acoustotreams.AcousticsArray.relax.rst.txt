@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.relax
-==================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.relax

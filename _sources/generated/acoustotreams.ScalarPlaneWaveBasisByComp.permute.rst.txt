@@ -1,6 +1,0 @@
-acoustotreams.ScalarPlaneWaveBasisByComp.permute
-================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarPlaneWaveBasisByComp.permute

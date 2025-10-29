@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.kst
-==================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticMaterial.kst

@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.\_\_repr\_\_
-===========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticMaterial.__repr__

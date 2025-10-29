@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrix.xs\_ext\_avg
-==========================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticTMatrix.xs_ext_avg

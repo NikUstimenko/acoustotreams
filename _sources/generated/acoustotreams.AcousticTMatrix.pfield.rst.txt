@@ -1,4 +1,0 @@
-acoustotreams.AcousticTMatrix.pfield
-====================================
-
-.. autoattribute:: acoustotreams.AcousticTMatrix.pfield

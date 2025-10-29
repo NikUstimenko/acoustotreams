@@ -1,6 +1,0 @@
-acoustotreams.ScalarCylindricalWaveBasis.positions
-==================================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: ScalarCylindricalWaveBasis.positions

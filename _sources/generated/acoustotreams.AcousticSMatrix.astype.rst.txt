@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.astype
-====================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrix.astype
