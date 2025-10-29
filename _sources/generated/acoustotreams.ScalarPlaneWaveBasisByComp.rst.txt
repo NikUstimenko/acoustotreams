@@ -1,0 +1,63 @@
+﻿acoustotreams.ScalarPlaneWaveBasisByComp
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. autoclass:: ScalarPlaneWaveBasisByComp
+
+  
+  
+      .. rubric:: Attributes
+
+      .. autosummary::
+         :toctree:
+      
+         ~ScalarPlaneWaveBasisByComp.isglobal
+         ~ScalarPlaneWaveBasisByComp.kx
+         ~ScalarPlaneWaveBasisByComp.ky
+         ~ScalarPlaneWaveBasisByComp.kz
+  
+  
+
+  
+      .. rubric:: Methods
+
+      .. autosummary::
+         :toctree:
+
+      
+         ~ScalarPlaneWaveBasisByComp.__and__
+         ~ScalarPlaneWaveBasisByComp.__eq__
+         ~ScalarPlaneWaveBasisByComp.__ge__
+         ~ScalarPlaneWaveBasisByComp.__getitem__
+         ~ScalarPlaneWaveBasisByComp.__gt__
+         ~ScalarPlaneWaveBasisByComp.__le__
+         ~ScalarPlaneWaveBasisByComp.__len__
+         ~ScalarPlaneWaveBasisByComp.__lt__
+         ~ScalarPlaneWaveBasisByComp.__ne__
+         ~ScalarPlaneWaveBasisByComp.__or__
+         ~ScalarPlaneWaveBasisByComp.__repr__
+         ~ScalarPlaneWaveBasisByComp.__str__
+         ~ScalarPlaneWaveBasisByComp.__sub__
+         ~ScalarPlaneWaveBasisByComp.__xor__
+         ~ScalarPlaneWaveBasisByComp.byunitvector
+         ~ScalarPlaneWaveBasisByComp.count
+         ~ScalarPlaneWaveBasisByComp.default
+         ~ScalarPlaneWaveBasisByComp.diffr_orders
+         ~ScalarPlaneWaveBasisByComp.index
+         ~ScalarPlaneWaveBasisByComp.isdisjoint
+         ~ScalarPlaneWaveBasisByComp.kvecs
+         ~ScalarPlaneWaveBasisByComp.permute
+      
+         ~ScalarPlaneWaveBasisByComp.__xor__
+         ~ScalarPlaneWaveBasisByComp.__or__
+         ~ScalarPlaneWaveBasisByComp.__gt__
+         ~ScalarPlaneWaveBasisByComp.__sub__
+         ~ScalarPlaneWaveBasisByComp.__str__
+         ~ScalarPlaneWaveBasisByComp.__ge__
+         ~ScalarPlaneWaveBasisByComp.__le__
+         ~ScalarPlaneWaveBasisByComp.__ne__
+         ~ScalarPlaneWaveBasisByComp.__and__
+         ~ScalarPlaneWaveBasisByComp.__lt__
+         ~ScalarPlaneWaveBasisByComp.__repr__
+  

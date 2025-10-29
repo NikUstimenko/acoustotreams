@@ -1,0 +1,4 @@
+acoustotreams.AcousticSMatrices.permute
+=======================================
+
+.. autoattribute:: acoustotreams.AcousticSMatrices.permute

@@ -1,0 +1,6 @@
+﻿acoustotreams.vamplitudeff
+==========================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: vamplitudeff

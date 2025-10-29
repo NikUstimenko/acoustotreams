@@ -1,0 +1,6 @@
+acoustotreams.ScalarCylindricalWaveBasis.\_\_lt\_\_
+===================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarCylindricalWaveBasis.__lt__

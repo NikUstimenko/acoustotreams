@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.propagation
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.propagation

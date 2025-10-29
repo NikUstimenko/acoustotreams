@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.cumsum
+===================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.cumsum

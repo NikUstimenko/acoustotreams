@@ -1,0 +1,6 @@
+acoustotreams.AcousticMaterial.impedance
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticMaterial.impedance

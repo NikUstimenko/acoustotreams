@@ -1,0 +1,59 @@
+﻿acoustotreams.ScalarCylindricalWaveBasis
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. autoclass:: ScalarCylindricalWaveBasis
+
+  
+  
+      .. rubric:: Attributes
+
+      .. autosummary::
+         :toctree:
+      
+         ~ScalarCylindricalWaveBasis.isglobal
+         ~ScalarCylindricalWaveBasis.positions
+  
+  
+
+  
+      .. rubric:: Methods
+
+      .. autosummary::
+         :toctree:
+
+      
+         ~ScalarCylindricalWaveBasis.__and__
+         ~ScalarCylindricalWaveBasis.__eq__
+         ~ScalarCylindricalWaveBasis.__ge__
+         ~ScalarCylindricalWaveBasis.__getitem__
+         ~ScalarCylindricalWaveBasis.__gt__
+         ~ScalarCylindricalWaveBasis.__le__
+         ~ScalarCylindricalWaveBasis.__len__
+         ~ScalarCylindricalWaveBasis.__lt__
+         ~ScalarCylindricalWaveBasis.__ne__
+         ~ScalarCylindricalWaveBasis.__or__
+         ~ScalarCylindricalWaveBasis.__repr__
+         ~ScalarCylindricalWaveBasis.__str__
+         ~ScalarCylindricalWaveBasis.__sub__
+         ~ScalarCylindricalWaveBasis.__xor__
+         ~ScalarCylindricalWaveBasis.count
+         ~ScalarCylindricalWaveBasis.default
+         ~ScalarCylindricalWaveBasis.defaultdim
+         ~ScalarCylindricalWaveBasis.defaultmmax
+         ~ScalarCylindricalWaveBasis.diffr_orders
+         ~ScalarCylindricalWaveBasis.index
+         ~ScalarCylindricalWaveBasis.isdisjoint
+      
+         ~ScalarCylindricalWaveBasis.__xor__
+         ~ScalarCylindricalWaveBasis.__or__
+         ~ScalarCylindricalWaveBasis.__gt__
+         ~ScalarCylindricalWaveBasis.__sub__
+         ~ScalarCylindricalWaveBasis.__str__
+         ~ScalarCylindricalWaveBasis.__ge__
+         ~ScalarCylindricalWaveBasis.__le__
+         ~ScalarCylindricalWaveBasis.__ne__
+         ~ScalarCylindricalWaveBasis.__and__
+         ~ScalarCylindricalWaveBasis.__lt__
+  

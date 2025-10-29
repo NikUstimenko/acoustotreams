@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.trace
+==================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.trace

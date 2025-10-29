@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.interface
+=========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.interface

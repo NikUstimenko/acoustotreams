@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.imag
+=================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticsArray.imag

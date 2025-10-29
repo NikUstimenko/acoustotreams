@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.from\_array
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.from_array

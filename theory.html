@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Theory &#8212; acoustotreams 0.1.44 documentation</title>
+    <title>Theory &#8212; acoustotreams 0.1.45 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=6a0a5382"></script>
+    <script src="_static/documentation_options.js?v=ce72d79b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="smatrix.html" title="Acoustic S-Matrices for plane waves"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.44 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.45 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Theory</a></li> 
       </ul>
     </div>  
@@ -80,7 +80,7 @@ p\\
 \mathbf{v}
 \end{pmatrix}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p = p(\mathbf{r}, \omega)\)</span> and <span class="math notranslate nohighlight">\(\mathbf v = \mathbf v(\mathbf r, \omega)\)</span>
-are the pressure and velocity fields (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.pfield()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vfield()</span></code>).
+are the pressure and velocity fields (<a class="reference internal" href="generated/acoustotreams.pfield.html#acoustotreams.pfield" title="acoustotreams.pfield"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.pfield()</span></code></a>, <a class="reference internal" href="generated/acoustotreams.vfield.html#acoustotreams.vfield" title="acoustotreams.vfield"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vfield()</span></code></a>).
 All these quantities are complex valued fields, that depend on the angular frequency <span class="math notranslate nohighlight">\(\omega\)</span> and
 the position <span class="math notranslate nohighlight">\(\mathbf r\)</span>. The material parameters are the speed of sound <span class="math notranslate nohighlight">\(c\)</span>, and
 the mass density <span class="math notranslate nohighlight">\(\rho\)</span>. Conventionally, within acoustotreams the (air) wave number
@@ -106,7 +106,7 @@ In this case we explicitly solve the equation for the displacement field <span c
 + (c^2 - c_t^2) \boldsymbol \nabla (\boldsymbol \nabla \cdot \mathbf u)
 = 0\]</div>
 <p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the mass density, <span class="math notranslate nohighlight">\(c\)</span> is the speed of longitudinal pressure waves,
-and <span class="math notranslate nohighlight">\(c_t\)</span> is the speed of transverse shear waves (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial()</span></code>).
+and <span class="math notranslate nohighlight">\(c_t\)</span> is the speed of transverse shear waves (<a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial()</span></code></a>).
 Due to the requirement of isotropy these quantities are all scalar. In a medium with <span class="math notranslate nohighlight">\(c_t \equiv 0\)</span>
 the last equation coincides with the Helmholtz equations below and we can use the scalar description
 of the waves.</p>
@@ -152,7 +152,7 @@ be described by scalar pressure fields and corresponding longitudinal fields.</p
 plane waves</p>
 <div class="math notranslate nohighlight">
 \[\psi_{\mathbf k}(k, \mathbf r) = \mathrm e^{\mathrm i \mathbf k \mathbf r}\]</div>
-<p>given by <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.spw_Psi()</span></code> where the wave vector fulfils
+<p>given by <a class="reference internal" href="generated/acoustotreams.spw_Psi.html#acoustotreams.spw_Psi" title="acoustotreams.spw_Psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.spw_Psi()</span></code></a> where the wave vector fulfils
 <span class="math notranslate nohighlight">\(|\mathbf k|^2 = k_x^2 + k_y^2 + k_z^2 = k^2\)</span>. The corresponding
 longitudinal vector plane wave is</p>
 <div class="math notranslate nohighlight">
@@ -161,7 +161,7 @@ longitudinal vector plane wave is</p>
 \mathrm e^{\mathrm i \mathbf k \mathbf r}
 \equiv \mathbf{\hat r}_{\mathbf k}
 \mathrm e^{\mathrm i \mathbf k \mathbf r}\]</div>
-<p>given by <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vpw_L()</span></code>. We normalized this wave by <span class="math notranslate nohighlight">\(k\)</span> in the medium
+<p>given by <a class="reference internal" href="generated/acoustotreams.vpw_L.html#acoustotreams.vpw_L" title="acoustotreams.vpw_L"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vpw_L()</span></code></a>. We normalized this wave by <span class="math notranslate nohighlight">\(k\)</span> in the medium
 such that it has unit strength for real-valued wave vectors.</p>
 </section>
 <section id="cylindrical-waves">
@@ -173,7 +173,7 @@ The solutions in cylindrical coordinates are</p>
 =
 Z_m^{(n)}(k_\rho \rho) \mathrm e^{\mathrm i (m \varphi + k_z z)}\]</div>
 <p>where <span class="math notranslate nohighlight">\(k_z \in \mathbb R\)</span> and <span class="math notranslate nohighlight">\(m \in \mathbb Z\)</span> are the parameters of the
-solution (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_rPsi()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_Psi()</span></code>). The radial part
+solution (<a class="reference internal" href="generated/acoustotreams.scw_rPsi.html#acoustotreams.scw_rPsi" title="acoustotreams.scw_rPsi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_rPsi()</span></code></a>, and <a class="reference internal" href="generated/acoustotreams.scw_Psi.html#acoustotreams.scw_Psi" title="acoustotreams.scw_Psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.scw_Psi()</span></code></a>). The radial part
 of the wave vector is defined as <span class="math notranslate nohighlight">\(k_\rho = \sqrt{k^2 - k_z^2}\)</span> with the imaginary part
 of the square root to be taken non-negative. Note that here <span class="math notranslate nohighlight">\(\rho\)</span> is a radial distance
 of cylindrical coordinates. The functions <span class="math notranslate nohighlight">\(Z_m^{(n)}\)</span> are the Bessel and Hankel functions.
@@ -188,15 +188,15 @@ Bessel functions <span class="math notranslate nohighlight">\(J_m = Z_m^{(1)}\)<
 + \mathrm{i}\frac{m k_{\rho}}{k}\frac{Z_{m}^{(n)}(k_{\rho}\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}}
 + \frac{\mathrm{i} k_z}{k}Z_{m}^{(n)}(k_{\rho}\rho) \hat{\mathbf{z}} \right]
 \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}\]</div>
-<p>where we, again, normalized the functions by by <span class="math notranslate nohighlight">\(k\)</span> in the medium (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vcw_rL()</span></code>,
-and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vcw_L()</span></code>).</p>
+<p>where we, again, normalized the functions by by <span class="math notranslate nohighlight">\(k\)</span> in the medium (<a class="reference internal" href="generated/acoustotreams.vcw_rL.html#acoustotreams.vcw_rL" title="acoustotreams.vcw_rL"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vcw_rL()</span></code></a>,
+and <a class="reference internal" href="generated/acoustotreams.vcw_L.html#acoustotreams.vcw_L" title="acoustotreams.vcw_L"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vcw_L()</span></code></a>).</p>
 </section>
 <section id="spherical-waves">
 <h3>Spherical waves<a class="headerlink" href="#spherical-waves" title="Link to this heading">¶</a></h3>
 <p>Finally, we define the spherical wave solutions</p>
 <div class="math notranslate nohighlight">
 \[\psi_{lm}^{(n)}(k, \mathbf{r}) = z_l^{(n)}(kr) Y_{lm}(\theta, \phi)\]</div>
-<p>given by (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_rPsi()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_Psi()</span></code>)
+<p>given by (<a class="reference internal" href="generated/acoustotreams.ssw_rPsi.html#acoustotreams.ssw_rPsi" title="acoustotreams.ssw_rPsi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_rPsi()</span></code></a>, and <a class="reference internal" href="generated/acoustotreams.ssw_Psi.html#acoustotreams.ssw_Psi" title="acoustotreams.ssw_Psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.ssw_Psi()</span></code></a>)
 where <span class="math notranslate nohighlight">\(z_l^{(n)}\)</span> are the spherical Bessel and Hankel functions.
 We choose <span class="math notranslate nohighlight">\(j_l = z_l^{(1)}\)</span> and <span class="math notranslate nohighlight">\(h_l^{(1)} = z_l^{(3)}\)</span> in complete analogy
 to the cylindrical waves case (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.spherical_jn()</span></code>,
@@ -207,7 +207,7 @@ the angular momentum or degree. The projection of the angular momentum onto the 
 <div class="math notranslate nohighlight">
 \[\mathbf{L}_{lm}^{(n)} (k, \mathbf{r})
  = -\mathrm{i} \left[{z_l^{(n)}}' (kr) \mathbf{Z}_{lm}(\theta, \varphi) + \frac{z_l^{(n)}(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
-<p>(<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsw_rL()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsw_L()</span></code>) where</p>
+<p>(<a class="reference internal" href="generated/acoustotreams.vsw_rL.html#acoustotreams.vsw_rL" title="acoustotreams.vsw_rL"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsw_rL()</span></code></a>, and <a class="reference internal" href="generated/acoustotreams.vsw_L.html#acoustotreams.vsw_L" title="acoustotreams.vsw_L"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.vsw_L()</span></code></a>) where</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf X_{lm} (\theta, \varphi)
 = \mathrm i \sqrt{\frac{2 l + 1}{4 \pi l (l + 1)} \frac{(l - m)!}{(l + m)!}}
@@ -330,7 +330,7 @@ edited by E. M. Lifshitz, A. M. Kosevich, and  L. P. Pitaevskii
         <li class="right" >
           <a href="smatrix.html" title="Acoustic S-Matrices for plane waves"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.44 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.1.45 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Theory</a></li> 
       </ul>
     </div>

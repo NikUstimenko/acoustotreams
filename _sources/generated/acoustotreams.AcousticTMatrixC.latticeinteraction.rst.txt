@@ -1,0 +1,4 @@
+acoustotreams.AcousticTMatrixC.latticeinteraction
+=================================================
+
+.. autoattribute:: acoustotreams.AcousticTMatrixC.latticeinteraction

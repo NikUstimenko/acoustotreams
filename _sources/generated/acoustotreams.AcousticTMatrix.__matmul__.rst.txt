@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.\_\_matmul\_\_
+============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.__matmul__

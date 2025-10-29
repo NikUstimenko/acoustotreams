@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.bands\_kz
+=========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.bands_kz

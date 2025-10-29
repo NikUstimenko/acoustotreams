@@ -1,0 +1,6 @@
+﻿acoustotreams.pamplitudeff
+==========================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: pamplitudeff

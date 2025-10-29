@@ -1,0 +1,6 @@
+﻿acoustotreams.expandlattice
+===========================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: expandlattice

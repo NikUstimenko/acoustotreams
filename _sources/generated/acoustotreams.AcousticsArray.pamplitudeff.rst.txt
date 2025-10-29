@@ -1,0 +1,4 @@
+acoustotreams.AcousticsArray.pamplitudeff
+=========================================
+
+.. autoattribute:: acoustotreams.AcousticsArray.pamplitudeff

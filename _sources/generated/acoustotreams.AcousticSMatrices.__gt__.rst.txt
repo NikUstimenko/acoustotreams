@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.\_\_gt\_\_
+==========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.__gt__

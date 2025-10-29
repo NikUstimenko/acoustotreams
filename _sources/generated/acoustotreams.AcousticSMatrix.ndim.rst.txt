@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.ndim
+==================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticSMatrix.ndim

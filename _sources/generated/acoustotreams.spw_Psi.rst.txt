@@ -1,0 +1,6 @@
+﻿acoustotreams.spw\_Psi
+======================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: spw_Psi

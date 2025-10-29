@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.isglobal
+=======================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticTMatrixC.isglobal

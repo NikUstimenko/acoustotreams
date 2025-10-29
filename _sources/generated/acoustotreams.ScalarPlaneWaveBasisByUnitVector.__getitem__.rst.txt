@@ -1,0 +1,6 @@
+acoustotreams.ScalarPlaneWaveBasisByUnitVector.\_\_getitem\_\_
+==============================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarPlaneWaveBasisByUnitVector.__getitem__

@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.\_\_setitem\_\_
+==============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.__setitem__

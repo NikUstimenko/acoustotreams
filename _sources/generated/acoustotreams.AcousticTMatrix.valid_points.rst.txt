@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.valid\_points
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.valid_points

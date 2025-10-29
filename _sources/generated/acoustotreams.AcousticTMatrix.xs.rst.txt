@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.xs
+================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.xs

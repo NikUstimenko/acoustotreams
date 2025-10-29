@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.sphere
+====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.sphere

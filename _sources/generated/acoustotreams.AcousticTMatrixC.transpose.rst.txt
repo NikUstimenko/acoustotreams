@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.transpose
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.transpose

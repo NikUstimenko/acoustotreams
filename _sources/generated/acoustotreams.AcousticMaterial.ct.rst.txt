@@ -1,0 +1,6 @@
+acoustotreams.AcousticMaterial.ct
+=================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticMaterial.ct

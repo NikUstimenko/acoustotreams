@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.\_\_divmod\_\_
+=============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.__divmod__

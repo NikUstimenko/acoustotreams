@@ -1,0 +1,58 @@
+﻿acoustotreams.ScalarSphericalWaveBasis
+======================================
+
+.. currentmodule:: acoustotreams
+
+.. autoclass:: ScalarSphericalWaveBasis
+
+  
+  
+      .. rubric:: Attributes
+
+      .. autosummary::
+         :toctree:
+      
+         ~ScalarSphericalWaveBasis.isglobal
+         ~ScalarSphericalWaveBasis.positions
+  
+  
+
+  
+      .. rubric:: Methods
+
+      .. autosummary::
+         :toctree:
+
+      
+         ~ScalarSphericalWaveBasis.__and__
+         ~ScalarSphericalWaveBasis.__eq__
+         ~ScalarSphericalWaveBasis.__ge__
+         ~ScalarSphericalWaveBasis.__getitem__
+         ~ScalarSphericalWaveBasis.__gt__
+         ~ScalarSphericalWaveBasis.__le__
+         ~ScalarSphericalWaveBasis.__len__
+         ~ScalarSphericalWaveBasis.__lt__
+         ~ScalarSphericalWaveBasis.__ne__
+         ~ScalarSphericalWaveBasis.__or__
+         ~ScalarSphericalWaveBasis.__repr__
+         ~ScalarSphericalWaveBasis.__str__
+         ~ScalarSphericalWaveBasis.__sub__
+         ~ScalarSphericalWaveBasis.__xor__
+         ~ScalarSphericalWaveBasis.count
+         ~ScalarSphericalWaveBasis.default
+         ~ScalarSphericalWaveBasis.defaultdim
+         ~ScalarSphericalWaveBasis.defaultlmax
+         ~ScalarSphericalWaveBasis.index
+         ~ScalarSphericalWaveBasis.isdisjoint
+      
+         ~ScalarSphericalWaveBasis.__xor__
+         ~ScalarSphericalWaveBasis.__or__
+         ~ScalarSphericalWaveBasis.__gt__
+         ~ScalarSphericalWaveBasis.__sub__
+         ~ScalarSphericalWaveBasis.__str__
+         ~ScalarSphericalWaveBasis.__ge__
+         ~ScalarSphericalWaveBasis.__le__
+         ~ScalarSphericalWaveBasis.__ne__
+         ~ScalarSphericalWaveBasis.__and__
+         ~ScalarSphericalWaveBasis.__lt__
+  

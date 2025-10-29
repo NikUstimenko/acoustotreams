@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.relax
+====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.relax

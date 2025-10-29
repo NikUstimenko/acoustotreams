@@ -1,0 +1,6 @@
+﻿acoustotreams.expand
+====================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: expand
