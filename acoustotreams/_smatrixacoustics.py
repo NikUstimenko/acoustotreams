@@ -90,7 +90,7 @@ class AcousticSMatrices:
 
     Args:
         smats (AcousticSMatrix): Acoustic S-matrices.
-        k0 (float): Wave number in vacuum.
+        k0 (float): Wave number in air.
         basis (ScalarPlaneWaveBasisByComp): The basis for the S-matrices.
         material (tuple, AcousticMaterial, optional): Material definition, if a tuple of length
             two is specified, this refers to the materials above and below the S-matrix.
@@ -168,7 +168,7 @@ class AcousticSMatrices:
 
         Args:
             basis (ScalarPlaneWaveBasisByComp): Basis definitions.
-            k0 (float): Wave number in vacuum
+            k0 (float): Wave number in air.
             materials (Sequence[AcousticMaterial]): Material definitions.
 
         Returns:
@@ -191,7 +191,7 @@ class AcousticSMatrices:
         parameters.
 
         Args:
-            k0 (float): Wave number in vacuum.
+            k0 (float): Wave number in air.
             basis (ScalarPlaneWaveBasisByComp): Basis definition.
             tickness (Sequence[Float]): Thickness of the slab or the thicknesses of all
                 slabs in order from negative to positive z.
@@ -241,7 +241,7 @@ class AcousticSMatrices:
 
         Args:
             r (float, (3,)-array): Translation vector.
-            k0 (float): Wave number in vacuum.
+            k0 (float): Wave number in air.
             basis (ScalarPlaneWaveBasis): Basis definition.
             material (AcousticMaterial, optional): Material definition.
 
@@ -384,12 +384,12 @@ class AcousticSMatrices:
             trans, refl = refl, trans
             paz.reverse()
         illu = np.asarray(illu)
-        s_t = np.real(trans.conjugate().T @ paz[0][0] @ trans)             
-        s_r = np.real(refl.conjugate().T @ paz[1][0] @ refl)
-        s_i = np.real(np.conjugate(illu).T @ paz[1][0] @ illu)
+        s_t = np.real(trans.conjugate().T @ paz[0] @ trans)             
+        s_r = np.real(refl.conjugate().T @ paz[1] @ refl)
+        s_i = np.real(np.conjugate(illu).T @ paz[1] @ illu)
         s_ir = np.real(
-            refl.conjugate().T @ paz[1][1] @ illu
-            - np.conjugate(illu).T @ paz[1][1] @ refl
+            refl.conjugate().T @ paz[1] @ illu
+            - np.conjugate(illu).T @ paz[1] @ refl
         )
         return s_t / (s_i + s_ir), s_r / (s_i + s_ir)
 
@@ -476,7 +476,6 @@ def poynting_avg_z(basis, k0, material=AcousticMaterial()):
     Returns:
         tuple
     """
-    material = AcousticMaterial(material)
     kx, ky, kzs = basis.kvecs(k0, material)
     selection = (kx[:, None] == kx) & (ky[:, None] == ky)
     gamma = kzs / (material.ks(k0) * material.impedance)
