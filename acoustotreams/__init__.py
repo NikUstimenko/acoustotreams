@@ -149,7 +149,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.1.51"
+_version__ = "0.1.52"
 
 from scipy.special import (  # noqa: F401
     hankel1,
