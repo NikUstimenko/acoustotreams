@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s =  2 * np.pi * np.linspace(1000, 45000, 1000) / 343
+k0s =  2 * np.pi * np.linspace(1000, 45000, 10) / 343
 material_slab = acoustotreams.AcousticMaterial(698, 950)
 thickness = 0.0025
 period = 0.025
@@ -30,12 +30,13 @@ def compute_coeffs(k0):
     dist = acoustotreams.AcousticSMatrices.propagation([0, 0, radius], spwb, k0, materials[1])
     array = acoustotreams.AcousticSMatrices.from_array(spheres, spwb)
     total = acoustotreams.AcousticSMatrices.stack([slab, dist, array])
-    return total.tr(splw)
+    print(total.tr(splw)[0])
+    return total.tr(splw)[0]
 
 res = Parallel(n_jobs=-1)(delayed(compute_coeffs)(k0s[i]) for i in range(len(k0s)))
-for i in range(len(k0s)):
-    tr[i, 0] = res[i][0]
-    tr[i, 1] = res[i][1]
+#for i in range(len(k0s)):
+#    tr[i, 0] = res[i][0]
+#    tr[i, 1] = res[i][1]
 
 fig, ax = plt.subplots()
 ax.set_xlabel("Frequency (kHz)")

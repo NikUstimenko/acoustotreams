@@ -29,6 +29,8 @@ Combining these two objects then allows the description of simple slabs.
 The setup is fairly simple. The materials are given in order from negative to positive
 z coordinates. We simply loop over the wave number and calculate transmission and reflection.
 
+.. plot:: examples/slab.py
+   
 From T-matrix arrays
 ====================
 

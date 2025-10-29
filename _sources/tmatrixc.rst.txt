@@ -188,3 +188,5 @@ of infinitely long cylinders in a square array in the xy plane.
 
 Similarly to the case of spheres and a three-dimensional lattice, we can check the
 smallest singular value.
+
+.. plot:: examples/crystal_tmatrixc.py
