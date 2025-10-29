@@ -26,7 +26,7 @@ jobs:
       - name: Build documentation
         run: |
           sphinx-build -b html docs docs/build/html
-          ls -R docs/build/html
+          ls -R docs/build/html | grep png || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
