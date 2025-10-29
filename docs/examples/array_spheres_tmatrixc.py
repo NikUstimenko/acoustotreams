@@ -36,11 +36,10 @@ def compute_coeffs(k0):
     array = acoustotreams.AcousticSMatrices.from_array(spheres_tmc, spwb)
     total = acoustotreams.AcousticSMatrices.stack([slab, dist, array])
     return total.tr(splw)
+tr = np.array(
+    Parallel(n_jobs=-1)(delayed(compute_coeffs)(k0s[i]) for i in range(len(k0s)))
+)
 
-res = Parallel(n_jobs=-1)(delayed(compute_coeffs)(k0s[i]) for i in range(len(k0s)))
-for i in range(len(k0s)):
-    tr[i, 0] = res[i][0]
-    tr[i, 1] = res[i][1]
 
 fig, ax = plt.subplots()
 ax.set_xlabel("Frequency (kHz)")

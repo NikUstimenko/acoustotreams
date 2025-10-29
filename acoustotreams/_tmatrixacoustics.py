@@ -699,13 +699,12 @@ def _plane_wave_partial_scalar(
     modetype = "up" if modetype is None else modetype
     if modetype not in ("up", "down"):
         raise ValueError(f"invalid 'modetype': {modetype}")
-    kvecs = np.array(basis.kvecs(k0, material, modetype))
-    pol = wv.spw_Psi(*kvecs, 0, 0, 0)
+    kzs = AcousticMaterial(material).kzs(k0, *kpar)
+    pol = wv.spw_Psi(*kpar, kzs, 0, 0, 0)
     res = [pol * (np.abs(np.array(kpar) - x[:2]) < 1e-14).all() for x in basis]
     return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype
     )
-
 
 def _plane_wave_scalar(
     kvec, *, k0=None, basis=None, material=None, modetype=None
