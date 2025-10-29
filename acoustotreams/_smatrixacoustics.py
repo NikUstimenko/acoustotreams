@@ -384,12 +384,12 @@ class AcousticSMatrices:
             trans, refl = refl, trans
             paz.reverse()
         illu = np.asarray(illu)
-        s_t = np.real(trans.conjugate().T @ paz[0] @ trans)             
-        s_r = np.real(refl.conjugate().T @ paz[1] @ refl)
-        s_i = np.real(np.conjugate(illu).T @ paz[1] @ illu)
+        s_t = np.real(trans.conjugate().T @ paz[0][0] @ trans)             
+        s_r = np.real(refl.conjugate().T @ paz[1][0] @ refl)
+        s_i = np.real(np.conjugate(illu).T @ paz[1][0] @ illu)
         s_ir = np.real(
-            refl.conjugate().T @ paz[1] @ illu
-            - np.conjugate(illu).T @ paz[1] @ refl
+            refl.conjugate().T @ paz[1][1] @ illu
+            - np.conjugate(illu).T @ paz[1][1] @ refl
         )
         return s_t / (s_i + s_ir), s_r / (s_i + s_ir)
 
