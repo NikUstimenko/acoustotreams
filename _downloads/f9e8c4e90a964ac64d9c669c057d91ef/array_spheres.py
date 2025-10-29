@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s =  2 * np.pi * np.linspace(1000, 45000, 10) / 343
+k0s =  2 * np.pi * np.linspace(1000, 45000, 100) / 343
 material_slab = acoustotreams.AcousticMaterial(698, 950)
 thickness = 0.0025
 period = 0.025
