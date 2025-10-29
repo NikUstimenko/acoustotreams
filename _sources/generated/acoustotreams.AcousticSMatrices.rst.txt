@@ -48,9 +48,9 @@
          ~AcousticSMatrices.tr
       
          ~AcousticSMatrices.__gt__
-         ~AcousticSMatrices.__ge__
-         ~AcousticSMatrices.__le__
          ~AcousticSMatrices.__lt__
          ~AcousticSMatrices.__str__
+         ~AcousticSMatrices.__le__
+         ~AcousticSMatrices.__ge__
          ~AcousticSMatrices.__ne__
   
