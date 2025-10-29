@@ -49,15 +49,15 @@
          ~ScalarPlaneWaveBasisByComp.kvecs
          ~ScalarPlaneWaveBasisByComp.permute
       
-         ~ScalarPlaneWaveBasisByComp.__xor__
-         ~ScalarPlaneWaveBasisByComp.__gt__
-         ~ScalarPlaneWaveBasisByComp.__lt__
-         ~ScalarPlaneWaveBasisByComp.__repr__
-         ~ScalarPlaneWaveBasisByComp.__sub__
-         ~ScalarPlaneWaveBasisByComp.__le__
-         ~ScalarPlaneWaveBasisByComp.__or__
          ~ScalarPlaneWaveBasisByComp.__and__
+         ~ScalarPlaneWaveBasisByComp.__le__
+         ~ScalarPlaneWaveBasisByComp.__lt__
+         ~ScalarPlaneWaveBasisByComp.__or__
+         ~ScalarPlaneWaveBasisByComp.__ge__
          ~ScalarPlaneWaveBasisByComp.__ne__
          ~ScalarPlaneWaveBasisByComp.__str__
-         ~ScalarPlaneWaveBasisByComp.__ge__
+         ~ScalarPlaneWaveBasisByComp.__repr__
+         ~ScalarPlaneWaveBasisByComp.__xor__
+         ~ScalarPlaneWaveBasisByComp.__sub__
+         ~ScalarPlaneWaveBasisByComp.__gt__
   
