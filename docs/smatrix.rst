@@ -24,13 +24,13 @@ Combining these two objects then allows the description of simple slabs.
 
 .. literalinclude:: examples/slab.py
    :language: python
-   :lines: 7-19
+   :lines: 7-18
 
 The setup is fairly simple. The materials are given in order from negative to positive
 z coordinates. We simply loop over the wave number and calculate transmission and reflection.
 
 .. plot:: examples/slab.py
-   
+
 From T-matrix arrays
 ====================
 
@@ -49,7 +49,7 @@ use a simple loop to solve the system for all wave numbers.
 
 .. literalinclude:: examples/array_spheres.py
    :language: python
-   :lines: 18-38
+   :lines: 18-36
 
 We set an oblique incidence and the array of spheres. Then, we define a 
 plane wave and the needed S-matrices: a slab, the distance between the
@@ -75,7 +75,7 @@ use separately and define the maximal order :code:`mmax` also separately.
 
 .. literalinclude:: examples/array_spheres_tmatrixc.py
    :language: python
-   :lines: 18-43
+   :lines: 18-36
 
 The first half of the loop is now a little bit different. After creating the spheres
 we solve the interaction along the z direction, then create the cylindrical T-matrix
