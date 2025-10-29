@@ -45,15 +45,15 @@
          ~ScalarPlaneWaveBasisByUnitVector.kvecs
          ~ScalarPlaneWaveBasisByUnitVector.permute
       
-         ~ScalarPlaneWaveBasisByUnitVector.__sub__
-         ~ScalarPlaneWaveBasisByUnitVector.__and__
-         ~ScalarPlaneWaveBasisByUnitVector.__or__
-         ~ScalarPlaneWaveBasisByUnitVector.__repr__
-         ~ScalarPlaneWaveBasisByUnitVector.__le__
-         ~ScalarPlaneWaveBasisByUnitVector.__gt__
          ~ScalarPlaneWaveBasisByUnitVector.__ne__
+         ~ScalarPlaneWaveBasisByUnitVector.__and__
          ~ScalarPlaneWaveBasisByUnitVector.__ge__
-         ~ScalarPlaneWaveBasisByUnitVector.__lt__
-         ~ScalarPlaneWaveBasisByUnitVector.__xor__
          ~ScalarPlaneWaveBasisByUnitVector.__str__
+         ~ScalarPlaneWaveBasisByUnitVector.__lt__
+         ~ScalarPlaneWaveBasisByUnitVector.__or__
+         ~ScalarPlaneWaveBasisByUnitVector.__le__
+         ~ScalarPlaneWaveBasisByUnitVector.__xor__
+         ~ScalarPlaneWaveBasisByUnitVector.__gt__
+         ~ScalarPlaneWaveBasisByUnitVector.__repr__
+         ~ScalarPlaneWaveBasisByUnitVector.__sub__
   
