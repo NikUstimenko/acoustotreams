@@ -99,35 +99,35 @@
          ~AcousticTMatrix.valid_points
          ~AcousticTMatrix.xs
       
-         ~AcousticTMatrix.__mul__
-         ~AcousticTMatrix.__mod__
-         ~AcousticTMatrix.__abs__
-         ~AcousticTMatrix.__floordiv__
-         ~AcousticTMatrix.__neg__
-         ~AcousticTMatrix.__pos__
-         ~AcousticTMatrix.__array_function__
-         ~AcousticTMatrix.__ne__
-         ~AcousticTMatrix.__array_ufunc__
-         ~AcousticTMatrix.__and__
-         ~AcousticTMatrix.__invert__
          ~AcousticTMatrix.__xor__
-         ~AcousticTMatrix.__rshift__
-         ~AcousticTMatrix.__divmod__
-         ~AcousticTMatrix.__sub__
+         ~AcousticTMatrix.__pow__
+         ~AcousticTMatrix.__mul__
          ~AcousticTMatrix.__gt__
-         ~AcousticTMatrix.__len__
-         ~AcousticTMatrix.__truediv__
-         ~AcousticTMatrix.__add__
          ~AcousticTMatrix.__ge__
          ~AcousticTMatrix.__le__
-         ~AcousticTMatrix.__matmul__
-         ~AcousticTMatrix.__eq__
-         ~AcousticTMatrix.__lt__
-         ~AcousticTMatrix.__repr__
          ~AcousticTMatrix.__or__
-         ~AcousticTMatrix.__pow__
-         ~AcousticTMatrix.__array__
+         ~AcousticTMatrix.__array_ufunc__
+         ~AcousticTMatrix.__len__
+         ~AcousticTMatrix.__matmul__
+         ~AcousticTMatrix.__ne__
+         ~AcousticTMatrix.__array_function__
          ~AcousticTMatrix.__lshift__
-         ~AcousticTMatrix.__str__
+         ~AcousticTMatrix.__invert__
+         ~AcousticTMatrix.__lt__
+         ~AcousticTMatrix.__abs__
+         ~AcousticTMatrix.__add__
+         ~AcousticTMatrix.__eq__
          ~AcousticTMatrix.__setitem__
+         ~AcousticTMatrix.__and__
+         ~AcousticTMatrix.__truediv__
+         ~AcousticTMatrix.__divmod__
+         ~AcousticTMatrix.__sub__
+         ~AcousticTMatrix.__floordiv__
+         ~AcousticTMatrix.__neg__
+         ~AcousticTMatrix.__array__
+         ~AcousticTMatrix.__str__
+         ~AcousticTMatrix.__mod__
+         ~AcousticTMatrix.__rshift__
+         ~AcousticTMatrix.__repr__
+         ~AcousticTMatrix.__pos__
   

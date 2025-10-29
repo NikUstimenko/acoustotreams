@@ -47,13 +47,13 @@
          ~ScalarCylindricalWaveBasis.isdisjoint
       
          ~ScalarCylindricalWaveBasis.__xor__
-         ~ScalarCylindricalWaveBasis.__or__
          ~ScalarCylindricalWaveBasis.__gt__
-         ~ScalarCylindricalWaveBasis.__sub__
-         ~ScalarCylindricalWaveBasis.__str__
          ~ScalarCylindricalWaveBasis.__ge__
-         ~ScalarCylindricalWaveBasis.__le__
-         ~ScalarCylindricalWaveBasis.__ne__
          ~ScalarCylindricalWaveBasis.__and__
+         ~ScalarCylindricalWaveBasis.__le__
+         ~ScalarCylindricalWaveBasis.__or__
+         ~ScalarCylindricalWaveBasis.__sub__
          ~ScalarCylindricalWaveBasis.__lt__
+         ~ScalarCylindricalWaveBasis.__str__
+         ~ScalarCylindricalWaveBasis.__ne__
   

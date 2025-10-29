@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>acoustotreams._coreacoustics &#8212; acoustotreams 0.1.46 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
+    <script src="../../_static/documentation_options.js?v=f98a5df1"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.1.46 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams._coreacoustics</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for acoustotreams._coreacoustics</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Scalar basis sets and core array functionalities.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">treams._operators</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">op</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">acoustotreams._operatorsacoustics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">opa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">treams.lattice</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">la</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">treams</span><span class="w"> </span><span class="kn">import</span> <span class="n">util</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">treams._lattice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lattice</span><span class="p">,</span> <span class="n">WaveVector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._materialacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticMaterial</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarBasisSet</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">OrderedSet</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scalar basis set base class.</span>
+
+<span class="sd">    It is the base class for all basis sets used. They are expected to be an ordered</span>
+<span class="sd">    sequence of the modes, that are included in a expansion. Basis sets are expected to</span>
+<span class="sd">    be immutable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_names</span> <span class="o">=</span> <span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Names of the relevant parameters&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String representation.</span>
+
+<span class="sd">        Automatically generated when the attribute ``_names`` is defined.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">    &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">,</span> <span class="bp">self</span><span class="p">[()]))</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">)&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct a default basis from parameters.</span>
+
+<span class="sd">        Construct a basis set in a default order by giving few parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.html#acoustotreams.ScalarSphericalWaveBasis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarSphericalWaveBasis</span><span class="p">(</span><span class="n">ScalarBasisSet</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Basis of scalar spherical waves.</span>
+
+<span class="sd">    Functions of the spherical wave basis are defined by their angular momentum ``l``,</span>
+<span class="sd">    its projection onto the z-axis ``m``. If the basis</span>
+<span class="sd">    is defined with respect to a single origin it is referred to as &quot;global&quot;, if it</span>
+<span class="sd">    contains multiple origins it is referred to as &quot;local&quot;. In a local basis an</span>
+<span class="sd">    additional position index ``pidx`` is used to link the modes to one of the</span>
+<span class="sd">    specified ``positions``.</span>
+
+<span class="sd">    Spherical waves can be separated into incident and scattered fields. Depending </span>
+<span class="sd">    on these combinations the basis modes refer to one of the functions :</span>
+<span class="sd">    func:`~acoustotreams.ssw_rPsi`, :func:`~acoustotreams.ssw_Psi`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        modes (array-like): A tuple containing a list for each of ``l``, and ``m``</span>
+<span class="sd">            or ``pidx``, ``l``, and ``m``.</span>
+<span class="sd">        positions (array-like, optional): The positions of the origins for the specified</span>
+<span class="sd">            modes. Defaults to ``[[0, 0, 0]]``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        pidx (array-like): Integer referring to a row in :attr:`positions`.</span>
+<span class="sd">        l (array-like): Angular momentum as an integer :math:`l \geq 0`</span>
+<span class="sd">        m (array-like): Angular momentum projection onto the z-axis, it is an integer</span>
+<span class="sd">            with :math:`m \leq |l|`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;pidx&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initalization.&quot;&quot;&quot;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">modes</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pidx</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># noqa: E741</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">l</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">modes</span><span class="p">),)</span>
+            <span class="n">pidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">pidx</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">modes</span><span class="p">),)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of modes&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid shape of positions </span><span class="si">{</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pidx</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">,</span> <span class="n">pidx</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">)):</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;parameters must be integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;l&#39; must be a non-negative integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;|m|&#39; cannot be larger than &#39;l&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;undefined position is indexed&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span> <span class="o">=</span> <span class="n">positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span> 
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.__len__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.__len__.html#acoustotreams.ScalarSphericalWaveBasis.__len__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of modes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>     </div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Positions of the modes&#39; origins.</span>
+
+<span class="sd">        The positions are an immutable (N, 3)-array. Each row corresponds to a point in</span>
+<span class="sd">        the three-dimensional Cartesian space.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span>
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.__repr__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.__repr__.html#acoustotreams.ScalarSphericalWaveBasis.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String representation.&quot;&quot;&quot;</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="s2">&quot;positions=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">    </span><span class="si">{</span><span class="n">positions</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">)&quot;</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isglobal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Basis is defined with respect to a single (global) origin.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">dct</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;pidx&quot;</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dct</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.__getitem__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.__getitem__.html#acoustotreams.ScalarSphericalWaveBasis.__getitem__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a subset of the basis.</span>
+
+<span class="sd">        This function allows index into the basis set by an integer, a slice, a sequence</span>
+<span class="sd">        of integers or bools, an ellipsis, or an empty tuple. All of them except the</span>
+<span class="sd">        integer and the empty tuple results in another basis set being returned. In case</span>
+<span class="sd">        of the two exceptions a tuple is returned.</span>
+
+<span class="sd">        Alternatively, the string &quot;plm&quot;, or &quot;lm&quot; can be used to access only a</span>
+<span class="sd">        subset of :attr:`pidx`, :attr:`l`, and :attr:`m`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.__eq__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.__eq__.html#acoustotreams.ScalarSphericalWaveBasis.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare basis sets.</span>
+
+<span class="sd">        Basis sets are considered equal, when they have the same modes in the same order</span>
+<span class="sd">        and the specified origin :attr:`positions` are equal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">pidx</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">m</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.default">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.default.html#acoustotreams.ScalarSphericalWaveBasis.default">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default basis for the given maximal multipolar order.</span>
+
+<span class="sd">        The default order contains separate blocks for each position index which are in</span>
+<span class="sd">        ascending order. Within each block the modes are sorted by angular momentum</span>
+<span class="sd">        :math:`l`, with the lowest angular momentum coming first. For each angular</span>
+<span class="sd">        momentum its z-projection is in ascending order from :math:`m = -l` to</span>
+<span class="sd">        :math:`m = l`.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarSphericalWaveBasis.default(2)</span>
+<span class="sd">            ScalarSphericalWaveBasis(</span>
+<span class="sd">                pidx=[0 0 0 0 0 0 0 0 0],</span>
+<span class="sd">                l=[0 1 1 1 2 2 2 2 2],</span>
+<span class="sd">                m=[ 0 -1  0  1 -2 -1  0  1  2],</span>
+<span class="sd">                positions=[[0. 0. 0.]],</span>
+<span class="sd">            )</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarSphericalWaveBasis.default(0, 2, [[0, 0, 1.], [0, 0, -1.]])</span>
+<span class="sd">            ScalarSphericalWaveBasis(</span>
+<span class="sd">                pidx=[0 1],</span>
+<span class="sd">                l=[0 0],</span>
+<span class="sd">                m=[0 0],</span>
+<span class="sd">                positions=[[ 0.  0.  1.], [ 0.  0. -1.]],</span>
+<span class="sd">            )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lmax (int): Maximal multipolar order.</span>
+<span class="sd">            nmax (int, optional): Number of positions, defaults to 1.</span>
+<span class="sd">            positions (array-like, optional): Positions of the origins.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nmax</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># noqa: E741</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.defaultlmax">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.defaultlmax.html#acoustotreams.ScalarSphericalWaveBasis.defaultlmax">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">defaultlmax</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the default mode order for a given length.</span>
+
+<span class="sd">        Given the dimension of the T-matrix return the estimated maximal value of `l`.</span>
+<span class="sd">        This is the inverse of :meth:`defaultdim`. A value of zero is allowed for empty</span>
+<span class="sd">        T-matrices.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarSphericalWaveBasis.defaultlmax(len(acoustotreams.ScalarSphericalWaveBasis.default(3)))</span>
+<span class="sd">            3</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dim (int): Dimension of the T-matrix, respectively number of modes.</span>
+<span class="sd">            nmax (int, optional): Number of particles, defaults to 1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dim</span> <span class="o">/</span> <span class="n">nmax</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">res_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">res</span> <span class="o">-</span> <span class="n">res_int</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">res_int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot estimate the default lmax&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res_int</span></div>
+
+
+<div class="viewcode-block" id="ScalarSphericalWaveBasis.defaultdim">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarSphericalWaveBasis.defaultdim.html#acoustotreams.ScalarSphericalWaveBasis.defaultdim">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">defaultdim</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default number of modes for a given mulipolar order.</span>
+
+<span class="sd">        Given the maximal value of `l` return the size of the corresponding T-matrix.</span>
+<span class="sd">        This is the inverse of :meth:`defaultlmax`. A value of lmax=-1 is allowed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lmax (int): Maximal multipolar order</span>
+<span class="sd">            nmax (int, optional): Number of particles, defaults to `1`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># lmax=-1 is allowed and won&#39;t give an error</span>
+        <span class="k">if</span> <span class="n">lmax</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">nmax</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;maximal order must be non-negative&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nmax</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarSphericalWaveBasis</span><span class="p">):</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">positions</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span>    </div>
+
+    
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.html#acoustotreams.ScalarCylindricalWaveBasis">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarCylindricalWaveBasis</span><span class="p">(</span><span class="n">ScalarBasisSet</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Basis of scalar cylindrical waves.</span>
+
+<span class="sd">    Functions of the cylindrical wave basis are defined by the z-components of the wave</span>
+<span class="sd">    vector ``kz`` and the angular momentum  ``m``.</span>
+<span class="sd">    If the basis is defined with respect to a single origin it is referred to as</span>
+<span class="sd">    &quot;global&quot;, if it contains multiple origins it is referred to as &quot;local&quot;. In a local</span>
+<span class="sd">    basis an additional position index ``pidx`` is used to link the modes to one of the</span>
+<span class="sd">    specified ``positions``.</span>
+
+<span class="sd">    Cylindrical can be separated into incident and scattered fields. </span>
+<span class="sd">    Depending on these combinations the basis modes refer to one of the functions</span>
+<span class="sd">    :func:`~acoustotreams.scw_rPsi`, or :func:`~acoustotreams.scw_Psi`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        modes (array-like): A tuple containing a list for each of ``kz``, and ``m``,</span>
+<span class="sd">            or ``pidx``, ``kz``, and ``m``.</span>
+<span class="sd">        positions (array-like, optional): The positions of the origins for the specified</span>
+<span class="sd">            modes. Defaults to ``[[0, 0, 0]]``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        pidx (array-like): Integer referring to a row in :attr:`positions`.</span>
+<span class="sd">        kz (array-like): Real valued z-component of the wave vector.</span>
+<span class="sd">        m (array-like): Integer angular momentum projection onto the z-axis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;pidx&quot;</span><span class="p">,</span> <span class="s2">&quot;kz&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initalization.&quot;&quot;&quot;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">modes</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pidx</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">kz</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">kz</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">modes</span><span class="p">),)</span>
+            <span class="n">pidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">pidx</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">modes</span><span class="p">),)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of modes&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="k">if</span> <span class="n">positions</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid shape of positions </span><span class="si">{</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pidx</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kz</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">,</span> <span class="n">pidx</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">)):</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;parameters must be integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;undefined position is indexed&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span> <span class="o">=</span> <span class="n">positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kz</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">kz</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">WaveVector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kz</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.__len__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.__len__.html#acoustotreams.ScalarCylindricalWaveBasis.__len__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of modes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> </div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Positions of the modes&#39; origins.</span>
+
+<span class="sd">        The positions are an immutable (N, 3)-array. Each row corresponds to a point in</span>
+<span class="sd">        the three-dimensional Cartesian space.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span>
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.__repr__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.__repr__.html#acoustotreams.ScalarCylindricalWaveBasis.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String representation.&quot;&quot;&quot;</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="s2">&quot;positions=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">    </span><span class="si">{</span><span class="n">positions</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">)&quot;</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isglobal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Basis is defined with respect to a single (global) origin.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">dct</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="s2">&quot;kz&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;pidx&quot;</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dct</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.__getitem__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.__getitem__.html#acoustotreams.ScalarCylindricalWaveBasis.__getitem__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a subset of the basis.</span>
+
+<span class="sd">        This function allows index into the basis set by an integer, a slice, a sequence</span>
+<span class="sd">        of integers or bools, an ellipsis, or an empty tuple. All of them except the</span>
+<span class="sd">        integer and the empty tuple results in another basis set being returned. In case</span>
+<span class="sd">        of the two exceptions a tuple is returned.</span>
+
+<span class="sd">        Alternatively, the string &quot;pkzm&quot;, or &quot;kzm&quot; can be used to access only a</span>
+<span class="sd">        subset of :attr:`pidx`, :attr:`kz`, and :attr:`m`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">kz</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">==</span> <span class="p">()):</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.__eq__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.__eq__.html#acoustotreams.ScalarCylindricalWaveBasis.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare basis sets.</span>
+
+<span class="sd">        Basis sets are considered equal, when they have the same modes in the same order</span>
+<span class="sd">        and the specified origin :attr:`positions` are equal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pidx</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">pidx</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kz</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">m</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.default">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.default.html#acoustotreams.ScalarCylindricalWaveBasis.default">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kzs</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default basis for the given z-components of wave vector and angular momentum.</span>
+
+<span class="sd">        The default order contains separate blocks for each position index which are in</span>
+<span class="sd">        ascending order. Within each block the modes are sorted by the z-component of</span>
+<span class="sd">        the wave vector :math:`k_z`. For each of those values the z-projection of the</span>
+<span class="sd">        angular momentum is placed in ascending order.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)</span>
+<span class="sd">            ScalarCylindricalWaveBasis(</span>
+<span class="sd">                pidx=[0 0 0 0 0 0],</span>
+<span class="sd">                kz=[-0.5 -0.5 -0.5 0.5  0.5  0.5],</span>
+<span class="sd">                m=[-1  0  1 -1  0  1],</span>
+<span class="sd">                positions=[[0. 0. 0.]],</span>
+<span class="sd">            )</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarCylindricalWaveBasis.default([0], 1, 2, [[1., 0, 0], [-1., 0, 0]])</span>
+<span class="sd">            ScalarCylindricalWaveBasis(</span>
+<span class="sd">                pidx=[0 0 0 1 1 1],</span>
+<span class="sd">                kz=[0. 0. 0. 0. 0. 0.],</span>
+<span class="sd">                m=[-1  0  1 -1  0  1],</span>
+<span class="sd">                positions=[[ 1.  0.  0.], [-1.  0.  0.]],</span>
+<span class="sd">            )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kzs (array-like, float): Maximal multipolar order.</span>
+<span class="sd">            mmax (int): Maximal value of the angular momentum z-component.</span>
+<span class="sd">            nmax (int, optional): Number of positions, defaults to 1.</span>
+<span class="sd">            positions (array-like, optional): Positions of the origins.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kzs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">kzs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kzs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;kzs has dimension larger than one: &#39;</span><span class="si">{</span><span class="n">kzs</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nmax</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">kz</span> <span class="ow">in</span> <span class="n">kzs</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">mmax</span><span class="p">,</span> <span class="n">mmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.diffr_orders">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.diffr_orders.html#acoustotreams.ScalarCylindricalWaveBasis.diffr_orders">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">diffr_orders</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a basis set for a system periodic in the z-direction.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">           &gt;&gt;&gt; acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2 * np.pi, 1)</span>
+<span class="sd">           ScalarCylindricalWaveBasis(</span>
+<span class="sd">               pidx=[0 0 0 0 0 0 0 0 0],</span>
+<span class="sd">               kz=[-0.9 -0.9 -0.9  0.1  0.1  0.1  1.1  1.1  1.1],</span>
+<span class="sd">               m=[-1  0  1 -1  0  1 -1  0  1],</span>
+<span class="sd">               positions=[[0. 0. 0.]],</span>
+<span class="sd">           )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kz (float): Wave vector z-component. Ideally it is in the first Brillouin</span>
+<span class="sd">                zone (use :func:`treams.misc.firstbrillouin1d`).</span>
+<span class="sd">            mmax (int): Maximal value for the z-component of the angular momentum.</span>
+<span class="sd">            lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.</span>
+<span class="sd">            bmax (float): Maximal change of the z-component of the wave vector. So,</span>
+<span class="sd">                this defines a maximal momentum transfer from the given value `kz`.</span>
+<span class="sd">            nmax (int, optional): Number of positions.</span>
+<span class="sd">            positions (array-like, optional): Positions of the origins.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lattice</span><span class="p">)</span>
+        <span class="n">lattice_z</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">)</span>
+        <span class="n">nkz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">bmax</span> <span class="o">/</span> <span class="n">lattice_z</span><span class="o">.</span><span class="n">reciprocal</span><span class="p">))</span>
+        <span class="n">kzs</span> <span class="o">=</span> <span class="n">kz</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">nkz</span><span class="p">,</span> <span class="n">nkz</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">lattice_z</span><span class="o">.</span><span class="n">reciprocal</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">kzs</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">nmax</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">WaveVector</span><span class="p">(</span><span class="n">kz</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarCylindricalWaveBasis</span><span class="p">):</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">positions</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">lattice</span>
+            <span class="n">kpar</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">kpar</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.defaultmmax">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.defaultmmax.html#acoustotreams.ScalarCylindricalWaveBasis.defaultmmax">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">defaultmmax</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">nkz</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the default mode order for a given length.</span>
+
+<span class="sd">        Given the dimension of the T-matrix return the estimated maximal value of `m`.</span>
+<span class="sd">        This is the inverse of :meth:`defaultdim`. A value of zero is allowed for empty</span>
+<span class="sd">        T-matrices.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarCylindricalWaveBasis.defaultmmax(len(acoustotreams.ScalarCylindricalWaveBasis.default([0], 2)), 1)</span>
+<span class="sd">            2</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dim (int): Dimension of the T-matrix, respectively number of modes</span>
+<span class="sd">            nkz (int, optional): Number of z-components of the wave vector.</span>
+<span class="sd">            nmax (int, optional): Number of particles, defaults to 1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">%</span> <span class="p">(</span><span class="n">nkz</span> <span class="o">*</span> <span class="n">nmax</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot estimate the default mmax&quot;</span><span class="p">)</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span> <span class="o">//</span> <span class="p">(</span><span class="n">nkz</span> <span class="o">*</span> <span class="n">nmax</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot estimate the default mmax&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">dim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="ScalarCylindricalWaveBasis.defaultdim">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarCylindricalWaveBasis.defaultdim.html#acoustotreams.ScalarCylindricalWaveBasis.defaultdim">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">defaultdim</span><span class="p">(</span><span class="n">nkz</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default number of modes for a given mulipolar order.</span>
+
+<span class="sd">        Given the maximal value of `m` and number of `k_z` return the size of the corresponding T-matrix.</span>
+<span class="sd">        A value of zero is allowed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            nkz (int): Number of z-components of the wave vector.</span>
+<span class="sd">            mmax (int): Maximal value of the angular momentum&#39;s z-component.</span>
+<span class="sd">            nmax (int, optional): Number of particles, defaults to 1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">nkz</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">mmax</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;maximal order must be positive&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nkz</span> <span class="o">*</span> <span class="n">nmax</span></div>
+</div>
+
+    
+    
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarPlaneWaveBasis</span><span class="p">(</span><span class="n">ScalarBasisSet</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scalar plane wave basis parent class.&quot;&quot;&quot;</span>
+
+    <span class="n">isglobal</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarPlaneWaveBasisByUnitVector</span><span class="p">(</span><span class="n">ScalarPlaneWaveBasis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scalar plane wave basis.</span>
+
+<span class="sd">    A plane wave basis is defined by a collection of wave vectors specified by the</span>
+<span class="sd">    Cartesian wave vector components ``qx``, ``qy``, and ``qz`` normalized to</span>
+<span class="sd">    :math:`q_x^2 + q_y^2 + q_z^2 = 1`.</span>
+
+<span class="sd">    Plane waves can refer to:func:`~acoustotreams.spw_Psi`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        modes (array-like): A tuple containing a list for each of ``qx``, ``qy``,</span>
+<span class="sd">            and ``qz``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        qx (array-like): X-component of the normalized wave vector.</span>
+<span class="sd">        qy (array-like): Y-component of the normalized wave vector.</span>
+<span class="sd">        qz (array-like): Z-component of the normalized wave vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;qx&quot;</span><span class="p">,</span> <span class="s2">&quot;qy&quot;</span><span class="p">,</span> <span class="s2">&quot;qz&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A scalar plane wave basis is always global.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialization.&quot;&quot;&quot;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">modes</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">qx</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">qy</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">qz</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">modes</span><span class="p">),)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of modes&quot;</span><span class="p">)</span>
+
+        <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">))</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">emath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">qx</span> <span class="o">*</span> <span class="n">qx</span> <span class="o">+</span> <span class="n">qy</span> <span class="o">*</span> <span class="n">qy</span> <span class="o">+</span> <span class="n">qz</span> <span class="o">*</span> <span class="n">qz</span><span class="p">)</span>
+        <span class="n">norm</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">norm</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-14</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">true_divide</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">norm</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">):</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of parameters&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qz</span> <span class="o">=</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.__len__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.__len__.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.__len__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of modes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qx</span><span class="p">)</span> </div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">dct</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;qx&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;qy&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="s2">&quot;qz&quot;</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dct</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.__getitem__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.__getitem__.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.__getitem__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a subset of the basis.</span>
+
+<span class="sd">        This function allows index into the basis set by an integer, a slice, a sequence</span>
+<span class="sd">        of integers or bools, an ellipsis, or an empty tuple. All of them except the</span>
+<span class="sd">        integer and the empty tuple results in another basis set being returned. In case</span>
+<span class="sd">        of the two exceptions a tuple is returned.</span>
+
+<span class="sd">        Alternatively, the string &quot;xyz&quot;, &quot;xy&quot;, or &quot;z&quot; can be used to access only a</span>
+<span class="sd">        subset of :attr:`qx`, :attr:`qy`, and :attr:`qz`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qx</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">qy</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">qz</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">==</span> <span class="p">()):</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.default">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.default.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.default">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kvecs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default basis from the given wave vectors.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarPlaneWaveBasisByUnitVector.default([[0, 0, 5], [0, 3, 4]])</span>
+<span class="sd">            ScalarPlaneWaveBasisByUnitVector(</span>
+<span class="sd">                qx=[0. 0.],</span>
+<span class="sd">                qy=[0.  0.6],</span>
+<span class="sd">                qz=[1.  0.8],</span>
+<span class="sd">            )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kvecs (array-like): Wave vectors in Cartesian coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">kvecs</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">kvecs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">kvecs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>                           
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">kvecs</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarPlaneWaveBasisByUnitVector</span><span class="p">):</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">lattice</span>
+            <span class="n">kpar</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">kpar</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.__eq__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.__eq__.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare basis sets.</span>
+
+<span class="sd">        Basis sets are considered equal, when they have the same modes in the same</span>
+<span class="sd">        order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qx</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">qx</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qy</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">qy</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qz</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">qz</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.bycomp">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.bycomp.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.bycomp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bycomp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">()):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a :class:`ScalarPlaneWaveBasisByComp`.</span>
+
+<span class="sd">        The plane wave basis is changed to a partial basis, where only two (real-valued)</span>
+<span class="sd">        wave vector components are defined the third component is then inferred from the</span>
+<span class="sd">        dispersion relation, which depends on the wave number and material, and a</span>
+<span class="sd">        ``modetype`` that specifies the sign of the third component.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alignment (str, optional): Wave vector components that are part of the</span>
+<span class="sd">                partial basis. Defaults to &quot;xy&quot;, other permitted values are &quot;yz&quot; and</span>
+<span class="sd">                &quot;zx&quot;.</span>
+<span class="sd">            k0 (float, optional): Wave number. If given, it is checked that the current</span>
+<span class="sd">                basis fulfils the dispersion relation.</span>
+<span class="sd">            material (:class:`acoustotreams.AcousticMaterial` or tuple): Material definition. Defaults</span>
+<span class="sd">                to air.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ks</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alignment</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;yz&quot;</span><span class="p">,</span> <span class="s2">&quot;zx&quot;</span><span class="p">):</span>
+            <span class="n">kpars</span> <span class="o">=</span> <span class="p">[</span><span class="n">ks</span> <span class="o">*</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">alignment</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid alignment &#39;</span><span class="si">{</span><span class="n">alignment</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">ScalarPlaneWaveBasisByComp</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">kpars</span><span class="p">),</span> <span class="n">alignment</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.kvecs">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.kvecs.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.kvecs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kvecs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">(),</span> <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wave vectors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            k0 (float): Wave number.</span>
+<span class="sd">            material (:class:`acoustotreams.AcousticMaterial` or tuple, optional): Material</span>
+<span class="sd">                definition. Defaults to air.</span>
+<span class="sd">            modetype (optional): Currently unused for this class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: check kz depending on modetype (alignment?)</span>
+        <span class="n">ks</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ks</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qx</span><span class="p">,</span> <span class="n">ks</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qy</span><span class="p">,</span> <span class="n">ks</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qz</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.permute">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByUnitVector.permute.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector.permute">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">permute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span>
+        <span class="n">lattice</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qz</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span> <span class="o">=</span> <span class="n">qz</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">)))</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+</div>
+
+    
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarPlaneWaveBasisByComp</span><span class="p">(</span><span class="n">ScalarPlaneWaveBasis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Partial scalar plane wave basis.</span>
+
+<span class="sd">    A partial plane wave basis is defined by two wave vector components out of all three</span>
+<span class="sd">    Cartesian wave vector components ``kx``, ``ky``, and ``kz``. </span>
+<span class="sd">    Which two components are given is specified in the :attr:`alignment`. This</span>
+<span class="sd">    basis is mostly used for stratified media that are periodic or uniform in the two</span>
+<span class="sd">    alignment directions, such that the given wave vector components correspond to the</span>
+<span class="sd">    diffraction orders.</span>
+
+<span class="sd">    Scalar plane waves can refer to :func:`~acoustotreams.spw_Psi`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        modes (array-like): A tuple containing a list for each of ``k1``, and ``k2``.</span>
+<span class="sd">        alignment (str, optional): Definition which wave vector components are given.</span>
+<span class="sd">            Defaults to &quot;xy&quot;, other possible values are &quot;yz&quot; and &quot;zx&quot;.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        alignment (str): Alignment of the partial basis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialization.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">modes</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">ky</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">modes</span><span class="p">),)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of modes&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kx</span><span class="p">,</span> <span class="n">kx</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ky</span><span class="p">,</span> <span class="n">ky</span><span class="p">)]:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of parameters&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid value for parameter, must be real&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">alignment</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;yz&quot;</span><span class="p">,</span> <span class="s2">&quot;zx&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_names</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;k&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">alignment</span><span class="p">),)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid alignment &#39;</span><span class="si">{</span><span class="n">alignment</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">=</span> <span class="n">alignment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.__len__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.__len__.html#acoustotreams.ScalarPlaneWaveBasisByComp.__len__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of modes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.permute">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.permute.html#acoustotreams.ScalarPlaneWaveBasisByComp.permute">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">permute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span>
+        <span class="n">lattice</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">alignments</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;xy&quot;</span><span class="p">:</span> <span class="s2">&quot;yz&quot;</span><span class="p">,</span> <span class="s2">&quot;yz&quot;</span><span class="p">:</span> <span class="s2">&quot;zx&quot;</span><span class="p">,</span> <span class="s2">&quot;zx&quot;</span><span class="p">:</span> <span class="s2">&quot;xy&quot;</span><span class="p">}</span>
+        <span class="n">alignment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">alignment</span> <span class="o">=</span> <span class="n">alignments</span><span class="p">[</span><span class="n">alignment</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">alignment</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;X-components of the wave vector.</span>
+
+<span class="sd">        If the components are not specified `None` is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;xy&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;zx&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ky</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Y-components of the wave vector.</span>
+
+<span class="sd">        If the components are not specified `None` is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;xy&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;yz&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Z-components of the wave vector.</span>
+
+<span class="sd">        If the components are not specified `None` is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;yz&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;zx&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">dct</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;kx&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;ky&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="s2">&quot;kz&quot;</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dct</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.__getitem__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.__getitem__.html#acoustotreams.ScalarPlaneWaveBasisByComp.__getitem__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a subset of the basis.</span>
+
+<span class="sd">        This function allows index into the basis set by an integer, a slice, a sequence</span>
+<span class="sd">        of integers or bools, an ellipsis, or an empty tuple. All of them except the</span>
+<span class="sd">        integer and the empty tuple results in another basis set being returned. In case</span>
+<span class="sd">        of the two exceptions a tuple is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">==</span> <span class="p">()):</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.default">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.default.html#acoustotreams.ScalarPlaneWaveBasisByComp.default">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kpars</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Default basis from the given wave vectors.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 3]])</span>
+<span class="sd">            ScalarPlaneWaveBasisByComp(</span>
+<span class="sd">                kx=[0 0],</span>
+<span class="sd">                ky=[0 3],</span>
+<span class="sd">            )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kpars (array-like): Wave vector components in Cartesian coordinates.</span>
+<span class="sd">            alignment (str, optional): Definition which wave vector components are</span>
+<span class="sd">                given. Defaults to &quot;xy&quot;, other possible values are &quot;yz&quot; and &quot;zx&quot;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kpars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">kpars</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">kpars</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">modes</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">alignment</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.diffr_orders">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders.html#acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">diffr_orders</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kpar</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a basis set for a two-dimensional periodic system.</span>
+
+<span class="sd">        The reciprocal lattice to the given lattice is taken to consider all diffraction</span>
+<span class="sd">        orders that lie within the defined maximal radius (in reciprocal space).</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], acoustotreams.Lattice.square(2 * np.pi), 1)</span>
+<span class="sd">            ScalarPlaneWaveBasisByComp(</span>
+<span class="sd">                kx=[ 0.  0.  0.  1. -1.],</span>
+<span class="sd">                ky=[ 0.  1. -1.  0.  0.],</span>
+<span class="sd">            )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kpar (float): Tangential wave vector components. Ideally they are in the</span>
+<span class="sd">                first Brillouin zone (use :func:`misc.firstbrillouin2d`).</span>
+<span class="sd">            lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.</span>
+<span class="sd">            bmax (float): Maximal change of tangential wave vector components. So,</span>
+<span class="sd">                this defines a maximal momentum transfer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lattice</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lattice</span><span class="o">.</span><span class="n">dim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid lattice dimensions&quot;</span><span class="p">)</span>
+        <span class="n">latrec</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">reciprocal</span>
+        <span class="n">kpars</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">+</span> <span class="n">la</span><span class="o">.</span><span class="n">diffr_orders_circle</span><span class="p">(</span><span class="n">latrec</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span> <span class="o">@</span> <span class="n">latrec</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">kpars</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">lattice</span><span class="o">.</span><span class="n">alignment</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">WaveVector</span><span class="p">(</span><span class="n">kpar</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">lattice</span><span class="o">.</span><span class="n">alignment</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarPlaneWaveBasisByComp</span><span class="p">):</span>
+            <span class="n">alignment</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">alignment</span> <span class="k">if</span> <span class="n">alignment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">alignment</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">lattice</span>
+            <span class="n">kpar</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">kpar</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">alignment</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.__eq__">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.__eq__.html#acoustotreams.ScalarPlaneWaveBasisByComp.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare basis sets.</span>
+
+<span class="sd">        Basis sets are considered equal, when they have the same modes in the same</span>
+<span class="sd">        order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">skx</span><span class="p">,</span> <span class="n">sky</span><span class="p">,</span> <span class="n">skz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ky</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kz</span>
+            <span class="n">okx</span><span class="p">,</span> <span class="n">oky</span><span class="p">,</span> <span class="n">okz</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">kx</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">ky</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">kz</span>
+            <span class="k">return</span> <span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">skx</span><span class="p">,</span> <span class="n">okx</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">skx</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">okx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">))</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">sky</span><span class="p">,</span> <span class="n">oky</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">sky</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">oky</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">))</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">skz</span><span class="p">,</span> <span class="n">okz</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">skz</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">okz</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.byunitvector">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector.html#acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">byunitvector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">(),</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;up&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a complete basis :class:`ScalarPlaneWaveBasis`.</span>
+
+<span class="sd">        A plane wave basis is considered complete, when all three Cartesian components</span>
+<span class="sd">        are defined for each mode. So, the specified wave number,</span>
+<span class="sd">        material, and modetype is taken to calculate the third Cartesian wave vector.</span>
+<span class="sd">        The modetype &quot;up&quot; (&quot;down&quot;) is for waves propagating in the positive (negative)</span>
+<span class="sd">        direction with respect to the Cartesian axis that is orthogonal to the</span>
+<span class="sd">        alignment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            k0 (float): Wave number.</span>
+<span class="sd">            material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material</span>
+<span class="sd">                definition. Defaults to air.</span>
+<span class="sd">            modetype (str, optional): Propagation direction. Defaults to &quot;up&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;modetype not recognized&quot;</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
+        <span class="n">kx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span>
+        <span class="n">ky</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span>
+        <span class="n">kz</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">kzs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;yz&quot;</span><span class="p">:</span>
+            <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="n">kz</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;zy&quot;</span><span class="p">:</span>
+            <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">kx</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">ScalarPlaneWaveBasisByUnitVector</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">))</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.kvecs">
+<a class="viewcode-back" href="../../generated/acoustotreams.ScalarPlaneWaveBasisByComp.kvecs.html#acoustotreams.ScalarPlaneWaveBasisByComp.kvecs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kvecs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">(),</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;up&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wave vectors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            k0 (float): Wave number.</span>
+<span class="sd">            material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material</span>
+<span class="sd">                definition. Defaults to air.</span>
+<span class="sd">            modetype (str, optional): Propagation direction. Defaults to &quot;up&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;modetype not recognized&quot;</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
+        <span class="n">kx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kx</span>
+        <span class="n">ky</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ky</span>
+        <span class="n">kz</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">kzs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;yz&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">kz</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="o">==</span> <span class="s2">&quot;zx&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">kx</span>
+        <span class="k">return</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_raise_basis_error</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;basis&#39; must be ScalarBasisSet&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ScalarPhysicsDict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">AnnotationDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Physics dictionary (for scalar waves).</span>
+
+<span class="sd">    Derives from :class:`treams.util.AnnotationDict`. This dictionary has additionally</span>
+<span class="sd">    several properties defined.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        basis (:class:`ScalarBasisSet`): Basis set.</span>
+<span class="sd">        k0 (float): Wave number.</span>
+<span class="sd">        kpar (list): Parallel wave vector components. Usually, this is a list of length</span>
+<span class="sd">            3 with its items corresponding to the Cartesian axes. Unspecified items are</span>
+<span class="sd">            set to `nan`.</span>
+<span class="sd">        lattice (:class:`~acoustotreams.Lattice`): Lattice definition.</span>
+<span class="sd">        material (:class:`~acoustotreams.AcousticMaterial`): Material definition.</span>
+<span class="sd">        modetype (str): Mode type, for spherical and cylindrical waves this can be</span>
+<span class="sd">            &quot;incident&quot; and &quot;scattered&quot;, for partial plane waves it can be &quot;up&quot; or</span>
+<span class="sd">            &quot;down&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;:class:`ScalarBasisSet`.&quot;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ScalarBasisSet</span><span class="p">),</span>
+            <span class="n">_raise_basis_error</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;k0&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Wave number.&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span> <span class="nb">float</span><span class="p">),</span>
+        <span class="s2">&quot;kpar&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;Wave vector components tangential to the lattice.&quot;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">WaveVector</span><span class="p">),</span>
+            <span class="n">WaveVector</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;lattice&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;:class:`~acoustotreams.Lattice`.&quot;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Lattice</span><span class="p">),</span>
+            <span class="n">Lattice</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">&quot;:class:`AcousticMaterial`.&quot;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">AcousticMaterial</span><span class="p">),</span>
+            <span class="n">AcousticMaterial</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;modetype&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Mode type.&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Special properties tracked by the ScalarPhysicsDict.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set item specified by key to the defined value.</span>
+
+<span class="sd">        When overwriting an existing key an :class:`AnnotationWarning` is emitted.</span>
+<span class="sd">        Avoid the warning by explicitly deleting the key first. The special attributes</span>
+<span class="sd">        are cast to their corresponding types.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (hashable): Key</span>
+<span class="sd">            val : Value</span>
+
+<span class="sd">        Warns:</span>
+<span class="sd">            AnnotationWarning</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid key &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">testfunc</span><span class="p">,</span> <span class="n">castfunc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">testfunc</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">castfunc</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AcousticsArray">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticsArray.html#acoustotreams.AcousticsArray">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AcousticsArray</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">AnnotatedArray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Acoustics-aware array.</span>
+
+<span class="sd">    An acoustics aware array is a special type of :class`~treams.util.AnnotatedArray`.</span>
+<span class="sd">    Additionally to keeping track of the annotations, it is enhanced by the ability to</span>
+<span class="sd">    create suiting linear operators to perform tasks like rotations, translations, or</span>
+<span class="sd">    expansions into different basis sets and by applying special rules for the</span>
+<span class="sd">    physical properties of :class:`ScalarPhysicsDict` upon matrix multiplications, see also</span>
+<span class="sd">    :meth:`__matmul__`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_scales</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;basis&quot;</span><span class="p">}</span>
+
+    <span class="n">pfield</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">PField</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pressure field evaluation matrix, see also :class:`acoustotreams.PField`.&quot;&quot;&quot;</span>
+    <span class="n">vfield</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">VField</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Velocity field evaluation matrix, see also :class:`acoustotreams.VField`.&quot;&quot;&quot;</span>
+    <span class="n">pamplitudeff</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">PAmplitudeFF</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Far-field amplitude of pressure field evaluation matrix, see also :class:`acoustotreams.PAmplitudeFF`.&quot;&quot;&quot;</span>
+    <span class="n">vamplitudeff</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">VAmplitudeFF</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Far-field amplitude of velocity field evaluation matrix, see also :class:`acoustotreams.VAmplitudeFF`.&quot;&quot;&quot;</span>
+    <span class="n">expand</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">Expand</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Expansion matrix, see also :class:`acoustotreams.Expand`.&quot;&quot;&quot;</span>
+    <span class="n">expandlattice</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">ExpandLattice</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lattice expansion matrix, see also :class:`acoustotreams.ExpandLattice`.&quot;&quot;&quot;</span>
+    <span class="n">permute</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">Permute</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Permutation matrix, see also :class:`acoustotreams.Permute`.&quot;&quot;&quot;</span>
+    <span class="n">rotate</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">Rotate</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rotation matrix, see also :class:`acoustotreams.Rotate`.&quot;&quot;&quot;</span>
+    <span class="n">translate</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">OperatorAttribute</span><span class="p">(</span><span class="n">opa</span><span class="o">.</span><span class="n">Translate</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translation matrix, see also :class:`acoustotreams.Translate`.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">ann</span><span class="o">=</span><span class="p">(),</span> <span class="o">/</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialization.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ann</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ann</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Array annotations.&quot;&quot;&quot;</span>
+        <span class="c1"># necessary to define the setter below</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">ann</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ScalarPhysicsDict</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="n">err</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ScalarPhysicsDict</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span><span class="p">,)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">val</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ann</span><span class="o">.</span><span class="n">as_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+    <span class="nd">@ann</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ann</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ann</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set array annotations.</span>
+
+<span class="sd">        See also :meth:`treams.util.AnnotatedArray.__setitem__`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ann</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">AnnotationSequence</span><span class="p">(</span><span class="o">*</span><span class="p">(({},)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">),</span> <span class="n">mapping</span><span class="o">=</span><span class="n">ScalarPhysicsDict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ann</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ann</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AcousticsArray.__repr__">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticsArray.__repr__.html#acoustotreams.AcousticsArray.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String representation.</span>
+
+<span class="sd">        For a more managable output only the special physics properties are shown</span>
+<span class="sd">        alongside the array itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repr_arr</span> <span class="o">=</span> <span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_array</span><span class="p">)[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span>        
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ScalarPhysicsDict</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">repr_arr</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">))</span><span class="si">}</span><span class="s2">,&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="se">\n</span><span class="si">{</span><span class="n">repr_arr</span><span class="si">}</span><span class="se">\n</span><span class="s2">)&quot;</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run checks to validate the physical properties.</span>
+
+<span class="sd">        The checks are run on the last two dimensions. They include:</span>
+
+<span class="sd">            * Dispersion relation checks for :class:`ScalarPlaneWaveBasis` if `basis`, `k0`</span>
+<span class="sd">              and `material` is defined`</span>
+<span class="sd">            * All lattices explicitly given and in the basis hints must be compatible.</span>
+<span class="sd">            * All tangential wave vector compontents must be compatible.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ann</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]:</span>
+            <span class="n">k0</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;k0&quot;</span><span class="p">)</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;material&quot;</span><span class="p">)</span>
+            <span class="n">modetype</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;modetype&quot;</span><span class="p">)</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;basis&quot;</span><span class="p">,</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;_basis&quot;</span><span class="p">,</span> <span class="s2">&quot;lattice kpar&quot;</span><span class="p">)(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+<div class="viewcode-block" id="AcousticsArray.__array_ufunc__">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticsArray.__array_ufunc__.html#acoustotreams.AcousticsArray.__array_ufunc__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__array_ufunc__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ufunc</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement ufunc API.</span>
+
+<span class="sd">        Additionally to keeping track of the annotations the special properties of an</span>
+<span class="sd">        ScalarPhysicsArray are also &quot;transparent&quot; in matrix multiplications.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__array_ufunc__</span><span class="p">(</span><span class="n">ufunc</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">ufunc</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span>
+            <span class="ow">and</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;__call__&quot;</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;axes&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span> <span class="o">+</span> <span class="p">(</span><span class="n">res</span><span class="p">,)]</span>   <span class="c1">#!!!!!!!!!!!</span>
+            <span class="p">)</span>
+            <span class="n">anns</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">ann</span><span class="p">[</span><span class="n">ax</span><span class="p">]</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;ann&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[{},</span> <span class="p">{}]</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ScalarPhysicsDict</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">res</span><span class="o">.</span><span class="n">ann</span><span class="p">[</span><span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">anns</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">name</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="n">res</span><span class="o">.</span><span class="n">ann</span><span class="p">[</span><span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">anns</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">name</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+</div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acoustotreams.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.1.46 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams._coreacoustics</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>

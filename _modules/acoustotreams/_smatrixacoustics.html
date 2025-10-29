@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>acoustotreams._smatrixacoustics &#8212; acoustotreams 0.1.46 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
+    <script src="../../_static/documentation_options.js?v=f98a5df1"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.1.46 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams._smatrixacoustics</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for acoustotreams._smatrixacoustics</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">treams</span><span class="w"> </span><span class="kn">import</span> <span class="n">util</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._coreacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticsArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._coreacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScalarPlaneWaveBasisByComp</span> <span class="k">as</span> <span class="n">SPWBC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._materialacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticMaterial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._operatorsacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">translate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._tmatrixacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticTMatrixC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams.coeffs</span><span class="w"> </span><span class="kn">import</span> <span class="n">fresnel_acoustics</span>
+
+
+<div class="viewcode-block" id="AcousticSMatrix">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrix.html#acoustotreams.AcousticSMatrix">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AcousticSMatrix</span><span class="p">(</span><span class="n">AcousticsArray</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Acoustic S-matrix for a scalar plane wave.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">util</span><span class="o">.</span><span class="n">AnnotationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid shape: &#39;</span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">util</span><span class="o">.</span><span class="n">AnnotationError</span><span class="p">(</span><span class="s2">&quot;invalid k0&quot;</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">AcousticMaterial</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">material</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">util</span><span class="o">.</span><span class="n">AnnotationError</span><span class="p">(</span><span class="s2">&quot;basis not set&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="n">SPWBC</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">bycomp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">)</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OperatorAttributeSMatrices</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objtype</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_objtype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">if</span> <span class="n">objtype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">objtype</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objtype</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">apply_left</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objtype</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">apply_right</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objtype</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AcousticSMatrices">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.html#acoustotreams.AcousticSMatrices">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AcousticSMatrices</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Collection of four acoustic S-matrices with a scalar plane wave basis.</span>
+
+<span class="sd">    The S-matrix describes the scattering of incoming into outgoing modes using a plane</span>
+<span class="sd">    wave basis, with functions :func:`acoustotreams.spw_Psi`. The primary</span>
+<span class="sd">    direction of propagation is parallel or anti-parallel to the z-axis. The scattering</span>
+<span class="sd">    object itself is infinitely extended in the x- and y-directions. The S-matrix is</span>
+<span class="sd">    divided into four submatrices :math:`S_{\uparrow \uparrow}`,</span>
+<span class="sd">    :math:`S_{\uparrow \downarrow}`, :math:`S_{\downarrow \uparrow}`, and</span>
+<span class="sd">    :math:`S_{\downarrow \downarrow}`:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        S = \begin{pmatrix}</span>
+<span class="sd">            S_{\uparrow \uparrow} &amp; S_{\uparrow \downarrow} \\</span>
+<span class="sd">            S_{\downarrow \uparrow} &amp; S_{\downarrow \downarrow}</span>
+<span class="sd">        \end{pmatrix}\,.</span>
+
+<span class="sd">    These matrices describe the transmission of plane waves propagating into positive</span>
+<span class="sd">    z-direction, reflection of plane waves into the positive z-direction, reflection of</span>
+<span class="sd">    plane waves into negative z-direction, and the transmission of plane waves</span>
+<span class="sd">    propagating in negative z-direction, respectively. Each of those for matrices</span>
+<span class="sd">    contain different diffraction orders.</span>
+
+<span class="sd">    The wave number :attr:`k0` and, if not air, the material :attr:`material` are</span>
+<span class="sd">    also required.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        smats (AcousticSMatrix): Acoustic S-matrices.</span>
+<span class="sd">        k0 (float): Wave number in vacuum.</span>
+<span class="sd">        basis (ScalarPlaneWaveBasisByComp): The basis for the S-matrices.</span>
+<span class="sd">        material (tuple, AcousticMaterial, optional): Material definition, if a tuple of length</span>
+<span class="sd">            two is specified, this refers to the materials above and below the S-matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">permute</span> <span class="o">=</span> <span class="n">OperatorAttributeSMatrices</span><span class="p">(</span><span class="s2">&quot;permute&quot;</span><span class="p">)</span>
+    <span class="n">translate</span> <span class="o">=</span> <span class="n">OperatorAttributeSMatrices</span><span class="p">(</span><span class="s2">&quot;translate&quot;</span><span class="p">)</span>
+    <span class="n">rotate</span> <span class="o">=</span> <span class="n">OperatorAttributeSMatrices</span><span class="p">(</span><span class="s2">&quot;rotate&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">smats</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialization.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">smats</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">smats</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">smats</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid shape of S-matrices&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;material&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">smats</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;material&quot;</span><span class="p">):</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">smats</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">material</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">smats</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;material&quot;</span><span class="p">):</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">smats</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">material</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">material</span> <span class="o">=</span> <span class="n">material</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">smats</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;material&quot;</span><span class="p">):</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">smats</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">material</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">smats</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;material&quot;</span><span class="p">):</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">smats</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">material</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">ma</span><span class="p">,</span> <span class="n">mb</span> <span class="o">=</span> <span class="n">material</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ma</span> <span class="o">=</span> <span class="n">mb</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="p">[[(</span><span class="n">ma</span><span class="p">,</span> <span class="n">mb</span><span class="p">),</span> <span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">ma</span><span class="p">)],</span> <span class="p">[(</span><span class="n">mb</span><span class="p">,</span> <span class="n">mb</span><span class="p">),</span> <span class="p">(</span><span class="n">mb</span><span class="p">,</span> <span class="n">ma</span><span class="p">)]]</span>
+        <span class="n">modetype</span> <span class="o">=</span> <span class="p">[[(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">)],</span> <span class="p">[(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">)]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sms</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="n">AcousticSMatrix</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ar</span><span class="p">,</span> <span class="n">mr</span><span class="p">,</span> <span class="n">tr</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="n">ar</span><span class="p">,</span> <span class="n">mr</span><span class="p">,</span> <span class="n">tr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">smats</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">material</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k0</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">k0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">k0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k0</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span>
+
+<div class="viewcode-block" id="AcousticSMatrices.__eq__">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.__eq__.html#acoustotreams.AcousticSMatrices.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">other</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-14</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>           
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.__getitem__">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.__getitem__.html#acoustotreams.AcousticSMatrices.__getitem__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sms</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid key: &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sms</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.__len__">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.__len__.html#acoustotreams.AcousticSMatrices.__len__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">2</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sms</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="AcousticSMatrices.interface">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.interface.html#acoustotreams.AcousticSMatrices.interface">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">interface</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">materials</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Planar interface between two media.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            basis (ScalarPlaneWaveBasisByComp): Basis definitions.</span>
+<span class="sd">            k0 (float): Wave number in vacuum</span>
+<span class="sd">            materials (Sequence[AcousticMaterial]): Material definitions.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticSMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">materials</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">AcousticMaterial</span><span class="p">,</span> <span class="n">materials</span><span class="p">))</span>
+        <span class="n">qs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">)),</span> <span class="nb">complex</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">):</span>
+            <span class="n">kzs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">kzs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">])</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">fresnel_acoustics</span><span class="p">(</span><span class="n">kzs</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">rho</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">])</span>
+            <span class="n">qs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">materials</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.slab">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.slab.html#acoustotreams.AcousticSMatrices.slab">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">slab</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">materials</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Slab of material.</span>
+
+<span class="sd">        A slab of material, defined by a thickness and three materials. Consecutive</span>
+<span class="sd">        slabs of material can be defined by `n` thicknesses and and `n + 2` material</span>
+<span class="sd">        parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            k0 (float): Wave number in vacuum.</span>
+<span class="sd">            basis (ScalarPlaneWaveBasisByComp): Basis definition.</span>
+<span class="sd">            tickness (Sequence[Float]): Thickness of the slab or the thicknesses of all</span>
+<span class="sd">                slabs in order from negative to positive z.</span>
+<span class="sd">            materials (Sequence[AcousticMaterial]): Material definitions from negative to</span>
+<span class="sd">                positive z.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticSMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">iter</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">thickness</span> <span class="o">=</span> <span class="p">[</span><span class="n">thickness</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">interface</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">materials</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">mb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">materials</span><span class="p">[</span><span class="mi">2</span><span class="p">:]):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">propagation</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">ma</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">interface</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">mb</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.stack">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.stack.html#acoustotreams.AcousticSMatrices.stack">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stack</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stack of S-matrices.</span>
+
+<span class="sd">        Electromagnetically couple multiple S-matrices in the order given. Before</span>
+<span class="sd">        coupling it can be checked for matching materials and modes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            items (Sequence[AcousticSMatrix]): An array of S-matrices in their intended order</span>
+<span class="sd">                from negative to positive z.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticSMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">acc</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.propagation">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.propagation.html#acoustotreams.AcousticSMatrices.propagation">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">propagation</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">()):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;S-matrix for the propagation along a distance.</span>
+
+<span class="sd">        This S-matrix translates the reference origin along `r`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            r (float, (3,)-array): Translation vector.</span>
+<span class="sd">            k0 (float): Wave number in vacuum.</span>
+<span class="sd">            basis (ScalarPlaneWaveBasis): Basis definition.</span>
+<span class="sd">            material (AcousticMaterial, optional): Material definition.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticSMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sup</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;up&quot;</span><span class="p">)</span>
+        <span class="n">sdown</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;down&quot;</span>
+        <span class="p">)</span>
+        <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sup</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">([[</span><span class="n">sup</span><span class="p">,</span> <span class="n">zero</span><span class="p">],</span> <span class="p">[</span><span class="n">zero</span><span class="p">,</span> <span class="n">sdown</span><span class="p">]],</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.from_array">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.from_array.html#acoustotreams.AcousticSMatrices.from_array">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">basis</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;S-matrix from an array of (cylindrical) T-matrices.</span>
+
+<span class="sd">        Create a S-matrix for a two-dimensional array of objects described by the</span>
+<span class="sd">        T-Matrix or an one-dimensional array of objects described by a cylindrical</span>
+<span class="sd">        T-matrix.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tm (AcousticTMatrix or AcousticTMatrixC): (Cylindrical) T-matrix to place in the array.</span>
+<span class="sd">            basis (ScalarPlaneWaveBasisByComp): Basis definition.</span>
+<span class="sd">            eta (float or complex, optional): Splitting parameter in the lattice sum.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">AcousticTMatrixC</span><span class="p">):</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pu</span><span class="p">,</span> <span class="n">pd</span> <span class="o">=</span> <span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">))</span>
+        <span class="n">au</span><span class="p">,</span> <span class="n">ad</span> <span class="o">=</span> <span class="p">(</span><span class="n">tm</span><span class="o">.</span><span class="n">expand</span><span class="o">.</span><span class="n">eval_inv</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">))</span>
+        <span class="n">eye</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">))</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">([[</span><span class="n">eye</span> <span class="o">+</span> <span class="n">pu</span> <span class="o">@</span> <span class="n">au</span><span class="p">,</span> <span class="n">pu</span> <span class="o">@</span> <span class="n">ad</span><span class="p">],</span> <span class="p">[</span><span class="n">pd</span> <span class="o">@</span> <span class="n">au</span><span class="p">,</span> <span class="n">eye</span> <span class="o">+</span> <span class="n">pd</span> <span class="o">@</span> <span class="n">ad</span><span class="p">]])</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">AcousticTMatrixC</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">permute</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.add">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.add.html#acoustotreams.AcousticSMatrices.add">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Couple another S-matrix on top of the current one.</span>
+
+<span class="sd">        See also :func:`AcousticSMatrix.stack` for a function that does not change the</span>
+<span class="sd">        current S-matrix but creates a new one.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sm (AcousticSMatrix): Acoustic S-matrix to add.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticSMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
+        <span class="n">snew</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
+        <span class="n">s_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">sm</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">snew</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_tmp</span>
+        <span class="n">snew</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">sm</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_tmp</span>
+        <span class="n">s_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">-</span> <span class="n">sm</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sm</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">snew</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_tmp</span>
+        <span class="n">snew</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">sm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">s_tmp</span>
+        <span class="k">return</span> <span class="n">AcousticSMatrices</span><span class="p">(</span><span class="n">snew</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.double">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.double.html#acoustotreams.AcousticSMatrices.double">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">double</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Double the acoustic S-matrix.</span>
+
+<span class="sd">        By default this function doubles the S-matrix but it can also create a</span>
+<span class="sd">        :math:`2^n`-fold repetition of itself:</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n (int, optional): Number of times to double itself. Defaults to 1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticSMatrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.illuminate">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.illuminate.html#acoustotreams.AcousticSMatrices.illuminate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">illuminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">illu</span><span class="p">,</span> <span class="n">illu2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">smat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Field coefficients above and below the S-matrix.</span>
+
+<span class="sd">        Given an illumination defined by the coefficients of each incoming mode</span>
+<span class="sd">        calculate the coefficients for the outgoing field above and below the S-matrix.</span>
+<span class="sd">        If a second SMatrix is given, the field expansions in between are also</span>
+<span class="sd">        calculated.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            illu (array-like): Illumination, if `modetype` is specified, the direction</span>
+<span class="sd">                will be chosen accordingly.</span>
+<span class="sd">            illu2 (array-like, optional): Second illumination. If used, the first</span>
+<span class="sd">                argument is taken to be coming from below and this one to be coming from</span>
+<span class="sd">                above.</span>
+<span class="sd">            smat (AcousticSMatrix, optional): Second S-matrix for the calculation of the</span>
+<span class="sd">                field expansion between two S-matrices.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">&quot;modetype&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="nb">tuple</span><span class="p">))]</span>
+        <span class="n">illu2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">illu</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="k">if</span> <span class="n">illu2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">illu2</span>
+        <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+            <span class="n">illu</span><span class="p">,</span> <span class="n">illu2</span> <span class="o">=</span> <span class="n">illu2</span><span class="p">,</span> <span class="n">illu</span>
+        <span class="k">if</span> <span class="n">smat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">field_up</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span> <span class="o">+</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu2</span>
+            <span class="n">field_down</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span> <span class="o">+</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu2</span>
+            <span class="k">return</span> <span class="n">field_up</span><span class="p">,</span> <span class="n">field_down</span>
+        <span class="n">stmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">))</span> <span class="o">-</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">smat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">field_in_up</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">stmp</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span> <span class="o">+</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">smat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu2</span>
+        <span class="p">)</span>
+        <span class="n">field_in_down</span> <span class="o">=</span> <span class="n">smat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">field_in_up</span> <span class="o">+</span> <span class="n">smat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu2</span>
+        <span class="n">field_up</span> <span class="o">=</span> <span class="n">smat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu2</span> <span class="o">+</span> <span class="n">smat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">field_in_up</span>
+        <span class="n">field_down</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span> <span class="o">+</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">field_in_down</span>
+        <span class="k">return</span> <span class="n">field_up</span><span class="p">,</span> <span class="n">field_down</span><span class="p">,</span> <span class="n">field_in_up</span><span class="p">,</span> <span class="n">field_in_down</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.tr">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.tr.html#acoustotreams.AcousticSMatrices.tr">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">illu</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transmittance and reflectance.</span>
+
+<span class="sd">        Calculate the transmittance and reflectance for one S-matrix with the given</span>
+<span class="sd">        illumination and direction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            illu (complex, array_like): Expansion coefficients for the incoming wave</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">&quot;modetype&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="nb">tuple</span><span class="p">))]</span>
+        <span class="n">trans</span><span class="p">,</span> <span class="n">refl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">illuminate</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">material</span> <span class="o">=</span> <span class="n">material</span><span class="p">,</span> <span class="n">material</span>
+        <span class="n">paz</span> <span class="o">=</span> <span class="p">[</span><span class="n">poynting_avg_z</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">material</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+            <span class="n">trans</span><span class="p">,</span> <span class="n">refl</span> <span class="o">=</span> <span class="n">refl</span><span class="p">,</span> <span class="n">trans</span>
+            <span class="n">paz</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="n">illu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">trans</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">trans</span><span class="p">)</span>             
+        <span class="n">s_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">refl</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">refl</span><span class="p">)</span>
+        <span class="n">s_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span><span class="p">)</span>
+        <span class="n">s_ir</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="n">refl</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span>
+            <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">refl</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">s_t</span> <span class="o">/</span> <span class="p">(</span><span class="n">s_i</span> <span class="o">+</span> <span class="n">s_ir</span><span class="p">),</span> <span class="n">s_r</span> <span class="o">/</span> <span class="p">(</span><span class="n">s_i</span> <span class="o">+</span> <span class="n">s_ir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.periodic">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.periodic.html#acoustotreams.AcousticSMatrices.periodic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">periodic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Periodic repetition of the S-matrix.</span>
+
+<span class="sd">        Transform the S-matrix to an infinite periodic arrangement of itself defined</span>
+<span class="sd">        by</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \begin{pmatrix}</span>
+<span class="sd">                S_{\uparrow \uparrow} &amp; S_{\uparrow \downarrow} \\</span>
+<span class="sd">                -S_{\downarrow \downarrow}^{-1}</span>
+<span class="sd">                S_{\downarrow \uparrow} S_{\uparrow \uparrow} &amp;</span>
+<span class="sd">                S_{\downarrow \downarrow}^{-1} (\mathbb{1} - S_{\downarrow \uparrow}</span>
+<span class="sd">                S_{\uparrow \downarrow})</span>
+<span class="sd">            \end{pmatrix}\,.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            complex, array_like</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dim</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">dim</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">dim</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">dim</span><span class="p">:,</span> <span class="n">dim</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.bands_kz">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.bands_kz.html#acoustotreams.AcousticSMatrices.bands_kz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bands_kz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">az</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Band structure calculation.</span>
+
+<span class="sd">        Calculate the band structure for the given S-matrix, assuming it is periodically</span>
+<span class="sd">        repeated along the z-axis. The function returns the z-components of the wave</span>
+<span class="sd">        vector :math:`k_z` and the corresponding eigenvectors :math:`v` of</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \begin{pmatrix}</span>
+<span class="sd">                S_{\uparrow \uparrow} &amp; S_{\uparrow \downarrow} \\</span>
+<span class="sd">                -S_{\downarrow \downarrow}^{-1} S_{\downarrow \uparrow}</span>
+<span class="sd">                    S_{\uparrow \uparrow} &amp;</span>
+<span class="sd">                S_{\downarrow \downarrow}^{-1} (\mathbb{1} - S_{\downarrow \uparrow}</span>
+<span class="sd">                    S_{\uparrow \downarrow})</span>
+<span class="sd">            \end{pmatrix}</span>
+<span class="sd">            \boldsymbol v</span>
+<span class="sd">            =</span>
+<span class="sd">            \mathrm{e}^{\mathrm{i}k_z a_z}</span>
+<span class="sd">            \boldsymbol v\,.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            az (float): Lattice pitch along the z direction</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodic</span><span class="p">())</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="n">az</span><span class="p">,</span> <span class="n">v</span></div>
+
+
+<div class="viewcode-block" id="AcousticSMatrices.__repr__">
+<a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.__repr__.html#acoustotreams.AcousticSMatrices.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(...,</span>
+<span class="s2">    basis=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="si">}</span><span class="s2">,</span>
+<span class="s2">    k0=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">k0</span><span class="si">}</span><span class="s2">,</span>
+<span class="s2">    material=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="si">}</span><span class="s2">,</span>
+<span class="s2">)&quot;&quot;&quot;</span></div>
+</div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">poynting_avg_z</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">()):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Time-averaged z-component of the Poynting vector.</span>
+
+<span class="sd">    Calculate the time-averaged Poynting vector&#39;s z-component</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \langle S_z \rangle</span>
+<span class="sd">        = \frac{1}{2} \Re (p v_z^\ast) \boldsymbol{\hat{z}}</span>
+
+<span class="sd">    on one side of the S-matrix with the given coefficients.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
+    <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kzs</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">kvecs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">)</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="p">(</span><span class="n">kx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">kx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ky</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">ky</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">kzs</span> <span class="o">/</span> <span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span> <span class="o">*</span> <span class="n">material</span><span class="o">.</span><span class="n">impedance</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">selection</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">)</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acoustotreams.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.1.46 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams._smatrixacoustics</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>

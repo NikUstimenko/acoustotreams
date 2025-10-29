@@ -46,13 +46,13 @@
          ~ScalarSphericalWaveBasis.isdisjoint
       
          ~ScalarSphericalWaveBasis.__xor__
-         ~ScalarSphericalWaveBasis.__or__
          ~ScalarSphericalWaveBasis.__gt__
-         ~ScalarSphericalWaveBasis.__sub__
-         ~ScalarSphericalWaveBasis.__str__
          ~ScalarSphericalWaveBasis.__ge__
-         ~ScalarSphericalWaveBasis.__le__
-         ~ScalarSphericalWaveBasis.__ne__
          ~ScalarSphericalWaveBasis.__and__
+         ~ScalarSphericalWaveBasis.__le__
+         ~ScalarSphericalWaveBasis.__or__
+         ~ScalarSphericalWaveBasis.__sub__
          ~ScalarSphericalWaveBasis.__lt__
+         ~ScalarSphericalWaveBasis.__str__
+         ~ScalarSphericalWaveBasis.__ne__
   

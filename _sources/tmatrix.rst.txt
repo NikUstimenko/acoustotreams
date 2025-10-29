@@ -80,7 +80,7 @@ the direction of incidence of the plane wave.
    :language: python
    :lines: 42-47
 
-.. plot:: examples/sphere.py
+.. plot:: ../examples/sphere.py
 
 
 Clusters

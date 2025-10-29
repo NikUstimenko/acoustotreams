@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>acoustotreams.ssw &#8212; acoustotreams 0.1.46 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
+    <script src="../../_static/documentation_options.js?v=f98a5df1"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.1.46 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams.ssw</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for acoustotreams.ssw</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Scalar spherical wave module.</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">   :toctree:</span>
+
+<span class="sd">   periodic_to_scw</span>
+<span class="sd">   periodic_to_spw</span>
+<span class="sd">   rotate</span>
+<span class="sd">   translate</span>
+<span class="sd">   translate_periodic</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">acoustotreams._wavesacoustics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">treams.special</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">treams</span><span class="w"> </span><span class="kn">import</span> <span class="n">lattice</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ss</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_translate_s</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regular translation coefficient for spherical modes&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">kr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-16</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span><span class="n">j</span>
+    <span class="k">return</span> <span class="n">wv</span><span class="o">.</span><span class="n">tl_ssw</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_translate_r</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Singular translation coefficient for spherical modes&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wv</span><span class="o">.</span><span class="n">tl_ssw_r</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="n">_translate_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">_translate_s</span><span class="p">)</span>
+<span class="n">_translate_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">_translate_r</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="translate">
+<a class="viewcode-back" href="../../generated/acoustotreams.ssw.translate.html#acoustotreams.ssw.translate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">singular</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;translate(lambda_, mu, l, m, kr, theta, phi, singular=True)</span>
+
+<span class="sd">    Translation coefficient for spherical modes.</span>
+
+<span class="sd">    Returns the correct translation coefficient from :func:acoustotreams.ssw.tl_ssw,</span>
+<span class="sd">    and :func:acoustotreams.ssw.tl_ssw_r or a combination thereof for the specified mode and</span>
+<span class="sd">    basis.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lambda_ (int, array_like): Degree of the destination mode</span>
+<span class="sd">        mu (int, array_like): Order of the destination mode</span>
+<span class="sd">        l (int, array_like): Degree of the source mode</span>
+<span class="sd">        m (int, array_like): Order of the source mode</span>
+<span class="sd">        kr (float or complex, array_like): Translation distance in units of the wave number</span>
+<span class="sd">        theta (float, array_like): Polar angle</span>
+<span class="sd">        phi (float, array_like): Azimuthal angle</span>
+<span class="sd">        singular (bool, optional): If true, singular translation coefficients are used,</span>
+<span class="sd">            else regular coefficients. Defaults to ``True``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        complex</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">singular</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_translate_s</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_translate_r</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_rotate</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotation coefficient for the rotation around the Euler angles phi, theta and psi.</span>
+<span class="sd">    It is intended to be used to construct the rotation matrix manually.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">lambda_</span> <span class="o">==</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sc</span><span class="o">.</span><span class="n">wignerd</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span><span class="n">j</span>
+
+<span class="n">_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">_rotate</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="rotate">
+<a class="viewcode-back" href="../../generated/acoustotreams.ssw.rotate.html#acoustotreams.ssw.rotate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">psi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;rotate(lambda_, mu, l, m, phi, theta=0, psi=0)</span>
+<span class="sd">    </span>
+<span class="sd">    Rotation coefficient for scalar spherical modes.</span>
+
+<span class="sd">    Returns the correct rotation coefficient from :func:`treams.special.wignerd`. The</span>
+<span class="sd">    angles are given as Euler angles in `z-y-z`-convention. In the intrinsic (object</span>
+<span class="sd">    fixed coordinate system) convention the rotations are applied in the order phi</span>
+<span class="sd">    first, theta second, psi third. In the extrinsic (global or reference frame fixed</span>
+<span class="sd">    coordinate system) the rotations are applied psi first, theta second, phi third.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lambda_ (int, array_like): Degree of the destination mode</span>
+<span class="sd">        mu (int, array_like): Order of the destination mode</span>
+<span class="sd">        l (int, array_like): Degree of the source mode</span>
+<span class="sd">        m (int, array_like): Order of the source mode</span>
+<span class="sd">        phi (float or complex, array_like): First Euler angle</span>
+<span class="sd">        theta (float, array_like): Second Euler angle</span>
+<span class="sd">        psi (float, array_like): Third Euler angle</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        complex</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_rotate</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_transl_a_lattice</span><span class="p">(</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">dlms</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Singular translation coefficients in a lattice&quot;&quot;&quot;</span>
+    <span class="n">pref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">lambda_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span><span class="p">,</span> <span class="n">lambda_</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span>
+    <span class="n">dlm</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">lambda_</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">lambda_</span> <span class="o">-</span> <span class="n">l</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="n">m</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">dlm</span> <span class="o">=</span> <span class="n">dlms</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">m</span> <span class="o">-</span> <span class="n">mu</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">dlm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">wigner3j</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="n">mu</span><span class="p">,</span> <span class="o">-</span><span class="n">m</span> <span class="o">+</span> <span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">wigner3j</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span> <span class="o">*</span> <span class="n">pref</span>
+
+
+<div class="viewcode-block" id="translate_periodic">
+<a class="viewcode-back" href="../../generated/acoustotreams.ssw.translate_periodic.html#acoustotreams.ssw.translate_periodic">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">translate_periodic</span><span class="p">(</span><span class="n">ks</span><span class="p">,</span> <span class="n">kpar</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">in_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rsin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">lattice</span><span class="o">.</span><span class="n">lsumsw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translation coefficients in a lattice.</span>
+
+<span class="sd">    Returns the translation coefficents for the given modes in a lattice. The calculation</span>
+<span class="sd">    uses the fast converging sums of :py:data:`~treams.lattice`.</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        ks (float or complex): Wave number of longitudinal waves in the medium</span>
+<span class="sd">        kpar (float, (D,)-array): Parallel component of the wave, defines the dimension with `1 &lt;= D &lt;= 3`</span>
+<span class="sd">        a (float, (D,D)-array): Lattice vectors in each row of the array</span>
+<span class="sd">        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point</span>
+<span class="sd">        out (2- or 3-tuple of integer arrays): Output modes</span>
+<span class="sd">        in_ (2- or 3-tuple of integer arrays): Input modes, if none are given equal to</span>
+<span class="sd">            the output modes</span>
+<span class="sd">        rsin (float): Shift vectors to use with the input modes, if non are given equal</span>
+<span class="sd">            to `rs`</span>
+<span class="sd">        eta (float or complex, optional): Cut between real and reciprocal space</span>
+<span class="sd">            summation, if equal to zero, an estimation for the optimal value is done.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        complex array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">in_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">in_</span> <span class="o">=</span> <span class="n">out</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">),)</span>
+    <span class="n">in_</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">in_</span><span class="p">),)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid length of output modes </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="si">}</span><span class="s2">, must be 2 or 3&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]),)</span> <span class="o">+</span> <span class="n">out</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid length of input modes </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">in_</span><span class="p">)</span><span class="si">}</span><span class="s2">, must be 2 or 3&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">in_</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">in_</span><span class="p">[</span><span class="mi">0</span><span class="p">]),)</span> <span class="o">+</span> <span class="n">in_</span>
+    <span class="k">if</span> <span class="n">rsin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rsin</span> <span class="o">=</span> <span class="n">rs</span>
+    <span class="n">modes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">in_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">])</span>
+    <span class="n">kpar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">kpar</span><span class="p">)</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">rsin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rsin</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rsin</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">rsin</span> <span class="o">=</span> <span class="n">rsin</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">rsdiff</span> <span class="o">=</span> <span class="o">-</span><span class="n">rs</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">rsin</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">kpar</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">kpar</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># The result has the shape (n_rs, n_rs, n_modes)</span>
+    <span class="n">dlms</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">modes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">modes</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ks</span><span class="p">,</span> <span class="n">kpar</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">rsdiff</span><span class="p">,</span> <span class="n">eta</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">in_</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">complex</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">in_</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">_transl_a_lattice</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">in_</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">in_</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dlms</span><span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]][</span><span class="n">in_</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+         
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_periodic_to_spw</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert periodic spherical wave to plane wave&quot;&quot;&quot;</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">kx</span> <span class="o">+</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">ky</span> <span class="o">+</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">kz</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">ky</span><span class="p">,</span> <span class="n">kx</span><span class="p">)</span>
+    <span class="n">kz_s</span> <span class="o">=</span> <span class="n">kz</span>
+    <span class="k">if</span> <span class="n">kz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">kz_s</span> <span class="o">=</span> <span class="mf">1e-20</span> <span class="o">+</span> <span class="mf">1e-20j</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">kz_s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">kz_s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">kz_s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">kz_s</span> <span class="o">=</span> <span class="o">-</span><span class="n">kz_s</span>
+    <span class="n">prefactor</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">l</span> <span class="o">-</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">ss</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+        <span class="o">/</span> <span class="p">(</span><span class="n">area</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">kz_s</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">prefactor</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">lpmv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">kz</span> <span class="o">/</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">_periodic_to_spw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">_periodic_to_spw</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="periodic_to_spw">
+<a class="viewcode-back" href="../../generated/acoustotreams.ssw.periodic_to_spw.html#acoustotreams.ssw.periodic_to_spw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">periodic_to_spw</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;periodic_to_spw(kx, ky, kz, l, m, area)</span>
+<span class="sd">    </span>
+<span class="sd">    Convert periodic spherical wave to plane wave.</span>
+
+<span class="sd">    Returns the coefficient for the basis change in a periodic arrangement of spherical</span>
+<span class="sd">    modes to plane waves. For multiple positions only diagonal values (with respect to</span>
+<span class="sd">    the position) are returned. A correct phase factor is still necessary for the full</span>
+<span class="sd">    result.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kx (float, array_like): X component of destination mode wave vector</span>
+<span class="sd">        ky (float, array_like): Y component of destination mode wave vector</span>
+<span class="sd">        kz (float or complex, array_like): Z component of destination mode wave vector</span>
+<span class="sd">        l (int, array_like): Degree of the source mode</span>
+<span class="sd">        m (int, array_like): Order of the source mode</span>
+<span class="sd">        area (float, array_like): Unit cell area</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        complex</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_periodic_to_spw</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_periodic_to_scw</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert periodic spherical wave to cylindrical wave&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mu</span> <span class="o">!=</span> <span class="n">m</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span><span class="n">j</span> <span class="o">+</span> <span class="n">sc</span><span class="o">.</span><span class="n">lpmv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">prefactor</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">*</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">l</span> <span class="o">-</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">ss</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">*</span> 
+        <span class="mf">0.5</span> <span class="o">*</span> 
+        <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+    <span class="p">)</span> 
+    <span class="k">return</span> <span class="n">prefactor</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">lpmv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">kz</span><span class="o">/</span><span class="n">k</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+ 
+<span class="n">_periodic_to_scw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">_periodic_to_scw</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="periodic_to_scw">
+<a class="viewcode-back" href="../../generated/acoustotreams.ssw.periodic_to_scw.html#acoustotreams.ssw.periodic_to_scw">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">periodic_to_scw</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;periodic_to_scw(kz, m, l, mu, k, area)</span>
+<span class="sd">    </span>
+<span class="sd">    Convert periodic spherical wave to cylindrical wave.</span>
+
+<span class="sd">    Returns the coefficient for the basis change in a periodic arrangement of spherical</span>
+<span class="sd">    modes to cylindrical waves. For multiple positions only diagonal values (with respect to</span>
+<span class="sd">    the position) are returned. </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kz (float, array_like): Z component of destination mode wave vector</span>
+<span class="sd">        m (int, array_like): Order or the destination mode</span>
+<span class="sd">        l (int, array_like): Degree of the source mode</span>
+<span class="sd">        mu (int, array_like): Order of the source mode</span>
+<span class="sd">        k (float or complex, array_like): Wave number</span>
+<span class="sd">        area (float, array_like): Unit cell area</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        complex</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_periodic_to_scw</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acoustotreams.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.1.46 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams.ssw</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>
