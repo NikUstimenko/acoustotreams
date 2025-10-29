@@ -26,8 +26,9 @@ jobs:
       - name: Build documentation
         run: |
           sphinx-build -b html docs docs/build/html
-          ls -R docs/build/html
-
+          echo "=== Checking for plot images ==="
+          find docs/build/html -name "*.png" -or -name "*.svg" || true
+          
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
