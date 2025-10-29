@@ -31,7 +31,6 @@ def compute_coeffs(k0):
     array = acoustotreams.AcousticSMatrices.from_array(spheres, spwb)
     total = acoustotreams.AcousticSMatrices.stack([slab, dist, array])
     return total.tr(splw)
-
 tr = np.array(
     Parallel(n_jobs=-1)(delayed(compute_coeffs)(k0s[i]) for i in range(len(k0s)))
 )

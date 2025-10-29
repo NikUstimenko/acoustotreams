@@ -45,14 +45,14 @@
          ~ScalarSphericalWaveBasis.index
          ~ScalarSphericalWaveBasis.isdisjoint
       
-         ~ScalarSphericalWaveBasis.__and__
-         ~ScalarSphericalWaveBasis.__ne__
          ~ScalarSphericalWaveBasis.__sub__
-         ~ScalarSphericalWaveBasis.__gt__
-         ~ScalarSphericalWaveBasis.__le__
-         ~ScalarSphericalWaveBasis.__or__
-         ~ScalarSphericalWaveBasis.__xor__
-         ~ScalarSphericalWaveBasis.__lt__
-         ~ScalarSphericalWaveBasis.__ge__
+         ~ScalarSphericalWaveBasis.__and__
          ~ScalarSphericalWaveBasis.__str__
+         ~ScalarSphericalWaveBasis.__ne__
+         ~ScalarSphericalWaveBasis.__xor__
+         ~ScalarSphericalWaveBasis.__gt__
+         ~ScalarSphericalWaveBasis.__or__
+         ~ScalarSphericalWaveBasis.__le__
+         ~ScalarSphericalWaveBasis.__ge__
+         ~ScalarSphericalWaveBasis.__lt__
   

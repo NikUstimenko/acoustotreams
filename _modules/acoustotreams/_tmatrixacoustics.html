@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._tmatrixacoustics &#8212; acoustotreams 0.2.3 documentation</title>
+    <title>acoustotreams._tmatrixacoustics &#8212; acoustotreams 0.2.4 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=a47416a6"></script>
+    <script src="../../_static/documentation_options.js?v=6ffd866b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._tmatrixacoustics</a></li> 
       </ul>
@@ -790,13 +790,12 @@
     <span class="n">modetype</span> <span class="o">=</span> <span class="s2">&quot;up&quot;</span> <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">modetype</span>
     <span class="k">if</span> <span class="n">modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid &#39;modetype&#39;: </span><span class="si">{</span><span class="n">modetype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">kvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">kvecs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="p">))</span>
-    <span class="n">pol</span> <span class="o">=</span> <span class="n">wv</span><span class="o">.</span><span class="n">spw_Psi</span><span class="p">(</span><span class="o">*</span><span class="n">kvecs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">kzs</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span><span class="o">.</span><span class="n">kzs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="o">*</span><span class="n">kpar</span><span class="p">)</span>
+    <span class="n">pol</span> <span class="o">=</span> <span class="n">wv</span><span class="o">.</span><span class="n">spw_Psi</span><span class="p">(</span><span class="o">*</span><span class="n">kpar</span><span class="p">,</span> <span class="n">kzs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">pol</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">kpar</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-14</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">basis</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">AcousticsArray</span><span class="p">(</span>
         <span class="n">res</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="n">modetype</span>
     <span class="p">)</span>
-
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_plane_wave_scalar</span><span class="p">(</span>
     <span class="n">kvec</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span>
@@ -937,7 +936,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.4 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._tmatrixacoustics</a></li> 
       </ul>
