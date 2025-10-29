@@ -384,9 +384,7 @@ class AcousticTMatrixC(AcousticsArray):
     """
 
     interaction = _Interaction()
-    interactionapprox = _InteractionApprox()
     latticeinteraction = _LatticeInteraction()
-    latticeinteractionapprox = _LatticeInteractionApprox()
 
     def _check(self):
         """Fill in default values or raise errors for missing attributes."""
