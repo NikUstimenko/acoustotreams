@@ -308,77 +308,102 @@ def mie_acoustics(l, x, *materials):
         res.append(mie[0])
     return res
 
-def mie_acoustics_cyl(kz, m, k0, radii, *materials):
-    r"""Scattering coefficient at an infinite cylinder
+def _mie_acoustics_iter_cyl(tm, kz, m, k0, radius, mat_cyl, mat_env):
+    """Solve a matrix for the boundary conditions at a cylindrical interface.
 
-    The cylinder is defined by its radii.
+    Three types of interfaces are supported: fluid-fluid, soft-fluid, and hard-fluid.
+
+    The fluid medium has :math:`(\rho, c, c_t = 0)`,
+    the soft medium has :math:`(\rho = 0, c = 0, c_t = 0)`,
+    and the hard medium has :math:`(\rho = \infty, c = 0, c_t = 0)`.
+
+    Args:
+        tm: T-matrix of the previous layer.
+        kz: Z component of the wave vector.
+        m: Order.
+        k0: Wave number in air.
+        radius: Radius of the cylinder.
+        mat_cyl: Material of the cylinder :math:`(\rho, c, c_t)`.
+        mat_env: Material of the medium :math:`(\rho, c, c_t)`.
+
+    Returns:
+        complex
+    """ 
+
+    k_env = k0 * AcousticMaterial().c / mat_env[1] + 0j
+    krho_env = np.sqrt(k_env * k_env - kz * kz)
+    x_env = krho_env * radius
+    j = treams.special.jv(m, x_env)
+    j_d = treams.special.jv_d(m, x_env)
+    h = treams.special.hankel1(m, x_env)
+    h_d = treams.special.hankel1_d(m, x_env)
+    res = 0
+    if np.abs(mat_cyl[2]) == 0 and np.abs(mat_cyl[1]) == 0 and np.abs(mat_cyl[0]) == np.inf:
+        return -j_d / h_d
+    elif np.abs(mat_cyl[2]) == 0 and np.abs(mat_cyl[1]) == 0 and np.abs(mat_cyl[0]) == 0:
+        return -j / h
+    elif np.abs(mat_cyl[1]) > 0 and np.abs(mat_cyl[2]) == 0:
+        k_cyl = k0 * AcousticMaterial().c / mat_cyl[1] + 0j
+        krho_cyl = np.sqrt(k_cyl * k_cyl - kz * kz)
+        x_cyl = krho_cyl * radius
+        j1 = treams.special.jv(m, x_cyl)
+        j1_d = treams.special.jv_d(m, x_cyl)
+        h1 = treams.special.hankel1(m, x_cyl)
+        h1_d = treams.special.hankel1_d(m, x_cyl)
+        matrix = np.zeros((2, 2), complex)
+        rhs = np.zeros(2, complex)
+        rhs[0] = x_env * j_d
+        rhs[1] = j
+        aL = x_cyl * (j1_d + tm * h1_d) * mat_env[0]/mat_cyl[0]
+        cL = j1 + tm * h1
+        al = -x_env * h_d
+        cl = -h
+        matrix[0][0] = aL
+        matrix[1][0] = cL
+        matrix[0][1] = al
+        matrix[1][1] = cl
+        res = np.linalg.solve(matrix, rhs)
+        return res[1]
+    return res
+
+
+def mie_acoustics_cyl(kz, m, k0, radii, *materials):
+    r"""Scattering coefficient at an infinite (fluid) cylinder
+
+    The cylinder is defined by its radii. A multilayered cylinder is defined
+    by giving an array of ascending numbers, that define the size parameters of the
+    cylinder and its shells starting from the center.
+
     Likewise, the material parameters are given from inside to outside. These arrays
     are expected to be exactly one unit larger then the array `radii`.
 
-    The result is a complex number relating incident with the scattered modes, 
-    which are index in the same way.
+    The result is a complex number relating incident with the scattered modes, which are 
+    index in the same way.
+
+    Note:
+        1. :math:`c_t` of all the materials must be zero. 
+        2. For the soft and hard infinite cylinders, only one radius must be given. 
 
     Args:
-        kz (float): Z component of the wave
+        kz (float): Z component of the wave vector
         m (integer): Order
-        k0 (float or complex): Wave number in vacuum
-        radii (float, array_like): Size parameters
+        k0 (float or complex): Wave number in the air
+        radii (float, array_like): Radii of the layers
         rho (float or complex, array_like): Mass density
         c (float or complex, array_like): Longitudinal speed of sound
         c_t (float or complex, array_like): Transverse speed of sound
 
     Returns:
-        complex
+        complex array
     """
-
-    mat_cyl, mat_env = zip(*materials) 
-    k_env = k0 * AcousticMaterial().c / mat_env[1] + 0j
-    krho_env = np.sqrt(k_env * k_env - kz * kz)
-    x_env = krho_env * radii
-    j = treams.special.jv(m, x_env)
-    j_d = treams.special.jv_d(m, x_env)
-    h = treams.special.hankel1(m, x_env)
-    h_d = treams.special.hankel1_d(m, x_env)
     
-    if np.abs(mat_cyl[2]) == 0 and np.abs(mat_cyl[1]) == 0 and np.abs(mat_cyl[0]) == np.inf:
-        res = -j_d / h_d
-    elif np.abs(mat_cyl[2]) == 0 and np.abs(mat_cyl[1]) == 0 and np.abs(mat_cyl[0]) == 0:
-        res = -j / h
-    if np.abs(mat_cyl[1]) > 0:
-        k_cyl = k0 * AcousticMaterial().c / mat_cyl[1] + 0j
-        krho_cyl = np.sqrt(k_cyl * k_cyl - kz * kz)
-        x_cyl = krho_cyl * radii
-        j1 = treams.special.jv(m, x_cyl)
-        j1_d = treams.special.jv_d(m, x_cyl)
-        if np.abs(mat_cyl[2]) == 0:
-            delta = x_cyl * mat_env[0] / (x_env * mat_cyl[0]) 
-            res = (delta * j1_d * j - j1 * j_d) / (j1 * h_d - delta * j1_d * h)
-        elif np.abs(mat_cyl[2]) > 0:
-            k_cyl_t = k0 * AcousticMaterial().c / mat_cyl[2] + 0j
-            krho_cyl_t = np.sqrt(k_cyl_t * k_cyl_t - kz * kz) 
-            x_cyl_t = krho_cyl_t * radii
-            j1t = treams.special.jv(m, x_cyl_t)
-            j1t_d = treams.special.jv_d(m, x_cyl_t)
-            j1t_dd = (-j1t_d + (x_cyl_t**2 + m**2) * j1t) / x_cyl_t
-            j1_dd = (-j1_d + (x_cyl**2 + m**2) * j1) / x_cyl
-            matrix = np.zeros((3, 3), complex)
-            rhs = np.zeros(3, complex)
-            lam_0 = mat_env[0] * mat_env[1]**2
-            mu_1 = mat_cyl[0] * mat_cyl[2]**2
-            lam_1 = mat_cyl[0] * mat_cyl[1]**2 - 2 * mu_1
-            matrix[0][1] = 2j * kz * krho_cyl/k_cyl * j1_d
-            matrix[0][2] = (krho_cyl_t**2 - kz**2)/k_cyl_t * j1t_d
-            matrix[1][0] = k_env * lam_0 * h
-            matrix[1][1] = 2 * mu_1 * krho_cyl**2/k_cyl * j1_dd - k_cyl * lam_1 * j1
-            matrix[1][2] = 2j * mu_1 * kz * krho_cyl_t/k_cyl_t * j1t_dd
-            rhs[1] = -np.power(-1j, m) * k_env * lam_0 * j
-            matrix[2][0] = -krho_env/k_env * h_d
-            matrix[2][1] = krho_cyl/k_cyl * j1_d
-            matrix[2][2] = 1j * kz/k_cyl_t * j1t_d
-            rhs[2] = np.power(-1j, m) * krho_env/k_env * j_d
-            res = np.linalg.solve(matrix, rhs)
-            res = res[0] * np.power(1j, m)
-    return res
+    mat = list(zip(*materials))
+    radii = np.atleast_1d(radii)
+    mie = 0
+    for i in range(len(list(mat)) - 1):
+        mat_cyl, mat_env = mat[i], mat[i + 1]
+        mie = _mie_acoustics_iter_cyl(mie, kz, m, k0, radii[i], mat_cyl, mat_env)
+    return mie
 
 def fresnel_acoustics(kzs, rhos):
     r"""Fresnel coefficients for a planar interface.
