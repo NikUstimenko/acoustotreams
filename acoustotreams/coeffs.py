@@ -151,9 +151,9 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
             sol_L = np.linalg.solve(matrix, rhs_L)
             res[0] = sol_L[1]
             res[1] = sol_L[0]
-            rhs_N[0] = -d2N / x_env
-            rhs_N[1] = -d3N / x_env
-            rhs_N[2] = -d4N / x_env
+            rhs_N[0] = -d2N / x_env_t
+            rhs_N[1] = -d3N / x_env_t
+            rhs_N[2] = -d4N / x_env_t
             sol_N = np.linalg.solve(matrix, rhs_N)
             res[2] = sol_N[1]
             res[3] = sol_N[0]
@@ -187,11 +187,11 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
             matrix[0][0] = -psi * d22 / x_env
             matrix[2][0] = -psi * d42 / x_env
             matrix[0][1] = -d23 / x_sphere_t - f23 * tm[3] / x_sphere_t + psi * tm[2] * f24 / x_sphere
-            matrix[1][1] = -d33 / x_sphere_t - f33 * tm[3] / x_sphere_t + psi * tm[2] * f24 / x_sphere
-            matrix[2][1] = -d43 / x_sphere_t - f43 * tm[3] / x_sphere_t + psi * tm[2] * f24 / x_sphere
-            matrix[0][2] = psi * (d24 + tm[0] * f24) / x_sphere - psi * tm[1] * f23 / x_sphere_t
-            matrix[1][2] = psi * (d34 + tm[0] * f34) / x_sphere - psi * tm[1] * f33 / x_sphere_t
-            matrix[2][2] = psi * (d44 + tm[0] * f44) / x_sphere - psi * tm[1] * f43 / x_sphere_t 
+            matrix[1][1] = -d33 / x_sphere_t - f33 * tm[3] / x_sphere_t + psi * tm[2] * f34 / x_sphere
+            matrix[2][1] = -d43 / x_sphere_t - f43 * tm[3] / x_sphere_t + psi * tm[2] * f44 / x_sphere
+            matrix[0][2] = psi * (d24 + tm[0] * f24) / x_sphere - tm[1] * f23 / x_sphere_t
+            matrix[1][2] = psi * (d34 + tm[0] * f34) / x_sphere - tm[1] * f33 / x_sphere_t
+            matrix[2][2] = psi * (d44 + tm[0] * f44) / x_sphere - tm[1] * f43 / x_sphere_t 
             rhs[0] = psi * d2L / x_env
             rhs[2] = psi * d4L / x_env
             sol = np.linalg.solve(matrix, rhs)
@@ -225,7 +225,7 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
                 * (x_sphere * j1_d - j1))
             f34 = (mat_sphere[0]/mat_env[0] * (x_env_t/x_sphere_t)**2 
                * (x_sphere * h1_d - h1))
-            f13 = x_sphere_t * h1_d + h1
+            f13 = x_sphere_t * h1t_d + h1t
             f33 = (mat_sphere[0]/mat_env[0] * (x_env_t/x_sphere_t)**2 
                * ((psi**2 - 0.5 * x_sphere_t**2 - 1) * h1t - x_sphere_t * h1t_d))
             f43 = (mat_sphere[0]/mat_env[0] * (x_env_t/x_sphere_t)**2  * psi**2 
@@ -404,54 +404,3 @@ def fresnel_acoustics(kzs, rhos):
     res[1][0][0][0] = (-rhos[0] * kzs[1] + rhos[1] * kzs[0]) / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
     res[0][1][0][0] = -res[1][0][0][0]
     return res
-
-
-#if (np.abs(mat_sphere[2]) == 0 
-#    and np.abs(mat_sphere[1]) == 0 
-#    and np.abs(mat_sphere[0]) == 0
-#    and np.abs(mat_env[2]) > 0):
-#    if l == 0:
-#        return np.array([-j / h, 0, 0, 0])
-#    matrix = np.zeros((2, 2), complex)
-#    rhs_L = np.zeros(2, complex)
-#    rhs_N = np.zeros(2, complex)
-#    matrix[0][0] = d31 / x_env_t
-#    matrix[0][1] = -psi * d32 / x_env
-#    matrix[1][0] = d41 / x_env_t
-#    matrix[1][1] = -psi * d42 / x_env
-#    rhs_L[0] = psi * d3L / x_env
-#    rhs_L[1] = psi * d4L / x_env
-#    rhs_N[0] = -d3N / x_env_t
-#    rhs_N[1] = -d4N / x_env_t
-#    sol_L = np.linalg.solve(matrix, rhs_L)
-#    res[0] = sol_L[1]
-#    res[1] = sol_L[0]
-#    sol_N = np.linalg.solve(matrix, rhs_N)
-#    res[2] = sol_N[1]
-#    res[3] = sol_N[0]
-#    return res
-
-#if (np.abs(mat_sphere[2]) == 0 
-#    and np.abs(mat_sphere[1]) == 0 
-#    and np.abs(mat_sphere[0]) == np.inf
-#    and np.abs(mat_env[2]) > 0):
-#    if l == 0:
-#        return np.array([-j_d / h_d, 0, 0, 0])
-#    matrix = np.zeros((2, 2), complex)
-#    rhs_L = np.zeros(2, complex)
-#    rhs_N = np.zeros(2, complex)
-#    matrix[0][0] = d11 / x_env_t
-#    matrix[0][1] = -psi * d12 / x_env
-#    matrix[1][0] = d21 / x_env_t
-#    matrix[1][1] = -psi * d22 / x_env
-#    rhs_L[0] = psi * d1L / x_env
-#    rhs_L[1] = psi * d2L / x_env
-#    rhs_N[0] = -d1N / x_env_t
-#    rhs_N[1] = -d2N / x_env_t
-#    sol_L = np.linalg.solve(matrix, rhs_L)
-#    res[0] = sol_L[1]
-#    res[1] = sol_L[0]
-#    sol_N = np.linalg.solve(matrix, rhs_N)
-#    res[2] = sol_N[1]
-#    res[3] = sol_N[0]
-#    return res
