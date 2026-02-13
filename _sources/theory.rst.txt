@@ -60,7 +60,7 @@ Solutions to the scalar Helmholtz equation
 
 Instead of immediatly solving equations from above, we will study the
 Helmholtz equation which is commonly encountered when studying wave phenomena first.
-This section mainly relies on [3]_.
+This section mainly relies on [2]_.
 
 The scalar Helmholtz equation is
 
@@ -99,7 +99,7 @@ chosen to be Cartesian, cylindrical, and spherical.
 
 The first type of solution is longitudinal waves that obey constraint :math:`\boldsymbol{\nabla} \times \mathbf L = 0`,
 while the second and third ones are transverse waves with the constraint :math:`\boldsymbol{\nabla} \cdot \{\mathbf M,\mathbf N\} = 0`.
-In the following, we will limit the discussion of the transverse waves, because acoustic waves in a medium with :math:`c_t \equiv 0` can
+In the following, we will limit the discussion of the transverse waves, because acoustic waves in a medium with :math:`c^{t} \equiv 0` can
 be described by scalar pressure fields and corresponding longitudinal fields.
 
 Plane waves
@@ -112,7 +112,7 @@ plane waves
 
     \psi_{\mathbf k}(k, \mathbf r) = \mathrm e^{\mathrm i \mathbf k \mathbf r} 
 
-given by :func:`acoustotreams.spw_Psi` where the wave vector fulfils 
+given by :func:`acoustotreams.special.spw_Psi` where the wave vector fulfils 
 :math:`|\mathbf k|^2 = k_x^2 + k_y^2 + k_z^2 = k^2`. The corresponding 
 longitudinal vector plane wave is
 
@@ -124,7 +124,7 @@ longitudinal vector plane wave is
     \equiv \mathbf{\hat r}_{\mathbf k}
     \mathrm e^{\mathrm i \mathbf k \mathbf r}
 
-given by :func:`acoustotreams.vpw_L`. We normalized this wave by :math:`k` in the medium
+given by :func:`acoustotreams.special.vpw_L`. We normalized this wave by :math:`k` in the medium
 such that it has unit strength for real-valued wave vectors.
 
 Cylindrical waves
@@ -140,14 +140,14 @@ The solutions in cylindrical coordinates are
     Z_m^{(n)}(k_\rho \rho) \mathrm e^{\mathrm i (m \varphi + k_z z)}
 
 where :math:`k_z \in \mathbb R` and :math:`m \in \mathbb Z` are the parameters of the
-solution (:func:`acoustotreams.scw_rPsi`, and :func:`acoustotreams.scw_Psi`). The radial part 
+solution (:func:`acoustotreams.special.scw_rPsi`, and :func:`acoustotreams.special.scw_Psi`). The radial part 
 of the wave vector is defined as :math:`k_\rho = \sqrt{k^2 - k_z^2}` with the imaginary part 
 of the square root to be taken non-negative. Note that here :math:`\rho` is a radial distance 
 of cylindrical coordinates. The functions :math:`Z_m^{(n)}` are the Bessel and Hankel functions. 
 For a complete set of solutions, it is necessary to select two of them. We generally use the (regular)
 Bessel functions :math:`J_m = Z_m^{(1)}` and the Hankel functions of the first kind
 :math:`H_m^{(1)} = Z_m^{(3)}`, which are singular at :math:`\rho \to 0` and correspond to radiating waves,
-(:func:`acoustotreams.jv`, :func:`acoustotreams.hankel1`). The vector cylindrical waves are then
+(:func:`acoustotreams.special.jv`, :func:`acoustotreams.special.hankel1`). The vector cylindrical waves are then
 
 .. math::
 
@@ -158,8 +158,8 @@ Bessel functions :math:`J_m = Z_m^{(1)}` and the Hankel functions of the first k
     + \frac{\mathrm{i} k_z}{k}Z_{m}^{(n)}(k_{\rho}\rho) \hat{\mathbf{z}} \right] 
     \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
-where we, again, normalized the functions by by :math:`k` in the medium (:func:`acoustotreams.vcw_rL`,
-and :func:`acoustotreams.vcw_L`).
+where we, again, normalized the functions by by :math:`k` in the medium (:func:`acoustotreams.special.vcw_rL`,
+and :func:`acoustotreams.special.vcw_L`).
 
 Spherical waves
 ---------------
@@ -170,12 +170,12 @@ Finally, we define the spherical wave solutions
 
     \psi_{lm}^{(n)}(k, \mathbf{r}) = z_l^{(n)}(kr) Y_{lm}(\theta, \phi)
 
-given by (:func:`acoustotreams.ssw_rPsi`, and :func:`acoustotreams.ssw_Psi`)
+given by (:func:`acoustotreams.special.ssw_rPsi`, and :func:`acoustotreams.special.ssw_Psi`)
 where :math:`z_l^{(n)}` are the spherical Bessel and Hankel functions. 
 We choose :math:`j_l = z_l^{(1)}` and :math:`h_l^{(1)} = z_l^{(3)}` in complete analogy 
-to the cylindrical waves case (:func:`acoustotreams.spherical_jn`,
-:func:`treams.special.spherical_hankel1`). :math:`Y_{lm}` are the spherical harmonics 
-(:func:`treams.special.sph_harm`). The value :math:`l \in \mathbb N \cup \{0\}` refers to 
+to the cylindrical waves case (:func:`acoustotreams.special.spherical_jn`,
+:func:`acoustotreams.special.spherical_hankel1`). :math:`Y_{lm}` are the spherical harmonics 
+(:func:`acoustotreams.special.sph_harm`). The value :math:`l \in \mathbb N \cup \{0\}` refers to 
 the angular momentum or degree. The projection of the angular momentum onto the z axis or order is 
 :math:`m \in \mathbb Z` with :math:`|m| \leq l`. Hence, the vector spherical waves are defined as
 
@@ -184,7 +184,7 @@ the angular momentum or degree. The projection of the angular momentum onto the 
    \mathbf{L}_{lm}^{(n)} (k, \mathbf{r})
     = -\mathrm{i} \left[{z_l^{(n)}}' (kr) \mathbf{Z}_{lm}(\theta, \varphi) + \frac{z_l^{(n)}(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
-(:func:`acoustotreams.vsw_rL`, and :func:`acoustotreams.vsw_L`) where
+(:func:`acoustotreams.special.vsw_rL`, and :func:`acoustotreams.special.vsw_L`) where
 
 .. math::
 
@@ -203,12 +203,12 @@ the angular momentum or degree. The projection of the angular momentum onto the 
     \mathbf Z_{lm} (\theta, \varphi)
     = \mathrm i Y_{lm}(\theta, \varphi) \mathbf{\hat r}
 
-are the vector spherical harmonics (:func:`acoustotreams.vsh_X`,
-:func:`acoustotreams.vsh_Y`, and :func:`acoustotreams.vsh_Z`) imported from `treams.special`. 
+are the vector spherical harmonics (:func:`acoustotreams.special.vsh_X`,
+:func:`acoustotreams.special.vsh_Y`, and :func:`acoustotreams.special.vsh_Z`). 
 These are themselves defined by the functions :math:`\pi_l^m(x) = \frac{m P_l^m(x)}{\sqrt{1 - x^2}}`,
 :math:`\tau_l^m(x) = \frac{\mathrm d}{\mathrm d \theta}P_l^m(x = \cos\theta)`, and
-the associated Legendre polynomials :math:`P_l^m` (:func:`acoustotreams.pi_fun`,
-:func:`acoustotreams.tau_fun`, and :func:`acoustotreams.lpmv` are also imported from `treams.special`). 
+the associated Legendre polynomials :math:`P_l^m` (:func:`acoustotreams.special.pi_fun`,
+:func:`acoustotreams.special.tau_fun`, and :func:`acoustotreams.special.lpmv`). 
 The vector spherical harmonics are orthogonal to each other and normalized to 1 upon integration over the
 solid angle.
 
@@ -232,9 +232,5 @@ References
 
 .. [1] H. Bruus, Acoustofluidics 2: Perturbation theory and 
    ultrasound resonance modes  Lab Chip 12, 20 (2012).
-.. [2] L. D. Landau and E. M. Lifshitz, Theory of Elasticity: 
-   Course of Theoretical Physics, Volume 7, 
-   edited by E. M. Lifshitz, A. M. Kosevich, and  L. P. Pitaevskii
-   (Butterworth-Heinemann, Oxford, England, UK, 1986).
-.. [3] P. M. Morse and H. Feshbach, Methods of Theoretical Physics
+.. [2] P. M. Morse and H. Feshbach, Methods of Theoretical Physics
    (McGraw-Hill, New York, 1953).

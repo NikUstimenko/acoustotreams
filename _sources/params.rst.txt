@@ -245,9 +245,10 @@ Materials
 =========
 
 For materials there exists the class :class:`~acoustotreams.AcousticMaterial`, which holds the values
-of the mass density, longitudinal speed of sound, and transverse speed of sound. The
-default material is air (room temperature) and can be initialized without any parameters. For other cases,
-the parameters can be given in the order above.
+of the mass density, longitudinal speed of sound, and transverse speed of sound. The complex material parameters
+are accepted. Absorption corresponds to :math:`\Im(\rho) > 0`, :math:`\Im(c) < 0`, and :math:`\Im(c^t) < 0`, while
+gain corresponds to the opposite signs. The default material is air (room temperature) and can be initialized 
+without any parameters. For other cases, the parameters can be given in the order above.
 
 .. doctest::
 

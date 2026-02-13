@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.2.11 documentation</title>
+    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.2.12 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=29c81e07"></script>
+    <script src="_static/documentation_options.js?v=1e30946d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="intro.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.12 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>
@@ -257,9 +257,10 @@ unit of (inverse) length.</p>
 <section id="materials">
 <h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
 <p>For materials there exists the class <a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a>, which holds the values
-of the mass density, longitudinal speed of sound, and transverse speed of sound. The
-default material is air (room temperature) and can be initialized without any parameters. For other cases,
-the parameters can be given in the order above.</p>
+of the mass density, longitudinal speed of sound, and transverse speed of sound. The complex material parameters
+are accepted. Absorption corresponds to <span class="math notranslate nohighlight">\(\Im(\rho) &gt; 0\)</span>, <span class="math notranslate nohighlight">\(\Im(c) &lt; 0\)</span>, and <span class="math notranslate nohighlight">\(\Im(c^t) &lt; 0\)</span>, while
+gain corresponds to the opposite signs. The default material is air (room temperature) and can be initialized
+without any parameters. For other cases, the parameters can be given in the order above.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span>
 <span class="go">AcousticMaterial(1.3, 343.0, 0.0)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1300</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -436,7 +437,7 @@ combined and compared.</p>
         <li class="right" >
           <a href="intro.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.12 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>
