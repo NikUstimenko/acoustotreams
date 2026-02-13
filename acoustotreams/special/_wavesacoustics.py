@@ -74,7 +74,7 @@ def ssw_Psi(l, m, kr, theta, phi):
         \Psi_{lm}^{(3)}(x, \theta, \varphi)
         = h_l^{(1)}(x) Y_{lm}(\theta, \varphi)
 
-    with :func:`acoustotreams.sph_harm`, and :func:`acoustotreams.spherical_hankel1`.
+    with :func:`acoustotreams.special.sph_harm`, and :func:`acoustotreams.special.spherical_hankel1`.
 
     This function describes a solution to the scalar Helmholtz wave
     equation.
@@ -102,7 +102,7 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
         Y_{lm}(\theta, \varphi)
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
 
-    with :func:`acoustotreams.sph_harm`.
+    with :func:`acoustotreams.special.sph_harm`.
 
     This function describes a solution to the vector Helmholtz wave
     equation in the limit of :math:`kr \to +\infty`.
@@ -136,7 +136,7 @@ def ssw_rPsi(l, m, kr, theta, phi):
         \Psi_{lm}^{(1)}(x, \theta, \varphi)
         = j_l(x) Y_{lm}(\theta, \varphi)
 
-    with :func:`acoustotreams.sph_harm`, and :func:`acoustotreams.spherical_jn`.
+    with :func:`acoustotreams.special.sph_harm`, and :func:`acoustotreams.special.spherical_jn`.
 
     This function describes a solution to the scalar Helmholtz wave
     equation.
@@ -164,7 +164,7 @@ def scw_Psi(kz, m, krr, phi, z):
          \psi_{k_z m}^{(3)}(x_\rho, \varphi, z)
         = H_m^{(1)}(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
-     using :func:`acoustotreams.hankel1`.
+     using :func:`acoustotreams.special.hankel1`.
 
      This function describes a solution to the scalar Helmholtz wave
      equation.
@@ -224,7 +224,7 @@ def scw_rPsi(kz, m, krr, phi, z):
          \psi_{k_z m}^{(1)}(x_\rho, \varphi, z)
         = J_m(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
-     using :func:`acoustotreams.jv`.
+     using :func:`acoustotreams.special.jv`.
 
      This function describes a solution to the scalar Helmholtz wave
      equation.
@@ -253,8 +253,8 @@ def vsw_L(l, m, kr, theta, phi):
         = -\mathrm{i} \left[{h_l^{(1)}}'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
         + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
-    with :func:`acoustotreams.vsh_Z`, :func:`acoustotreams.vsh_Y`, 
-    :func:`acoustotreams.spherical_hankel1`, and :func:`acoustotreams.spherical_hankel1`.
+    with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, 
+    :func:`acoustotreams.special.spherical_hankel1`, and :func:`acoustotreams.special.spherical_hankel1`.
 
     This function describes a solution to the vector Helmholtz wave
     equation.
@@ -286,7 +286,7 @@ def vsw_l(l, m, x, y, z, theta, phi, k):
         Y_{lm}(\theta, \varphi)\hat{\mathbf{r}}
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
 
-    with :func:`acoustotreams.sph_harm`.
+    with :func:`acoustotreams.special.sph_harm`.
 
     This function describes a solution to the vector Helmholtz wave
     equation in the limit of :math:`kr \to +\infty`.
@@ -330,8 +330,8 @@ def vsw_rL(l, m, kr, theta, phi):
         = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
         + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
-    with :func:`acoustotreams.vsh_Z`, :func:`acoustotreams.vsh_Y`, 
-    and :func:`acoustotreams.spherical_jn`.
+    with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, 
+    and :func:`acoustotreams.special.spherical_jn`.
 
     This function describes a solution to the vector Helmholtz wave
     equation.
@@ -381,7 +381,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
         + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
-     using :func:`acoustotreams.hankel1_d` and :func:`acoustotreams.hankel1`.
+     using :func:`acoustotreams.special.hankel1_d` and :func:`acoustotreams.special.hankel1`.
 
      This function describes a longitudinal solution to the vector Helmholtz wave
      equation.
@@ -471,7 +471,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
         + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
-     using :func:`acoustotreams.jv_d` and :func:`acoustotreams.jv`.
+     using :func:`acoustotreams.special.jv_d` and :func:`acoustotreams.special.jv`.
 
      This function describes a longitudinal solution to the vector Helmholtz wave
      equation.
@@ -523,26 +523,6 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
                 res.append(val)
      return np.array(res)
 
-
-#def _tl_ssw_helper(l, m, lambda_, mu, p, q):
-#    """Helper function for the translation coefficient of scalar and longitudinal spherical waves"""
-#    if (
-#        p < max(abs(m + mu), abs(l - lambda_))
-#        or p > abs(l + lambda_)
-#        or q < abs(l - lambda_)
-#        or q > abs(l + lambda_)
-#        or (q + l + lambda_) % 2 != 0
-#    ):
-#        return 0
-#    return (
-#        (2 * p + 1)
-#        * np.power(1j, lambda_ - l + p)
-#        * np.sqrt(ss.gamma(p - m - mu + 1) / ss.gamma(p + m + mu + 1))
-#        * sc.wigner3j(l, lambda_, p, m, mu, -(m + mu))
-#        * sc.wigner3j(l, lambda_, q, 0, 0, 0)
-#    )
-
-
 def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     r"""tl_ssw(lambda_, mu, l, m, kr, theta, phi)
     
@@ -563,9 +543,9 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
             0& 0& 0
         \end{pmatrix}
 
-    with the Wigner 3j-symbols (:func:`acoustotreams.wigner3j`), the spherical Hankel
-    functions (:func:`acoustotreams.spherical_hankel1`), and the spherical harmonics
-    (:func:`acoustotreams.sph_harm`). The summation runs over all
+    with the Wigner 3j-symbols (:func:`acoustotreams.special.wigner3j`), the spherical Hankel
+    functions (:func:`acoustotreams.special.spherical_hankel1`), and the spherical harmonics
+    (:func:`acoustotreams.special.sph_harm`). The summation runs over all
     :math:`q \in \{\lambda + l, \lambda + l - 2, \dots, \max(|\lambda - l|, |\mu - m|)\}`.
 
     These coefficients are used to translate from scattered to incident modes.
@@ -615,9 +595,9 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
             0& 0& 0
         \end{pmatrix}
 
-    with the Wigner 3j-symbols (:func:`acoustotreams.wigner3j`), the spherical Bessel
-    functions (:func:`acoustotreams.spherical_jn`), and the spherical harmonics
-    (:func:`acoustotreams.sph_harm`). The summation runs over all
+    with the Wigner 3j-symbols (:func:`acoustotreams.special.wigner3j`), the spherical Bessel
+    functions (:func:`acoustotreams.special.spherical_jn`), and the spherical harmonics
+    (:func:`acoustotreams.special.sph_harm`). The summation runs over all
     :math:`q \in \{\lambda + l, \lambda + l - 2, \dots, \max(|\lambda - l|, |\mu - m|)\}`.
 
     These coefficients are used to translate from scattered to scattered modes and
@@ -662,7 +642,7 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
             0 & \text{otherwise}
         \end{cases}
 
-    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:func:`acoustotreams.hankel1`).
+    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:func:`acoustotreams.special.hankel1`).
 
     These coefficients are used to translate from scattered to scattered modes and
     from incident to incident modes.
@@ -699,7 +679,7 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
             0 & \text{otherwise}
         \end{cases}
 
-    where :math:`J_{m - \mu}` are the Bessel functions (:func:`acoustotreams.jv`).
+    where :math:`J_{m - \mu}` are the Bessel functions (:func:`acoustotreams.special.jv`).
 
     These coefficients are used to translate from scattered to incident modes.
 

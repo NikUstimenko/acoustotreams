@@ -488,8 +488,8 @@ class TestPField:
         k0 = 4
         material = (1000, 686, 0)
         x = acoustotreams.pfield(r, basis=b, k0=k0, material=material)
-        rsph = acoustotreams.car2sph(r[:, None] - positions)
-        y = acoustotreams.ssw_rPsi(
+        rsph = acoustotreams.special.car2sph(r[:, None] - positions)
+        y = acoustotreams.special.ssw_rPsi(
             [3, 1],
             [-2, 1],
             k0 * rsph[..., 0] * 0.5,
@@ -513,8 +513,8 @@ class TestPField:
             material=material,
             modetype="singular",
         )
-        rsph = acoustotreams.car2sph(r[:, None] - positions)
-        y = acoustotreams.ssw_Psi(
+        rsph = acoustotreams.special.car2sph(r[:, None] - positions)
+        y = acoustotreams.special.ssw_Psi(
             [3, 1],
             [-2, 1],
             k0 * rsph[..., 0] * 0.5,
@@ -532,8 +532,8 @@ class TestPField:
         k0 = 4
         material = (1000, 686, 0)
         x = acoustotreams.pfield(r, basis=b, k0=k0, material=material)
-        rcyl = acoustotreams.car2cyl(r[:, None] - positions)
-        y = acoustotreams.scw_rPsi(
+        rcyl = acoustotreams.special.car2cyl(r[:, None] - positions)
+        y = acoustotreams.special.scw_rPsi(
             [0.3, 0.1],
             [-2, 1],
             rcyl[..., 0] * [np.sqrt(4 - 0.3 ** 2), np.sqrt(4 - 0.1 ** 2)],
@@ -557,8 +557,8 @@ class TestPField:
             material=material,
             modetype="singular",
         )
-        rcyl = acoustotreams.car2cyl(r[:, None] - positions)
-        y = acoustotreams.scw_Psi(
+        rcyl = acoustotreams.special.car2cyl(r[:, None] - positions)
+        y = acoustotreams.special.special.scw_Psi(
             [0.3, 0.1],
             [-2, 1],
             rcyl[..., 0] * [np.sqrt(4 - 0.3 ** 2), np.sqrt(4 - 0.1 ** 2)],
@@ -573,7 +573,7 @@ class TestPField:
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector(modes)
         r = np.array([[0, 1, 2], [3, 4, 5]])
         x = acoustotreams.pfield(r, basis=b, k0=5)
-        y = acoustotreams.spw_Psi(
+        y = acoustotreams.special.spw_Psi(
             [0, 0],
             [3, 4],
             [4, 3],
@@ -589,7 +589,7 @@ class TestPField:
         b = acoustotreams.ScalarPlaneWaveBasisByComp(modes)
         r = np.array([[0, 1, 2], [3, 4, 5]])
         x = acoustotreams.pfield(r, basis=b, k0=5)
-        y = acoustotreams.spw_Psi(
+        y = acoustotreams.special.spw_Psi(
             [0, 0],
             [3, 4],
             [4, 3],

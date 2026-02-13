@@ -112,7 +112,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.2.11"
+_version__ = "0.2.12"
 
 from treams.misc import(  # noqa: F401,
     wave_vec_z,

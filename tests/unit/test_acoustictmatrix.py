@@ -60,23 +60,23 @@ class TestSphere:
 
 class TestProperties:
     def test_xs_ext_avg(self):
-        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 800, 0)])
-        assert isclose(tm.xs_ext_avg, 24.92043089578468)
+        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])
+        assert isclose(tm.xs_ext_avg, 24.60384476871747)
 
     def test_xs_ext_avg_ct_zero(self):
         tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 0), (900, 800, 0)])
         assert isclose(tm.xs_ext_avg, 25.953193306013617)
 
     def test_xs_sca_avg(self):
-        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 800, 0)])
-        assert isclose(tm.xs_sca_avg, 16.626290601780596)
+        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])
+        assert isclose(tm.xs_sca_avg, 15.502943925268221)
 
     def test_xs_sca_avg_ct_zero(self):
         tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 0), (900, 800, 0)])
         assert isclose(tm.xs_sca_avg, 15.258304851607877)
 
     def test_modes(self):
-        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 800, 0)])
+        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])
         l, m = tm.basis.lm
         assert (
             np.all(l == [0] + 3 * [1] + 5 * [2])
@@ -86,25 +86,25 @@ class TestProperties:
 
 class TestXs:
     def test(self):
-        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 800, 0)])
+        tm = AcousticTMatrix.sphere(2, 3, [4], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])
         inc = acoustotreams.plane_wave_scalar([0, 0, 1], k0=tm.k0, material=tm.material)
         xs = tm.xs(inc, 0.125)
-        assert isclose(xs[0], 66.50516240712238,) and isclose(xs[1], 99.68172358313876)
+        assert isclose(xs[0], 62.0117757010729,) and isclose(xs[1], 98.41537907486989)
 
 
 class TestSca:
     def test(self):
-        tm = AcousticTMatrix.sphere(1, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 800, 0)])
+        tm = AcousticTMatrix.sphere(1, 3, [4], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])
         inc = acoustotreams.plane_wave_scalar([0, 0, 1], k0=tm.k0, material=tm.material)
         sca = tm.sca(inc)
-        assert (isclose(sca[0], -2.7385423033973506 + 0.16685495918137938j,) 
-                and isclose(sca[2], 2.44537336132951 - 2.492047932753504j)
+        assert (isclose(sca[0], -2.7586039218306673 + 0.17803571960546696j,) 
+                and isclose(sca[2], 2.4084972606519726 - 2.410569039823313j)
                 and sca[1] == sca[3] == 0. + 0.j)
 
 
 class TestTranslate:
     def test(self):
-        tm = AcousticTMatrix.sphere(3, 0.1, [0.2], [(200 + 10j, 1000 - 100j, 500), (900, 800, 0)])
+        tm = AcousticTMatrix.sphere(3, 0.1, [0.2], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])
         m = copy.deepcopy(tm)
         rs = np.array([[0.1, 0.2, 0.3], [-0.4, -0.5, -0.4]])
         tm = tm.translate(rs[0])

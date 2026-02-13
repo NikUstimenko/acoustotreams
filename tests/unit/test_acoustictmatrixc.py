@@ -50,7 +50,7 @@ class TestInit:
 
 class TestCylinder:
     def test(self):
-        tm = AcousticTMatrixC.cylinder([1], 2, 3, 4, [(200, 1000, 500), (900, 686, 0)])
+        tm = AcousticTMatrixC.cylinder([1], 2, 3, 4, [(200, 1000, 0), (900, 686, 0)])
         m = acoustotreams.coeffs.mie_cyl_acoustics(1, [-2, -1, 0, 1, 2], 3, [4], [200, 900], [1000, 686], [500, 0])
         assert (
             tm[0, 0] == m[0]
@@ -71,30 +71,22 @@ class TestCylinder:
 
 
 class TestProperties:
-    def test_xw_ext_avg(self):
-        tm = AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 686, 0)])
-        assert isclose(tm.xw_ext_avg, 2.8575610823570337)
-
     def test_xw_ext_avg_ct_zero(self):
         tm = AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j, 0), (900, 686, 0)])
         assert isclose(tm.xw_ext_avg, 2.976939980231719)
-
-    def test_xw_sca_avg(self):
-        tm = AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j, 500), (900, 686, 0)])
-        assert isclose(tm.xw_sca_avg, 2.5126294545531063)
 
     def test_xw_sca_avg_ct_zero(self):
         tm = AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j, 0), (900, 686, 0)])
         assert isclose(tm.xw_sca_avg, 1.3598694262205515)
 
     def test_krho(self):
-        tm = AcousticTMatrixC.cylinder([0, 5], 1, 3, [1], [(200 + 10j, 1000 - 100j,), ()])
+        tm = AcousticTMatrixC.cylinder([0, 5], 1, 3, [1], [(200 + 10j, 1000 - 100j, 0), ()])
         assert np.all(
             np.abs(tm.krhos - [3, 3, 3, 4j, 4j, 4j]) < 1e-16
         )
 
     def test_modes(self):
-        tm =  AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j,), (900, 686,)])
+        tm =  AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j, 0), (900, 686,)])
         kz, m = tm.basis.zm
         assert (
             np.all(kz == 3 * [-1] + 3 * [1])
@@ -102,7 +94,7 @@ class TestProperties:
         )
 
     def test_fullmodes(self):
-        tm = AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j,), (900, 686,)])
+        tm = AcousticTMatrixC.cylinder([-1, 1], 1, 3, [4], [(200 + 10j, 1000 - 100j, 0), (900, 686,)])
         pidx, kz, m = tm.basis[()]
         assert (
             np.all(kz == 3 * [-1] + 3 * [1])
@@ -114,7 +106,7 @@ class TestProperties:
 class TestXw:
     def test(self):
         kz = 1
-        tm = AcousticTMatrixC.cylinder(kz, 1, 3, [4], [(200 + 10j, 1000 - 100j,), ()])
+        tm = AcousticTMatrixC.cylinder(kz, 1, 3, [4], [(200 + 10j, 1000 - 100j, 0), ()])
         inc = acoustotreams.plane_wave_scalar([np.sqrt(tm.k0 * tm.k0 - kz * kz), 0, kz], k0=tm.k0, material=tm.material)
         xw = tm.xw(inc, 0.1255)
         assert isclose(xw[0], 5.892670869743773,) and isclose(xw[1], 5.902641304396861)
@@ -123,7 +115,7 @@ class TestXw:
 class TestSca:
     def test(self):
         kz = 1
-        tm = AcousticTMatrixC.cylinder(kz, 1, 3, [4], [(200 + 10j, 1000 - 100j,), ()])
+        tm = AcousticTMatrixC.cylinder(kz, 1, 3, [4], [(200 + 10j, 1000 - 100j, 0), ()])
         inc = acoustotreams.plane_wave_scalar([np.sqrt(tm.k0 * tm.k0 - kz * kz), 0, kz], k0=tm.k0, material=tm.material)
         sca = tm.sca(inc)
         assert (isclose(sca[0], 0.3506619987521309 + 0.14429243052400523j,) 

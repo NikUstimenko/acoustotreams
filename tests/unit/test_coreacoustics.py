@@ -469,7 +469,7 @@ class TestAcousticsArray:
         b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
         p = acoustotreams.AcousticsArray([1], basis=b, k0=1)
         x = p.pfield([1, 0, 0])
-        assert (np.abs(x - acoustotreams.ssw_rPsi(1, 0, 1, np.pi / 2, 0)) < 1e-15)
+        assert (np.abs(x - acoustotreams.special.ssw_rPsi(1, 0, 1, np.pi / 2, 0)) < 1e-15)
 
     def test_expand(self):
         b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
