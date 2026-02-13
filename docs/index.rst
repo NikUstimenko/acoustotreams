@@ -17,15 +17,14 @@ Welcome to acoustotreams's documentation!
    about
    
 
-The package **acoustotreams** adopts the framework of the package **treams** for
-electromagnetic scattering computations to simplify computations of the
-scattering of acoustic waves in acoustic metamaterials. The supported geometries 
-include single particles as well as finite and periodically infinite arrangements. 
+The package **acoustotreams** adopts the framework of the package **treams** to 
+simplify computations of the scattering of acoustic waves in acoustic metamaterials. 
+The supported geometries include single particles as well as finite and periodically infinite arrangements. 
 All methods are suitable for the use of lossy materials. The periodic systems can have 
 one-, two-, or three-dimensional lattices. The lattice computations are performed 
 by the functions imported from :mod:`treams.lattice` which accelerates them 
 by converting the occurring slowly converging summations to exponentially fast convergent series. 
-From :mod:`treams.special` the mathematical functions, which are typically necessary 
+From :mod:`acoustotreams.special` the mathematical functions, which are typically necessary 
 in T-Matrix method computations, are also imported.
 
 To accommodate the periodic structures of different dimensionalities, three types of
@@ -36,7 +35,7 @@ them.
 
 Finally, three classes are the main point of interaction for the user. They allow access
 to the underlying functions operating directly on the spherical and cylindrical
-acoustic T-matrices or the acoustic S-matrices based on the plane wave solutions.
+acoustic T-matrices or the acoustic S-matrices based on the plane-wave solutions.
 
 .. todo:: clean up intro
 

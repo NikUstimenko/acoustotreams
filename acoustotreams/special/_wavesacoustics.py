@@ -1,7 +1,8 @@
+"""Special mathematical functions related to the scalar waves"""
+
 import treams.special as sc
 import numpy as np
 import cmath
-import scipy.special as ss
 
 def spw_Psi(kx, ky, kz, x, y, z):
     r"""Scalar plane wave :math:`\Psi` 

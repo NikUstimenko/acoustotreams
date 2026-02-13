@@ -8,7 +8,7 @@ from treams._lattice import Lattice, WaveVector
 from acoustotreams._materialacoustics import AcousticMaterial
 import acoustotreams._coreacoustics as core
 from treams._operators import Operator,FieldOperator
-import acoustotreams._wavesacoustics as wv
+import acoustotreams.special as ats
 import acoustotreams.ssw as ssw
 import acoustotreams.spw as spw
 import acoustotreams.scw as scw
@@ -931,7 +931,7 @@ def _ssw_vfield(r, basis, k0, material, modetype):
     rsph = sc.car2sph(r - basis.positions)
     res = None
     if modetype == "regular":
-        res = wv.vsw_rL(
+        res = ats.vsw_rL(
             basis.l,
             basis.m,
             ks * rsph[..., basis.pidx, 0],
@@ -939,7 +939,7 @@ def _ssw_vfield(r, basis, k0, material, modetype):
             rsph[..., basis.pidx, 2],
         )
     elif modetype == "singular":
-        res = wv.vsw_L(
+        res = ats.vsw_L(
             basis.l,
             basis.m,
             ks * rsph[..., basis.pidx, 0],
@@ -965,7 +965,7 @@ def _scw_vfield(r, basis, k0, material, modetype):
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = sc.car2cyl(r - basis.positions)
     if modetype == "regular":
-        res = wv.vcw_rL(
+        res = ats.vcw_rL(
             basis.kz,
             basis.m,
             krhos * rcyl[..., basis.pidx, 0],
@@ -975,7 +975,7 @@ def _scw_vfield(r, basis, k0, material, modetype):
             ks
         )
     elif modetype == "singular":
-        res = wv.vcw_L(
+        res = ats.vcw_L(
             basis.kz,
             basis.m,
             krhos * rcyl[..., basis.pidx, 0],
@@ -999,7 +999,7 @@ def _spw_vfield(r, basis, k0, material, modetype):
     """Velocity field of scalar plane waves."""
     res = None
     kvecs = basis.kvecs(k0, material, modetype)
-    res = wv.vpw_L(*kvecs, r[..., 0], r[..., 1], r[..., 2])
+    res = ats.vpw_L(*kvecs, r[..., 0], r[..., 1], r[..., 2])
     res *= -1j / (material.rho * material.c)
     if res is None:
         raise ValueError("invalid parameters")
@@ -1056,7 +1056,7 @@ def _ssw_pfield(r, basis, k0, material, modetype):
     rsph = sc.car2sph(r - basis.positions)
     res = None
     if modetype == "regular":
-        res = wv.ssw_rPsi(
+        res = ats.ssw_rPsi(
             basis.l,
             basis.m,
             ks * rsph[..., basis.pidx, 0],
@@ -1064,7 +1064,7 @@ def _ssw_pfield(r, basis, k0, material, modetype):
             rsph[..., basis.pidx, 2],
             )
     elif modetype == "singular":
-            res = wv.ssw_Psi(
+            res = ats.ssw_Psi(
             basis.l,
             basis.m,
             ks * rsph[..., basis.pidx, 0],
@@ -1087,7 +1087,7 @@ def _scw_pfield(r, basis, k0, material, modetype):
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = sc.car2cyl(r - basis.positions)
     if modetype == "regular":
-        res = wv.scw_rPsi(
+        res = ats.scw_rPsi(
             basis.kz,
             basis.m,
             krhos * rcyl[..., basis.pidx, 0],
@@ -1095,7 +1095,7 @@ def _scw_pfield(r, basis, k0, material, modetype):
             rcyl[..., basis.pidx, 2],
         )
     elif modetype == "singular":
-        res = wv.scw_Psi(
+        res = ats.scw_Psi(
             basis.kz,
             basis.m,
             krhos * rcyl[..., basis.pidx, 0],
@@ -1115,7 +1115,7 @@ def _spw_pfield(r, basis, k0, material, modetype):
     """Pressure field of scalar plane waves."""
     res = None
     kvecs = basis.kvecs(k0, material, modetype)
-    res = wv.spw_Psi(*kvecs, r[..., 0], r[..., 1], r[..., 2])
+    res = ats.spw_Psi(*kvecs, r[..., 0], r[..., 1], r[..., 2])
     if res is None:
         raise ValueError("invalid parameters")
     res = util.AnnotatedArray(np.array([res]).T)
@@ -1171,7 +1171,7 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
     r = np.broadcast_to(r, basis.positions.shape)
     rsph = basis.positions
     res = None
-    res = wv.ssw_psi(
+    res = ats.ssw_psi(
             basis.l,
             basis.m,
             rsph[..., basis.pidx, 0],
@@ -1199,7 +1199,7 @@ def _scw_pamplitudeff(r, basis, k0, material, modetype):
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = basis.positions
     res = None
-    res = wv.scw_psi(
+    res = ats.scw_psi(
             basis.kz,
             basis.m,
             rcyl[..., basis.pidx, 0],
@@ -1262,7 +1262,7 @@ def _ssw_vamplitudeff(r, basis, k0, material, modetype):
     r = np.broadcast_to(r, basis.positions.shape)
     rsph = basis.positions
     res = None
-    res = wv.vsw_l(
+    res = ats.vsw_l(
             basis.l,
             basis.m,
             rsph[..., basis.pidx, 0],
@@ -1292,7 +1292,7 @@ def _scw_vamplitudeff(r, basis, k0, material, modetype):
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = basis.positions
     res = None
-    res = wv.vcw_l(
+    res = ats.vcw_l(
             basis.kz,
             basis.m,
             rcyl[..., basis.pidx, 0],

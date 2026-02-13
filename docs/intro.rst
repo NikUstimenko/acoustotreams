@@ -10,8 +10,8 @@ and high-level functions and classes.
 
 The low-level functions implement the underlying mathematical functions, that build
 the foundation of T-matrix calculations. They are mainly imported from
-:mod:`treams.special` and :mod:`treams.lattice`. The first one contains, e.g., 
-the extensions of mathematical functions in :mod:`scipy.special`, the
+:mod:`acoustotreams.special` and :mod:`treams.lattice`. The first one contains the  
+mathematical functions related to the scalar waves, while the
 second subpackage contains functions that are associated with computations in lattices.
 All functions necessary in acoustic computations, e.g., the various solutions 
 to the Helmholtz equation and their translation coefficients, implemented within

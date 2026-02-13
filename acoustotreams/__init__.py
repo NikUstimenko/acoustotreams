@@ -68,43 +68,6 @@ Scalar wave functions
    plane_wave_angle_scalar
    spherical_wave_scalar
 
-Spherical waves
-
-.. autosummary::
-   :toctree: generated/
-
-   ssw_Psi
-   ssw_psi
-   vsw_L
-   vsw_l
-   ssw_rPsi
-   vsw_rL
-   tl_ssw
-   tl_ssw_r
-
-Cylindrical waves
-
-.. autosummary::
-   :toctree: generated/
-
-   scw_Psi
-   scw_psi
-   vcw_L
-   vcw_l
-   scw_rPsi
-   vcw_rL
-   tl_scw
-   tl_scw_r
-
-
-Plane waves
-
-.. autosummary::
-   :toctree: generated/
-
-   spw_Psi
-   vpw_L
-
 Functions imported from SciPy
 -----------------------------
 
@@ -149,49 +112,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.2.7"
-
-from scipy.special import (  # noqa: F401
-    hankel1,
-    hankel2,
-    jv,
-    yv,
-    spherical_jn,
-    spherical_yn,
-)
-
-from treams.special import(   # noqa: F401
-    spherical_jn_d,
-    spherical_yn_d,
-    sph_harm,
-    lpmv,
-    incgamma,
-    intkambe,
-    wignersmalld,
-    wignerd,
-    wigner3j,
-    pi_fun,
-    tau_fun,
-    vsh_X,
-    vsh_Y,
-    vsh_Z,
-    car2cyl,
-    car2sph,
-    cyl2car,
-    cyl2sph,
-    sph2car,
-    sph2cyl,
-    vcar2cyl,
-    vcar2sph,
-    vcyl2car,
-    vcyl2sph,
-    vsph2car,
-    vsph2cyl,
-    car2pol,
-    pol2car,
-    vcar2pol,
-    vpol2car,
-    )
+_version__ = "0.2.8"
 
 from treams.misc import(  # noqa: F401,
     wave_vec_z,
@@ -201,8 +122,6 @@ from treams.misc import(  # noqa: F401,
 )
 
 from treams._lattice import *   # noqa: F401
-
-from acoustotreams._wavesacoustics import *  # noqa: F401
 
 from acoustotreams._materialacoustics import AcousticMaterial  # noqa: F401
 

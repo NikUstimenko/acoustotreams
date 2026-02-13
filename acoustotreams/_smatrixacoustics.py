@@ -65,7 +65,7 @@ class AcousticSMatrices:
     r"""Collection of four acoustic S-matrices with a scalar plane wave basis.
 
     The S-matrix describes the scattering of incoming into outgoing modes using a plane
-    wave basis, with functions :func:`acoustotreams.spw_Psi`. The primary
+    wave basis, with functions :func:`acoustotreams.speical.spw_Psi`. The primary
     direction of propagation is parallel or anti-parallel to the z-axis. The scattering
     object itself is infinitely extended in the x- and y-directions. The S-matrix is
     divided into four submatrices :math:`S_{\uparrow \uparrow}`,
@@ -367,7 +367,7 @@ class AcousticSMatrices:
         illumination and direction.
 
         Args:
-            illu (complex, array_like): Expansion coefficients for the incoming wave
+            illu (complex, array_like): Expansion coefficients of the incoming wave
 
         Returns:
             tuple

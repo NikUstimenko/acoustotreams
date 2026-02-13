@@ -12,7 +12,7 @@ from acoustotreams._materialacoustics import AcousticMaterial
 from acoustotreams.coeffs import mie_acoustics, mie_acoustics_cyl
 from acoustotreams._coreacoustics import AcousticsArray
 import acoustotreams._operatorsacoustics as opa
-import acoustotreams._wavesacoustics as wv
+import acoustotreams.special as ats
 
 
 class _Interaction:
@@ -53,9 +53,9 @@ class _LatticeInteraction:
 class AcousticTMatrix(AcousticsArray):
     """Acoustic T-matrix with a spherical basis.
 
-    The acoustic T-matrix is a square relating incident (regular) fields
-    func:`acoustotreams.ssw_rPsi` to the corresponding scattered fields :func:`acoustotreams.ssw_Psi`. 
-    The modes themselves are defined in :attr:`basis`. 
+    The acoustic T-matrix is a square matrix relating incident (regular) fields
+    func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered fields 
+    :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in :attr:`basis`. 
     Moreover, the wave number :attr:`k0` and, if not air, the material :attr:`material` are
     specified.
 
@@ -63,10 +63,10 @@ class AcousticTMatrix(AcousticsArray):
         arr (float or complex, array-like): T-matrix itself.
         k0 (float): Wave number in air.
         basis (ScalarSphericalWaveBasis, optional): Basis definition.
-        material (AcousticMaterial, optional): Embedding material, defaults to air.
+        material (AcousticMaterial, optional): background material, defaults to air.
         lattice (Lattice, optional): Lattice definition. If specified the T-Matrix is
             assumed to be periodically repeated in the defined lattice.
-        kpar (list, optional): Phase factor for the periodic T-Matrix.
+        kpar (list, optional): Bloch wave vector for the effective T-Matrix.
     """
 
     interaction = _Interaction()
@@ -105,18 +105,18 @@ class AcousticTMatrix(AcousticsArray):
         can also consist of multiple concentric spherical shells with an arbitrary
         number of layers.
 
-        Note:
-            1. :math:`c_t` of the last material must be zero. 
+        Please note:
+            1. :math:`c_t` of the **last** material must be zero. 
             2. For the soft and hard spheres, only one radius must be given. 
 
         Args:
             lmax (int): Non-negative integer for the maximum degree of the T-matrix.
             k0 (float): Wave number in air.
             radii (float or array): Radii from inside to outside of the sphere. For a
-                simple sphere the radius can be given as a single number, for a multi-
+                homogeneous sphere the radius can be given as a single number, for a multi-
                 layered sphere it is a list of increasing radii for all shells.
             material (list[AcousticMaterial]): The material parameters from the inside to the
-                outside. The last material in the list specifies the embedding medium.
+                outside. The last material in the list specifies the background medium.
 
         Returns:
             AcousticTMatrix
@@ -157,7 +157,7 @@ class AcousticTMatrix(AcousticsArray):
             \end{pmatrix}
 
         is created from the list of T-matrices :math:`(T_0, \dots, T_{N-1})`. Only
-        T-matrices of the same wave number, and embedding material.
+        T-matrices with the same wave number and background material are accepted.
 
         Args:
             tmats (Sequence): List of T-matrices.
@@ -218,7 +218,7 @@ class AcousticTMatrix(AcousticsArray):
             \langle \sigma_\mathrm{ext} \rangle
             = 2 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},
 
-        where :math:`k` is the wave number in the embedding medium.    
+        where :math:`k` is the wave number in the background medium.    
 
         It is only implemented for global T-matrices.
 
@@ -245,7 +245,8 @@ class AcousticTMatrix(AcousticsArray):
             = 2 \pi \sum_{lm} \sum_{l'm'}
             \frac{|T_{lm,l'm'}|^2}{k^2}
 
-        where :math:`k` is the wave number in the embedding medium. 
+        where :math:`k` is the wave number in the background medium. 
+
         It is only implemented for global T-matrices.
 
         Returns:
@@ -261,15 +262,15 @@ class AcousticTMatrix(AcousticsArray):
     def sca(self, inc):
         r"""Expansion coefficients of the scattered field.
 
-        Possible for all T-matrices (global and local) in non-absorbing embedding. The
+        Possible for all T-matrices (global and local) in non-absorbing background. The
         coefficients are calculated by
 
         .. math::
 
-            p_{lm} = T_{lm,l'm'} a_{l'm'}
+            a_{lm} = T_{lm,l'm'} b_{l'm'}
 
-        where :math:`a_{lm}` are the expansion coefficients of the incident wave,
-        :math:`T` is the T-matrix.
+        where :math:`b_{lm}` are the expansion coefficients of the incident wave
+        and :math:`T` is the T-matrix.
 
         Args:
             inc (complex, array): Incident wave or its expansion coefficients
@@ -288,20 +289,20 @@ class AcousticTMatrix(AcousticsArray):
     def xs(self, inc, flux=0.5):
         r"""Scattering and extinction cross section.
 
-        Possible for all T-matrices (global and local) in non-absorbing embedding. The
+        Possible for all T-matrices (global and local) in non-absorbing background. The
         values are calculated by
 
         .. math::
 
             \sigma_\mathrm{sca}
             = \frac{1}{2 I}
-            a_{lm}^\ast T_{l'm',lm}^\ast k^{-2} C_{l'm',l''m''}^{(1)}
-            T_{l''m'',l'''m'''} a_{l'''m'''} \\
+            b_{lm}^\ast T_{l'm',lm}^\ast k^{-2} C_{l'm',l''m''}^{(1)}
+            T_{l''m'',l'''m'''} b_{l'''m'''} \\
             \sigma_\mathrm{ext}
             = \frac{1}{2 I}
-            a_{lm}^\ast k^{-2} T_{lm,l'm'} a_{l'm'}
+            b_{lm}^\ast k^{-2} T_{lm,l'm'} b_{l'm'}
 
-        where :math:`a_{lm}` are the expansion coefficients of the incident wave,
+        where :math:`b_{lm}` are the expansion coefficients of the incident wave,
         :math:`T` is the T-matrix, :math:`C^{(1)}` is the (regular) translation
         matrix and :math:`k` is the wave number in the medium. All repeated indices
         are summed over. The incoming flux is :math:`I`.
@@ -309,10 +310,8 @@ class AcousticTMatrix(AcousticsArray):
         Args:
             inc (complex, array): Incident wave or its expansion coefficients
             flux (optional): Ingoing flux corresponding to the incident wave. Used for
-                the result's normalization. The flux is given in units of
-                :math:`\frac{{l^2}}{Z}` where :math:`l` is the
-                unit of length used in the wave number (and positions). A plane wave
-                has the flux `0.5` in this normalization, which is used as default.
+                the result's normalization. A plane wave has the flux `0.5` in this 
+                normalization, which is used as default.
 
         Returns:
             tuple[float]
@@ -368,19 +367,20 @@ class AcousticTMatrix(AcousticsArray):
 class AcousticTMatrixC(AcousticsArray):
     """Acoustic T-matrix with a scalar cylindrical basis.
 
-    The acoustic T-matrix is square relating incident (regular) fields
-    :func:`acoustotreams.scw_rPsi` to the scattered fields :func:`acoustotreams.scw_Psi`. The modes themselves
-    are defined in :attr:`basis`. Also, the wave number :attr:`k0` and, if not air, 
+    The acoustic T-matrix is a square matrix relating incident (regular) fields
+    :func:`acoustotreams.special.scw_rPsi` to the scattered fields 
+    :func:`acoustotreams.special.scw_Psi`. The modes themselves are defined 
+    in :attr:`basis`. Moreover, the wave number :attr:`k0` and, if not air, 
     the material :attr:`material` are specified.
 
     Args:
         arr (float or complex, array-like): T-matrix itself.
-        k0 (float): Wave number in vacuum.
+        k0 (float): Wave number in air.
         basis (ScalarCylindricalWaveBasis, optional): Basis definition.
-        material (AcousticMaterial, optional): Embedding material, defaults to air.
+        material (AcousticMaterial, optional): background material, defaults to air.
         lattice (Lattice, optional): Lattice definition. If specified the T-Matrix is
             assumed to be periodically repeated in the defined lattice.
-        kpar (list, optional): Phase factor for the periodic T-Matrix.
+        kpar (list, optional): Bloch wave vector for the effective T-Matrix.
     """
 
     interaction = _Interaction()
@@ -415,10 +415,10 @@ class AcousticTMatrixC(AcousticsArray):
 
     @property
     def krhos(self):
-        r"""Radial part of the wave.
+        r"""Radial part of the wave vector.
 
         Calculate :math:`\sqrt{k^2 - k_z^2}`, where :math:`k` is the wave number in the
-        medium for each illumination
+        medium for each insonification.
 
         Returns:
             Sequence[complex]
@@ -429,19 +429,23 @@ class AcousticTMatrixC(AcousticsArray):
     def cylinder(cls, kzs, mmax, k0, radii, materials):
         """Acoustic T-Matrix of an infinite cylinder.
 
-        Construct the T-matrix of the given order and material for an infinitely
-        extended cylinder.
+        Construct the T-matrix of the given order and material for an infinite cylinder. 
+        The object can also consist of multiple concentric cylindrical shells with an arbitrary
+        number of layers.
 
-        Note:
-            :math:`c_t` of the last material must be zero.  
+        Please note:
+            1. :math:`c_t` of **all** the materials must be zero. 
+            2. For the soft and hard cylinders, only one radius must be given.  
 
         Args:
             kzs (float, array_like): Z component of the cylindrical wave.
             mmax (int): Positive integer for the maximum order of the T-matrix.
-            k0 (float): Wave number in vacuum.
-            radii (float): Radius of the cylinder. 
+            k0 (float): Wave number in air.
+            radii (float): Radii from inside to outside of the cylinder. For a
+                homogeneous cylinder the radius can be given as a single number, for a multi-
+                layered cylinder it is a list of increasing radii for all the shells.
             material (list[AcousticMaterial]): The material parameters from the inside to the
-                outside. The last material in the list specifies the embedding medium.
+                outside. The last material in the list specifies the background medium.
 
         Returns:
             AcousticTMatrixC
@@ -482,7 +486,7 @@ class AcousticTMatrixC(AcousticsArray):
             \end{pmatrix}
 
         is created from the list of T-matrices :math:`(T_0, \dots, T_{N-1})`. Only
-        T-matrices of the same wave number, and embedding material
+        T-matrices with the same wave number and background material
         can be combined.
 
         Args:
@@ -544,7 +548,7 @@ class AcousticTMatrixC(AcousticsArray):
             \langle \lambda_\mathrm{ext} \rangle
             = -\frac{2 \pi}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s}
 
-        where :math:`k_s` is the wave number in the embedding medium and :math:`n_{k_z}` 
+        where :math:`k_s` is the wave number in the background medium and :math:`n_{k_z}` 
         is the number of wave components :math:`k_z` included in the T-matrix. 
         The average is taken over all given z-components of the wave vector and 
         rotations around the z-axis. It is only implemented for global T-matrices.
@@ -555,7 +559,7 @@ class AcousticTMatrixC(AcousticsArray):
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
         nk = np.unique(self.basis.kz).size
-        res = -4 * np.real(np.trace(self)) / (self.ks * nk)                   #!!!!!!!!!!!!!!!!!!!
+        res = -4 * np.real(np.trace(self)) / (self.ks * nk)                 
         if res.imag == 0:
             return res.real
         return res
@@ -572,7 +576,7 @@ class AcousticTMatrixC(AcousticsArray):
             = \frac{2 \pi}{n_{k_z}} \sum_{sk_zm} \sum_{s'{k_z}'m'}
             \frac{|T_{sk_zm,s'{k_z}'m'}|^2}{k_s}
 
-        where :math:`k_s` is the wave number in the embedding medium and :math:`n_{k_z}` 
+        where :math:`k_s` is the wave number in the background medium and :math:`n_{k_z}` 
         is the number of wave components
         :math:`k_z` included in the T-matrix. The average is taken over all given
         z-components of the wave vector and rotations around the z-axis. It is only
@@ -602,15 +606,15 @@ class AcousticTMatrixC(AcousticsArray):
     def sca(self, inc):
         r"""Expansion coefficients of the scattered field.
 
-        Possible for all T-matrices (global and local) in non-absorbing embedding. The
+        Possible for all T-matrices (global and local) in non-absorbing background. The
         coefficients are calculated by
 
         .. math::
 
-            p_{k_z m} = T_{k_z m,{k_z}'m'} a_{{k_z}'m'}
+            a_{k_z m} = T_{k_z m,{k_z}'m'} b_{{k_z}'m'}
 
-        where :math:`a_{k_z m}` are the expansion coefficients of the incident wave,
-        :math:`T` is the T-matrix.
+        where :math:`b_{k_z m}` are the expansion coefficients of the incident wave,
+        and :math:`T` is the T-matrix.
 
         Args:
             inc (complex, array): Incident wave or its expansion coefficients
@@ -628,21 +632,21 @@ class AcousticTMatrixC(AcousticsArray):
     def xw(self, inc, flux=0.5):
         r"""Scattering and extinction cross width.
 
-        Possible for all T-matrices (global and local) in non-absorbing embedding. The
+        Possible for all T-matrices (global and local) in non-absorbing background. The
         values are calculated by
 
         .. math::
 
             \lambda_\mathrm{sca}
             = \frac{1}{2 I}
-            a_{k_z m}^\ast T_{{k_z}' m',k_z m}^\ast k^{-2}
+            b_{k_z m}^\ast T_{{k_z}' m',k_z m}^\ast k^{-2}
             C_{{k_z}'m',{k_z}''m''}^{(1)}
-            T_{{k_z}''m'',{k_z}'''m'''} a_{{k_z}'''m'''} \\
+            T_{{k_z}''m'',{k_z}'''m'''} b_{{k_z}'''m'''} \\
             \sigma_\mathrm{ext}
             = \frac{1}{2 I}
-            a_{k_z m}^\ast k^{-2} T_{k_z m,{k_z}'m'} a_{{k_z}'m'}
+            b_{k_z m}^\ast k^{-2} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}
 
-        where :math:`a_{k_z m}` are the expansion coefficients of the incident wave,
+        where :math:`b_{k_z m}` are the expansion coefficients of the incident wave,
         :math:`T` is the T-matrix, :math:`C^{(1)}` is the (regular) translation
         matrix and :math:`k` is the wavenumber in the medium. All repeated indices
         are summed over. The incoming flux is :math:`I`.
@@ -650,10 +654,8 @@ class AcousticTMatrixC(AcousticsArray):
         Args:
             inc (complex, array): Incident wave or its expansion coefficients
             flux (optional): Ingoing flux corresponding to the incident wave. Used for
-                the result's normalization. The flux is given in units of
-                :math:`\frac{{l^2}}{Z}` where :math:`l` is the
-                unit of length used in the wave number (and positions). A plane wave
-                has the flux `0.5` in this normalization, which is used as default.
+                the result's normalization. A plane wave has the flux `0.5` in this 
+                normalization, which is used as default.
 
         Returns:
             tuple[float]
@@ -674,6 +676,21 @@ class AcousticTMatrixC(AcousticsArray):
         )
 
     def valid_points(self, grid, radii):
+        """Points on the grid where the expansion is valid.
+
+        The expansion of the acoustic wave fields is valid outside of the
+        circumscribing cylinders of each object. From a given set of coordinates mark
+        those that are outside of the given radii.
+
+        Args:
+            grid (array-like): Points to assess. The last dimension needs length two or three
+                and corresponds to the Cartesian coordinates.
+            radii (Sequence[float]): Radii of the circumscribing cylinders. Each radius
+                corresponds to a position of the basis.
+
+        Returns:
+            array
+        """
         grid = np.asarray(grid)
         if grid.shape[-1] not in (2, 3):
             raise ValueError("invalid grid")
@@ -700,7 +717,7 @@ def _plane_wave_partial_scalar(
     if modetype not in ("up", "down"):
         raise ValueError(f"invalid 'modetype': {modetype}")
     kzs = AcousticMaterial(material).kzs(k0, *kpar)
-    pol = wv.spw_Psi(*kpar, kzs, 0, 0, 0)
+    pol = ats.spw_Psi(*kpar, kzs, 0, 0, 0)
     res = [pol * (np.abs(np.array(kpar) - x[:2]) < 1e-14).all() for x in basis]
     return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype
@@ -717,7 +734,7 @@ def _plane_wave_scalar(
         kvec = AcousticMaterial(material).ks(k0) * qvec
     else:
         kvec = qvec
-    pol = wv.spw_Psi(*kvec, 0, 0, 0)
+    pol = ats.spw_Psi(*kvec, 0, 0, 0)
     res = [pol * (np.abs(qvec - x[:3]) < 1e-14).all() for x in basis]
     return AcousticsArray(
         res, basis=basis, k0=k0, material=material, modetype=modetype

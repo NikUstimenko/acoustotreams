@@ -11,7 +11,7 @@
 
 """
 
-import acoustotreams._wavesacoustics as wv
+import acoustotreams.special as ats
 import treams.special as sc
 import numpy as np
 from treams import lattice
@@ -21,10 +21,10 @@ import scipy.special as ss
 def _translate_s(kz, mu, qz, m, krr, phi, z, *args, **kwargs):
     if abs(krr) < 1e-16 and abs(z) < 1e-16:
         return 0.0j
-    return wv.tl_scw(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
+    return ats.tl_scw(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
 
 def _translate_r(kz, mu, qz, m, krr, phi, z, *args, **kwargs):
-    return wv.tl_scw_r(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
+    return ats.tl_scw_r(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
 
 
 _translate_s = np.vectorize(_translate_s)
