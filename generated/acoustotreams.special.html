@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>acoustotreams.special &#8212; acoustotreams 0.2.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
+    <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
+    <script src="../_static/documentation_options.js?v=29c81e07"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="acoustotreams.special.ssw_Psi" href="generated/acoustotreams.special.ssw_Psi.html" />
+    <link rel="prev" title="acoustotreams.coeffs.fresnel_acoustics" href="acoustotreams.coeffs.fresnel_acoustics.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/acoustotreams.special.ssw_Psi.html" title="acoustotreams.special.ssw_Psi"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.coeffs.fresnel_acoustics.html" title="acoustotreams.coeffs.fresnel_acoustics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams.special</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-acoustotreams.special">
+<span id="acoustotreams-special"></span><h1>acoustotreams.special<a class="headerlink" href="#module-acoustotreams.special" title="Link to this heading">¶</a></h1>
+<p>Special (mathematical) functions.</p>
+<p>Special mathematical functions used in <a class="reference internal" href="../acoustotreams.html#module-acoustotreams" title="acoustotreams"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams</span></code></a>. Some functions are imported from
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.17.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code>.</p>
+<section id="available-functions">
+<h2>Available functions<a class="headerlink" href="#available-functions" title="Link to this heading">¶</a></h2>
+<section id="spherical-waves">
+<h3>Spherical waves<a class="headerlink" href="#spherical-waves" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.ssw_Psi.html#acoustotreams.special.ssw_Psi" title="acoustotreams.special.ssw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_Psi</span></code></a>(l, m, kr, theta, phi)</p></td>
+<td><p>Singular scalar spherical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.ssw_psi.html#acoustotreams.special.ssw_psi" title="acoustotreams.special.ssw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_psi</span></code></a>(l, m, x, y, z, theta, phi, k)</p></td>
+<td><p>Far-field amplitude of singular scalar spherical wave <span class="math notranslate nohighlight">\(\psi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.vsw_L.html#acoustotreams.special.vsw_L" title="acoustotreams.special.vsw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_L</span></code></a>(l, m, kr, theta, phi)</p></td>
+<td><p>Singular longitudinal vector spherical wave L</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.vsw_l.html#acoustotreams.special.vsw_l" title="acoustotreams.special.vsw_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_l</span></code></a>(l, m, x, y, z, theta, phi, k)</p></td>
+<td><p>Far-field amplitude of singular longitudinal vector spherical wave l</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.ssw_rPsi.html#acoustotreams.special.ssw_rPsi" title="acoustotreams.special.ssw_rPsi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_rPsi</span></code></a>(l, m, kr, theta, phi)</p></td>
+<td><p>Regular scalar spherical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.vsw_rL.html#acoustotreams.special.vsw_rL" title="acoustotreams.special.vsw_rL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_rL</span></code></a>(l, m, kr, theta, phi)</p></td>
+<td><p>Regular longitudinal vector spherical wave L</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.tl_ssw.html#acoustotreams.special.tl_ssw" title="acoustotreams.special.tl_ssw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_ssw</span></code></a>(lambda_, mu, l, m, kr, theta, phi)</p></td>
+<td><p>Singular translation coefficient of scalar and longitudinal vector spherical waves</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.tl_ssw_r.html#acoustotreams.special.tl_ssw_r" title="acoustotreams.special.tl_ssw_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_ssw_r</span></code></a>(lambda_, mu, l, m, kr, theta, phi)</p></td>
+<td><p>Regular translation coefficient of scalar and longitudinal vector spherical waves</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cylindrical-waves">
+<h3>Cylindrical waves<a class="headerlink" href="#cylindrical-waves" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.scw_Psi.html#acoustotreams.special.scw_Psi" title="acoustotreams.special.scw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_Psi</span></code></a>(kz, m, krr, phi, z)</p></td>
+<td><p>Singular scalar cylindrical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.scw_psi.html#acoustotreams.special.scw_psi" title="acoustotreams.special.scw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_psi</span></code></a>(kz, m, x, y, phi, z, krho)</p></td>
+<td><p>Far-field amplitude of singular scalar cylindrical wave <span class="math notranslate nohighlight">\(\psi\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.vcw_L.html#acoustotreams.special.vcw_L" title="acoustotreams.special.vcw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_L</span></code></a>(kz, m, krr, phi, z, krho, k)</p></td>
+<td><p>Singular longitudinal vector cylindrical wave L</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.vcw_l.html#acoustotreams.special.vcw_l" title="acoustotreams.special.vcw_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_l</span></code></a>(kz, m, x, y, phi, z, krho, k)</p></td>
+<td><p>Far-field amplitude of longitudinal singular vector cylindrical wave l</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.scw_rPsi.html#acoustotreams.special.scw_rPsi" title="acoustotreams.special.scw_rPsi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_rPsi</span></code></a>(kz, m, krr, phi, z)</p></td>
+<td><p>Regular scalar cylindrical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.vcw_rL.html#acoustotreams.special.vcw_rL" title="acoustotreams.special.vcw_rL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_rL</span></code></a>(kz, m, krr, phi, z, krho, k)</p></td>
+<td><p>Regular longitudinal vector cylindrical wave L</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.tl_scw.html#acoustotreams.special.tl_scw" title="acoustotreams.special.tl_scw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_scw</span></code></a>(kz1, mu, kz2, m, krr, phi, z)</p></td>
+<td><p>Singular translation coefficient of scalar and longitudinal vector cylindrical waves</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.tl_scw_r.html#acoustotreams.special.tl_scw_r" title="acoustotreams.special.tl_scw_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tl_scw_r</span></code></a>(kz1, mu, kz2, m, krr, phi, z)</p></td>
+<td><p>Regular translation coefficient of scalar and longitudinal vector cylindrical waves</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="plane-waves">
+<h3>Plane waves<a class="headerlink" href="#plane-waves" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.spw_Psi.html#acoustotreams.special.spw_Psi" title="acoustotreams.special.spw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spw_Psi</span></code></a>(kx, ky, kz, x, y, z)</p></td>
+<td><p>Scalar plane wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.vpw_L.html#acoustotreams.special.vpw_L" title="acoustotreams.special.vpw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vpw_L</span></code></a>(kx, ky, kz, x, y, z)</p></td>
+<td><p>Longitudinal vector plane wave L</p></td>
+</tr>
+</tbody>
+</table>
+<p>Those functions are just imported from Scipy. So, one only needs to import this
+package within acoustotreams.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel1.html#scipy.special.hankel1" title="(in SciPy v1.17.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1</span></code></a>(v, z[, out])</p></td>
+<td><p>Hankel function of the
+first kind.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel2.html#scipy.special.hankel2" title="(in SciPy v1.17.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel2</span></code></a>(v, z[, out])</p></td>
+<td><p>Hankel function of the
+second kind.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.jv.html#scipy.special.jv" title="(in SciPy v1.17.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">jv</span></code></a>(v, z[, out])</p></td>
+<td><p>Bessel function of the
+first kind of real
+order and complex
+argument.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.yv.html#scipy.special.yv" title="(in SciPy v1.17.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">yv</span></code></a>(v, z[, out])</p></td>
+<td><p>Bessel function of the
+second kind of real
+order and complex
+argument.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_jn.html#scipy.special.spherical_jn" title="(in SciPy v1.17.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">spherical_jn</span></code></a>(n,
+z[, derivative])</div>
+</div>
+</td>
+<td><p>Spherical Bessel
+function of the first
+kind or its derivative.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_yn.html#scipy.special.spherical_yn" title="(in SciPy v1.17.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">spherical_yn</span></code></a>(n,
+z[, derivative])</div>
+</div>
+</td>
+<td><p>Spherical Bessel
+function of the second
+kind or its derivative.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following functions are just imported from treams. So, one only needs to import this
+package within treams.</p>
+</section>
+<section id="bessel-and-hankel-functions-with-their-spherical-counterparts-derivatives">
+<h3>Bessel and Hankel functions, with their spherical counterparts, derivatives<a class="headerlink" href="#bessel-and-hankel-functions-with-their-spherical-counterparts-derivatives" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1_d</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">hankel2_d</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">jv_d</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">yv_d</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel1</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel2</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel1_d</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel2_d</span></code></p>
+<p>Those functions just wrap Scipy functions with special optional arguments to be able to
+analogously access them like their non-spherical counterparts:</p>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code></p>
+</section>
+<section id="scipy-functions-with-enhanced-domain">
+<h3>Scipy functions with enhanced domain<a class="headerlink" href="#scipy-functions-with-enhanced-domain" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">sph_harm</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">lpmv</span></code></p>
+</section>
+<section id="integrals-for-the-ewald-summation">
+<h3>Integrals for the Ewald summation<a class="headerlink" href="#integrals-for-the-ewald-summation" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">incgamma</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">intkambe</span></code></p>
+</section>
+<section id="wigner-d-and-wigner-d-matrix-elements">
+<h3>Wigner d- and Wigner D-matrix elements<a class="headerlink" href="#wigner-d-and-wigner-d-matrix-elements" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">wignersmalld</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">wignerd</span></code></p>
+</section>
+<section id="wigner-3j-symbols">
+<h3>Wigner 3j-symbols<a class="headerlink" href="#wigner-3j-symbols" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">wigner3j</span></code></p>
+</section>
+<section id="vector-spherical-harmonics">
+<h3>Vector spherical harmonics<a class="headerlink" href="#vector-spherical-harmonics" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">pi_fun</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">tau_fun</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_X</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_Y</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_Z</span></code></p>
+</section>
+<section id="coordinate-system-transformations">
+<h3>Coordinate system transformations<a class="headerlink" href="#coordinate-system-transformations" title="Link to this heading">¶</a></h3>
+<p><code class="xref py py-data docutils literal notranslate"><span class="pre">car2cyl</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">car2sph</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">cyl2car</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">cyl2sph</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">sph2car</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">sph2cyl</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2cyl</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2sph</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vcyl2car</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vcyl2sph</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vsph2car</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vsph2cyl</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">car2pol</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">pol2car</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2pol</span></code>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">vpol2car</span></code></p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../acoustotreams.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Development and contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="acoustotreams.coeffs.fresnel_acoustics.html"
+                          title="previous chapter">acoustotreams.coeffs.fresnel_acoustics</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="generated/acoustotreams.special.ssw_Psi.html"
+                          title="next chapter">acoustotreams.special.ssw_Psi</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/generated/acoustotreams.special.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/acoustotreams.special.ssw_Psi.html" title="acoustotreams.special.ssw_Psi"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="acoustotreams.coeffs.fresnel_acoustics.html" title="acoustotreams.coeffs.fresnel_acoustics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">acoustotreams.special</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Nikita Ustimenko.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    </div>
+  </body>
+</html>

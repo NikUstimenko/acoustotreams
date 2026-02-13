@@ -198,11 +198,11 @@ Polarization
 ============
 
 In *acoustotreams* we consider acoustic waves that can be described by scalar pressure fields. 
-The scalar waves are defined in :func:`acoustotreams.ssw_Psi`, :func:`acoustotreams.ssw_rPsi`,
-:func:`acoustotreams.scw_Psi`, :func:`acoustotreams.scw_rPsi`, and :func:`acoustotreams.spw_Psi`.
-These scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.vsw_L`, 
-:func:`acoustotreams.vsw_rL`, :func:`acoustotreams.vcw_L`, :func:`acoustotreams.vcw_rL`, 
-and :func:`acoustotreams.vpw_L`.
+The scalar waves are defined in :func:`acoustotreams.specail.ssw_Psi`, :func:`acoustotreams.special.ssw_rPsi`,
+:func:`acoustotreams.specail.scw_Psi`, :func:`acoustotreams.specail.scw_rPsi`, and :func:`acoustotreams.specail.spw_Psi`.
+These scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.specail.vsw_L`, 
+:func:`acoustotreams.specail.vsw_rL`, :func:`acoustotreams.specail.vcw_L`, :func:`acoustotreams.specail.vcw_rL`, 
+and :func:`acoustotreams.specail.vpw_L`.
 
 Mode types
 ==========

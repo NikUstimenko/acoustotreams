@@ -1,0 +1,6 @@
+acoustotreams.special.tl\_ssw
+=============================
+
+.. currentmodule:: acoustotreams.special
+
+.. autofunction:: tl_ssw

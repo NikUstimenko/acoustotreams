@@ -1,0 +1,6 @@
+acoustotreams.special.scw\_psi
+==============================
+
+.. currentmodule:: acoustotreams.special
+
+.. autofunction:: scw_psi

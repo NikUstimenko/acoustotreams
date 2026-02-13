@@ -1,6 +1,0 @@
-﻿acoustotreams.ssw\_rPsi
-=======================
-
-.. currentmodule:: acoustotreams
-
-.. autofunction:: ssw_rPsi

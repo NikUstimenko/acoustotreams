@@ -5,15 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.AcousticTMatrixC.cylinder &#8212; acoustotreams 0.2.5 documentation</title>
+    <title>acoustotreams.AcousticTMatrixC.cylinder &#8212; acoustotreams 0.2.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=cb850272"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/documentation_options.js?v=29c81e07"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.AcousticTMatrixC.cumsum.html" title="acoustotreams.AcousticTMatrixC.cumsum"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.AcousticTMatrixC.html" accesskey="U">acoustotreams.AcousticTMatrixC</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticTMatrixC.cylinder</a></li> 
@@ -58,23 +58,29 @@
 <h1>acoustotreams.AcousticTMatrixC.cylinder<a class="headerlink" href="#acoustotreams-acoustictmatrixc-cylinder" title="Link to this heading">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.AcousticTMatrixC.cylinder">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AcousticTMatrixC.</span></span><span class="sig-name descname"><span class="pre">cylinder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kzs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_tmatrixacoustics.html#AcousticTMatrixC.cylinder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticTMatrixC.cylinder" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">AcousticTMatrixC.</span></span><span class="sig-name descname"><span class="pre">cylinder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kzs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_tmatrixacoustics.html#AcousticTMatrixC.cylinder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticTMatrixC.cylinder" title="Link to this definition">¶</a></dt>
 <dd><p>Acoustic T-Matrix of an infinite cylinder.</p>
-<p>Construct the T-matrix of the given order and material for an infinitely
-extended cylinder.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><span class="math notranslate nohighlight">\(c_t\)</span> of the last material must be zero.</p>
-</div>
+<p>Construct the T-matrix of the given order and material for an infinite cylinder.
+The object can also consist of multiple concentric cylindrical shells with an arbitrary
+number of layers.</p>
+<dl class="simple">
+<dt>Please note:</dt><dd><ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(c_t\)</span> of <strong>all</strong> the materials must be zero.</p></li>
+<li><p>For the soft and hard cylinders, only one radius must be given.</p></li>
+</ol>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>kzs</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of the cylindrical wave.</p></li>
 <li><p><strong>mmax</strong> (<em>int</em>) – Positive integer for the maximum order of the T-matrix.</p></li>
-<li><p><strong>k0</strong> (<em>float</em>) – Wave number in vacuum.</p></li>
-<li><p><strong>radii</strong> (<em>float</em>) – Radius of the cylinder.</p></li>
+<li><p><strong>k0</strong> (<em>float</em>) – Wave number in air.</p></li>
+<li><p><strong>radii</strong> (<em>float</em>) – Radii from inside to outside of the cylinder. For a
+homogeneous cylinder the radius can be given as a single number, for a multi-
+layered cylinder it is a list of increasing radii for all the shells.</p></li>
 <li><p><strong>material</strong> (<em>list</em><em>[</em><a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><em>AcousticMaterial</em></a><em>]</em>) – The material parameters from the inside to the
-outside. The last material in the list specifies the embedding medium.</p></li>
+outside. The last material in the list specifies the background medium.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -148,7 +154,7 @@ outside. The last material in the list specifies the embedding medium.</p></li>
         <li class="right" >
           <a href="acoustotreams.AcousticTMatrixC.cumsum.html" title="acoustotreams.AcousticTMatrixC.cumsum"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.AcousticTMatrixC.html" >acoustotreams.AcousticTMatrixC</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticTMatrixC.cylinder</a></li> 
@@ -156,7 +162,7 @@ outside. The last material in the list specifies the embedding medium.</p></li>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2024, Nikita Ustimenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
     </div>
   </body>
 </html>

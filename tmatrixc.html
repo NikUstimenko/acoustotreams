@@ -5,15 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic cylindrical T-Matrices &#8212; acoustotreams 0.2.5 documentation</title>
+    <title>Acoustic cylindrical T-Matrices &#8212; acoustotreams 0.2.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=cb850272"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=29c81e07"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="tmatrix.html" title="Acoustic T-Matrices"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic cylindrical T-Matrices</a></li> 
       </ul>
@@ -58,11 +58,11 @@
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#infinitely-long-cylinders" id="id3">Infinitely long cylinders</a></p></li>
-<li><p><a class="reference internal" href="#cylindrical-t-matrices-for-one-dimensional-arrays-of-spherical-t-matrices" id="id4">Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices</a></p></li>
-<li><p><a class="reference internal" href="#clusters" id="id5">Clusters</a></p></li>
-<li><p><a class="reference internal" href="#one-dimensional-arrays-along-the-x-axis" id="id6">One-dimensional arrays (along the x axis)</a></p></li>
-<li><p><a class="reference internal" href="#two-dimensional-arrays-in-the-xy-plane" id="id7">Two-dimensional arrays (in the xy plane)</a></p></li>
+<li><p><a class="reference internal" href="#infinitely-long-cylinders" id="id1">Infinitely long cylinders</a></p></li>
+<li><p><a class="reference internal" href="#cylindrical-t-matrices-for-one-dimensional-arrays-of-spherical-t-matrices" id="id2">Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices</a></p></li>
+<li><p><a class="reference internal" href="#clusters" id="id3">Clusters</a></p></li>
+<li><p><a class="reference internal" href="#one-dimensional-arrays-along-the-x-axis" id="id4">One-dimensional arrays (along the x axis)</a></p></li>
+<li><p><a class="reference internal" href="#two-dimensional-arrays-in-the-xy-plane" id="id5">Two-dimensional arrays (in the xy plane)</a></p></li>
 </ul>
 </nav>
 <p>Here, we cover acoustical cylindrical T-matrices, which are distinguished from the more
@@ -80,7 +80,7 @@ objects in a local and global basis and to place these objects in a lattice. The
 lattices can only extend in one and two dimensions; the z direction is implicitly
 periodic already.</p>
 <section id="infinitely-long-cylinders">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Infinitely long cylinders</a><a class="headerlink" href="#infinitely-long-cylinders" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Infinitely long cylinders</a><a class="headerlink" href="#infinitely-long-cylinders" title="Link to this heading">¶</a></h2>
 <p>The first simple object, for which we calculate the cylindrical T-matrix is an
 infinitely long cylinder. Due to the rotation symmetry about the z axis this matrix
 is diagonal with respect to <code class="code docutils literal notranslate"><span class="pre">m</span></code> and due to the translation symmetry
@@ -134,25 +134,9 @@ by</p>
 <p>For the infinite cylinder we can also calculate the radiation pattern as a function of the angle <span class="math notranslate nohighlight">\(\varphi\)</span>.
 The red arrow indicates the direction of incidence of the plane wave.</p>
 <p>(<a class="reference download internal" download="" href="_downloads/439d9446b2fe66af91ef9ddd9f09c970/cylinder_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
-<figure class="align-default" id="id1">
-<img alt="_images/cylinder_tmatrixc_00_00.png" class="plot-directive" src="_images/cylinder_tmatrixc_00_00.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/45075f2167f1aaad5bd9f56011346053/cylinder_tmatrixc_00_00.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/b1058635e9336a95a8c238312d991d0d/cylinder_tmatrixc_00_00.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/7eb8b2afe822f82576fe2773173a5f27/cylinder_tmatrixc_00_00.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-default" id="id2">
-<img alt="_images/cylinder_tmatrixc_00_01.png" class="plot-directive" src="_images/cylinder_tmatrixc_00_01.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/646f6b47c62d0f72e9caec7cc2d4c54a/cylinder_tmatrixc_00_01.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/e65caa99620871467f394819dc6274e0/cylinder_tmatrixc_00_01.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/3b35bd0a8527324add397e146cad8898/cylinder_tmatrixc_00_01.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>(<a class="reference download internal" download="" href="_downloads/e5e8ea6426dd1f7f7c154abcc0194ef6/cylinder_tmatrixc_01_00.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/c48f92b84352a691014b6694ef2db036/cylinder_tmatrixc_01_00.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/7c47a99a43786e737ff2d59a75a5614e/cylinder_tmatrixc_01_00.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/cylinder_tmatrixc_01_00.png" class="plot-directive" src="_images/cylinder_tmatrixc_01_00.png" />
-</figure>
 </section>
 <section id="cylindrical-t-matrices-for-one-dimensional-arrays-of-spherical-t-matrices">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices</a><a class="headerlink" href="#cylindrical-t-matrices-for-one-dimensional-arrays-of-spherical-t-matrices" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices</a><a class="headerlink" href="#cylindrical-t-matrices-for-one-dimensional-arrays-of-spherical-t-matrices" title="Link to this heading">¶</a></h2>
 <p>For our next example we want to look at the system of spheres on a one-dimensional
 lattice again (<a class="reference internal" href="tmatrix.html#one-dimensional-arrays-along-z"><span class="std std-ref">One-dimensional arrays (along z)</span></a>). They fulfil all
 properties that define structures where the use of cylindrical waves is beneficial,
@@ -226,13 +210,10 @@ outside of the spheres we can use the method of
 </div>
 <p>Finally, we can plot the results. To illustrate the periodicity better, three unit cells
 are shown.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/8143539ded379652095ce7a6269597fb/chain_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/00ce05e6cfc25c3432810d9e4758f652/chain_tmatrixc.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/fa5aacc0e58f5f0dfa814f516fb1a683/chain_tmatrixc.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/37f1bdd17302de360bc2fadcf6820069/chain_tmatrixc.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/chain_tmatrixc.png" class="plot-directive" src="_images/chain_tmatrixc.png" />
-</figure>
+<p>(<a class="reference download internal" download="" href="_downloads/8143539ded379652095ce7a6269597fb/chain_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="clusters">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
 <p>Similarly to the case of spheres we can also calculate the response from a cluster of
 objects. As an example let us simulate a cylinder together with a chain of spheres
 in the cylindrical wave basis as described in the previous section.</p>
@@ -272,13 +253,10 @@ and then scattered field coeffcients for the incident plane wave.</p>
 </pre></div>
 </div>
 <p>The scattered pressure field within three unit cells is shown below</p>
-<p>(<a class="reference download internal" download="" href="_downloads/6057aca12788be16d8950609a968b025/cluster_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/81936b8720cc151705931431ab659d5c/cluster_tmatrixc.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/b1ca8c4f3112991488bdce4c1661f978/cluster_tmatrixc.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/829a27af55db27da55a970b57bb11d79/cluster_tmatrixc.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/cluster_tmatrixc.png" class="plot-directive" src="_images/cluster_tmatrixc.png" />
-</figure>
+<p>(<a class="reference download internal" download="" href="_downloads/6057aca12788be16d8950609a968b025/cluster_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="one-dimensional-arrays-along-the-x-axis">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">One-dimensional arrays (along the x axis)</a><a class="headerlink" href="#one-dimensional-arrays-along-the-x-axis" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">One-dimensional arrays (along the x axis)</a><a class="headerlink" href="#one-dimensional-arrays-along-the-x-axis" title="Link to this heading">¶</a></h2>
 <p>Now, we take the chain of spheres and cylinder and place them in a grating structure
 along the x direction. We start again by defining the parameters and calculating the
 relevant cylindrical T-matrices.</p>
@@ -339,13 +317,10 @@ the pressure field.</p>
 </pre></div>
 </div>
 <p>and plot the results.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/8edc86f47f81c9761a5e6a5e4cef8572/grating_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/b89be8bd1bc64930e80d201a38acec0d/grating_tmatrixc.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/2c67e62c2474490f7c36a3b4edfa4de6/grating_tmatrixc.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/0943ed8db1e6efe80543a664d9218f92/grating_tmatrixc.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/grating_tmatrixc.png" class="plot-directive" src="_images/grating_tmatrixc.png" />
-</figure>
+<p>(<a class="reference download internal" download="" href="_downloads/8edc86f47f81c9761a5e6a5e4cef8572/grating_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="two-dimensional-arrays-in-the-xy-plane">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Two-dimensional arrays (in the xy plane)</a><a class="headerlink" href="#two-dimensional-arrays-in-the-xy-plane" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Two-dimensional arrays (in the xy plane)</a><a class="headerlink" href="#two-dimensional-arrays-in-the-xy-plane" title="Link to this heading">¶</a></h2>
 <p>As the last example, let us examine a structure that is a crystal consisting
 of infinitely long cylinders in a square array in the xy plane.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">115000</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
@@ -440,14 +415,14 @@ smallest singular value.</p>
         <li class="right" >
           <a href="tmatrix.html" title="Acoustic T-Matrices"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic cylindrical T-Matrices</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2024, Nikita Ustimenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
     </div>
   </body>
 </html>

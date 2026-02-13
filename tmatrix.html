@@ -5,15 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoustotreams 0.2.5 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoustotreams 0.2.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=cb850272"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/documentation_options.js?v=29c81e07"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="operators.html" title="Operators"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -58,11 +58,11 @@
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#spheres" id="id7">Spheres</a></p></li>
-<li><p><a class="reference internal" href="#clusters" id="id8">Clusters</a></p></li>
-<li><p><a class="reference internal" href="#one-dimensional-arrays-along-z" id="id9">One-dimensional arrays (along z)</a></p></li>
-<li><p><a class="reference internal" href="#two-dimensional-arrays-in-the-xy-plane" id="id10">Two-dimensional arrays (in the xy plane)</a></p></li>
-<li><p><a class="reference internal" href="#three-dimensional-arrays" id="id11">Three-dimensional arrays</a></p></li>
+<li><p><a class="reference internal" href="#spheres" id="id1">Spheres</a></p></li>
+<li><p><a class="reference internal" href="#clusters" id="id2">Clusters</a></p></li>
+<li><p><a class="reference internal" href="#one-dimensional-arrays-along-z" id="id3">One-dimensional arrays (along z)</a></p></li>
+<li><p><a class="reference internal" href="#two-dimensional-arrays-in-the-xy-plane" id="id4">Two-dimensional arrays (in the xy plane)</a></p></li>
+<li><p><a class="reference internal" href="#three-dimensional-arrays" id="id5">Three-dimensional arrays</a></p></li>
 </ul>
 </nav>
 <p>One of the main objects for acoustic scattering calculations within <em>acoustotreams</em> are
@@ -79,7 +79,7 @@ description treating the whole cluster as a single object.</p>
 can be periodic in one, two, or all three spatial dimensions. The unit cell of those
 lattices can consist of an arbitrary number of objects described by the acoustic T-matrix.</p>
 <section id="spheres">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Spheres</a><a class="headerlink" href="#spheres" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Spheres</a><a class="headerlink" href="#spheres" title="Link to this heading">¶</a></h2>
 <p>It’s possible to calculate the acoustic T-matrix of a single sphere with the
 method <a class="reference internal" href="generated/acoustotreams.AcousticTMatrix.sphere.html#acoustotreams.AcousticTMatrix.sphere" title="acoustotreams.AcousticTMatrix.sphere"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sphere()</span></code></a>. We start by defining the relevant parameters for
 our calculation and creating the acoustic T-matrices themselves.</p>
@@ -153,27 +153,9 @@ the direction of incidence of the plane wave.</p>
 </pre></div>
 </div>
 <p>(<a class="reference download internal" download="" href="_downloads/4db7961589a8b659add9c6c298e2527d/sphere.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
-<figure class="align-default" id="id1">
-<img alt="_images/sphere_00.png" class="plot-directive" src="_images/sphere_00.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/52e562cc40063e6ef05b7c7e67b2ea4e/sphere_00.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/bd7d73d852b26a8cb35cbd4142beabf2/sphere_00.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/c7dc48401d822a0d0231feefb49e6be0/sphere_00.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-default" id="id2">
-<img alt="_images/sphere_01.png" class="plot-directive" src="_images/sphere_01.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/79a4c8fc0c597ec4b17cb0217e577c94/sphere_01.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/6fc09d7755ba06d7cdf21b8d274dc823/sphere_01.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/c85dbbbb06420035806cf473714897f3/sphere_01.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-default" id="id3">
-<img alt="_images/sphere_02.png" class="plot-directive" src="_images/sphere_02.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/8aa704ce7f3ce45294f86203390f8207/sphere_02.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/d8b01c0b4f7fb65c0b873a7fdd10b8df/sphere_02.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/3bc59ffea42e4c5216fb4d8bba250665/sphere_02.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="clusters">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
 <p>Multi-scattering calculations in a cluster of particles is a typical application of the
 T-matrix method. We first construct an object from two spheres. Using the definition
 of the relevant parameters</p>
@@ -245,27 +227,9 @@ produces consistent results.</p>
 </pre></div>
 </div>
 <p>(<a class="reference download internal" download="" href="_downloads/2f373c568a269e5847e11c539f9854f1/cluster.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
-<figure class="align-default" id="id4">
-<img alt="_images/cluster_00.png" class="plot-directive" src="_images/cluster_00.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/2d70b960b10543dbf42f5180b53390c3/cluster_00.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/21f0d29d0db8bd6dc2cac04d47c0373b/cluster_00.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/f2d7b29113e53a8fa86281f2bad2864d/cluster_00.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-default" id="id5">
-<img alt="_images/cluster_01.png" class="plot-directive" src="_images/cluster_01.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/38af1dd86eb6395b02c93bd1b720272b/cluster_01.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/f110122b19df52ae270a0170462ea4bd/cluster_01.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/9438c10ad8ba027dc02e23b82fd9af95/cluster_01.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-default" id="id6">
-<img alt="_images/cluster_02.png" class="plot-directive" src="_images/cluster_02.png" />
-<figcaption>
-<p><span class="caption-text">(<a class="reference download internal" download="" href="_downloads/7437a33ef16f9bad5ddf5c803524cfd1/cluster_02.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/331261f30119205b6659f59305c68f8a/cluster_02.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/e4869743550d56189c46b2ac806f5098/cluster_02.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="one-dimensional-arrays-along-z">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">One-dimensional arrays (along z)</a><a class="headerlink" href="#one-dimensional-arrays-along-z" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">One-dimensional arrays (along z)</a><a class="headerlink" href="#one-dimensional-arrays-along-z" title="Link to this heading">¶</a></h2>
 <p>Next, we turn to systems that are periodic in the z direction. We calculate the
 scattering from an array of spheres. Intentionally, we choose a unit cell with two
 different spheres that overlap along the z direction, but are not placed exactly along
@@ -341,17 +305,10 @@ however, in the dipole approximation.</p>
     <span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="_downloads/167b5e31fa3a68f5d93cabfb9bd977c6/chain.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/bf47e6360cc3c1298282f0c4cc69fa4e/chain_00_00.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/2f2fae118cd3f895e1321ad050a8f194/chain_00_00.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/cf7fc7d74c22cb0a6dabce20cc395747/chain_00_00.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/chain_00_00.png" class="plot-directive" src="_images/chain_00_00.png" />
-</figure>
-<p>(<a class="reference download internal" download="" href="_downloads/9a4bf3bc8a801519df39c666ebcb77f2/chain_01_00.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/7184baad129dc322f23ed641688fb808/chain_01_00.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/4224e20f7e959e59df483dc2649f854f/chain_01_00.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/chain_01_00.png" class="plot-directive" src="_images/chain_01_00.png" />
-</figure>
+<p>(<a class="reference download internal" download="" href="_downloads/167b5e31fa3a68f5d93cabfb9bd977c6/chain.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="two-dimensional-arrays-in-the-xy-plane">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Two-dimensional arrays (in the xy plane)</a><a class="headerlink" href="#two-dimensional-arrays-in-the-xy-plane" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Two-dimensional arrays (in the xy plane)</a><a class="headerlink" href="#two-dimensional-arrays-in-the-xy-plane" title="Link to this heading">¶</a></h2>
 <p>The case of periodicity in two directions is similar to the case of the previous section
 with one-dimensional periodicity. Here, by convention the array has to be in the
 xy plane.</p>
@@ -398,13 +355,10 @@ previous examples. Most importantly we changed the value of the variable <code c
 to an instance of a two-dimensional <code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code> and set <code class="code docutils literal notranslate"><span class="pre">kpar</span></code>
 accordingly. Most other changes are just resulting from the change of the coordinate
 system.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/f216cf50362cf137998d2ee51a62cc67/grid.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/dd07a01a7da20d4b4fde091940f7e362/grid.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/0e3aca70d4197ed9a5bfb9fa90c32a1b/grid.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/811c139d308d87e5a431df9787a62b20/grid.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
-<figure class="align-default">
-<img alt="_images/grid.png" class="plot-directive" src="_images/grid.png" />
-</figure>
+<p>(<a class="reference download internal" download="" href="_downloads/f216cf50362cf137998d2ee51a62cc67/grid.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
 </section>
 <section id="three-dimensional-arrays">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Three-dimensional arrays</a><a class="headerlink" href="#three-dimensional-arrays" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Three-dimensional arrays</a><a class="headerlink" href="#three-dimensional-arrays" title="Link to this heading">¶</a></h2>
 <p>In a three-dimensional lattice we are mostly concerned with finding eigenmodes of a
 crystal. We want to restrict the example to calculating modes at the gamma point in
 reciprocal space. The calculated system consists of a single sphere in a cubic lattice.
@@ -495,14 +449,14 @@ additional modes at higher frequencies in the chosen range.</p>
         <li class="right" >
           <a href="operators.html" title="Operators"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2024, Nikita Ustimenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
     </div>
   </body>
 </html>

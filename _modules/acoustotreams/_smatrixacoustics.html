@@ -4,14 +4,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._smatrixacoustics &#8212; acoustotreams 0.2.5 documentation</title>
+    <title>acoustotreams._smatrixacoustics &#8212; acoustotreams 0.2.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=cb850272"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/documentation_options.js?v=29c81e07"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._smatrixacoustics</a></li> 
       </ul>
@@ -116,7 +116,7 @@
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Collection of four acoustic S-matrices with a scalar plane wave basis.</span>
 
 <span class="sd">    The S-matrix describes the scattering of incoming into outgoing modes using a plane</span>
-<span class="sd">    wave basis, with functions :func:`acoustotreams.spw_Psi`. The primary</span>
+<span class="sd">    wave basis, with functions :func:`acoustotreams.speical.spw_Psi`. The primary</span>
 <span class="sd">    direction of propagation is parallel or anti-parallel to the z-axis. The scattering</span>
 <span class="sd">    object itself is infinitely extended in the x- and y-directions. The S-matrix is</span>
 <span class="sd">    divided into four submatrices :math:`S_{\uparrow \uparrow}`,</span>
@@ -312,8 +312,8 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            r (float, (3,)-array): Translation vector.</span>
-<span class="sd">            k0 (float): Wave number in air.</span>
 <span class="sd">            basis (ScalarPlaneWaveBasis): Basis definition.</span>
+<span class="sd">            k0 (float): Wave number in air.</span>
 <span class="sd">            material (AcousticMaterial, optional): Material definition.</span>
 
 <span class="sd">        Returns:</span>
@@ -453,7 +453,7 @@
 <span class="sd">        illumination and direction.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            illu (complex, array_like): Expansion coefficients for the incoming wave</span>
+<span class="sd">            illu (complex, array_like): Expansion coefficients of the incoming wave</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple</span>
@@ -618,14 +618,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._smatrixacoustics</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2024, Nikita Ustimenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
     </div>
   </body>
 </html>

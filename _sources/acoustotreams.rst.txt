@@ -26,9 +26,21 @@ higher-level classes and functions.
    ~acoustotreams.scw
    ~acoustotreams.spw
 
-Finally, a module for calculating scattering coefficients.
+Finally, a module for calculating scattering and Fresnel coefficients.
 
 .. autosummary::
    :toctree: generated/
 
    ~acoustotreams.coeffs
+
+Subpackage
+==========
+
+This subpackages allows a low-level access to the implementation of
+mathematical functions
+
+.. autosummary::
+   :toctree: generated/
+   :template: bare-module
+
+   ~acoustotreams.special

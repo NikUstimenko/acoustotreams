@@ -5,15 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.AcousticSMatrices &#8212; acoustotreams 0.2.5 documentation</title>
+    <title>acoustotreams.AcousticSMatrices &#8212; acoustotreams 0.2.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=cb850272"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/documentation_options.js?v=29c81e07"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.AcousticSMatrix.transpose.html" title="acoustotreams.AcousticSMatrix.transpose"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticSMatrices</a></li> 
       </ul>
@@ -57,10 +57,10 @@
 <h1>acoustotreams.AcousticSMatrices<a class="headerlink" href="#acoustotreams-acousticsmatrices" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="acoustotreams.AcousticSMatrices">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">acoustotreams.</span></span><span class="sig-name descname"><span class="pre">AcousticSMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smats</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_smatrixacoustics.html#AcousticSMatrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticSMatrices" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">acoustotreams.</span></span><span class="sig-name descname"><span class="pre">AcousticSMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smats</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_smatrixacoustics.html#AcousticSMatrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticSMatrices" title="Link to this definition">¶</a></dt>
 <dd><p>Collection of four acoustic S-matrices with a scalar plane wave basis.</p>
 <p>The S-matrix describes the scattering of incoming into outgoing modes using a plane
-wave basis, with functions <a class="reference internal" href="acoustotreams.spw_Psi.html#acoustotreams.spw_Psi" title="acoustotreams.spw_Psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.spw_Psi()</span></code></a>. The primary
+wave basis, with functions <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.speical.spw_Psi()</span></code>. The primary
 direction of propagation is parallel or anti-parallel to the z-axis. The scattering
 object itself is infinitely extended in the x- and y-directions. The S-matrix is
 divided into four submatrices <span class="math notranslate nohighlight">\(S_{\uparrow \uparrow}\)</span>,
@@ -172,6 +172,12 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__ge__.html#acoustotreams.AcousticSMatrices.__ge__" title="acoustotreams.AcousticSMatrices.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a>(value, /)</p></td>
 <td><p>Return self&gt;=value.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__gt__.html#acoustotreams.AcousticSMatrices.__gt__" title="acoustotreams.AcousticSMatrices.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a>(value, /)</p></td>
+<td><p>Return self&gt;value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__str__.html#acoustotreams.AcousticSMatrices.__str__" title="acoustotreams.AcousticSMatrices.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a>()</p></td>
+<td><p>Return str(self).</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__le__.html#acoustotreams.AcousticSMatrices.__le__" title="acoustotreams.AcousticSMatrices.__le__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__le__</span></code></a>(value, /)</p></td>
 <td><p>Return self&lt;=value.</p></td>
 </tr>
@@ -180,12 +186,6 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__lt__.html#acoustotreams.AcousticSMatrices.__lt__" title="acoustotreams.AcousticSMatrices.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a>(value, /)</p></td>
 <td><p>Return self&lt;value.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__str__.html#acoustotreams.AcousticSMatrices.__str__" title="acoustotreams.AcousticSMatrices.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a>()</p></td>
-<td><p>Return str(self).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__gt__.html#acoustotreams.AcousticSMatrices.__gt__" title="acoustotreams.AcousticSMatrices.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a>(value, /)</p></td>
-<td><p>Return self&gt;value.</p></td>
 </tr>
 </tbody>
 </table>
@@ -256,14 +256,14 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
         <li class="right" >
           <a href="acoustotreams.AcousticSMatrix.transpose.html" title="acoustotreams.AcousticSMatrix.transpose"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticSMatrices</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2024, Nikita Ustimenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
     </div>
   </body>
 </html>

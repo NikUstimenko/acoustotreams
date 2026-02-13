@@ -1,0 +1,6 @@
+acoustotreams.special.ssw\_Psi
+==============================
+
+.. currentmodule:: acoustotreams.special
+
+.. autofunction:: ssw_Psi

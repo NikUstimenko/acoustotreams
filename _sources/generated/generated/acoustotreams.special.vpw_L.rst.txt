@@ -1,0 +1,6 @@
+acoustotreams.special.vpw\_L
+============================
+
+.. currentmodule:: acoustotreams.special
+
+.. autofunction:: vpw_L

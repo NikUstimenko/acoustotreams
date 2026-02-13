@@ -5,14 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Examples &#8212; acoustotreams 0.2.5 documentation</title>
+    <title>Examples &#8212; acoustotreams 0.2.11 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=cb850272"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/documentation_options.js?v=29c81e07"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="gettingstarted.html" title="Getting started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Examples</a></li> 
       </ul>
     </div>  
@@ -60,8 +60,8 @@ The functionality involves three levels: low-level functions, intermediate-level
 and high-level functions and classes.</p>
 <p>The low-level functions implement the underlying mathematical functions, that build
 the foundation of T-matrix calculations. They are mainly imported from
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code>. The first one contains, e.g.,
-the extensions of mathematical functions in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.16.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a>, the
+<a class="reference internal" href="generated/acoustotreams.special.html#module-acoustotreams.special" title="acoustotreams.special"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams.special</span></code></a> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code>. The first one contains the
+mathematical functions related to the scalar waves, while the
 second subpackage contains functions that are associated with computations in lattices.
 All functions necessary in acoustic computations, e.g., the various solutions
 to the Helmholtz equation and their translation coefficients, implemented within
@@ -71,7 +71,7 @@ as they are often needed for T-matrix calculations, e.g., the acoustic Mie coeff
 or the expansion coefficients of scalar plane waves into spherical waves.</p>
 <p>The high-level functionality is more focused on the usability. We attempt to create an
 useful interface to the underlying functions, that reduces redundancy and that is less
-error prone than using the pure functions, while still integrating nicely with <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a>
+error prone than using the pure functions, while still integrating nicely with <a class="reference external" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="(in NumPy v2.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numpy</span></code></a>
 functions. It consists of a combination of different classes and functions. At first,
 there are the different basis sets, that can be used together with other important
 parameters for the calculation, for example the embedding materials or the lattice
@@ -155,13 +155,13 @@ for scalar plane wave solutions.</p>
         <li class="right" >
           <a href="gettingstarted.html" title="Getting started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.11 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Examples</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
     &#169; Copyright 2024, Nikita Ustimenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
     </div>
   </body>
 </html>
