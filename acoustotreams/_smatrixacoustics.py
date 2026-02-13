@@ -241,8 +241,8 @@ class AcousticSMatrices:
 
         Args:
             r (float, (3,)-array): Translation vector.
-            k0 (float): Wave number in air.
             basis (ScalarPlaneWaveBasis): Basis definition.
+            k0 (float): Wave number in air.
             material (AcousticMaterial, optional): Material definition.
 
         Returns:

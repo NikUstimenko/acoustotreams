@@ -200,4 +200,4 @@ from treams.special import(   # noqa: F401
     vpol2car,
     )
 
-from acoustotreams._wavesacoustics import *  # noqa: F401
+from acoustotreams.special._wavesacoustics import *  # noqa: F401
