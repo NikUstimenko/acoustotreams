@@ -6,7 +6,7 @@ setup(
 
     name='acoustotreams',
 
-    version='0.2.13',
+    version='0.2.14',
 
     author='Nikita Ustimenko',
 
@@ -30,13 +30,7 @@ setup(
 
     classifiers=[
 
-        'Programming Language :: Python :: 3.10',
-
         'Programming Language :: Python :: 3.11',
-
-        'Programming Language :: Python :: 3.12',
-
-        'Programming Language :: Python :: 3.13',
 
         'License :: OSI Approved :: MIT License',
 
@@ -44,7 +38,7 @@ setup(
 
     ],
 
-    python_requires='>=3.10,<3.14',
+    python_requires='==3.11',
 
     install_requires=[
         "numpy",
