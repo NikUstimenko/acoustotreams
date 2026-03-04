@@ -218,7 +218,7 @@ class AcousticSMatrices:
     def stack(cls, items):
         """Stack of S-matrices.
 
-        Electromagnetically couple multiple S-matrices in the order given. Before
+        Couple multiple S-matrices in the order given. Before
         coupling it can be checked for matching materials and modes.
 
         Args:
