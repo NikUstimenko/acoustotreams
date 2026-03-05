@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.max
+================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.max

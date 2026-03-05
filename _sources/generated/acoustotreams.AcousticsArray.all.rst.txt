@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.all
+================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.all

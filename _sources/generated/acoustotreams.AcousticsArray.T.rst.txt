@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.T
+==============================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticsArray.T

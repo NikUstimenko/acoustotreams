@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.\_\_mul\_\_
+==========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.__mul__

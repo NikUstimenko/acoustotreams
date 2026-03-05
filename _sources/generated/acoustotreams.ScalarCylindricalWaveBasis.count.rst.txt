@@ -1,0 +1,6 @@
+acoustotreams.ScalarCylindricalWaveBasis.count
+==============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarCylindricalWaveBasis.count

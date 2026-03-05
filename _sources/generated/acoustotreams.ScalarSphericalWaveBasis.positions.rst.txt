@@ -1,0 +1,6 @@
+acoustotreams.ScalarSphericalWaveBasis.positions
+================================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: ScalarSphericalWaveBasis.positions

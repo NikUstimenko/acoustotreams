@@ -1,0 +1,4 @@
+acoustotreams.AcousticsArray.permute
+====================================
+
+.. autoattribute:: acoustotreams.AcousticsArray.permute

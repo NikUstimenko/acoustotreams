@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic S-Matrices for plane waves &#8212; acoustotreams 0.2.20 documentation</title>
+    <title>Acoustic S-Matrices for plane waves &#8212; acoustotreams 0.2.21 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=20e0ead2"></script>
+    <script src="_static/documentation_options.js?v=84986ecb"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="tmatrixc.html" title="Acoustic cylindrical T-Matrices"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.20 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic S-Matrices for plane waves</a></li> 
       </ul>
@@ -64,7 +64,7 @@ four parts: the transmission of fields propagating in the positive and negative
 z direction, and the reflection of those fields.</p>
 <section id="slabs">
 <h2>Slabs<a class="headerlink" href="#slabs" title="Link to this heading">¶</a></h2>
-<p>The main object for plane wave computations is the class <code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticSMatrices</span></code>
+<p>The main object for plane wave computations is the class <a class="reference internal" href="generated/acoustotreams.AcousticSMatrices.html#acoustotreams.AcousticSMatrices" title="acoustotreams.AcousticSMatrices"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticSMatrices</span></code></a>
 which exactly collects those four individual S-matrices. For simple interfaces and the
 propagation in a homogeneous medium these S-matrices can be obtained analytically.
 Combining these two objects then allows the description of simple slabs.</p>
@@ -84,7 +84,10 @@ Combining these two objects then allows the description of simple slabs.</p>
 </div>
 <p>The setup is fairly simple. The materials are given in order from negative to positive
 z coordinates. We simply loop over the wave number and calculate transmission and reflection.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/84cf580cadc864c840c7f0ade1b766bf/slab.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/84cf580cadc864c840c7f0ade1b766bf/slab.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/93fc35aca3b6f2ef00f4e3ad4ac64804/slab.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/da19021cedf600f15243954146c3fdb7/slab.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/581b313ef2dbd03ffc5d9a0cccc56f5a/slab.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
+<figure class="align-default">
+<img alt="_images/slab.png" class="plot-directive" src="_images/slab.png" />
+</figure>
 </section>
 <section id="from-t-matrix-arrays">
 <h2>From T-matrix arrays<a class="headerlink" href="#from-t-matrix-arrays" title="Link to this heading">¶</a></h2>
@@ -132,7 +135,10 @@ use a simple loop to solve the system for all wave numbers.</p>
 plane wave and the needed S-matrices: a slab, the distance between the
 top interface of the slab to the center of the sphere array, and the array in the
 S-matrix representation itself.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/f9e8c4e90a964ac64d9c669c057d91ef/array_spheres.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/f9e8c4e90a964ac64d9c669c057d91ef/array_spheres.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/240a90d0fccd2e5345fe576948af7feb/array_spheres.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/4eee72b32cd71ad359d279e6b699539e/array_spheres.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/ef97d78308cabf93ad1aa32b78be8a7d/array_spheres.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
+<figure class="align-default">
+<img alt="_images/array_spheres.png" class="plot-directive" src="_images/array_spheres.png" />
+</figure>
 </section>
 <section id="from-cylindrical-t-matrix-gratings">
 <h2>From cylindrical T-matrix gratings<a class="headerlink" href="#from-cylindrical-t-matrix-gratings" title="Link to this heading">¶</a></h2>
@@ -182,7 +188,10 @@ same as in the previous calculation.</p>
 <p>The most important aspect to note here, is that the method
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">from_array()</span></code> implicitly converts the lattice in the zx plane to
 a lattice in the xy plane.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/7077b2112abbec34d4915b184e802ad3/array_spheres_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/7077b2112abbec34d4915b184e802ad3/array_spheres_tmatrixc.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/e90c9dcdc98914794bc553bf135571ee/array_spheres_tmatrixc.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/64b017e48ba2d5915f165b8e48f67fa0/array_spheres_tmatrixc.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/8322ae7abb68f42b5170b80108ad531a/array_spheres_tmatrixc.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
+<figure class="align-default">
+<img alt="_images/array_spheres_tmatrixc.png" class="plot-directive" src="_images/array_spheres_tmatrixc.png" />
+</figure>
 </section>
 <section id="band-structure">
 <h2>Band structure<a class="headerlink" href="#band-structure" title="Link to this heading">¶</a></h2>
@@ -234,7 +243,10 @@ simple loop we can get the band structure for <span class="math notranslate nohi
 </pre></div>
 </div>
 <p>which looks as follows, after a cut on the imaginary part of the <span class="math notranslate nohighlight">\(k_z\)</span> component.</p>
-<p>(<a class="reference download internal" download="" href="_downloads/7483323cc371991c2aa5678bf3bf5d55/band_structure.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="_downloads/7483323cc371991c2aa5678bf3bf5d55/band_structure.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/05534c19169c5006a6012d7e8852f469/band_structure.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/75c697c0dd14b20932f556d60302cce4/band_structure.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/be30de14eb17e1f0fd719a3d1f08258f/band_structure.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
+<figure class="align-default">
+<img alt="_images/band_structure.png" class="plot-directive" src="_images/band_structure.png" />
+</figure>
 </section>
 </section>
 
@@ -301,7 +313,7 @@ simple loop we can get the band structure for <span class="math notranslate nohi
         <li class="right" >
           <a href="tmatrixc.html" title="Acoustic cylindrical T-Matrices"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.20 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic S-Matrices for plane waves</a></li> 
       </ul>

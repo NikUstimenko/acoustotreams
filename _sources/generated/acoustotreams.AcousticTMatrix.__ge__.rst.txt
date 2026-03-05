@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.\_\_ge\_\_
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.__ge__

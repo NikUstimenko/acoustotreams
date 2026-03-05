@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.prod
+==================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.prod

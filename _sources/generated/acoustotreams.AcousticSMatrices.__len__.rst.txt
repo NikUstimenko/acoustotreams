@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.\_\_len\_\_
+===========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.__len__

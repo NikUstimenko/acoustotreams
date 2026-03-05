@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.transpose
+======================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.transpose

@@ -1,0 +1,6 @@
+﻿acoustotreams.translate
+=======================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: translate

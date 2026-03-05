@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.cylinder
+=======================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.cylinder

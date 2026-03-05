@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.\_\_sub\_\_
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.__sub__

@@ -1,0 +1,6 @@
+acoustotreams.ScalarPlaneWaveBasisByUnitVector.bycomp
+=====================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarPlaneWaveBasisByUnitVector.bycomp

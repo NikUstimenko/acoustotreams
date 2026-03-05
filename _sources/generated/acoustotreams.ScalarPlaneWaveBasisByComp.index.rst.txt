@@ -1,0 +1,6 @@
+acoustotreams.ScalarPlaneWaveBasisByComp.index
+==============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarPlaneWaveBasisByComp.index

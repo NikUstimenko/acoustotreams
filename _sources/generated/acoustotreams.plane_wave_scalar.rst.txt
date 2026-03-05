@@ -1,0 +1,6 @@
+﻿acoustotreams.plane\_wave\_scalar
+=================================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: plane_wave_scalar

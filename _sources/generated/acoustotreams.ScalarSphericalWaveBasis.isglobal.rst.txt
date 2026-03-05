@@ -1,0 +1,6 @@
+acoustotreams.ScalarSphericalWaveBasis.isglobal
+===============================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: ScalarSphericalWaveBasis.isglobal

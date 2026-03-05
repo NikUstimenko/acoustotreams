@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.\_\_pow\_\_
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.__pow__

@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.ks
+================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticTMatrix.ks

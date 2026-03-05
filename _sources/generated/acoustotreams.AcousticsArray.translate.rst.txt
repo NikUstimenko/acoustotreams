@@ -1,0 +1,4 @@
+acoustotreams.AcousticsArray.translate
+======================================
+
+.. autoattribute:: acoustotreams.AcousticsArray.translate

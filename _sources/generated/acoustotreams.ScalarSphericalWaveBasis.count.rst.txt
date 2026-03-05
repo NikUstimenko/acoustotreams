@@ -1,0 +1,6 @@
+acoustotreams.ScalarSphericalWaveBasis.count
+============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarSphericalWaveBasis.count

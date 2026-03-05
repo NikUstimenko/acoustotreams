@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.slab
+====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.slab

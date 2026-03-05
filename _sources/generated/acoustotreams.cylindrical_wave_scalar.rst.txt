@@ -1,0 +1,6 @@
+﻿acoustotreams.cylindrical\_wave\_scalar
+=======================================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: cylindrical_wave_scalar

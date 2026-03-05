@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.flatten
+====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.flatten

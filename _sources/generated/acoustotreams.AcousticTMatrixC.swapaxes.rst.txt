@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.swapaxes
+=======================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.swapaxes

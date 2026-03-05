@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.\_\_truediv\_\_
+============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.__truediv__

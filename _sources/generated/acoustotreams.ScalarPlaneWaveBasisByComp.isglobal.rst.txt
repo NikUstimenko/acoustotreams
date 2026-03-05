@@ -1,0 +1,4 @@
+acoustotreams.ScalarPlaneWaveBasisByComp.isglobal
+=================================================
+
+.. autoattribute:: acoustotreams.ScalarPlaneWaveBasisByComp.isglobal

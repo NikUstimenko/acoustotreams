@@ -1,0 +1,6 @@
+acoustotreams.ScalarCylindricalWaveBasis.index
+==============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarCylindricalWaveBasis.index

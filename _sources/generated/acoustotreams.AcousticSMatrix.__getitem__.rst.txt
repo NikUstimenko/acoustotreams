@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.\_\_getitem\_\_
+=============================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.__getitem__

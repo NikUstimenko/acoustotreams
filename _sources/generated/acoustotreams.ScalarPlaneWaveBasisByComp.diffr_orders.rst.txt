@@ -1,0 +1,6 @@
+acoustotreams.ScalarPlaneWaveBasisByComp.diffr\_orders
+======================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarPlaneWaveBasisByComp.diffr_orders

@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.sca
+==================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.sca

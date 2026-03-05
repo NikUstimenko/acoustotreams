@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.cluster
+=====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.cluster

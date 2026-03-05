@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.conjugate
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.conjugate

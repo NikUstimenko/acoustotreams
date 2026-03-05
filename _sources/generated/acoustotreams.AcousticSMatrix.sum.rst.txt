@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.sum
+=================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.sum

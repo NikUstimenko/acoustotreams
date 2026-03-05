@@ -1,0 +1,4 @@
+acoustotreams.AcousticTMatrix.expand
+====================================
+
+.. autoattribute:: acoustotreams.AcousticTMatrix.expand

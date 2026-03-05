@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrix.\_\_repr\_\_
+==========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrix.__repr__

@@ -1,0 +1,6 @@
+acoustotreams.ScalarSphericalWaveBasis.\_\_gt\_\_
+=================================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: ScalarSphericalWaveBasis.__gt__

@@ -1,0 +1,6 @@
+acoustotreams.AcousticMaterial.\_\_ge\_\_
+=========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticMaterial.__ge__

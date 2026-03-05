@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrix.min
+=================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrix.min

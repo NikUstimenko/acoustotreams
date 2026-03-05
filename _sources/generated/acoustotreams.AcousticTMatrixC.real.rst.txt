@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.real
+===================================
+
+.. currentmodule:: acoustotreams
+
+.. autoproperty:: AcousticTMatrixC.real

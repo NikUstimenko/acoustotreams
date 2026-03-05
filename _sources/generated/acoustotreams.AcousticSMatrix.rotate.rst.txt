@@ -1,0 +1,4 @@
+acoustotreams.AcousticSMatrix.rotate
+====================================
+
+.. autoattribute:: acoustotreams.AcousticSMatrix.rotate

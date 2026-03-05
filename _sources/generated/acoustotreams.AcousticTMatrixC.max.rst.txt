@@ -1,0 +1,6 @@
+acoustotreams.AcousticTMatrixC.max
+==================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticTMatrixC.max

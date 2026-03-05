@@ -1,0 +1,6 @@
+acoustotreams.AcousticSMatrices.periodic
+========================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticSMatrices.periodic

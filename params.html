@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.2.20 documentation</title>
+    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.2.21 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=20e0ead2"></script>
+    <script src="_static/documentation_options.js?v=84986ecb"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="intro.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.20 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>
@@ -69,8 +69,8 @@ the phase shift between lattice sites.</p>
 coordinate systems. While being in principle equivalent, for different scenarios it is
 beneficial to use suitable solution sets that represent the waves with sufficient
 precision when truncated to a finite number of modes. The chosen finite number of
-modes is given in the classes <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarSphericalWaveBasis</span></code>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarCylindricalWaveBasis</span></code>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasis</span></code>, which
+modes is given in the classes <a class="reference internal" href="generated/acoustotreams.ScalarSphericalWaveBasis.html#acoustotreams.ScalarSphericalWaveBasis" title="acoustotreams.ScalarSphericalWaveBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarSphericalWaveBasis</span></code></a>,
+<a class="reference internal" href="generated/acoustotreams.ScalarCylindricalWaveBasis.html#acoustotreams.ScalarCylindricalWaveBasis" title="acoustotreams.ScalarCylindricalWaveBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarCylindricalWaveBasis</span></code></a>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasis</span></code>, which
 are all children of the base call <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarBasisSet</span></code>.</p>
 <p>The modes of the spherical basis can are defined by their degree <code class="docutils literal notranslate"><span class="pre">l</span></code>, and the order <code class="docutils literal notranslate"><span class="pre">m</span></code>.
 The basis is then simply the collection of multiple of these modes,
@@ -232,7 +232,7 @@ and the latter through the use of (spherical) Hankel functions of the first kind
 regular modes are finite in the whole space. Thus, they are suitable for describing
 incident modes or to expand a plane wave. The singular modes fulfil the radiation
 condition and as such are used for the scattered fields.</p>
-<p>For the plane wave basis of type (<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code>) only two
+<p>For the plane wave basis of type (<a class="reference internal" href="generated/acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp" title="acoustotreams.ScalarPlaneWaveBasisByComp"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code></a>) only two
 components of the wave vector are given and the third component is only implicitly
 defined by the wave number and the material parameters. The application for this basis
 is mostly within stratified media that are uniform or periodic in the two other
@@ -256,7 +256,7 @@ unit of (inverse) length.</p>
 </section>
 <section id="materials">
 <h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
-<p>For materials there exists the class <code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code>, which holds the values
+<p>For materials there exists the class <a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a>, which holds the values
 of the mass density, longitudinal speed of sound, and transverse speed of sound. The complex material parameters
 are accepted. Absorption corresponds to <span class="math notranslate nohighlight">\(\Im(\rho) &gt; 0\)</span>, <span class="math notranslate nohighlight">\(\Im(c) &lt; 0\)</span>, and <span class="math notranslate nohighlight">\(\Im(c^t) &lt; 0\)</span>, while
 gain corresponds to the opposite signs. The default material is air (room temperature) and can be initialized
@@ -437,7 +437,7 @@ combined and compared.</p>
         <li class="right" >
           <a href="intro.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.20 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>

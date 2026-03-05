@@ -1,0 +1,6 @@
+acoustotreams.AcousticsArray.swapaxes
+=====================================
+
+.. currentmodule:: acoustotreams
+
+.. automethod:: AcousticsArray.swapaxes
