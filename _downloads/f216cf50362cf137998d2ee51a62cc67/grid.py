@@ -62,4 +62,4 @@ ax.annotate(
         color="red" 
     )
 )
-plt.show()
+fig.show()
