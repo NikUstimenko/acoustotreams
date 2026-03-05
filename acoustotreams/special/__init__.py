@@ -17,7 +17,6 @@ Spherical waves
    ssw_Psi
    ssw_psi
    vsw_L
-   vsw_l
    ssw_rPsi
    vsw_rL
    tl_ssw
@@ -32,7 +31,6 @@ Cylindrical waves
    scw_Psi
    scw_psi
    vcw_L
-   vcw_l
    scw_rPsi
    vcw_rL
    tl_scw
