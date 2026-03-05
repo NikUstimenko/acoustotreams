@@ -55,6 +55,7 @@ ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $l_{\\rm max}=1$", "Scattering $l_{\\rm max}=1$"])
 plt.show()
+plt.close(fig)
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
@@ -78,6 +79,7 @@ ax.annotate(
     )
 )
 plt.show()
+plt.close(fig)
 
 fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
 ax.plot(theta, radpattern / np.max(radpattern))
@@ -93,3 +95,4 @@ ax.annotate(
     )
 )
 plt.show()
+plt.close(fig)
