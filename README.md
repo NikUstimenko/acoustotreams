@@ -8,8 +8,6 @@ The package `acoustotreams` adopts the framework of the `treams` package for aco
 
 ## Installation
 
-The version of Python should be 3.10 or 3.11.
-
 ### Installation using pip
 
 To install the package with pip, use
