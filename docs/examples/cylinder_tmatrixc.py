@@ -45,7 +45,7 @@ phi = np.linspace(0, 2 * np.pi, 301)
 radpattern = np.zeros(len(phi))
 def compute_radpattern(i):
     n = [np.cos(phi[i]), np.sin(phi[i]), 0]
-    return 0.5 * np.real(sca.pamplitudeff(n) * np.conjugate(sca.vamplitudeff(n)[0]))
+    return np.abs(sca.pamplitudeff(n))**2
 radpattern = Parallel(n_jobs=-1)(
     delayed(compute_radpattern)(i) for i in range(len(phi))
 )
@@ -58,7 +58,7 @@ ax.plot(k0s * 343 / (2 * np.pi) / 1000, xw_sca_mmax0, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $m_{\\rm max}=1$", "Scattering $m_{\\rm max}=1$"])
-fig.show()
+plt.show()
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
@@ -96,4 +96,4 @@ ax.annotate(
         lw=3
     )
 )
-fig.show()
+plt.show()

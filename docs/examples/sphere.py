@@ -43,7 +43,7 @@ theta = np.linspace(0, 2 * np.pi, 301)
 radpattern = np.zeros(len(theta))
 def compute_radpattern(i):
     n = [np.sin(theta[i]), 0, np.cos(theta[i])]
-    return 0.5 * np.real(sca.pamplitudeff(n) * np.conjugate(sca.vamplitudeff(n)[0]))
+    return np.abs(sca.pamplitudeff(n))**2
 radpattern = Parallel(n_jobs=-1)(delayed(compute_radpattern)(i) for i in range(len(theta)))
 
 fig, ax = plt.subplots()
@@ -54,7 +54,7 @@ ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca_lmax1, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $l_{\\rm max}=1$", "Scattering $l_{\\rm max}=1$"])
-fig.show()
+plt.show()
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
@@ -77,7 +77,7 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
+plt.show()
 
 fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
 ax.plot(theta, radpattern / np.max(radpattern))
@@ -92,4 +92,4 @@ ax.annotate(
         lw=3
     )
 )
-fig.show()
+plt.show()

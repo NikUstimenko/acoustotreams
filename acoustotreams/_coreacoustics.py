@@ -1102,8 +1102,8 @@ class AcousticsArray(util.AnnotatedArray):
     """Velocity field evaluation matrix, see also :class:`acoustotreams.VField`."""
     pamplitudeff = op.OperatorAttribute(opa.PAmplitudeFF)
     """Far-field amplitude of pressure field evaluation matrix, see also :class:`acoustotreams.PAmplitudeFF`."""
-    vamplitudeff = op.OperatorAttribute(opa.VAmplitudeFF)
-    """Far-field amplitude of velocity field evaluation matrix, see also :class:`acoustotreams.VAmplitudeFF`."""
+    #vamplitudeff = op.OperatorAttribute(opa.VAmplitudeFF)
+    #"""Far-field amplitude of velocity field evaluation matrix, see also :class:`acoustotreams.VAmplitudeFF`."""
     expand = op.OperatorAttribute(opa.Expand)
     """Expansion matrix, see also :class:`acoustotreams.Expand`."""
     expandlattice = op.OperatorAttribute(opa.ExpandLattice)

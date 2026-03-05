@@ -274,7 +274,7 @@ def vsw_L(l, m, kr, theta, phi):
      ) * sc.vsh_Y(l, m, theta, phi).T * sc.spherical_hankel1(l, kr) / kr) * (-1.0j)
 
 
-def vsw_l(l, m, x, y, z, theta, phi, k):
+#def vsw_l(l, m, x, y, z, theta, phi, k):
      r"""Far-field amplitude of singular longitudinal vector spherical wave l
 
      Defined by
@@ -408,7 +408,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
          )
      )
 
-def vcw_l(kz, m, x, y, phi, z, krho, k):
+#def vcw_l(kz, m, x, y, phi, z, krho, k):
      r"""Far-field amplitude of longitudinal singular vector cylindrical wave l
 
      Defined by
