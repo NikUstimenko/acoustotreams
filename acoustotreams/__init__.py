@@ -111,7 +111,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.2.20"
+_version__ = "0.2.21"
 
 from treams.misc import(  # noqa: F401,
     wave_vec_z,
@@ -157,7 +157,6 @@ from acoustotreams._operatorsacoustics import (  # noqa: F401
     PField,
     VField,
     PAmplitudeFF,
-    VAmplitudeFF,
     Expand,
     ExpandLattice,
     Permute,
@@ -166,7 +165,6 @@ from acoustotreams._operatorsacoustics import (  # noqa: F401
     vfield,
     pfield,
     pamplitudeff,
-    vamplitudeff,
     expand,
     expandlattice,
     permute,
