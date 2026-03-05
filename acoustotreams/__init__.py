@@ -50,7 +50,6 @@ Operators
    pfield
    vfield
    pamplitudeff
-   vamplitudeff
    expand
    expandlattice
    permute
@@ -112,7 +111,7 @@ Functions imported from treams.special, treams.misc, and treams.lattice
 
 """
 
-_version__ = "0.2.18"
+_version__ = "0.2.19"
 
 from treams.misc import(  # noqa: F401,
     wave_vec_z,
