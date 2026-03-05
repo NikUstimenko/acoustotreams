@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrices.\_\_repr\_\_
-============================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrices.__repr__

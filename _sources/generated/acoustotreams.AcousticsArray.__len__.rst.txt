@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_len\_\_
-========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__len__

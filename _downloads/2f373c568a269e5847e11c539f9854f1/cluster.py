@@ -70,7 +70,7 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
+plt.show()
 
 
 tm_global = tm.expand(acoustotreams.ScalarSphericalWaveBasis.default(10))
@@ -112,7 +112,7 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
+plt.show()
 
 inc = acoustotreams.plane_wave_scalar([k0, 0, 0], k0=tm.k0, material=tm.material)
 tm_rotate = tm_global.rotate(0, np.pi / 2)
@@ -153,4 +153,4 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
+plt.show()

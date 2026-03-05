@@ -1,4 +1,0 @@
-acoustotreams.AcousticsArray.expandlattice
-==========================================
-
-.. autoattribute:: acoustotreams.AcousticsArray.expandlattice

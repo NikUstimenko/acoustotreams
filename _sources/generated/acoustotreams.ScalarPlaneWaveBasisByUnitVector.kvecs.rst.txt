@@ -1,6 +1,0 @@
-acoustotreams.ScalarPlaneWaveBasisByUnitVector.kvecs
-====================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarPlaneWaveBasisByUnitVector.kvecs

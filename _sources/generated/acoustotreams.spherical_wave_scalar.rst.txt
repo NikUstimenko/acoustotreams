@@ -1,6 +1,0 @@
-﻿acoustotreams.spherical\_wave\_scalar
-=====================================
-
-.. currentmodule:: acoustotreams
-
-.. autofunction:: spherical_wave_scalar

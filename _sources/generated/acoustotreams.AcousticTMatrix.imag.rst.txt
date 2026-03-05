@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrix.imag
-==================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticTMatrix.imag

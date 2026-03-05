@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_array\_function\_\_
-====================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__array_function__

@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.krhost
-=====================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticMaterial.krhost

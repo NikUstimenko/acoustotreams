@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.diagonal
-======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrix.diagonal

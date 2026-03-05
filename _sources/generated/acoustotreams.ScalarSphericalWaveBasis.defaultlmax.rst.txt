@@ -1,6 +1,0 @@
-acoustotreams.ScalarSphericalWaveBasis.defaultlmax
-==================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarSphericalWaveBasis.defaultlmax

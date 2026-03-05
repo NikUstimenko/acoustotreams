@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrixC.shape
-====================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticTMatrixC.shape

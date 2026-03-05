@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrices.double
-======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrices.double

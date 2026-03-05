@@ -1,6 +1,0 @@
-acoustotreams.ScalarPlaneWaveBasisByUnitVector.\_\_eq\_\_
-=========================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarPlaneWaveBasisByUnitVector.__eq__

@@ -1,6 +1,0 @@
-﻿acoustotreams.permute
-=====================
-
-.. currentmodule:: acoustotreams
-
-.. autofunction:: permute

@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.shape
-==================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticsArray.shape

@@ -1,6 +1,0 @@
-acoustotreams.ScalarCylindricalWaveBasis.defaultmmax
-====================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarCylindricalWaveBasis.defaultmmax

@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.real
-=================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticsArray.real

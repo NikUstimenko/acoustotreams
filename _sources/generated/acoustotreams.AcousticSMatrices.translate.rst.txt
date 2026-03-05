@@ -1,4 +1,0 @@
-acoustotreams.AcousticSMatrices.translate
-=========================================
-
-.. autoattribute:: acoustotreams.AcousticSMatrices.translate

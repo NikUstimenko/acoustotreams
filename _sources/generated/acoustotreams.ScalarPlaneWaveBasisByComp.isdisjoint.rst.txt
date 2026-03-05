@@ -1,6 +1,0 @@
-acoustotreams.ScalarPlaneWaveBasisByComp.isdisjoint
-===================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarPlaneWaveBasisByComp.isdisjoint

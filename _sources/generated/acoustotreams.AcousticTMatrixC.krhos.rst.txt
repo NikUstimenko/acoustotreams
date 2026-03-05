@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrixC.krhos
-====================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticTMatrixC.krhos

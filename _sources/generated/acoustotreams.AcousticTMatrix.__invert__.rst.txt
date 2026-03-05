@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrix.\_\_invert\_\_
-============================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticTMatrix.__invert__

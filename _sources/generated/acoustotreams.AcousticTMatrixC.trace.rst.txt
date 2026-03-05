@@ -1,6 +1,0 @@
-acoustotreams.AcousticTMatrixC.trace
-====================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticTMatrixC.trace

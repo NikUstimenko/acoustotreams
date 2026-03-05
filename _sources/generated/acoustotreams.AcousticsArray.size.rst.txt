@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.size
-=================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticsArray.size

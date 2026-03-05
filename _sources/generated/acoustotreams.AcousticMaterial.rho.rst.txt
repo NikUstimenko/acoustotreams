@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.rho
-==================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticMaterial.rho

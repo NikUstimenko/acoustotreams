@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.swapaxes
-======================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticSMatrix.swapaxes

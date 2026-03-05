@@ -1,6 +1,0 @@
-acoustotreams.AcousticMaterial.isshear
-======================================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticMaterial.isshear

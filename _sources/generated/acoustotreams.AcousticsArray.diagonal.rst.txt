@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.diagonal
-=====================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.diagonal

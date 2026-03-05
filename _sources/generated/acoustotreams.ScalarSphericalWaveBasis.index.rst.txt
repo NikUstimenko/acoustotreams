@@ -1,6 +1,0 @@
-acoustotreams.ScalarSphericalWaveBasis.index
-============================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarSphericalWaveBasis.index

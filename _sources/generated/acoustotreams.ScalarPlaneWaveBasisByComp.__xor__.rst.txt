@@ -1,6 +1,0 @@
-acoustotreams.ScalarPlaneWaveBasisByComp.\_\_xor\_\_
-====================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarPlaneWaveBasisByComp.__xor__

@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_matmul\_\_
-===========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__matmul__

@@ -1,6 +1,0 @@
-acoustotreams.ScalarCylindricalWaveBasis.defaultdim
-===================================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: ScalarCylindricalWaveBasis.defaultdim

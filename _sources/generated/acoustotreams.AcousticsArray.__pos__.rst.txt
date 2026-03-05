@@ -1,6 +1,0 @@
-acoustotreams.AcousticsArray.\_\_pos\_\_
-========================================
-
-.. currentmodule:: acoustotreams
-
-.. automethod:: AcousticsArray.__pos__

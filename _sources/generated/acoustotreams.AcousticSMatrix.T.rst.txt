@@ -1,6 +1,0 @@
-acoustotreams.AcousticSMatrix.T
-===============================
-
-.. currentmodule:: acoustotreams
-
-.. autoproperty:: AcousticSMatrix.T

@@ -1,4 +1,0 @@
-acoustotreams.AcousticsArray.expand
-===================================
-
-.. autoattribute:: acoustotreams.AcousticsArray.expand
