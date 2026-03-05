@@ -54,7 +54,7 @@ ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca_lmax1, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $l_{\\rm max}=1$", "Scattering $l_{\\rm max}=1$"])
-plt.show()
+fig.show()
 plt.close(fig)
 
 fig, ax = plt.subplots()
@@ -78,7 +78,7 @@ ax.annotate(
         color="red" 
     )
 )
-plt.show()
+fig.show()
 plt.close(fig)
 
 fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
@@ -94,5 +94,5 @@ ax.annotate(
         lw=3
     )
 )
-plt.show()
+fig.show()
 plt.close(fig)
