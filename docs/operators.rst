@@ -547,12 +547,12 @@ the velocity field :math:`\mathbf v` in Cartesian coordinates can be computed.
 Evaluate the far-field amplitude
 ================================
 
-Similarly, we can also calculate the far-field amplitudes of the scattered pressure and velocity fields
-defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0` and :math:`\mathbf v = \frac{\mathrm e^{\mathrm i k r}}{r}\mathbf v_0` for spherical waves,
-and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0` and :math:`\mathbf v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\mathbf v_0`
-for cylindrical waves. For a singular spherical wave, the amplitudes :math:`p_0` and :math:`\mathbf v_0` are calculated
-using :func:`acoustotreams.special.ssw_psi` and :func:`acoustotreams.special.vsw_l`, respectively; for a singular cylindrical wave, 
-using :func:`acoustotreams.special.scw_psi` and :func:`acoustotreams.special.vcw_l`.
+Similarly, we can also calculate the far-field amplitudes of the scattered pressure field
+defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_{FF}` for spherical waves,
+and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_{FF}`
+for cylindrical waves. For a singular spherical wave, the amplitude :math:`p_0` is calculated
+using :func:`acoustotreams.special.ssw_psi`; for a singular cylindrical wave, 
+using :func:`acoustotreams.special.scw_psi`.
 
 .. doctest::
 
@@ -561,10 +561,3 @@ using :func:`acoustotreams.special.scw_psi` and :func:`acoustotreams.special.vcw
     AcousticsArray(
         [-0.48860251+0.j],
     )
-    >>> sssw.vamplitudeff([0, 0, 1])
-    AcousticsArray(
-        [-0.00109577+0.j  0.+0.j  0.+0.j],
-    )
-
-Note that :math:`v_0` is computed in spherical coordinates for the spherical wave basis and
-cylindrical coordinates for the cylindrical wave basis.
