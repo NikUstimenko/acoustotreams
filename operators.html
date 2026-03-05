@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Operators &#8212; acoustotreams 0.2.22 documentation</title>
+    <title>Operators &#8212; acoustotreams 0.2.21 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=b360e4a1"></script>
+    <script src="_static/documentation_options.js?v=84986ecb"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acousticsarray.html" title="Acoustics-aware arrays"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.22 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Operators</a></li> 
       </ul>
@@ -538,19 +538,25 @@ the velocity field <span class="math notranslate nohighlight">\(\mathbf v\)</spa
 </section>
 <section id="evaluate-the-far-field-amplitude">
 <h2>Evaluate the far-field amplitude<a class="headerlink" href="#evaluate-the-far-field-amplitude" title="Link to this heading">¶</a></h2>
-<p>Similarly, we can also calculate the far-field amplitudes of the scattered pressure field
-defined as <span class="math notranslate nohighlight">\(p = \frac{\mathrm e^{\mathrm i k r}}{r}p_{FF}\)</span> for spherical waves,
-and <span class="math notranslate nohighlight">\(p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_{FF}\)</span>
-for cylindrical waves. For a singular spherical wave, the amplitude <span class="math notranslate nohighlight">\(p_0\)</span> is calculated
-using <a class="reference internal" href="generated/generated/acoustotreams.special.ssw_psi.html#acoustotreams.special.ssw_psi" title="acoustotreams.special.ssw_psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.ssw_psi()</span></code></a>; for a singular cylindrical wave,
-using <a class="reference internal" href="generated/generated/acoustotreams.special.scw_psi.html#acoustotreams.special.scw_psi" title="acoustotreams.special.scw_psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.scw_psi()</span></code></a>.</p>
+<p>Similarly, we can also calculate the far-field amplitudes of the scattered pressure and velocity fields
+defined as <span class="math notranslate nohighlight">\(p = \frac{\mathrm e^{\mathrm i k r}}{r}p_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf v = \frac{\mathrm e^{\mathrm i k r}}{r}\mathbf v_0\)</span> for spherical waves,
+and <span class="math notranslate nohighlight">\(p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf v = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}\mathbf v_0\)</span>
+for cylindrical waves. For a singular spherical wave, the amplitudes <span class="math notranslate nohighlight">\(p_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf v_0\)</span> are calculated
+using <a class="reference internal" href="generated/generated/acoustotreams.special.ssw_psi.html#acoustotreams.special.ssw_psi" title="acoustotreams.special.ssw_psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.ssw_psi()</span></code></a> and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsw_l()</span></code>, respectively; for a singular cylindrical wave,
+using <a class="reference internal" href="generated/generated/acoustotreams.special.scw_psi.html#acoustotreams.special.scw_psi" title="acoustotreams.special.scw_psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.scw_psi()</span></code></a> and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vcw_l()</span></code>.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">spherical_wave_scalar</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">&quot;singular&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">pamplitudeff</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="go">AcousticsArray(</span>
 <span class="go">    [-0.48860251+0.j],</span>
 <span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sssw</span><span class="o">.</span><span class="n">vamplitudeff</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">AcousticsArray(</span>
+<span class="go">    [-0.00109577+0.j  0.+0.j  0.+0.j],</span>
+<span class="go">)</span>
 </pre></div>
 </div>
+<p>Note that <span class="math notranslate nohighlight">\(v_0\)</span> is computed in spherical coordinates for the spherical wave basis and
+cylindrical coordinates for the cylindrical wave basis.</p>
 </section>
 </section>
 
@@ -617,7 +623,7 @@ using <a class="reference internal" href="generated/generated/acoustotreams.spec
         <li class="right" >
           <a href="acousticsarray.html" title="Acoustics-aware arrays"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.22 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.21 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Operators</a></li> 
       </ul>
