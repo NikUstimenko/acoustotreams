@@ -46,6 +46,9 @@ def compute_radpattern(i):
     return np.abs(sca.pamplitudeff(n))**2
 radpattern = Parallel(n_jobs=-1)(delayed(compute_radpattern)(i) for i in range(len(theta)))
 
+import matplotlib
+matplotlib.use("Agg")
+
 fig, ax = plt.subplots()
 ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext)
 ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca)
@@ -54,8 +57,6 @@ ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca_lmax1, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $l_{\\rm max}=1$", "Scattering $l_{\\rm max}=1$"])
-fig.show()
-plt.close(fig)
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
@@ -78,8 +79,6 @@ ax.annotate(
         color="red" 
     )
 )
-fig.show()
-plt.close(fig)
 
 fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
 ax.plot(theta, radpattern / np.max(radpattern))
@@ -94,5 +93,3 @@ ax.annotate(
         lw=3
     )
 )
-fig.show()
-plt.close(fig)
