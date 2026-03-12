@@ -20,8 +20,8 @@ chain = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinterac
 inc = acoustotreams.plane_wave_scalar([chain.k0, 0, 0], k0=chain.k0, material=chain.material)
 sca = chain.sca(inc)
 
-x = np.linspace(-0.75*period, 0.75*period, 101)
-z = np.linspace(-0.5*period, 0.5*period, 101)
+x = np.linspace(-0.75 * period, 0.75 * period, 101)
+z = np.linspace(-0.5 * period, 0.5 * period, 101)
 def compute_pressure(i, j):
     r = [x[j], 0, z[i]]  
     if chain.valid_points(r, radii):

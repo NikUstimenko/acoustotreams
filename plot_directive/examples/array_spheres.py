@@ -11,7 +11,7 @@ period = 0.025
 lattice = acoustotreams.Lattice.square(period)
 materials = [acoustotreams.AcousticMaterial(1050, 2350), 
             acoustotreams.AcousticMaterial(998, 1497)]
-n = 1497 / 343
+n = 343 / 1497
 radius = 0.0075
 lmax = 3
 
@@ -21,11 +21,11 @@ def compute_coeffs(k0):
 
     spheres = acoustotreams.AcousticTMatrix.sphere(
         lmax, k0, radius, materials
-        ).latticeinteraction.solve(lattice, kpar / n)
+        ).latticeinteraction.solve(lattice, kpar * n)
     
     bmax = 3.1 * 2 * np.pi / period
-    spwb = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders(kpar / n, lattice, bmax)
-    splw = acoustotreams.plane_wave_scalar(kpar / n, k0=k0, basis=spwb, material=materials[1])
+    spwb = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders(kpar * n, lattice, bmax)
+    splw = acoustotreams.plane_wave_scalar(kpar * n, k0=k0, basis=spwb, material=materials[1])
     slab = acoustotreams.AcousticSMatrices.slab(thickness, spwb, k0, [materials[1], material_slab, materials[1]])
     dist = acoustotreams.AcousticSMatrices.propagation([0, 0, radius], spwb, k0, materials[1])
     array = acoustotreams.AcousticSMatrices.from_array(spheres, spwb)

@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoustotreams 0.2.24 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoustotreams 0.2.25 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=dc91f075"></script>
+    <script src="_static/documentation_options.js?v=78e9746c"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="operators.html" title="Operators"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.24 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.25 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -265,8 +265,8 @@ stay in the expression of the fields as scalar spherical waves. This allows the
 calculation of the fields in the domain between the spheres. To compute them accurately, we
 expand the scattered field coefficients in the whole lattice in monopole approximation at each point
 we want to calculate the pressure field.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.75</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_pressure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
     <span class="k">if</span> <span class="n">chain</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
@@ -329,8 +329,8 @@ xy plane.</p>
 <span class="n">inc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">k0</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="n">array</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">array</span><span class="o">.</span><span class="n">material</span><span class="p">)</span>
 <span class="n">sca</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_intensity</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">sca</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
     <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
@@ -449,7 +449,7 @@ additional modes at higher frequencies in the chosen range.</p>
         <li class="right" >
           <a href="operators.html" title="Operators"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.24 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.25 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>

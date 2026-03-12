@@ -101,34 +101,34 @@
          ~AcousticTMatrixC.xw
       
          ~AcousticTMatrixC.__pow__
-         ~AcousticTMatrixC.__array_ufunc__
+         ~AcousticTMatrixC.__ne__
+         ~AcousticTMatrixC.__sub__
+         ~AcousticTMatrixC.__mul__
+         ~AcousticTMatrixC.__rshift__
+         ~AcousticTMatrixC.__add__
+         ~AcousticTMatrixC.__truediv__
+         ~AcousticTMatrixC.__repr__
+         ~AcousticTMatrixC.__invert__
+         ~AcousticTMatrixC.__ge__
          ~AcousticTMatrixC.__array__
-         ~AcousticTMatrixC.__abs__
+         ~AcousticTMatrixC.__lt__
+         ~AcousticTMatrixC.__le__
          ~AcousticTMatrixC.__setitem__
          ~AcousticTMatrixC.__floordiv__
-         ~AcousticTMatrixC.__sub__
-         ~AcousticTMatrixC.__ge__
-         ~AcousticTMatrixC.__or__
-         ~AcousticTMatrixC.__xor__
+         ~AcousticTMatrixC.__array_ufunc__
          ~AcousticTMatrixC.__array_function__
-         ~AcousticTMatrixC.__add__
-         ~AcousticTMatrixC.__and__
-         ~AcousticTMatrixC.__invert__
-         ~AcousticTMatrixC.__neg__
-         ~AcousticTMatrixC.__rshift__
-         ~AcousticTMatrixC.__lshift__
-         ~AcousticTMatrixC.__ne__
-         ~AcousticTMatrixC.__pos__
-         ~AcousticTMatrixC.__repr__
-         ~AcousticTMatrixC.__eq__
          ~AcousticTMatrixC.__matmul__
-         ~AcousticTMatrixC.__divmod__
-         ~AcousticTMatrixC.__gt__
-         ~AcousticTMatrixC.__str__
-         ~AcousticTMatrixC.__mul__
-         ~AcousticTMatrixC.__truediv__
          ~AcousticTMatrixC.__len__
-         ~AcousticTMatrixC.__le__
-         ~AcousticTMatrixC.__lt__
+         ~AcousticTMatrixC.__lshift__
+         ~AcousticTMatrixC.__str__
+         ~AcousticTMatrixC.__eq__
+         ~AcousticTMatrixC.__neg__
+         ~AcousticTMatrixC.__xor__
+         ~AcousticTMatrixC.__or__
+         ~AcousticTMatrixC.__gt__
+         ~AcousticTMatrixC.__abs__
+         ~AcousticTMatrixC.__divmod__
+         ~AcousticTMatrixC.__pos__
+         ~AcousticTMatrixC.__and__
          ~AcousticTMatrixC.__mod__
   

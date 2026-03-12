@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic cylindrical T-Matrices &#8212; acoustotreams 0.2.24 documentation</title>
+    <title>Acoustic cylindrical T-Matrices &#8212; acoustotreams 0.2.25 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=dc91f075"></script>
+    <script src="_static/documentation_options.js?v=78e9746c"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="tmatrix.html" title="Acoustic T-Matrices"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.24 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.25 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic cylindrical T-Matrices</a></li> 
       </ul>
@@ -155,17 +155,17 @@ the wave vector along the z axis <span class="math notranslate nohighlight">\(k_
 <span class="n">period</span> <span class="o">=</span> <span class="mf">0.035</span>
 <span class="n">lattice</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
 <span class="n">kz</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">k0</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">1497</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">343</span> <span class="o">/</span> <span class="mi">1497</span>
 
 <span class="n">spheres</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">radii</span><span class="p">]</span>
-<span class="n">chain</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">spheres</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kz</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">spheres</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Here we also define <span class="math notranslate nohighlight">\(n\)</span> as a “refractive index” for the background medium of the spheres
 with respect to the air and divide <span class="math notranslate nohighlight">\(k_z\)</span> by <span class="math notranslate nohighlight">\(n\)</span> when it is needed. Next, we convert
 this chain in the spherical wave basis to a suitable cylindrical wave basis.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bmax</span> <span class="o">=</span> <span class="mf">3.1</span> <span class="o">*</span> <span class="n">lattice</span><span class="o">.</span><span class="n">reciprocal</span>
-<span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+<span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
 <span class="n">chain_tmc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrixC</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">cwb</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -186,8 +186,8 @@ procedure.</p>
 use the fast cylindrical wave expansion. Inside of the circumscribing cylinders but
 outside of the spheres we can use the method of
 <a class="reference internal" href="tmatrix.html#one-dimensional-arrays-along-z"><span class="std std-ref">One-dimensional arrays (along z)</span></a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.75</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_pressure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
     <span class="k">if</span> <span class="n">chain_tmc</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
@@ -228,12 +228,12 @@ basis as before</p>
 <span class="n">period</span> <span class="o">=</span> <span class="mf">0.035</span>
 <span class="n">lattice</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
 <span class="n">kz</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">k0</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">1497</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">343</span> <span class="o">/</span> <span class="mi">1497</span>
 
 <span class="n">sphere</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radii</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">materials</span><span class="p">)</span>
-<span class="n">chain</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kz</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
 <span class="n">bmax</span> <span class="o">=</span> <span class="mf">3.1</span> <span class="o">*</span> <span class="n">lattice</span><span class="o">.</span><span class="n">reciprocal</span>
-<span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
+<span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
 <span class="n">chain_tmc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrixC</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">cwb</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -270,12 +270,12 @@ relevant cylindrical T-matrices.</p>
 <span class="n">lattice_z</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
 <span class="n">lattice_x</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="n">kz</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">k0</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">1497</span> <span class="o">/</span> <span class="mi">343</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">343</span> <span class="o">/</span> <span class="mi">1497</span>
 
 <span class="n">sphere</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radii</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">materials</span><span class="p">)</span>
-<span class="n">chain</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice_z</span><span class="p">,</span> <span class="n">kz</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice_z</span><span class="p">,</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
 <span class="n">bmax</span> <span class="o">=</span> <span class="mf">3.1</span> <span class="o">*</span> <span class="n">lattice_z</span><span class="o">.</span><span class="n">reciprocal</span>
-<span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice_z</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
+<span class="n">cwb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">diffr_orders</span><span class="p">(</span><span class="n">kz</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">lattice_z</span><span class="p">,</span> <span class="n">bmax</span><span class="p">)</span>
 <span class="n">kzs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">cwb</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span>
 <span class="n">chain_tmc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrixC</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">cwb</span><span class="p">)</span>
 <span class="n">cylinder</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrixC</span><span class="o">.</span><span class="n">cylinder</span><span class="p">(</span><span class="n">kzs</span><span class="p">,</span> <span class="n">mmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radii</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">materials</span><span class="p">)</span>
@@ -296,8 +296,8 @@ defined periodicity. Then, we simply calculate the scattering coefficients.</p>
 </div>
 <p>In the last step, we sum up the scattered fields at each point we want to calculate
 the pressure field.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_pressure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
     <span class="k">if</span> <span class="n">cluster</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
@@ -415,7 +415,7 @@ smallest singular value.</p>
         <li class="right" >
           <a href="tmatrix.html" title="Acoustic T-Matrices"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.24 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.25 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic cylindrical T-Matrices</a></li> 
       </ul>

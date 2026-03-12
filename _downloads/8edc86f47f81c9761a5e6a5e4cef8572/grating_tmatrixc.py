@@ -14,12 +14,12 @@ period = 0.035
 lattice_z = acoustotreams.Lattice(period)
 lattice_x = acoustotreams.Lattice(period, "x")
 kz = 0.1 * k0
-n = 1497 / 343
+n = 343 / 1497
 
 sphere = acoustotreams.AcousticTMatrix.sphere(lmax, k0, radii[0], materials)
-chain = sphere.latticeinteraction.solve(lattice_z, kz / n)
+chain = sphere.latticeinteraction.solve(lattice_z, kz * n)
 bmax = 3.1 * lattice_z.reciprocal
-cwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz / n, mmax, lattice_z, bmax)
+cwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz * n, mmax, lattice_z, bmax)
 kzs = np.unique(cwb.kz)
 chain_tmc = acoustotreams.AcousticTMatrixC.from_array(chain, cwb)
 cylinder = acoustotreams.AcousticTMatrixC.cylinder(kzs, mmax, k0, radii[1], materials)
@@ -34,8 +34,8 @@ inc = acoustotreams.plane_wave_scalar(
 )
 sca = cluster.sca(inc)
 
-x = np.linspace(-0.5*period, 0.5*period, 101)
-z = np.linspace(-0.5*period, 0.5*period, 101)
+x = np.linspace(-0.5 * period, 0.5 * period, 101)
+z = np.linspace(-0.5 * period, 0.5 * period, 101)
 def compute_pressure(i, j):
     r = [x[j], 0, z[i]]  
     if cluster.valid_points(r, radii):

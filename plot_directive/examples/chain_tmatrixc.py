@@ -13,13 +13,13 @@ positions = [[-0.004, 0, -0.0075], [0.004, 0, 0.0075]]
 period = 0.035
 lattice = acoustotreams.Lattice(period)
 kz = 0.1 * k0
-n = 1497 / 343
+n = 343 / 1497
 
 spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
-chain = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz / n)
+chain = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz * n)
 
 bmax = 3.1 * lattice.reciprocal
-cwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz / n, mmax, lattice, bmax, 2, positions)
+cwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz * n, mmax, lattice, bmax, 2, positions)
 chain_tmc = acoustotreams.AcousticTMatrixC.from_array(chain, cwb)
 
 inc = acoustotreams.plane_wave_scalar(
@@ -30,8 +30,8 @@ inc = acoustotreams.plane_wave_scalar(
 sca = chain.sca(inc)
 sca_tmc = chain_tmc.sca(inc)
 
-x = np.linspace(-0.75*period, 0.75*period, 101)
-z = np.linspace(-0.5*period, 0.5*period, 101)
+x = np.linspace(-0.75 * period, 0.75 * period, 101)
+z = np.linspace(-0.5 * period, 0.5 * period, 101)
 def compute_pressure(i, j):
     r = [x[j], 0, z[i]]  
     if chain_tmc.valid_points(r, radii):
@@ -53,9 +53,9 @@ for i, j, result in results:
 
 p = np.concatenate(
     (
-        np.real(p * np.exp(-1j * kz / n * period)),
+        np.real(p * np.exp(-1j * kz * n * period)),
         p.real,
-        np.real(p * np.exp(1j * kz / n * period)),
+        np.real(p * np.exp(1j * kz * n * period)),
     )
 )
 z = np.concatenate((z - period, z, z + period,))
