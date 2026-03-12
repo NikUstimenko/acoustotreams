@@ -21,8 +21,8 @@ array = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinterac
 inc = acoustotreams.plane_wave_scalar([0, 0, array.k0], k0=array.k0, material=array.material)
 sca = array.sca(inc)
 
-x = np.linspace(-0.5*period, 0.5*period, 101)
-z = np.linspace(-0.5*period, 0.5*period, 101)
+x = np.linspace(-0.5 * period, 0.5 * period, 101)
+z = np.linspace(-0.5 * period, 0.5 * period, 101)
 def compute_intensity(i, j, tm, radii, inc, sca):
     r = [x[j], 0, z[i]]  
     if tm.valid_points(r, radii):

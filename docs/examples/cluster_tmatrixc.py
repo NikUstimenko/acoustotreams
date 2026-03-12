@@ -13,12 +13,12 @@ positions = [[-0.004, -0.005, 0], [0.004, 0.005, 0]]
 period = 0.035
 lattice = acoustotreams.Lattice(period)
 kz = 0.1 * k0
-n = 1497 / 343
+n = 343 / 1497
 
 sphere = acoustotreams.AcousticTMatrix.sphere(lmax, k0, radii[0], materials)
-chain = sphere.latticeinteraction.solve(lattice, kz / n)
+chain = sphere.latticeinteraction.solve(lattice, kz * n)
 bmax = 3.1 * lattice.reciprocal
-cwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz / n, mmax, lattice, bmax)
+cwb = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(kz * n, mmax, lattice, bmax)
 chain_tmc = acoustotreams.AcousticTMatrixC.from_array(chain, cwb)
 
 cylinder = acoustotreams.AcousticTMatrixC.cylinder(np.unique(cwb.kz), mmax, k0, radii[1], materials)
@@ -51,9 +51,9 @@ for i, j, result in results:
 
 p = np.concatenate(
     (
-        np.real(p * np.exp(-1j * kz / n * period)),
+        np.real(p * np.exp(-1j * kz * n * period)),
         p.real,
-        np.real(p * np.exp(1j * kz / n * period)),
+        np.real(p * np.exp(1j * kz * n * period)),
     )
 )
 z = np.concatenate((z - period, z, z + period,))
