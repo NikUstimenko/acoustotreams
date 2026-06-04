@@ -6,13 +6,13 @@ setup(
 
     name='acoustotreams',
 
-    version='0.2.26',
+    version='0.2.27',
 
     author='Nikita Ustimenko',
 
     author_email='nikita.ustimenko@kit.edu',
 
-    description='A Python package for acoustic wave scattering based on the T-matrix method',
+    description='A Python package for acoustic-wave scattering based on the T-matrix method',
 
     license = 'MIT',
 
@@ -38,7 +38,7 @@ setup(
 
     ],
 
-    python_requires='>=3.8',
+    python_requires='>=3.8,<3.14',
 
     install_requires=[
         "numpy",
