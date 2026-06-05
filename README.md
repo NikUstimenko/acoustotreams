@@ -3,7 +3,7 @@
 [![Documentation Status](https://img.shields.io/badge/docs-online-brightgreen)](https://NikUstimenko.github.io/acoustotreams)
 ![doctests](https://github.com/NikUstimenko/acoustotreams/actions/workflows/doctests.yml/badge.svg?branch=main)
 ![tests](https://github.com/NikUstimenko/acoustotreams/actions/workflows/tests.yml/badge.svg?branch=main)
-[![coverage](https://img.shields.io/endpoint?url=https://NikUstimenko.github.io/acoustotreams/endpoint.json)](https://htmlpreview.github.io/?https://github.com/NikUstimenko/acoustotreams/blob/htmlcov/index.html)
+[![coverage](https://img.shields.io/endpoint?url=https://NikUstimenko.github.io/acoustotreams/endpoint.json)](https://NikUstimenko.github.io/acoustotreams/)
 
 # acoustotreams
 
