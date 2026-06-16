@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.scw.translate &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.scw.translate &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="acoustotreams.scw.to_ssw.html" title="acoustotreams.scw.to_ssw"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.scw.html" accesskey="U">acoustotreams.scw</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.scw.translate</a></li> 
@@ -58,21 +58,21 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="acoustotreams.scw.translate">
 <span class="sig-prename descclassname"><span class="pre">acoustotreams.scw.</span></span><span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">krr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/scw.html#translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.scw.translate" title="Link to this definition">¶</a></dt>
-<dd><p>Translation coefficient for cylindrical modes.</p>
-<p>Returns the correct translation coefficient from :func:acoustotreams.scw.tl_scw,
-and :func:acoustotreams.scw.tl_scw_r or a combination thereof for the specified mode and
+<dd><p>Translation coefficients for scalar cylindrical modes.</p>
+<p>Returns the correct translation coefficients from :func:acoustotreams.scw.tl_scw
+and :func:acoustotreams.scw.tl_scw_r or combinations thereof for the specified modes and
 basis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>kz</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of the destination mode’s wave vector</p></li>
-<li><p><strong>mu</strong> (<em>int</em><em>, </em><em>array_like</em>) – Order of the destination mode</p></li>
-<li><p><strong>qz</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of the source mode’s wave vector</p></li>
-<li><p><strong>m</strong> (<em>int</em><em>, </em><em>array_like</em>) – Order of the source mode</p></li>
+<li><p><strong>kz</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z-component of the wave vector of output modes.</p></li>
+<li><p><strong>mu</strong> (<em>int</em><em>, </em><em>array_like</em>) – Order of output modes.</p></li>
+<li><p><strong>qz</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z component of the wave vector of input modes.</p></li>
+<li><p><strong>m</strong> (<em>int</em><em>, </em><em>array_like</em>) – Order of input modes.</p></li>
 <li><p><strong>krr</strong> (<em>float</em><em> or </em><em>complex</em><em>, </em><em>array_like</em>) – Translation distance in units of
-the radial component of the wave vector</p></li>
-<li><p><strong>phi</strong> (<em>float</em><em>, </em><em>array_like</em>) – Azimuthal angle</p></li>
-<li><p><strong>z</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z coordinate</p></li>
+the radial component of the wave vector.</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em>, </em><em>array_like</em>) – Azimuthal angle (rad).</p></li>
+<li><p><strong>z</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z-coordinate.</p></li>
 <li><p><strong>singular</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, singular translation coefficients are used,
 else regular coefficients. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
 </ul>
@@ -148,7 +148,7 @@ else regular coefficients. Defaults to <code class="docutils literal notranslate
         <li class="right" >
           <a href="acoustotreams.scw.to_ssw.html" title="acoustotreams.scw.to_ssw"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.scw.html" >acoustotreams.scw</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.scw.translate</a></li> 

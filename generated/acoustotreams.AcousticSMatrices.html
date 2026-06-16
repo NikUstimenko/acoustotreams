@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.AcousticSMatrices &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.AcousticSMatrices &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.AcousticSMatrix.transpose.html" title="acoustotreams.AcousticSMatrix.transpose"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticSMatrices</a></li> 
       </ul>
@@ -58,14 +58,13 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="acoustotreams.AcousticSMatrices">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">acoustotreams.</span></span><span class="sig-name descname"><span class="pre">AcousticSMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smats</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_smatrixacoustics.html#AcousticSMatrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticSMatrices" title="Link to this definition">¶</a></dt>
-<dd><p>Collection of four acoustic S-matrices with a scalar plane wave basis.</p>
-<p>The S-matrix describes the scattering of incoming into outgoing modes using a plane
-wave basis, with functions <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.speical.spw_Psi()</span></code>. The primary
+<dd><p>Collection of four acoustic S-matrices with a scalar plane-wave basis.</p>
+<p>The S-matrix describes the scattering of incoming into outgoing modes using a
+plane-wave basis, given by functions <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.speical.spw_Psi()</span></code>. The primary
 direction of propagation is parallel or anti-parallel to the z-axis. The scattering
-object itself is infinitely extended in the x- and y-directions. The S-matrix is
-divided into four submatrices <span class="math notranslate nohighlight">\(S_{\uparrow \uparrow}\)</span>,
-<span class="math notranslate nohighlight">\(S_{\uparrow \downarrow}\)</span>, <span class="math notranslate nohighlight">\(S_{\downarrow \uparrow}\)</span>, and
-<span class="math notranslate nohighlight">\(S_{\downarrow \downarrow}\)</span>:</p>
+structure itself is infinitely elongated in the x- and y-directions. The S-matrix
+contains four blocks <span class="math notranslate nohighlight">\(S_{\uparrow \uparrow}\)</span>,:math:<cite>S_{uparrow downarrow}</cite>,
+<span class="math notranslate nohighlight">\(S_{\downarrow \uparrow}\)</span>, and <span class="math notranslate nohighlight">\(S_{\downarrow \downarrow}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}S = \begin{pmatrix}
     S_{\uparrow \uparrow} &amp; S_{\uparrow \downarrow} \\
@@ -74,18 +73,18 @@ divided into four submatrices <span class="math notranslate nohighlight">\(S_{\u
 <p>These matrices describe the transmission of plane waves propagating into positive
 z-direction, reflection of plane waves into the positive z-direction, reflection of
 plane waves into negative z-direction, and the transmission of plane waves
-propagating in negative z-direction, respectively. Each of those for matrices
-contain different diffraction orders.</p>
-<p>The wave number <code class="xref py py-attr docutils literal notranslate"><span class="pre">k0</span></code> and, if not air, the material <code class="xref py py-attr docutils literal notranslate"><span class="pre">material</span></code> are
-also required.</p>
+propagating in negative z-direction, respectively. Each of these four matrices
+also maps different diffraction orders to one another.</p>
+<p>The wavenumber <code class="xref py py-attr docutils literal notranslate"><span class="pre">k0</span></code> and, if not the air, the material <code class="xref py py-attr docutils literal notranslate"><span class="pre">material</span></code>
+are required.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>smats</strong> (<a class="reference internal" href="acoustotreams.AcousticSMatrix.html#acoustotreams.AcousticSMatrix" title="acoustotreams.AcousticSMatrix"><em>AcousticSMatrix</em></a>) – Acoustic S-matrices.</p></li>
-<li><p><strong>k0</strong> (<em>float</em>) – Wave number in air.</p></li>
-<li><p><strong>basis</strong> (<a class="reference internal" href="acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp" title="acoustotreams.ScalarPlaneWaveBasisByComp"><em>ScalarPlaneWaveBasisByComp</em></a>) – The basis for the S-matrices.</p></li>
-<li><p><strong>material</strong> (<em>tuple</em><em>, </em><a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><em>AcousticMaterial</em></a><em>, </em><em>optional</em>) – Material definition, if a tuple of length
-two is specified, this refers to the materials above and below the S-matrix.</p></li>
+<li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air (rad/m).</p></li>
+<li><p><strong>basis</strong> (<a class="reference internal" href="acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp" title="acoustotreams.ScalarPlaneWaveBasisByComp"><em>ScalarPlaneWaveBasisByComp</em></a>) – Basis for the S-matrices.</p></li>
+<li><p><strong>material</strong> (<em>tuple</em><em>, </em><a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><em>AcousticMaterial</em></a><em>, </em><em>optional</em>) – Material definition. If a tuple of length
+two is specified, it refers to the materials above and below the S-matrix.</p></li>
 </ul>
 </dd>
 </dl>
@@ -143,7 +142,7 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
 <td><p>Band structure calculation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.double.html#acoustotreams.AcousticSMatrices.double" title="acoustotreams.AcousticSMatrices.double"><code class="xref py py-obj docutils literal notranslate"><span class="pre">double</span></code></a>([n])</p></td>
-<td><p>Double the acoustic S-matrix.</p></td>
+<td><p>Double an acoustic S-matrix.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.from_array.html#acoustotreams.AcousticSMatrices.from_array" title="acoustotreams.AcousticSMatrices.from_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_array</span></code></a>(tm, basis)</p></td>
 <td><p>S-matrix from an array of (cylindrical) T-matrices.</p></td>
@@ -155,7 +154,7 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
 <td><p>Planar interface between two media.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.periodic.html#acoustotreams.AcousticSMatrices.periodic" title="acoustotreams.AcousticSMatrices.periodic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">periodic</span></code></a>()</p></td>
-<td><p>Periodic repetition of the S-matrix.</p></td>
+<td><p>Periodic repetition of an S-matrix.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.propagation.html#acoustotreams.AcousticSMatrices.propagation" title="acoustotreams.AcousticSMatrices.propagation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">propagation</span></code></a>(r, basis, k0[, material])</p></td>
 <td><p>S-matrix for the propagation along a distance.</p></td>
@@ -169,23 +168,23 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.tr.html#acoustotreams.AcousticSMatrices.tr" title="acoustotreams.AcousticSMatrices.tr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tr</span></code></a>(illu)</p></td>
 <td><p>Transmittance and reflectance.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__lt__.html#acoustotreams.AcousticSMatrices.__lt__" title="acoustotreams.AcousticSMatrices.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a>(value, /)</p></td>
-<td><p>Return self&lt;value.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__ge__.html#acoustotreams.AcousticSMatrices.__ge__" title="acoustotreams.AcousticSMatrices.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a>(value, /)</p></td>
+<td><p>Return self&gt;=value.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__gt__.html#acoustotreams.AcousticSMatrices.__gt__" title="acoustotreams.AcousticSMatrices.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a>(value, /)</p></td>
 <td><p>Return self&gt;value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__ne__.html#acoustotreams.AcousticSMatrices.__ne__" title="acoustotreams.AcousticSMatrices.__ne__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ne__</span></code></a>(value, /)</p></td>
-<td><p>Return self!=value.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__str__.html#acoustotreams.AcousticSMatrices.__str__" title="acoustotreams.AcousticSMatrices.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a>()</p></td>
+<td><p>Return str(self).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__ge__.html#acoustotreams.AcousticSMatrices.__ge__" title="acoustotreams.AcousticSMatrices.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a>(value, /)</p></td>
-<td><p>Return self&gt;=value.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__lt__.html#acoustotreams.AcousticSMatrices.__lt__" title="acoustotreams.AcousticSMatrices.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a>(value, /)</p></td>
+<td><p>Return self&lt;value.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__le__.html#acoustotreams.AcousticSMatrices.__le__" title="acoustotreams.AcousticSMatrices.__le__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__le__</span></code></a>(value, /)</p></td>
 <td><p>Return self&lt;=value.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__str__.html#acoustotreams.AcousticSMatrices.__str__" title="acoustotreams.AcousticSMatrices.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a>()</p></td>
-<td><p>Return str(self).</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.AcousticSMatrices.__ne__.html#acoustotreams.AcousticSMatrices.__ne__" title="acoustotreams.AcousticSMatrices.__ne__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ne__</span></code></a>(value, /)</p></td>
+<td><p>Return self!=value.</p></td>
 </tr>
 </tbody>
 </table>
@@ -256,7 +255,7 @@ two is specified, this refers to the materials above and below the S-matrix.</p>
         <li class="right" >
           <a href="acoustotreams.AcousticSMatrix.transpose.html" title="acoustotreams.AcousticSMatrix.transpose"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticSMatrices</a></li> 
       </ul>

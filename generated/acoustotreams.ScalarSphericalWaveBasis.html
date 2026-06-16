@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.ScalarSphericalWaveBasis &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.ScalarSphericalWaveBasis &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.ScalarPlaneWaveBasisByComp.permute.html" title="acoustotreams.ScalarPlaneWaveBasisByComp.permute"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarSphericalWaveBasis</a></li> 
       </ul>
@@ -59,22 +59,23 @@
 <dt class="sig sig-object py" id="acoustotreams.ScalarSphericalWaveBasis">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">acoustotreams.</span></span><span class="sig-name descname"><span class="pre">ScalarSphericalWaveBasis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_coreacoustics.html#ScalarSphericalWaveBasis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.ScalarSphericalWaveBasis" title="Link to this definition">¶</a></dt>
 <dd><p>Basis of scalar spherical waves.</p>
-<p>Functions of the spherical wave basis are defined by their angular momentum <code class="docutils literal notranslate"><span class="pre">l</span></code>,
-its projection onto the z-axis <code class="docutils literal notranslate"><span class="pre">m</span></code>. If the basis
-is defined with respect to a single origin it is referred to as “global”, if it
-contains multiple origins it is referred to as “local”. In a local basis an
+<p>Functions of the spherical wave basis are defined by their degree <code class="docutils literal notranslate"><span class="pre">l</span></code>
+and order <code class="docutils literal notranslate"><span class="pre">m</span></code>. If the basis is defined with respect to a single
+expansion center, it is referred to as “global”. If it contains multiple
+expansion centers, it is referred to as “local”. In a local basis, an
 additional position index <code class="docutils literal notranslate"><span class="pre">pidx</span></code> is used to link the modes to one of the
 specified <code class="docutils literal notranslate"><span class="pre">positions</span></code>.</p>
-<p>Spherical waves can be separated into incident and scattered fields. Depending
-on these combinations the basis modes refer to one of the functions :
-func:<cite>~acoustotreams.ssw_rPsi</cite>, <code class="xref py py-func docutils literal notranslate"><span class="pre">ssw_Psi()</span></code>.</p>
+<p>Spherical waves can be separated into regular and singular modes, which
+describe incident and scattered fields, respectively. Therefore,
+the basis modes refer to one of the functions, <a class="reference internal" href="generated/acoustotreams.special.ssw_rPsi.html#acoustotreams.special.ssw_rPsi" title="acoustotreams.special.ssw_rPsi"><code class="xref py py-func docutils literal notranslate"><span class="pre">ssw_rPsi()</span></code></a>
+or <a class="reference internal" href="generated/acoustotreams.special.ssw_Psi.html#acoustotreams.special.ssw_Psi" title="acoustotreams.special.ssw_Psi"><code class="xref py py-func docutils literal notranslate"><span class="pre">ssw_Psi()</span></code></a>, respectively.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>modes</strong> (<em>array-like</em>) – A tuple containing a list for each of <code class="docutils literal notranslate"><span class="pre">l</span></code>, and <code class="docutils literal notranslate"><span class="pre">m</span></code>
-or <code class="docutils literal notranslate"><span class="pre">pidx</span></code>, <code class="docutils literal notranslate"><span class="pre">l</span></code>, and <code class="docutils literal notranslate"><span class="pre">m</span></code>.</p></li>
-<li><p><strong>positions</strong> (<em>array-like</em><em>, </em><em>optional</em>) – The positions of the origins for the specified
-modes. Defaults to <code class="docutils literal notranslate"><span class="pre">[[0,</span> <span class="pre">0,</span> <span class="pre">0]]</span></code>.</p></li>
+<li><p><strong>modes</strong> (<em>array-like</em>) – A tuple containing a list for each of <code class="docutils literal notranslate"><span class="pre">l</span></code> and <code class="docutils literal notranslate"><span class="pre">m</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">pidx</span></code>, <code class="docutils literal notranslate"><span class="pre">l</span></code> and <code class="docutils literal notranslate"><span class="pre">m</span></code>.</p></li>
+<li><p><strong>positions</strong> (<em>array-like</em><em>, </em><em>optional</em>) – The positions of the expansion centers
+for the specified modes (m). Defaults to <code class="docutils literal notranslate"><span class="pre">[[0,</span> <span class="pre">0,</span> <span class="pre">0]]</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -92,7 +93,7 @@ modes. Defaults to <code class="docutils literal notranslate"><span class="pre">
 <dl class="py attribute">
 <dt class="sig sig-object py" id="acoustotreams.ScalarSphericalWaveBasis.l">
 <span class="sig-name descname"><span class="pre">l</span></span><a class="headerlink" href="#acoustotreams.ScalarSphericalWaveBasis.l" title="Link to this definition">¶</a></dt>
-<dd><p>Angular momentum as an integer <span class="math notranslate nohighlight">\(l \geq 0\)</span></p>
+<dd><p>Degree as an integer <span class="math notranslate nohighlight">\(l \geq 0\)</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>array-like</p>
@@ -103,8 +104,7 @@ modes. Defaults to <code class="docutils literal notranslate"><span class="pre">
 <dl class="py attribute">
 <dt class="sig sig-object py" id="acoustotreams.ScalarSphericalWaveBasis.m">
 <span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#acoustotreams.ScalarSphericalWaveBasis.m" title="Link to this definition">¶</a></dt>
-<dd><p>Angular momentum projection onto the z-axis, it is an integer
-with <span class="math notranslate nohighlight">\(m \leq |l|\)</span>.</p>
+<dd><p>Order as an integer <span class="math notranslate nohighlight">\(m \leq |l|\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>array-like</p>
@@ -116,10 +116,10 @@ with <span class="math notranslate nohighlight">\(m \leq |l|\)</span>.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.isglobal.html#acoustotreams.ScalarSphericalWaveBasis.isglobal" title="acoustotreams.ScalarSphericalWaveBasis.isglobal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isglobal</span></code></a></p></td>
-<td><p>Basis is defined with respect to a single (global) origin.</p></td>
+<td><p>Basis is defined with respect to a single (global) expansion center.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.positions.html#acoustotreams.ScalarSphericalWaveBasis.positions" title="acoustotreams.ScalarSphericalWaveBasis.positions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">positions</span></code></a></p></td>
-<td><p>Positions of the modes' origins.</p></td>
+<td><p>Positions of the modes' expansion centers.</p></td>
 </tr>
 </tbody>
 </table>
@@ -172,13 +172,13 @@ with <span class="math notranslate nohighlight">\(m \leq |l|\)</span>.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.default.html#acoustotreams.ScalarSphericalWaveBasis.default" title="acoustotreams.ScalarSphericalWaveBasis.default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></a>(lmax[, nmax, positions])</p></td>
-<td><p>Default basis for the given maximal multipolar order.</p></td>
+<td><p>Default basis for a given maximum multipolar degree.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.defaultdim.html#acoustotreams.ScalarSphericalWaveBasis.defaultdim" title="acoustotreams.ScalarSphericalWaveBasis.defaultdim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultdim</span></code></a>(lmax[, nmax])</p></td>
-<td><p>Default number of modes for a given mulipolar order.</p></td>
+<td><p>Calculate the number of modes for a given mulipolar degree.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.defaultlmax.html#acoustotreams.ScalarSphericalWaveBasis.defaultlmax" title="acoustotreams.ScalarSphericalWaveBasis.defaultlmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultlmax</span></code></a>(dim[, nmax])</p></td>
-<td><p>Calculate the default mode order for a given length.</p></td>
+<td><p>Calculate the maximum degree for a given number of modes.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.index.html#acoustotreams.ScalarSphericalWaveBasis.index" title="acoustotreams.ScalarSphericalWaveBasis.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a>(value, [start, [stop]])</p></td>
 <td><p>Raises ValueError if the value is not present.</p></td>
@@ -186,34 +186,34 @@ with <span class="math notranslate nohighlight">\(m \leq |l|\)</span>.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.isdisjoint.html#acoustotreams.ScalarSphericalWaveBasis.isdisjoint" title="acoustotreams.ScalarSphericalWaveBasis.isdisjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isdisjoint</span></code></a>(other)</p></td>
 <td><p>Return True if two sets have a null intersection.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__lt__.html#acoustotreams.ScalarSphericalWaveBasis.__lt__" title="acoustotreams.ScalarSphericalWaveBasis.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a>(other)</p></td>
-<td><p>Return self&lt;value.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__ge__.html#acoustotreams.ScalarSphericalWaveBasis.__ge__" title="acoustotreams.ScalarSphericalWaveBasis.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a>(other)</p></td>
+<td><p>Return self&gt;=value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__and__.html#acoustotreams.ScalarSphericalWaveBasis.__and__" title="acoustotreams.ScalarSphericalWaveBasis.__and__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__and__</span></code></a>(other)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__gt__.html#acoustotreams.ScalarSphericalWaveBasis.__gt__" title="acoustotreams.ScalarSphericalWaveBasis.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a>(other)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__gt__.html#acoustotreams.ScalarSphericalWaveBasis.__gt__" title="acoustotreams.ScalarSphericalWaveBasis.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a>(other)</p></td>
 <td><p>Return self&gt;value.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__xor__.html#acoustotreams.ScalarSphericalWaveBasis.__xor__" title="acoustotreams.ScalarSphericalWaveBasis.__xor__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__xor__</span></code></a>(other)</p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__or__.html#acoustotreams.ScalarSphericalWaveBasis.__or__" title="acoustotreams.ScalarSphericalWaveBasis.__or__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__or__</span></code></a>(other)</p></td>
 <td><p>Return self|value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__ne__.html#acoustotreams.ScalarSphericalWaveBasis.__ne__" title="acoustotreams.ScalarSphericalWaveBasis.__ne__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ne__</span></code></a>(value, /)</p></td>
-<td><p>Return self!=value.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__str__.html#acoustotreams.ScalarSphericalWaveBasis.__str__" title="acoustotreams.ScalarSphericalWaveBasis.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a>()</p></td>
+<td><p>Return str(self).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__ge__.html#acoustotreams.ScalarSphericalWaveBasis.__ge__" title="acoustotreams.ScalarSphericalWaveBasis.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a>(other)</p></td>
-<td><p>Return self&gt;=value.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__and__.html#acoustotreams.ScalarSphericalWaveBasis.__and__" title="acoustotreams.ScalarSphericalWaveBasis.__and__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__and__</span></code></a>(other)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__lt__.html#acoustotreams.ScalarSphericalWaveBasis.__lt__" title="acoustotreams.ScalarSphericalWaveBasis.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a>(other)</p></td>
+<td><p>Return self&lt;value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__sub__.html#acoustotreams.ScalarSphericalWaveBasis.__sub__" title="acoustotreams.ScalarSphericalWaveBasis.__sub__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__sub__</span></code></a>(other)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__le__.html#acoustotreams.ScalarSphericalWaveBasis.__le__" title="acoustotreams.ScalarSphericalWaveBasis.__le__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__le__</span></code></a>(other)</p></td>
 <td><p>Return self&lt;=value.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__str__.html#acoustotreams.ScalarSphericalWaveBasis.__str__" title="acoustotreams.ScalarSphericalWaveBasis.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a>()</p></td>
-<td><p>Return str(self).</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__ne__.html#acoustotreams.ScalarSphericalWaveBasis.__ne__" title="acoustotreams.ScalarSphericalWaveBasis.__ne__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ne__</span></code></a>(value, /)</p></td>
+<td><p>Return self!=value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__sub__.html#acoustotreams.ScalarSphericalWaveBasis.__sub__" title="acoustotreams.ScalarSphericalWaveBasis.__sub__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__sub__</span></code></a>(other)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.__xor__.html#acoustotreams.ScalarSphericalWaveBasis.__xor__" title="acoustotreams.ScalarSphericalWaveBasis.__xor__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__xor__</span></code></a>(other)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -285,7 +285,7 @@ with <span class="math notranslate nohighlight">\(m \leq |l|\)</span>.</p>
         <li class="right" >
           <a href="acoustotreams.ScalarPlaneWaveBasisByComp.permute.html" title="acoustotreams.ScalarPlaneWaveBasisByComp.permute"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarSphericalWaveBasis</a></li> 
       </ul>

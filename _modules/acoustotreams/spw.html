@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams.spw &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.spw &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.spw</a></li> 
       </ul>
@@ -66,14 +66,14 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;translate(kx, ky, kz, x, y, z)</span>
 <span class="sd">    </span>
-<span class="sd">    Translation coefficient for scalar plane wave modes</span>
+<span class="sd">    Translation coefficients for scalar plane waves.</span>
 
 <span class="sd">    The translation coefficient is the phase factor</span>
 <span class="sd">    :math:`\mathrm e^{\mathrm i \mathbf k \mathbf r}`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kx, ky, kz (float or complex, array_like): Wave vector components</span>
-<span class="sd">        x, y, z (float, array_like): Translation vector components</span>
+<span class="sd">        kx, ky, kz (float or complex, array_like): Wave vector components.</span>
+<span class="sd">        x, y, z (float, array_like): Translation vector components.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
@@ -101,18 +101,18 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">to_ssw</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;to_ssw(l, m, kx, ky, kz)</span>
 <span class="sd">    </span>
-<span class="sd">    Coefficient for the expansion of a scalar plane wave in scalar spherical waves</span>
+<span class="sd">    Coefficients for the expansion of scalar plane waves in scalar spherical waves.</span>
 
-<span class="sd">    Returns the coefficient for the basis change from a scalar plane wave to a scalar spherical wave.</span>
-<span class="sd">    For multiple positions only diagonal values (with respect to the position) are</span>
+<span class="sd">    Return the coefficient for the basis change from scalar plane waves to scalar spherical waves.</span>
+<span class="sd">    For multiple positions, only the diagonal values (corresponding to identical positions) are</span>
 <span class="sd">    returned.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        l (int, array_like): Degree of the scalar spherical wave</span>
-<span class="sd">        m (int, array_like): Order of the scalar spherical wave</span>
-<span class="sd">        kx (float, array_like): X component of scalar plane wave&#39;s wave vector</span>
-<span class="sd">        ky (float, array_like): Y component of scalar plane wave&#39;s wave vector</span>
-<span class="sd">        kz (float, array_like): Z component of scalar plane wave&#39;s wave vector</span>
+<span class="sd">        l (int, array_like): Degree of scalar spherical waves.</span>
+<span class="sd">        m (int, array_like): Order of scalar spherical waves.</span>
+<span class="sd">        kx (float, array_like): X-component of the wave vector of scalar plane waves.</span>
+<span class="sd">        ky (float, array_like): Y-component of the wave vector of scalar plane waves.</span>
+<span class="sd">        kz (float, array_like): Z-component of the wave vector of scalar plane waves.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
@@ -141,17 +141,17 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">to_scw</span><span class="p">(</span><span class="n">kzcw</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kzpw</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;to_scw(qz, m, kx, ky, kz)</span>
 
-<span class="sd">    Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves</span>
+<span class="sd">    Coefficients for the expansion of scalar plane waves in scalar cylindrical waves.</span>
 
-<span class="sd">    Returns the coefficient for the basis change from a scalar plane wave to a scalar cylindrical wave.</span>
-<span class="sd">    For multiple positions only diagonal values (with respect to the position) are returned.</span>
+<span class="sd">    Return the coefficient for the basis change from scalar plane waves to scalar cylindrical waves.</span>
+<span class="sd">    For multiple positions, only the diagonal values (corresponding to identical positions) are returned.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        qz (float, array_like): Z component of the scalar cylindrical wave</span>
-<span class="sd">        m (int, array_like): Order of the scalar cylindrical wave</span>
-<span class="sd">        kx (float, array_like): X component of scalar plane wave&#39;s wave vector</span>
-<span class="sd">        ky (float, array_like): Y component of scalar plane wave&#39;s wave vector</span>
-<span class="sd">        kz (float, array_like): Z component of scalar plane wave&#39;s wave vector</span>
+<span class="sd">        qz (float, array_like): Z-component of the wave vector of scalar cylindrical waves.</span>
+<span class="sd">        m (int, array_like): Order of scalar cylindrical waves.</span>
+<span class="sd">        kx (float, array_like): X-component of the wave vector of scalar plane waves.</span>
+<span class="sd">        ky (float, array_like): Y-component of the wave vector of scalar plane waves.</span>
+<span class="sd">        kz (float, array_like): Z-component of the wave vector of scalar plane waves.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
@@ -175,23 +175,23 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">permute_xyz</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;permute_xyz(kx, ky, kz, inverse=False)</span>
 <span class="sd">    </span>
-<span class="sd">    Change the coordinate system of the plane wave</span>
+<span class="sd">    Change the coordinate system of the plane-wave basis.</span>
 
-<span class="sd">    A plane wave in the coordinate system :math:`(x, y, z)` with primary direction of</span>
+<span class="sd">    A plane wave in the coordinate system :math:`(x, y, z)` with the primary direction of</span>
 <span class="sd">    propagation along the z-axis is described in the system :math:`(x&#39;, y&#39;, z&#39;) = (y, z, x)`. </span>
 <span class="sd">    The inverse transformation is also possible.</span>
 
-<span class="sd">    The function is essentially diagonal in the wave number, because we always describe</span>
-<span class="sd">    the source and destination mode in the unprimed coordinate system.</span>
+<span class="sd">    The function is essentially diagonal relative to the wavenumber, because we always describe</span>
+<span class="sd">    the input and output modes in the unprimed coordinate system.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kxa (float, array_like): X component of destination mode wave vector</span>
-<span class="sd">        kya (float or complex, array_like): Y component of destination mode wave vector</span>
-<span class="sd">        kza (float, array_like): Z component of destination mode wave vector</span>
-<span class="sd">        kx (float, array_like): X component of source mode wave vector</span>
-<span class="sd">        ky (float, array_like): Y component of source mode wave vector</span>
-<span class="sd">        kz (float or complex, array_like): Z component of source mode wave vector</span>
-<span class="sd">        inverse (bool, optional): Use the inverse transformation.</span>
+<span class="sd">        kxa (float, array_like): X-component of the wave vector of output modes.</span>
+<span class="sd">        kya (float or complex, array_like): Y-component of the wave vector of output modes.</span>
+<span class="sd">        kza (float, array_like): Z-component of the wave vector of output modes.</span>
+<span class="sd">        kx (float, array_like): X-component of the wave vector of input modes.</span>
+<span class="sd">        ky (float, array_like): Y-component of the wave vector of input modes.</span>
+<span class="sd">        kz (float or complex, array_like): Z-component of the wave vector of input modes.</span>
+<span class="sd">        inverse (bool, optional): Defaults to False. If True, use the inverse transformation.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
@@ -241,7 +241,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.spw</a></li> 
       </ul>

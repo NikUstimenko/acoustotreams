@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.ScalarSphericalWaveBasis.default &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.ScalarSphericalWaveBasis.default &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.ScalarSphericalWaveBasis.count.html" title="acoustotreams.ScalarSphericalWaveBasis.count"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarSphericalWaveBasis.html" accesskey="U">acoustotreams.ScalarSphericalWaveBasis</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarSphericalWaveBasis.default</a></li> 
@@ -59,12 +59,11 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.ScalarSphericalWaveBasis.default">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ScalarSphericalWaveBasis.</span></span><span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_coreacoustics.html#ScalarSphericalWaveBasis.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.ScalarSphericalWaveBasis.default" title="Link to this definition">¶</a></dt>
-<dd><p>Default basis for the given maximal multipolar order.</p>
-<p>The default order contains separate blocks for each position index which are in
-ascending order. Within each block the modes are sorted by angular momentum
-<span class="math notranslate nohighlight">\(l\)</span>, with the lowest angular momentum coming first. For each angular
-momentum its z-projection is in ascending order from <span class="math notranslate nohighlight">\(m = -l\)</span> to
-<span class="math notranslate nohighlight">\(m = l\)</span>.</p>
+<dd><p>Default basis for a given maximum multipolar degree.</p>
+<p>By default, modes are grouped into separate blocks for each position
+index in ascending order. Within each block, modes are sorted by
+degree <span class="math notranslate nohighlight">\(l\)</span> (lowest first) and then by order :math:m from
+<span class="math notranslate nohighlight">\(m = -l\)</span> to <span class="math notranslate nohighlight">\(m = l\)</span>.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">ScalarSphericalWaveBasis(</span>
@@ -85,9 +84,9 @@ momentum its z-projection is in ascending order from <span class="math notransla
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lmax</strong> (<em>int</em>) – Maximal multipolar order.</p></li>
-<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of positions, defaults to 1.</p></li>
-<li><p><strong>positions</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Positions of the origins.</p></li>
+<li><p><strong>lmax</strong> (<em>int</em>) – Maximum multipolar degree.</p></li>
+<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of positions. Defaults to 1.</p></li>
+<li><p><strong>positions</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Positions of the expansion centers (m). Defaults to [[0, 0, 0]].</p></li>
 </ul>
 </dd>
 </dl>
@@ -158,7 +157,7 @@ momentum its z-projection is in ascending order from <span class="math notransla
         <li class="right" >
           <a href="acoustotreams.ScalarSphericalWaveBasis.count.html" title="acoustotreams.ScalarSphericalWaveBasis.count"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarSphericalWaveBasis.html" >acoustotreams.ScalarSphericalWaveBasis</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarSphericalWaveBasis.default</a></li> 

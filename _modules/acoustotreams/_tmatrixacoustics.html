@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._tmatrixacoustics &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams._tmatrixacoustics &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._tmatrixacoustics</a></li> 
       </ul>
@@ -99,21 +99,21 @@
 <div class="viewcode-block" id="AcousticTMatrix">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrix.html#acoustotreams.AcousticTMatrix">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AcousticTMatrix</span><span class="p">(</span><span class="n">AcousticsArray</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Acoustic T-matrix with a spherical basis.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Acoustic T-matrix in a spherical-wave basis.</span>
 
-<span class="sd">    The acoustic T-matrix is a square matrix relating incident (regular) fields</span>
-<span class="sd">    func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered fields </span>
+<span class="sd">    The acoustic T-matrix is a square matrix that maps incident (regular) fields</span>
+<span class="sd">    func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered (singular) fields </span>
 <span class="sd">    :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in :attr:`basis`. </span>
-<span class="sd">    Moreover, the wave number :attr:`k0` and, if not air, the material :attr:`material` are</span>
+<span class="sd">    Moreover, the wavenumber :attr:`k0` and, if not air, the material :attr:`material` are</span>
 <span class="sd">    specified.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arr (float or complex, array-like): T-matrix itself.</span>
-<span class="sd">        k0 (float): Wave number in air.</span>
+<span class="sd">        k0 (float): Angular wavenumber in the air (rad/m).</span>
 <span class="sd">        basis (ScalarSphericalWaveBasis, optional): Basis definition.</span>
-<span class="sd">        material (AcousticMaterial, optional): background material, defaults to air.</span>
-<span class="sd">        lattice (Lattice, optional): Lattice definition. If specified the T-Matrix is</span>
-<span class="sd">            assumed to be periodically repeated in the defined lattice.</span>
+<span class="sd">        material (AcousticMaterial, optional): Background material. Defaults to the air.</span>
+<span class="sd">        lattice (Lattice, optional): Lattice definition (m). If specified, the T-matrix is</span>
+<span class="sd">            assumed to be placed on the defined lattice.</span>
 <span class="sd">        kpar (list, optional): Bloch wave vector for the effective T-Matrix.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -151,7 +151,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">sphere</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="n">materials</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Acoustic T-Matrix of a sphere.</span>
 
-<span class="sd">        Construct the T-matrix of the given order and material for a sphere. The object</span>
+<span class="sd">        Construct the T-matrix of the given degree and material for a sphere. The scatterer</span>
 <span class="sd">        can also consist of multiple concentric spherical shells with an arbitrary</span>
 <span class="sd">        number of layers.</span>
 
@@ -161,10 +161,10 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            lmax (int): Non-negative integer for the maximum degree of the T-matrix.</span>
-<span class="sd">            k0 (float): Wave number in air.</span>
-<span class="sd">            radii (float or array): Radii from inside to outside of the sphere. For a</span>
-<span class="sd">                homogeneous sphere the radius can be given as a single number, for a multi-</span>
-<span class="sd">                layered sphere it is a list of increasing radii for all shells.</span>
+<span class="sd">            k0 (float): Angular wavenumber in air (rad/m).</span>
+<span class="sd">            radii (float or array): Radii from inside to outside of the sphere (m). For a</span>
+<span class="sd">                homogeneous sphere, the radius can be given as a single number; </span>
+<span class="sd">                for a multilayered sphere, it is a list of increasing radii for all the shells.</span>
 <span class="sd">            material (list[AcousticMaterial]): The material parameters from the inside to the</span>
 <span class="sd">                outside. The last material in the list specifies the background medium.</span>
 
@@ -193,12 +193,12 @@
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrix.cluster.html#acoustotreams.AcousticTMatrix.cluster">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">cluster</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tmats</span><span class="p">,</span> <span class="n">positions</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Block-diagonal T-matrix of multiple objects.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Block-diagonal T-matrix of multiple scatterers.</span>
 
-<span class="sd">        Construct the initial block-diagonal T-matrix for a cluster of objects. The</span>
-<span class="sd">        T-matrices in the list are placed together into a block-diagonal matrix and the</span>
-<span class="sd">        complete (local) basis is defined based on the individual T-matrices and their</span>
-<span class="sd">        bases together with the defined positions. In mathematical terms the matrix</span>
+<span class="sd">        Construct the initial block-diagonal T-matrix for a cluster of scatterers. The</span>
+<span class="sd">        T-matrices in the list are arranged into a block-diagonal matrix and the</span>
+<span class="sd">        complete (local) basis is defined, based on the individual T-matrices and their</span>
+<span class="sd">        bases together with the defined positions. In mathematical terms, the matrix</span>
 
 <span class="sd">        .. math::</span>
 
@@ -210,11 +210,11 @@
 <span class="sd">            \end{pmatrix}</span>
 
 <span class="sd">        is created from the list of T-matrices :math:`(T_0, \dots, T_{N-1})`. Only</span>
-<span class="sd">        T-matrices with the same wave number and background material are accepted.</span>
+<span class="sd">        T-matrices with the same wavenumber and background material are accepted.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tmats (Sequence): List of T-matrices.</span>
-<span class="sd">            positions (array): The positions of all individual objects in the cluster.</span>
+<span class="sd">            positions (array): The positions of all individual objects in the cluster (m).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticTMatrix</span>
@@ -263,7 +263,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">xs_ext_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation averaged extinction cross section.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation-averaged extinction cross section (m^2).</span>
 
 <span class="sd">        The average is calculated as</span>
 
@@ -272,7 +272,7 @@
 <span class="sd">            \langle \sigma_\mathrm{ext} \rangle</span>
 <span class="sd">            = 2 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},</span>
 
-<span class="sd">        where :math:`k` is the wave number in the background medium.    </span>
+<span class="sd">        where :math:`k` is the angular wavenumber in the background medium.    </span>
 
 <span class="sd">        It is only implemented for global T-matrices.</span>
 
@@ -289,7 +289,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">xs_sca_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation averaged scattering cross section.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation-averaged scattering cross section (m^2).</span>
 
 <span class="sd">        The average is calculated as</span>
 
@@ -297,9 +297,9 @@
 
 <span class="sd">            \langle \sigma_\mathrm{sca} \rangle</span>
 <span class="sd">            = 2 \pi \sum_{lm} \sum_{l&#39;m&#39;}</span>
-<span class="sd">            \frac{|T_{lm,l&#39;m&#39;}|^2}{k^2}</span>
+<span class="sd">            \frac{|T_{lm,l&#39;m&#39;}|^2}{k^2},</span>
 
-<span class="sd">        where :math:`k` is the wave number in the background medium. </span>
+<span class="sd">        where :math:`k` is the angular wavenumber in the background medium. </span>
 
 <span class="sd">        It is only implemented for global T-matrices.</span>
 
@@ -318,12 +318,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">sca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Expansion coefficients of the scattered field.</span>
 
-<span class="sd">        Possible for all T-matrices (global and local) in non-absorbing background. The</span>
-<span class="sd">        coefficients are calculated by</span>
+<span class="sd">        Possible for all T-matrices (global and local) in nonabsorbing background. The</span>
+<span class="sd">        coefficients are computed by</span>
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            a_{lm} = T_{lm,l&#39;m&#39;} b_{l&#39;m&#39;}</span>
+<span class="sd">            a_{lm} = \sum_{l&#39;m&#39;} T_{lm,l&#39;m&#39;} b_{l&#39;m&#39;},</span>
 
 <span class="sd">        where :math:`b_{lm}` are the expansion coefficients of the incident wave</span>
 <span class="sd">        and :math:`T` is the T-matrix.</span>
@@ -346,30 +346,30 @@
 <div class="viewcode-block" id="AcousticTMatrix.xs">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrix.xs.html#acoustotreams.AcousticTMatrix.xs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">xs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scattering and extinction cross section.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scattering and extinction cross section (m^2).</span>
 
-<span class="sd">        Possible for all T-matrices (global and local) in non-absorbing background. The</span>
+<span class="sd">        Possible for all T-matrices (global and local) in nonabsorbing background. The</span>
 <span class="sd">        values are calculated by</span>
 
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \sigma_\mathrm{sca}</span>
 <span class="sd">            = \frac{1}{2 I}</span>
-<span class="sd">            b_{lm}^\ast T_{l&#39;m&#39;,lm}^\ast k^{-2} C_{l&#39;m&#39;,l&#39;&#39;m&#39;&#39;}^{(1)}</span>
-<span class="sd">            T_{l&#39;&#39;m&#39;&#39;,l&#39;&#39;&#39;m&#39;&#39;&#39;} b_{l&#39;&#39;&#39;m&#39;&#39;&#39;} \\</span>
+<span class="sd">            b_{lm}^\ast T_{lm,l&#39;m&#39;}^\ast k^{-2} C_{l&#39;m&#39;,l&#39;&#39;m&#39;&#39;}^{(1)}</span>
+<span class="sd">            T_{l&#39;&#39;m&#39;&#39;,l&#39;&#39;&#39;m&#39;&#39;&#39;} b_{l&#39;&#39;&#39;m&#39;&#39;&#39;}, \\</span>
 <span class="sd">            \sigma_\mathrm{ext}</span>
-<span class="sd">            = \frac{1}{2 I}</span>
-<span class="sd">            b_{lm}^\ast k^{-2} T_{lm,l&#39;m&#39;} b_{l&#39;m&#39;}</span>
+<span class="sd">            = -\frac{1}{2 I}</span>
+<span class="sd">            b_{lm}^\ast k^{-2} T_{lm,l&#39;m&#39;} b_{l&#39;m&#39;},</span>
 
 <span class="sd">        where :math:`b_{lm}` are the expansion coefficients of the incident wave,</span>
 <span class="sd">        :math:`T` is the T-matrix, :math:`C^{(1)}` is the (regular) translation</span>
-<span class="sd">        matrix and :math:`k` is the wave number in the medium. All repeated indices</span>
-<span class="sd">        are summed over. The incoming flux is :math:`I`.</span>
+<span class="sd">        matrix, and :math:`k` is the wavenumber in the background medium. All </span>
+<span class="sd">        repeated indices are summed over. The incoming flux is :math:`I`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            inc (complex, array): Incident wave or its expansion coefficients</span>
-<span class="sd">            flux (optional): Ingoing flux corresponding to the incident wave. Used for</span>
-<span class="sd">                the result&#39;s normalization. A plane wave has the flux `0.5` in this </span>
+<span class="sd">            inc (complex, array): Incident wave or its expansion coefficients.</span>
+<span class="sd">            flux (optional): Input flux corresponding to the incident wave. Used for</span>
+<span class="sd">                the result&#39;s normalization. A plane pressure wave has the flux `0.5` in this </span>
 <span class="sd">                normalization, which is used as default.</span>
 
 <span class="sd">        Returns:</span>
@@ -396,15 +396,15 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">valid_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Points on the grid where the expansion is valid.</span>
 
-<span class="sd">        The expansion of the acoustic wave fields is valid outside of the</span>
-<span class="sd">        circumscribing spheres of each object. From a given set of coordinates mark</span>
-<span class="sd">        those that are outside of the given radii.</span>
+<span class="sd">        The multipole expansion of acoustic fields is valid outside the</span>
+<span class="sd">        circumscribing spheres of each scatterer. From a given set of coordinates, </span>
+<span class="sd">        select those that are outside the spheres of the given radii.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            grid (array-like): Points to assess. The last dimension needs length three</span>
+<span class="sd">            grid (array-like): Points (m). The last dimension needs length three</span>
 <span class="sd">                and corresponds to the Cartesian coordinates.</span>
-<span class="sd">            radii (Sequence[float]): Radii of the circumscribing spheres. Each radius</span>
-<span class="sd">                corresponds to a position of the basis.</span>
+<span class="sd">            radii (Sequence[float]): Radii of the circumscribing spheres (m). Each radius</span>
+<span class="sd">                corresponds to an expansion center in the basis.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            array</span>
@@ -434,21 +434,21 @@
 <div class="viewcode-block" id="AcousticTMatrixC">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrixC.html#acoustotreams.AcousticTMatrixC">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AcousticTMatrixC</span><span class="p">(</span><span class="n">AcousticsArray</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Acoustic T-matrix with a scalar cylindrical basis.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Acoustic T-matrix in a scalar cylindrical-wave basis.</span>
 
-<span class="sd">    The acoustic T-matrix is a square matrix relating incident (regular) fields</span>
-<span class="sd">    :func:`acoustotreams.special.scw_rPsi` to the scattered fields </span>
+<span class="sd">    The acoustic T-matrix is a square matrix that maps incident (regular) fields</span>
+<span class="sd">    :func:`acoustotreams.special.scw_rPsi` to corresponding scattered (singular) fields </span>
 <span class="sd">    :func:`acoustotreams.special.scw_Psi`. The modes themselves are defined </span>
-<span class="sd">    in :attr:`basis`. Moreover, the wave number :attr:`k0` and, if not air, </span>
+<span class="sd">    in :attr:`basis`. Moreover, the wavenumber :attr:`k0` and, if not the air, </span>
 <span class="sd">    the material :attr:`material` are specified.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arr (float or complex, array-like): T-matrix itself.</span>
-<span class="sd">        k0 (float): Wave number in air.</span>
+<span class="sd">        k0 (float): Angular wavenumber in the air (rad/m).</span>
 <span class="sd">        basis (ScalarCylindricalWaveBasis, optional): Basis definition.</span>
-<span class="sd">        material (AcousticMaterial, optional): background material, defaults to air.</span>
-<span class="sd">        lattice (Lattice, optional): Lattice definition. If specified the T-Matrix is</span>
-<span class="sd">            assumed to be periodically repeated in the defined lattice.</span>
+<span class="sd">        material (AcousticMaterial, optional): Background material. Defaults to air.</span>
+<span class="sd">        lattice (Lattice, optional): Lattice definition (m). If specified, the T-matrix is</span>
+<span class="sd">            assumed to be placed on the defined lattice.</span>
 <span class="sd">        kpar (list, optional): Bloch wave vector for the effective T-Matrix.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -477,7 +477,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wave numbers (in medium).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Angular wavenumber in the background medium.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k0</span><span class="p">)</span>
@@ -486,7 +486,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">krhos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Radial part of the wave vector.</span>
 
-<span class="sd">        Calculate :math:`\sqrt{k^2 - k_z^2}`, where :math:`k` is the wave number in the</span>
+<span class="sd">        Calculate :math:`\sqrt{k^2 - k_z^2}`, where :math:`k` is the wavenumber in the</span>
 <span class="sd">        medium for each insonification.</span>
 
 <span class="sd">        Returns:</span>
@@ -501,20 +501,20 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Acoustic T-Matrix of an infinite cylinder.</span>
 
 <span class="sd">        Construct the T-matrix of the given order and material for an infinite cylinder. </span>
-<span class="sd">        The object can also consist of multiple concentric cylindrical shells with an arbitrary</span>
-<span class="sd">        number of layers.</span>
+<span class="sd">        The scatterer can also consist of multiple concentric cylindrical shells with </span>
+<span class="sd">        an arbitrary number of layers.</span>
 
 <span class="sd">        Please note:</span>
 <span class="sd">            1. :math:`c_t` of **all** the materials must be zero. </span>
 <span class="sd">            2. For the soft and hard cylinders, only one radius must be given.  </span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            kzs (float, array_like): Z component of the cylindrical wave.</span>
+<span class="sd">            kzs (float, array_like): Z-components of the wave vector in the medium (rad/m).</span>
 <span class="sd">            mmax (int): Positive integer for the maximum order of the T-matrix.</span>
-<span class="sd">            k0 (float): Wave number in air.</span>
-<span class="sd">            radii (float): Radii from inside to outside of the cylinder. For a</span>
-<span class="sd">                homogeneous cylinder the radius can be given as a single number, for a multi-</span>
-<span class="sd">                layered cylinder it is a list of increasing radii for all the shells.</span>
+<span class="sd">            k0 (float): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">            radii (float): Radii from inside to outside of the cylinder (m). For a</span>
+<span class="sd">                homogeneous cylinder, the radius can be given as a single number; </span>
+<span class="sd">                for a multilayered cylinder, it is a list of increasing radii for all the shells.</span>
 <span class="sd">            material (list[AcousticMaterial]): The material parameters from the inside to the</span>
 <span class="sd">                outside. The last material in the list specifies the background medium.</span>
 
@@ -546,9 +546,9 @@
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Block-diagonal T-matrix of multiple objects.</span>
 
 <span class="sd">        Construct the initial block-diagonal T-matrix for a cluster of objects. The</span>
-<span class="sd">        T-matrices in the list are placed together into a block-diagonal matrix and the</span>
-<span class="sd">        complete (local) basis is defined based on the individual T-matrices and their</span>
-<span class="sd">        bases together with the defined positions. In mathematical terms the matrix</span>
+<span class="sd">        T-matrices in the list are arranged into a block-diagonal matrix and the</span>
+<span class="sd">        complete (local) basis is defined, based on the individual T-matrices and their</span>
+<span class="sd">        bases together with the defined positions. In mathematical terms, the matrix</span>
 
 <span class="sd">        .. math::</span>
 
@@ -560,12 +560,11 @@
 <span class="sd">            \end{pmatrix}</span>
 
 <span class="sd">        is created from the list of T-matrices :math:`(T_0, \dots, T_{N-1})`. Only</span>
-<span class="sd">        T-matrices with the same wave number and background material</span>
-<span class="sd">        can be combined.</span>
+<span class="sd">        T-matrices with the same wave number and background material can be combined.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tmats (Sequence): List of T-matrices.</span>
-<span class="sd">            positions (array): The positions of all individual objects in the cluster.</span>
+<span class="sd">            positions (array): The positions of all individual objects in the cluster (m).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticTMatrixC</span>
@@ -607,7 +606,7 @@
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrixC.from_array.html#acoustotreams.AcousticTMatrixC.from_array">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;1d array of spherical T-matrices.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;One-dimensional array of spherical T-matrices.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="p">(</span><span class="n">tm</span> <span class="o">@</span> <span class="n">opa</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span><span class="o">.</span><span class="n">inv</span><span class="p">)</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">),</span>
             <span class="n">lattice</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">lattice</span><span class="p">,</span>
@@ -617,19 +616,21 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">xw_ext_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation averaged extinction cross width.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation-averaged extinction cross width (m).</span>
 
 <span class="sd">        The average is calculated as</span>
 
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{ext} \rangle</span>
-<span class="sd">            = -\frac{2 \pi}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s}</span>
+<span class="sd">            = -\frac{2 \pi}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},</span>
 
-<span class="sd">        where :math:`k_s` is the wave number in the background medium and :math:`n_{k_z}` </span>
-<span class="sd">        is the number of wave components :math:`k_z` included in the T-matrix. </span>
+<span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>
+<span class="sd">        is the number of :math:`k_z` components included in the basis of the T-matrix. </span>
 <span class="sd">        The average is taken over all given z-components of the wave vector and </span>
-<span class="sd">        rotations around the z-axis. It is only implemented for global T-matrices.</span>
+<span class="sd">        rotations about the z-axis. </span>
+<span class="sd">        </span>
+<span class="sd">        It is only implemented for global T-matrices.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float or complex</span>
@@ -644,21 +645,22 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">xw_sca_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation averaged scattering cross width.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rotation-averaged scattering cross width (m).</span>
 
 <span class="sd">        The average is calculated as</span>
 
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{sca} \rangle</span>
-<span class="sd">            = \frac{2 \pi}{n_{k_z}} \sum_{sk_zm} \sum_{s&#39;{k_z}&#39;m&#39;}</span>
-<span class="sd">            \frac{|T_{sk_zm,s&#39;{k_z}&#39;m&#39;}|^2}{k_s}</span>
+<span class="sd">            = \frac{2 \pi}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}&#39;m&#39;}</span>
+<span class="sd">            \frac{|T_{k_zm,{k_z}&#39;m&#39;}|^2}{k_s},</span>
 
-<span class="sd">        where :math:`k_s` is the wave number in the background medium and :math:`n_{k_z}` </span>
-<span class="sd">        is the number of wave components</span>
-<span class="sd">        :math:`k_z` included in the T-matrix. The average is taken over all given</span>
-<span class="sd">        z-components of the wave vector and rotations around the z-axis. It is only</span>
-<span class="sd">        implemented for global T-matrices.</span>
+<span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>
+<span class="sd">        is the number of :math:`k_z` components included in the basis of the T-matrix. </span>
+<span class="sd">        The average is taken over all given z-components of the wave vector and </span>
+<span class="sd">        rotations about the z-axis. </span>
+<span class="sd">        </span>
+<span class="sd">        It is only implemented for global T-matrices.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float or complex</span>
@@ -675,8 +677,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">isglobal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Test if a T-matrix is global.</span>
 
-<span class="sd">        A T-matrix is considered global, when its basis refers to only a single point</span>
-<span class="sd">        and it is not placed periodically in a lattice.</span>
+<span class="sd">        A T-matrix is considered global if its basis contains only a single expansion center</span>
+<span class="sd">        and it is not placed on a lattice.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span> <span class="ow">is</span> <span class="kc">None</span>
     
@@ -686,12 +688,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">sca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Expansion coefficients of the scattered field.</span>
 
-<span class="sd">        Possible for all T-matrices (global and local) in non-absorbing background. The</span>
+<span class="sd">        Possible for all T-matrices (global and local) in nonabsorbing background. The</span>
 <span class="sd">        coefficients are calculated by</span>
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            a_{k_z m} = T_{k_z m,{k_z}&#39;m&#39;} b_{{k_z}&#39;m&#39;}</span>
+<span class="sd">            a_{k_z m} = \sum_{{k_z}&#39;m&#39;} T_{k_z m,{k_z}&#39;m&#39;} b_{{k_z}&#39;m&#39;},</span>
 
 <span class="sd">        where :math:`b_{k_z m}` are the expansion coefficients of the incident wave,</span>
 <span class="sd">        and :math:`T` is the T-matrix.</span>
@@ -713,26 +715,26 @@
 <div class="viewcode-block" id="AcousticTMatrixC.xw">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrixC.xw.html#acoustotreams.AcousticTMatrixC.xw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">xw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scattering and extinction cross width.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scattering and extinction cross width (m).</span>
 
-<span class="sd">        Possible for all T-matrices (global and local) in non-absorbing background. The</span>
+<span class="sd">        Possible for all T-matrices (global and local) in nonabsorbing background. The</span>
 <span class="sd">        values are calculated by</span>
 
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \lambda_\mathrm{sca}</span>
 <span class="sd">            = \frac{1}{2 I}</span>
-<span class="sd">            b_{k_z m}^\ast T_{{k_z}&#39; m&#39;,k_z m}^\ast k^{-2}</span>
+<span class="sd">            b_{k_z m}^\ast T_{{k_z} m, {k_z}&#39; m&#39;}^\ast k^{-2}</span>
 <span class="sd">            C_{{k_z}&#39;m&#39;,{k_z}&#39;&#39;m&#39;&#39;}^{(1)}</span>
 <span class="sd">            T_{{k_z}&#39;&#39;m&#39;&#39;,{k_z}&#39;&#39;&#39;m&#39;&#39;&#39;} b_{{k_z}&#39;&#39;&#39;m&#39;&#39;&#39;} \\</span>
 <span class="sd">            \sigma_\mathrm{ext}</span>
-<span class="sd">            = \frac{1}{2 I}</span>
+<span class="sd">            = -\frac{1}{2 I}</span>
 <span class="sd">            b_{k_z m}^\ast k^{-2} T_{k_z m,{k_z}&#39;m&#39;} b_{{k_z}&#39;m&#39;}</span>
 
 <span class="sd">        where :math:`b_{k_z m}` are the expansion coefficients of the incident wave,</span>
 <span class="sd">        :math:`T` is the T-matrix, :math:`C^{(1)}` is the (regular) translation</span>
-<span class="sd">        matrix and :math:`k` is the wavenumber in the medium. All repeated indices</span>
-<span class="sd">        are summed over. The incoming flux is :math:`I`.</span>
+<span class="sd">        matrix, and :math:`k` is the wavenumber in the medium. All repeated indices</span>
+<span class="sd">        are summed over. The flux of a plane pressure wave is :math:`I = 0.5`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            inc (complex, array): Incident wave or its expansion coefficients</span>
@@ -764,15 +766,15 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">valid_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Points on the grid where the expansion is valid.</span>
 
-<span class="sd">        The expansion of the acoustic wave fields is valid outside of the</span>
-<span class="sd">        circumscribing cylinders of each object. From a given set of coordinates mark</span>
-<span class="sd">        those that are outside of the given radii.</span>
+<span class="sd">        The multipole expansion of acoustic fields is valid outside the</span>
+<span class="sd">        circumscribing cylinders of each object. From a given set of coordinates,</span>
+<span class="sd">        select those that are outside the cylinders of the given radii.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            grid (array-like): Points to assess. The last dimension needs length two or three</span>
+<span class="sd">            grid (array-like): Points (m). The last dimension needs length two or three</span>
 <span class="sd">                and corresponds to the Cartesian coordinates.</span>
-<span class="sd">            radii (Sequence[float]): Radii of the circumscribing cylinders. Each radius</span>
-<span class="sd">                corresponds to a position of the basis.</span>
+<span class="sd">            radii (Sequence[float]): Radii of the circumscribing cylinders (m). Each radius</span>
+<span class="sd">                corresponds to an expansion center of the basis.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            array</span>
@@ -840,9 +842,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Array describing a scalar plane wave.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kvec (Sequence): Wave vector.</span>
+<span class="sd">        kvec (Sequence): Wave vector in the air (rad/m).</span>
 <span class="sd">        basis (ScalarPlaneWaveBasis, optional): Basis definition.</span>
-<span class="sd">        k0 (float, optional): Wave number in air.</span>
+<span class="sd">        k0 (float, optional): Angular wavenumber in the air (rad/m).</span>
 <span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
 <span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -885,6 +887,16 @@
     <span class="n">material</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Array describing a scalar spherical wave.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        l (int): Degree :math:`l \geq 0`.</span>
+<span class="sd">        m (int): Order :math:`|m| \leq 0`.</span>
+<span class="sd">        k0 (float, optional): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        basis (ScalarPlaneWaveBasis, optional): Basis definition.</span>
+<span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
+<span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">basis</span> <span class="o">=</span> <span class="n">SSWB</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">basis</span><span class="o">.</span><span class="n">isglobal</span><span class="p">:</span>
@@ -902,6 +914,16 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">cylindrical_wave_scalar</span><span class="p">(</span>
     <span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Array describing a scalar cylindrical wave.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kz (float): Z-component of the wave vector in the medium (rad/m).</span>
+<span class="sd">        m (int): Order.</span>
+<span class="sd">        k0 (float, optional): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        basis (ScalarPlaneWaveBasis, optional): Basis definition.</span>
+<span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
+<span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">basis</span> <span class="o">=</span> <span class="n">SCWB</span><span class="o">.</span><span class="n">default</span><span class="p">([</span><span class="n">kz</span><span class="p">],</span> <span class="nb">abs</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">basis</span><span class="o">.</span><span class="n">isglobal</span><span class="p">:</span>
@@ -953,7 +975,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._tmatrixacoustics</a></li> 
       </ul>

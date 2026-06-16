@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.ScalarSphericalWaveBasis.defaultlmax &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.ScalarSphericalWaveBasis.defaultlmax &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="acoustotreams.ScalarSphericalWaveBasis.defaultdim.html" title="acoustotreams.ScalarSphericalWaveBasis.defaultdim"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarSphericalWaveBasis.html" accesskey="U">acoustotreams.ScalarSphericalWaveBasis</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarSphericalWaveBasis.defaultlmax</a></li> 
@@ -58,10 +58,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.ScalarSphericalWaveBasis.defaultlmax">
 <span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ScalarSphericalWaveBasis.</span></span><span class="sig-name descname"><span class="pre">defaultlmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_coreacoustics.html#ScalarSphericalWaveBasis.defaultlmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.ScalarSphericalWaveBasis.defaultlmax" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the default mode order for a given length.</p>
-<p>Given the dimension of the T-matrix return the estimated maximal value of <cite>l</cite>.
-This is the inverse of <a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.defaultdim.html#acoustotreams.ScalarSphericalWaveBasis.defaultdim" title="acoustotreams.ScalarSphericalWaveBasis.defaultdim"><code class="xref py py-meth docutils literal notranslate"><span class="pre">defaultdim()</span></code></a>. A value of zero is allowed for empty
-T-matrices.</p>
+<dd><p>Calculate the maximum degree for a given number of modes.</p>
+<p>Return the estimated maximum value of <cite>l</cite> given the dimension of the T-matrix.
+This is the inverse of :meth:defaultdim. A value of zero is returned for empty T-matrices.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">defaultlmax</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
 <span class="go">3</span>
@@ -71,7 +70,7 @@ T-matrices.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dim</strong> (<em>int</em>) – Dimension of the T-matrix, respectively number of modes.</p></li>
-<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of particles, defaults to 1.</p></li>
+<li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of scatterers. Defaults to 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -145,7 +144,7 @@ T-matrices.</p>
         <li class="right" >
           <a href="acoustotreams.ScalarSphericalWaveBasis.defaultdim.html" title="acoustotreams.ScalarSphericalWaveBasis.defaultdim"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarSphericalWaveBasis.html" >acoustotreams.ScalarSphericalWaveBasis</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarSphericalWaveBasis.defaultlmax</a></li> 

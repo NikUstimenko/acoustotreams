@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.AcousticTMatrixC.xw &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.AcousticTMatrixC.xw &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.AcousticTMatrixC.valid_points.html" title="acoustotreams.AcousticTMatrixC.valid_points"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.AcousticTMatrixC.html" accesskey="U">acoustotreams.AcousticTMatrixC</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticTMatrixC.xw</a></li> 
@@ -59,22 +59,22 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.AcousticTMatrixC.xw">
 <span class="sig-prename descclassname"><span class="pre">AcousticTMatrixC.</span></span><span class="sig-name descname"><span class="pre">xw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_tmatrixacoustics.html#AcousticTMatrixC.xw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticTMatrixC.xw" title="Link to this definition">¶</a></dt>
-<dd><p>Scattering and extinction cross width.</p>
-<p>Possible for all T-matrices (global and local) in non-absorbing background. The
+<dd><p>Scattering and extinction cross width (m).</p>
+<p>Possible for all T-matrices (global and local) in nonabsorbing background. The
 values are calculated by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\lambda_\mathrm{sca}
 = \frac{1}{2 I}
-b_{k_z m}^\ast T_{{k_z}' m',k_z m}^\ast k^{-2}
+b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-2}
 C_{{k_z}'m',{k_z}''m''}^{(1)}
 T_{{k_z}''m'',{k_z}'''m'''} b_{{k_z}'''m'''} \\
 \sigma_\mathrm{ext}
-= \frac{1}{2 I}
+= -\frac{1}{2 I}
 b_{k_z m}^\ast k^{-2} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(b_{k_z m}\)</span> are the expansion coefficients of the incident wave,
 <span class="math notranslate nohighlight">\(T\)</span> is the T-matrix, <span class="math notranslate nohighlight">\(C^{(1)}\)</span> is the (regular) translation
-matrix and <span class="math notranslate nohighlight">\(k\)</span> is the wavenumber in the medium. All repeated indices
-are summed over. The incoming flux is <span class="math notranslate nohighlight">\(I\)</span>.</p>
+matrix, and <span class="math notranslate nohighlight">\(k\)</span> is the wavenumber in the medium. All repeated indices
+are summed over. The flux of a plane pressure wave is <span class="math notranslate nohighlight">\(I = 0.5\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -155,7 +155,7 @@ normalization, which is used as default.</p></li>
         <li class="right" >
           <a href="acoustotreams.AcousticTMatrixC.valid_points.html" title="acoustotreams.AcousticTMatrixC.valid_points"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.AcousticTMatrixC.html" >acoustotreams.AcousticTMatrixC</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticTMatrixC.xw</a></li> 

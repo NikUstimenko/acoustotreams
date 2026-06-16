@@ -5,14 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.coeffs &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.coeffs &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -41,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.spw.permute_xyz.html" title="acoustotreams.spw.permute_xyz"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" accesskey="U">Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.coeffs</a></li> 
       </ul>
@@ -55,17 +56,17 @@
   <section id="module-acoustotreams.coeffs">
 <span id="acoustotreams-coeffs"></span><h1>acoustotreams.coeffs<a class="headerlink" href="#module-acoustotreams.coeffs" title="Link to this heading">¶</a></h1>
 <p>Scattering coefficients for high-symmetry cases.</p>
-<p>Calculate the scattering coefficients for cases where they can be obtained analytically
-easily. This is a (multilayered) sphere using spherical waves (Mie coefficients),
+<p>Calculate the scattering coefficients for cases where they can be obtained analytically.
+Thes include a (multilayered) sphere using spherical waves (Mie coefficients),
 a cylinder using cylindrical waves, and an infinitely extended planar
 interface (Fresnel coefficients).</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.coeffs.mie_acoustics.html#acoustotreams.coeffs.mie_acoustics" title="acoustotreams.coeffs.mie_acoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics</span></code></a>(l, x, *materials)</p></td>
-<td><p>Mie scattering coefficient of degree l.</p></td>
+<td><p>Mie-scattering coefficient of degree <span class="math notranslate nohighlight">\(l\)</span> for a sphere.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.coeffs.mie_acoustics_cyl.html#acoustotreams.coeffs.mie_acoustics_cyl" title="acoustotreams.coeffs.mie_acoustics_cyl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics_cyl</span></code></a>(kz, m, k0, radii, *materials)</p></td>
-<td><p>Scattering coefficient at an infinite (fluid) cylinder</p></td>
+<td><p>Scattering coefficient at a cylindrical interface</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.coeffs.fresnel_acoustics.html#acoustotreams.coeffs.fresnel_acoustics" title="acoustotreams.coeffs.fresnel_acoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fresnel_acoustics</span></code></a>(kzs, rhos)</p></td>
 <td><p></p></td>
@@ -79,10 +80,10 @@ interface (Fresnel coefficients).</p>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="acoustotreams.coeffs.mie_acoustics.html#acoustotreams.coeffs.mie_acoustics" title="acoustotreams.coeffs.mie_acoustics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics</span></code></a>(l, x, *materials)</p></td>
-<td><p>Mie scattering coefficient of degree l.</p></td>
+<td><p>Mie-scattering coefficient of degree <span class="math notranslate nohighlight">\(l\)</span> for a sphere.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="acoustotreams.coeffs.mie_acoustics_cyl.html#acoustotreams.coeffs.mie_acoustics_cyl" title="acoustotreams.coeffs.mie_acoustics_cyl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mie_acoustics_cyl</span></code></a>(kz, m, k0, radii, *materials)</p></td>
-<td><p>Scattering coefficient at an infinite (fluid) cylinder</p></td>
+<td><p>Scattering coefficient at a cylindrical interface</p></td>
 </tr>
 </tbody>
 </table>
@@ -151,7 +152,7 @@ interface (Fresnel coefficients).</p>
         <li class="right" >
           <a href="acoustotreams.spw.permute_xyz.html" title="acoustotreams.spw.permute_xyz"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.coeffs</a></li> 
       </ul>

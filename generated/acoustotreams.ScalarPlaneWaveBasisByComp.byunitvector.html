@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector &#8212; acoustotreams 0.2.36 documentation</title>
+    <title>acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector &#8212; acoustotreams 0.2.37 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=2bde2e42"></script>
+    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="acoustotreams.ScalarPlaneWaveBasisByComp.__xor__.html" title="acoustotreams.ScalarPlaneWaveBasisByComp.__xor__"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarPlaneWaveBasisByComp.html" accesskey="U">acoustotreams.ScalarPlaneWaveBasisByComp</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector</a></li> 
@@ -58,19 +58,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector">
 <span class="sig-prename descclassname"><span class="pre">ScalarPlaneWaveBasisByComp.</span></span><span class="sig-name descname"><span class="pre">byunitvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">AcousticMaterial(1.3,</span> <span class="pre">343.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modetype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'up'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_coreacoustics.html#ScalarPlaneWaveBasisByComp.byunitvector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector" title="Link to this definition">¶</a></dt>
-<dd><p>Create a complete basis <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasis</span></code>.</p>
-<p>A plane wave basis is considered complete, when all three Cartesian components
-are defined for each mode. So, the specified wave number,
-material, and modetype is taken to calculate the third Cartesian wave vector.
-The modetype “up” (“down”) is for waves propagating in the positive (negative)
+<dd><p>Creates an instance of complete basis <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasis</span></code>.</p>
+<p>A plane-wave basis is considered complete when all three Cartesian components
+are defined for each mode. A third Cartesian component is calculated from
+the specified wavenumber, material, and modetype. The modetype “up”
+(resp. “down”) corresponds to waves propagating in the positive (resp. negative)
 direction with respect to the Cartesian axis that is orthogonal to the
-alignment.</p>
+alignment plane.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>k0</strong> (<em>float</em>) – Wave number.</p></li>
+<li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air (rad/m).</p></li>
 <li><p><strong>material</strong> (<a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a> or tuple, optional) – Material
-definition. Defaults to air.</p></li>
+definition. Defaults to the air.</p></li>
 <li><p><strong>modetype</strong> (<em>str</em><em>, </em><em>optional</em>) – Propagation direction. Defaults to “up”.</p></li>
 </ul>
 </dd>
@@ -142,7 +142,7 @@ definition. Defaults to air.</p></li>
         <li class="right" >
           <a href="acoustotreams.ScalarPlaneWaveBasisByComp.__xor__.html" title="acoustotreams.ScalarPlaneWaveBasisByComp.__xor__"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarPlaneWaveBasisByComp.html" >acoustotreams.ScalarPlaneWaveBasisByComp</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarPlaneWaveBasisByComp.byunitvector</a></li> 
