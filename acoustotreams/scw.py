@@ -34,21 +34,21 @@ _translate_r = np.vectorize(_translate_r)
 def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
     """translate(kz, mu, qz, m, krr, phi, z, singular=True)
     
-    Translation coefficient for cylindrical modes.
+    Translation coefficients for scalar cylindrical modes.
 
-    Returns the correct translation coefficient from :func:acoustotreams.scw.tl_scw,
-    and :func:acoustotreams.scw.tl_scw_r or a combination thereof for the specified mode and
+    Returns the correct translation coefficients from :func:acoustotreams.scw.tl_scw
+    and :func:acoustotreams.scw.tl_scw_r or combinations thereof for the specified modes and
     basis.
 
     Args:
-        kz (float, array_like): Z component of the destination mode's wave vector
-        mu (int, array_like): Order of the destination mode
-        qz (float, array_like): Z component of the source mode's wave vector
-        m (int, array_like): Order of the source mode
+        kz (float, array_like): Z-component of the wave vector of output modes.
+        mu (int, array_like): Order of output modes.
+        qz (float, array_like): Z component of the wave vector of input modes.
+        m (int, array_like): Order of input modes.
         krr (float or complex, array_like): Translation distance in units of 
-            the radial component of the wave vector
-        phi (float, array_like): Azimuthal angle
-        z (float, array_like): Z coordinate
+            the radial component of the wave vector.
+        phi (float, array_like): Azimuthal angle (rad).
+        z (float, array_like): Z-coordinate.
         singular (bool, optional): If true, singular translation coefficients are used,
             else regular coefficients. Defaults to ``True``.
 
@@ -70,17 +70,16 @@ _rotate = np.vectorize(_rotate)
 def rotate(kz, mu, qz, m, phi, *args, **kwargs):
     """rotate(kz, mu, qz, m, phi)
 
-    Rotation coefficient for cylindrical modes.
+    Rotation coefficients for scalar cylindrical modes.
 
-    Returns the correct rotation coefficient or a combination thereof for the specified
-    mode.
+    Return the rotation coefficients or a combination thereof for the specified modes.
 
     Args:
-        kz (float, array_like): Z component of the destination mode
-        mu (int, array_like): Order of the destination mode
-        qz (float, array_like): Z component of the source mode
-        m (int, array_like): Order of the source mode
-        phi (float, array_like): Rotation angle
+        kz (float, array_like): Z-component of the wave vector of output modes.
+        mu (int, array_like): Order of output modes.
+        qz (float, array_like): Z-component of the wave vector of input modes.
+        m (int, array_like): Order of input modes.
+        phi (float, array_like): Rotation angle (rad).
 
     Returns:
         complex
@@ -107,19 +106,19 @@ _periodic_to_spw = np.vectorize(_periodic_to_spw)
 def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
     """periodic_to_spw(kx, ky, kz, qz, m, a)
 
-    Convert periodic cylindrical wave to plane wave.
+    Convert periodic scalar cylindrical waves into scalar plane waves.
 
-    Returns the coefficient for the basis change in a periodic arrangement of cylindrical
-    modes to plane waves. For multiple positions only diagonal values (with respect to
-    the position) are returned.
+    Return the coefficients for the basis change from a periodic arrangement of cylindrical
+    waves to plane waves. For multiple positions, only the diagonal values (corresponding to
+    identical positions) are returned.
 
     Args:
-        kx (float, array_like): X component of destination plane wave mode wave vector
-        ky (float or complex, array_like): Y component of destination plane wave mode wave vector
-        kz (float, array_like): Z component of destination plane wave mode wave vector
-        qz (float, array_like): Z component of the source cylindrical mode
-        m (int, array_like): Order of the source cylindrical mode
-        area (float, array_like): Unit cell area
+        kx (float, array_like): X-component of the wave vector of plane waves.
+        ky (float or complex, array_like): Y-component of the wave vector of plane wavs.
+        kz (float, array_like): Z-component of the wave vector of plane waves.
+        qz (float, array_like): Z-component of the waver vector of cylindrical waves.
+        m (int, array_like): Order of cylindrical waves.
+        area (float, array_like): Unit cell area.
 
     Returns:
         complex
@@ -142,17 +141,18 @@ _to_ssw = np.vectorize(_to_ssw)
 def to_ssw(l, m, kz, mu, k, *args, **kwargs):
     """to_ssw(l, m, kz, mu, k)
     
-    Coefficient for the expansion of a cylindrical wave in spherical waves.
+    Coefficients for the expansion of scalar cylindrical waves in scalar spherical waves.
 
-    Returns the coefficient for the basis change from a cylindrical wave to a spherical wave. 
-    For multiple positions only diagonal values (with respect to the position) are returned.
+    Return the coefficient for the basis change from cylindrical waves to 
+    spherical waves. For multiple positions, only the diagonal values 
+    (corresponding to identical positions) are returned.
 
     Args:
-        l (int, array_like): Degree of the spherical wave
-        m (int, array_like): Order of the spherical wave
-        kz (float, array_like): Z component of the cylindrical wave's wave vector
-        mu (int, array_like): Order of the cylindrical wave
-        k (float or complex, array_like): Wave number
+        l (int, array_like): Degree of spherical waves.
+        m (int, array_like): Order of spherical waves.
+        kz (float, array_like): Z-component of the wave vector of cylindrical waves.
+        mu (int, array_like): Order of cylindrical waves.
+        k (float or complex, array_like): Angular wavenumber in the medium.
     
     Returns:
         complex array
@@ -161,24 +161,25 @@ def to_ssw(l, m, kz, mu, k, *args, **kwargs):
 
 
 def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
-    """Translation coefficients in a lattice.
+    """Translation coefficients for cylindrical waves on a lattice.
 
-    Returns the translation coefficents for the given modes in a lattice. The
-    calculation uses the fast converging sums of :mod:`treams.lattice`.
+    Return the translation coefficents for the given modes on a lattice. The
+    computations employ the fast converging Ewald summation from :mod:`treams.lattice`.
 
     Args:
-        k (float or complex): Wave number in the medium
-        kpar (float, (D,)-array): Parallel component of the wave, defines the dimension
-            with `1 <= D <= 2`
-        a (float, (D,D)-array): Lattice vectors in each row of the array
-        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point
+        k (float or complex): Angular wavenumber in the medium (rad/m).
+        kpar (float, (D,)-array): Parallel component of the wave vector. 
+            Defines the dimension with `1 <= D <= 2`.
+        a (float, (D,D)-array): Lattice vectors in each row of the array.
+        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point.
         out (2- or 3-tuple of integer arrays): Output modes
-        in_ (2- or 3-tuple of integer arrays): Input modes, if none are given equal to
-            the output modes
-        rsin (float): Shift vectors to use with the input modes, if non are given equal
-            to `rs`
-        eta (float or complex, optional): Cut between real and reciprocal space
-            summation, if equal to zero, an estimation for the optimal value is done.
+        in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, 
+            they are equal to the output modes.
+        rsin (float): Shift vectors of the input modes. If None is given, they are equal
+            to `rs`.
+        eta (float or complex, optional): Splitting parameter for the Ewald summation of
+            lattice sums. If zero, an estimation for the optimal value is done. Defaults
+            to zero.
 
     Returns:
         complex array

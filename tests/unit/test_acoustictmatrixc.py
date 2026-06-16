@@ -51,7 +51,7 @@ class TestInit:
 class TestCylinder:
     def test(self):
         tm = AcousticTMatrixC.cylinder([1], 2, 3, 4, [(200, 1000, 0), (900, 686, 0)])
-        m = acoustotreams.coeffs.mie_cyl_acoustics(1, [-2, -1, 0, 1, 2], 3, [4], [200, 900], [1000, 686], [500, 0])
+        m = acoustotreams.coeffs.mie_acoustics_cyl(1, [-2, -1, 0, 1, 2], 3, [4], [200, 900], [1000, 686], [500, 0])
         assert (
             tm[0, 0] == m[0]
             and tm[1, 1] == m[1]

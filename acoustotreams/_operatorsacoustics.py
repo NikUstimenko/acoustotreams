@@ -66,18 +66,18 @@ def _spwp_rotate(phi, basis, where):
 def rotate(phi, theta=0, psi=0, *, basis, where=True):
     """Rotation matrix.
 
-    For the given Euler angles apply a rotation for the given basis. In some basis sets
-    only rotations around the z-axis are permitted.
+    For the given Euler angles, apply a rotation for the given basis. 
+    For some basis sets, only rotations about the z-axis are permitted.
 
     Args:
-        phi (float): First Euler angle (rotation about z)
-        theta (float, optional): Second Euler angle (rotation about y)
-        psi (float, optional): Third Euler angle (rotation about z)
-        basis (:class:`ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
-            basis sets the output and input modes are taken accordingly, else both sets
-            of modes are the same.
-        where (array-like, bool, optional): Only evaluate parts of the rotation matrix,
-            the given array must have a shape that matches the output shape.
+        phi (float): First Euler angle (rotation about z) (rad).
+        theta (float, optional): Second Euler angle (rotation about y) (rad).
+        psi (float, optional): Third Euler angle (rotation about z) (rad).
+        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+            basis sets, the output and input modes are taken accordingly; otherwise, 
+            both sets of the modes are the same.
+        where (array-like, bool, optional): Only evaluate specified parts of the rotation matrix.
+            The input array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -101,6 +101,13 @@ def rotate(phi, theta=0, psi=0, *, basis, where=True):
 
 
 class Rotate(Operator):
+    """Rotation matrix.
+
+    When called as attribute of an object, it returns a suitable rotation matrix to
+    transform the object. See also :func:`rotate`.
+
+    """
+        
     _FUNC = staticmethod(rotate)
 
     def __init__(self, phi, theta=0, psi=0, *, isinv=False):
@@ -186,19 +193,20 @@ def translate(
 ):
     """Translation matrix.
 
-    Translate the given basis modes along the translation vector.
+    Translate the given basis set of modes along the translation vector.
 
     Args:
-        r (array-like): Translation vector
-        basis (:class:`ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
-            basis sets the output and input modes are taken accordingly, else both sets
-            of modes are the same.
-        k0 (float, optional): Wave number.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        modetype (str, optional): Wave mode, only used for
+        r (array-like): Translation vector (m).
+        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+            basis sets, the output and input modes are taken accordingly; otherwise, 
+            both sets of modes are the same.
+        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            parameters. Defaults to the air.
+        modetype (str, optional): Mode type. Only used for
             :class:`ScalarPlaneWaveBasisByComp`.
-        where (array-like, bool, optional): Only evaluate parts of the translation
-            matrix, the given array must have a shape that matches the output shape.
+        where (array-like, bool, optional): Only evaluate specified parts of the translation
+            matrix. The given array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -223,8 +231,8 @@ def translate(
 class Translate(Operator):
     """Translation matrix.
 
-    When called as attribute of an object it returns a suitable translation matrix to
-    transform it. See also :func:`translate`.
+    When called as attribute of an object, it returns a suitable translation matrix to
+    transform the object. See also :func:`translate`.
     """
 
     _FUNC = staticmethod(translate)
@@ -239,7 +247,7 @@ class Translate(Operator):
 
 
 def _ssw_ssw_expand(basis, to_basis, to_modetype, k0, material, modetype, where):
-    """Expand scalar spherical waves into scalar spherical waves."""
+    """Expand scalar spherical waves in scalar spherical waves."""
     if not (
         modetype == "regular" == to_modetype
         or modetype == "singular" == to_modetype
@@ -266,7 +274,7 @@ def _ssw_ssw_expand(basis, to_basis, to_modetype, k0, material, modetype, where)
     return res
 
 def _ssw_scw_expand(basis, to_basis, k0, material, where):
-    """Expand scalar cylindrical waves into scalar spherical waves."""
+    """Expand scalar cylindrical waves in scalar spherical waves."""
     where = np.logical_and(where, to_basis.pidx[:, None] == basis.pidx)
     ks = material.ks(k0)
     res = scw.to_ssw(
@@ -285,7 +293,7 @@ def _ssw_scw_expand(basis, to_basis, k0, material, where):
     )
 
 def _ssw_spw_expand(basis, to_basis, k0, material, modetype, where):
-    """Expand scalar plane waves into scalar spherical waves."""
+    """Expand scalar plane waves in scalar spherical waves."""
     if isinstance(basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up" if modetype is None else modetype
     kvecs = basis.kvecs(k0, material, modetype)
@@ -309,7 +317,7 @@ def _ssw_spw_expand(basis, to_basis, k0, material, modetype, where):
     )
 
 def _scw_scw_expand(basis, to_basis, to_modetype, k0, material, modetype, where):
-    """Expand scalar cylindrical waves into scalar cylindrical waves."""
+    """Expand scalar cylindrical waves in scalar cylindrical waves."""
     rs = sc.car2cyl(to_basis.positions[:, None, :] - basis.positions)
     krhos = material.krhos(k0, basis.kz)
     res = scw.translate(
@@ -328,7 +336,7 @@ def _scw_scw_expand(basis, to_basis, to_modetype, k0, material, modetype, where)
     return res
 
 def _scw_spw_expand(basis, to_basis, k0, material, modetype, where):
-    """Expand scalar plane waves into scalar cylindrical waves."""
+    """Expand scalar plane waves in scalar cylindrical waves."""
     if isinstance(basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up" if modetype is None else modetype
     kvecs = basis.kvecs(k0, material, modetype)
@@ -351,7 +359,7 @@ def _scw_spw_expand(basis, to_basis, k0, material, modetype, where):
 
 
 def _spw_spw_expand(basis, to_basis, k0, material, modetype, where):
-    """Expand scalar plane waves into scalar plane waves."""
+    """Expand scalar plane waves in scalar plane waves."""
     if isinstance(basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up" if modetype is None else modetype
     kvecs = basis.kvecs(k0, material, modetype)
@@ -375,23 +383,24 @@ def expand(
 ):
     """Expansion matrix.
 
-    Expand the modes from one basis set to another basis set. If applicable the modetype
-    can also be changed, like for spherical and cylindrical waves from `singular` to
-    `regular`. Not all expansions are available, only those that result in a discrete
-    set of modes. For example, plane waves can be expanded in spherical waves, but the
-    opposite transformation generally requires a continuous spectrum (an integral) over
-    plane waves.
+    Expand the modes from one basis set in the modes from another basis set. For
+    spherical and cylindrical waves, the modetype can also be changed, for example,
+    from `singular` to `regular`. Only those expansions are available that result 
+    in a discrete set of modes. For example, plane waves can be expanded in spherical 
+    waves, but the inverse transformation generally requires a continuous spectrum 
+    of plane waves, so that the transformation becomes an integral over this spectrum.
 
     Args:
-        basis (:class:`ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
-            basis sets the output and input modes are taken accordingly, else both sets
-            of modes are the same.
-        modetype (str, optional): Wave mode, used for
-            :class:`ScalarSphericalWaveBasis` (and :class:`ScalarCylindricalWaveBasis`).
-        k0 (float, optional): Wave number.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        where (array-like, bool, optional): Only evaluate parts of the expansion matrix,
-            the given array must have a shape that matches the output shape.
+        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+            basis sets, the output and input modes are taken accordingly; otherwise, 
+            both sets of modes are the same.
+        modetype (str, optional): Mode type, used for
+            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.
+        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            parameters. Defaults to the air.
+        where (array-like, bool, optional): Only evaluate specified parts of the expansion 
+            matrix. The given array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -441,8 +450,8 @@ def expand(
 class Expand(Operator):
     """Expansion matrix.
 
-    When called as attribute of an object it returns a suitable transformation matrix to
-    expand one set of modes into another basis set (and mode type, if applicable).
+    When called as attribute of an object, it returns a suitable transformation matrix to
+    expand one set of modes into another basis set (with different mode type if applicable).
     See also :func:`expand`.
     """
 
@@ -484,7 +493,7 @@ class Expand(Operator):
     def inv(self):
         """Inverse expansion.
 
-        The inverse transformation is not available for all transformations.
+        The inverse transformation is not available for all the transformations.
         """
         if len(self._args) == 1:
             basis, modetype = self._args[0], None
@@ -498,7 +507,7 @@ class Expand(Operator):
     
 
 def _sswl_expand(basis, to_basis, eta, k0, kpar, lattice, material, where):
-    """Expand scalar spherical waves in a lattice."""
+    """Expand scalar spherical waves on a lattice."""
     ks = k0 * AcousticMaterial().c / material.c
     if lattice.dim == 3:
         try:
@@ -545,7 +554,7 @@ def _sswl_expand(basis, to_basis, eta, k0, kpar, lattice, material, where):
 
 
 def _scw_ssw_expand(basis, to_basis, k0, kpar, lattice, material, where):
-    """Expand scalar spherical waves into scalar cylindrical waves in a lattice."""
+    """Expand scalar spherical waves on an one-dimensional lattice in scalar cylindrical waves."""
     ks = k0 * AcousticMaterial().c / material.c
     where = np.logical_and(where, to_basis.pidx[:, None] == basis.pidx)
     kpar = WaveVector(kpar)
@@ -571,7 +580,7 @@ def _scw_ssw_expand(basis, to_basis, k0, kpar, lattice, material, where):
 def _spw_ssw_expand(
     basis, to_basis, k0, kpar, lattice, material, modetype, where
 ):
-    """Expand scalar spherical waves into scalar plane waves in a lattice."""
+    """Expand scalar spherical waves on a two-dimensional lattice in scalar plane waves."""
     if modetype is None and isinstance(to_basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up"
     kpar = WaveVector(kpar)
@@ -601,7 +610,7 @@ def _spw_ssw_expand(
 
 
 def _scwl_expand(basis, to_basis, eta, k0, kpar, lattice, material, where):
-    """Expand scalar cylindrical waves in a lattice."""
+    """Expand scalar cylindrical waves on a lattice."""
     ks = material.ks(k0)
     alignment = (
         "x" if not isinstance(lattice, Lattice) and np.size(lattice) == 1 else None
@@ -656,7 +665,7 @@ def _scwl_expand(basis, to_basis, eta, k0, kpar, lattice, material, where):
 
 
 def _spw_scw_expand(basis, to_basis, k0, lattice, kpar, material, modetype, where):
-    """Expand scalar cylindrical waves into scalar plane waves in a lattice."""
+    """Expand scalar cylindrical waves on a 1D lattice in scalar plane waves."""
     if modetype is None and isinstance(to_basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up"
     if len(kpar) == 1:
@@ -696,30 +705,31 @@ def expandlattice(
     material=AcousticMaterial(),
     where=True,
 ):
-    """Expansion matrix in lattices.
+    """Expansion matrix for waves on lattices.
 
-    Expand the modes from one basis set which are assumed to be periodically repeated on
-    a lattice into another basis set.
+    Expand the modes from one basis set, which are assumed to be periodically repeated on
+    a lattice, into another basis set.
 
     Args:
-        lattice (:class:`~treams.Lattice` or array-like, optional): Lattice definition.
-            In some cases this argument can be omitted, when the lattice can be inferred
+        lattice (:class:`~treams.Lattice` or array-like, optional): Lattice definition (m).
+            In some cases, this argument can be omitted when the lattice can be inferred
             from the basis.
         kpar (sequence, optional): The components of the wave vector tangential to the
-            lattice. In some cases this argument can be omitted, when the lattice can be
+            lattice. In some cases, this argument can be omitted when kpar can be
             inferred from the basis.
-        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
-            basis sets the output and input modes are taken accordingly, else both sets
-            of modes are the same.
-        k0 (float, optional): Wave number.
-        eta (float or complex, optional): Split parameter used when the Ewald summation
-            is applied for the lattice sums. By setting it to 0 the split is set
-            automatically.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        modetype (str, optional): Wave mode, used for
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is 
+            a tuple of two basis sets, the output and input modes are taken accordingly; 
+            otherwise, both sets of modes are the same.
+        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        eta (float or complex, optional): Splitting parameter for the Ewald summation
+            of lattice sums. Defaults to 0, corresponding to the automatic
+            split.
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            definition. Defaults to the air.
+        modetype (str, optional): Mode type, used for
             :class:`ScalarPlaneWaveBasisByComp`.
-        where (array-like, bool, optional): Only evaluate parts of the expansion matrix,
-            the give array must have a shape that matches the output shape.
+        where (array-like, bool, optional): Only evaluate specified parts of the expansion 
+            matrix. The given array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -777,9 +787,9 @@ def expandlattice(
 
 
 class ExpandLattice(Operator):
-    """Expansion matrix in a lattice.
+    """Expansion matrix for waves on a lattice.
 
-    When called as attribute of an object it returns a suitable transformation matrix to
+    When called as attribute of an object, it returns a suitable transformation matrix to
     expand one set of modes that is periodically repeated into another basis set.
     See also :func:`expandlattice`.
     """
@@ -829,7 +839,7 @@ class ExpandLattice(Operator):
 
 
 def _spwp_permute(basis, n, k0, material, modetype):
-    """Permute axes in a scalar partial plane wave basis."""
+    """Permute axes in a partial basis of scalar plane waves."""
     if material is None:
         raise TypeError("missing definition of 'material'")
     modetype = "up" if modetype is None else modetype
@@ -857,7 +867,7 @@ def _spwp_permute(basis, n, k0, material, modetype):
 
 
 def _spwa_permute(basis, n):
-    """Permute axes in a scalar plane wave basis."""
+    """Permute axes in a scalar plane-wave basis."""
     qx, qy, qz = basis.qx, basis.qy, basis.qz
     where = (qx[:, None] == qx) & (qy[:, None] == qy) & (qz[:, None] == qz)
     if n == 1:
@@ -881,16 +891,17 @@ def _spwa_permute(basis, n):
 def permute(n=1, *, basis, k0=None, material=None, modetype=None):
     """Permutation matrix.
 
-    Permute the axes of a scalar plane wave basis expansion.
+    Permute the axes of a scalar plane-wave basis expansion.
 
     Args:
-        n (int, optional): Number of permutations, defaults to 1.
-        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set, if it is a tuple of two
-            basis sets the output and input modes are taken accordingly, else both sets
+        n (int, optional): Number of permutations. Defaults to 1.
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+            basis sets, the output and input modes are taken accordinglyp; otherwise, both sets
             of modes are the same.
-        k0 (float, optional): Wave number.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        modetype (str, optional): Wave mode.
+        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            parameters. Defaults to the air.
+        modetype (str, optional): Mode type.
     """
     if n != int(n):
         raise ValueError("'n' must be integer")
@@ -905,8 +916,8 @@ def permute(n=1, *, basis, k0=None, material=None, modetype=None):
 class Permute(Operator):
     """Axes permutation matrix.
 
-    When called as attribute of an object it returns a suitable transformation matrix to
-    permute the axis definitions of plane waves. See also :func:`permute`.
+    When called as attribute of an object, it returns a suitable transformation matrix to
+    permute the axes of scalar plane waves. See also :func:`permute`.
     """
 
     _FUNC = staticmethod(permute)
@@ -1012,17 +1023,18 @@ def _spw_vfield(r, basis, k0, material, modetype):
 def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     r"""Velocity field.
 
-    The resulting matrix maps the pressure field coefficients of the given basis to the
+    The resulting matrix maps the pressure field coefficients of a given basis to the
     velocity field in Cartesian coordinates.
 
-    The velocity field is given in units of :math:`\frac{1}{\rho c}p`.
+    The velocity field is given in units of m/s.
 
     Args:
-        r (array-like): Evaluation points
+        r (array-like): Evaluation points (m).
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
-        k0 (float): Wave number.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        modetype (str, optional): Wave mode.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            parameters. Defaults to the air.  
+        modetype (str, optional): Mode type.
     """
     material = AcousticMaterial(material)
     r = np.asanyarray(r)
@@ -1043,8 +1055,8 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 class VField(FieldOperator):
     """Velocity field evaluation matrix.
 
-    When called as attribute of an object it returns a suitable matrix to evaluate field
-    coefficients at specified points. See also :func:`vfield`.
+    When called as attribute of an object, it returns a suitable matrix to evaluate 
+    the field coefficients at specified points. See also :func:`vfield`.
     """
 
     _FUNC = staticmethod(vfield)
@@ -1128,15 +1140,18 @@ def _spw_pfield(r, basis, k0, material, modetype):
 def pfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     """Pressure field.
 
-    The resulting matrix maps the pressure field coefficients of the given basis to the
+    The resulting matrix maps the pressure field coefficients of a given basis to the
     pressure field.
 
+    The pressure field is given in units of Pa.
+
     Args:
-        r (array-like): Evaluation points
+        r (array-like): Evaluation points (m).
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
-        k0 (float): Wave number.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        modetype (str, optional): Wave mode.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            parameters. Defaults to the air.
+        modetype (str, optional): Mode type.
     """
     material = AcousticMaterial(material)
     r = np.asanyarray(r)
@@ -1157,8 +1172,8 @@ def pfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 class PField(FieldOperator):
     """Pressure field evaluation matrix.
 
-    When called as attribute of an object it returns a suitable matrix to evaluate field
-    coefficients at specified points. See also :func:`pfield`.
+    When called as attribute of an object, it returns a suitable matrix to evaluate 
+    the field coefficients at specified points. See also :func:`pfield`.
     """
 
     _FUNC = staticmethod(pfield)
@@ -1226,12 +1241,15 @@ def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The resulting matrix maps the scattered pressure field coefficients in the scalar 
     spherical or cylindrical wave basis to the far-field amplitude of the pressure field.
 
+    The far-field amplitude is given in units of N/m.
+
     Args:
-        r (array-like): Evaluation points
+        r (array-like): Evaluation points (m).
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
-        k0 (float): Wave number.
-        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material parameters.
-        modetype (str, optional): Wave mode.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+            parameters. Defaults to the air.
+        modetype (str, optional): Mode type.
     """
     material = AcousticMaterial(material)
     r = np.asanyarray(r)
@@ -1251,8 +1269,8 @@ def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
 class PAmplitudeFF(FieldOperator):
     """Far-field amplitude of pressure field evaluation matrix.
 
-    When called as attribute of an object it returns a suitable matrix to evaluate field
-    coefficients at specified points. See also :func:`pamplitudeff`.
+    When called as attribute of an object, it returns a suitable matrix to evaluate 
+    the field coefficients at specified points. See also :func:`pamplitudeff`.
     """
 
     _FUNC = staticmethod(pamplitudeff)

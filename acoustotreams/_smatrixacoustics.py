@@ -62,15 +62,14 @@ class OperatorAttributeSMatrices:
 
 
 class AcousticSMatrices:
-    r"""Collection of four acoustic S-matrices with a scalar plane wave basis.
+    r"""Collection of four acoustic S-matrices with a scalar plane-wave basis.
 
-    The S-matrix describes the scattering of incoming into outgoing modes using a plane
-    wave basis, with functions :func:`acoustotreams.speical.spw_Psi`. The primary
+    The S-matrix describes the scattering of incoming into outgoing modes using a 
+    plane-wave basis, given by functions :func:`acoustotreams.speical.spw_Psi`. The primary
     direction of propagation is parallel or anti-parallel to the z-axis. The scattering
-    object itself is infinitely extended in the x- and y-directions. The S-matrix is
-    divided into four submatrices :math:`S_{\uparrow \uparrow}`,
-    :math:`S_{\uparrow \downarrow}`, :math:`S_{\downarrow \uparrow}`, and
-    :math:`S_{\downarrow \downarrow}`:
+    structure itself is infinitely elongated in the x- and y-directions. The S-matrix 
+    contains four blocks :math:`S_{\uparrow \uparrow}`,:math:`S_{\uparrow \downarrow}`, 
+    :math:`S_{\downarrow \uparrow}`, and :math:`S_{\downarrow \downarrow}`:
 
     .. math::
 
@@ -82,18 +81,18 @@ class AcousticSMatrices:
     These matrices describe the transmission of plane waves propagating into positive
     z-direction, reflection of plane waves into the positive z-direction, reflection of
     plane waves into negative z-direction, and the transmission of plane waves
-    propagating in negative z-direction, respectively. Each of those for matrices
-    contain different diffraction orders.
+    propagating in negative z-direction, respectively. Each of these four matrices
+    also maps different diffraction orders to one another.
 
-    The wave number :attr:`k0` and, if not air, the material :attr:`material` are
-    also required.
+    The wavenumber :attr:`k0` and, if not the air, the material :attr:`material` 
+    are required.
 
     Args:
         smats (AcousticSMatrix): Acoustic S-matrices.
-        k0 (float): Wave number in air.
-        basis (ScalarPlaneWaveBasisByComp): The basis for the S-matrices.
-        material (tuple, AcousticMaterial, optional): Material definition, if a tuple of length
-            two is specified, this refers to the materials above and below the S-matrix.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        basis (ScalarPlaneWaveBasisByComp): Basis for the S-matrices.
+        material (tuple, AcousticMaterial, optional): Material definition. If a tuple of length
+            two is specified, it refers to the materials above and below the S-matrix.
     """
     permute = OperatorAttributeSMatrices("permute")
     translate = OperatorAttributeSMatrices("translate")
@@ -168,7 +167,7 @@ class AcousticSMatrices:
 
         Args:
             basis (ScalarPlaneWaveBasisByComp): Basis definitions.
-            k0 (float): Wave number in air.
+            k0 (float): Angular wavenumber in the air (rad/m).
             materials (Sequence[AcousticMaterial]): Material definitions.
 
         Returns:
@@ -187,11 +186,11 @@ class AcousticSMatrices:
         """Slab of material.
 
         A slab of material, defined by a thickness and three materials. Consecutive
-        slabs of material can be defined by `n` thicknesses and and `n + 2` material
+        slabs of material can be defined by `n` thicknesses and `(n + 2)` material
         parameters.
 
         Args:
-            k0 (float): Wave number in air.
+            k0 (float): Angular wavenumber in air (rad/m).
             basis (ScalarPlaneWaveBasisByComp): Basis definition.
             tickness (Sequence[Float]): Thickness of the slab or the thicknesses of all
                 slabs in order from negative to positive z.
@@ -240,9 +239,9 @@ class AcousticSMatrices:
         This S-matrix translates the reference origin along `r`.
 
         Args:
-            r (float, (3,)-array): Translation vector.
+            r (float, (3,)-array): Translation vector (m).
             basis (ScalarPlaneWaveBasis): Basis definition.
-            k0 (float): Wave number in air.
+            k0 (float): Angular wavenumber in the air (rad/m).
             material (AcousticMaterial, optional): Material definition.
 
         Returns:
@@ -260,12 +259,12 @@ class AcousticSMatrices:
     def from_array(cls, tm, basis):
         """S-matrix from an array of (cylindrical) T-matrices.
 
-        Create a S-matrix for a two-dimensional array of objects described by the
-        T-Matrix or an one-dimensional array of objects described by a cylindrical
+        Create a S-matrix for a two-dimensional array of scatterers described by the
+        T-Matrix or an one-dimensional array of scatterers described by the cylindrical
         T-matrix.
 
         Args:
-            tm (AcousticTMatrix or AcousticTMatrixC): (Cylindrical) T-matrix to place in the array.
+            tm (AcousticTMatrix or AcousticTMatrixC): (Cylindrical) T-matrix to place on array.
             basis (ScalarPlaneWaveBasisByComp): Basis definition.
             eta (float or complex, optional): Splitting parameter in the lattice sum.
 
@@ -305,9 +304,9 @@ class AcousticSMatrices:
         return AcousticSMatrices(snew)
 
     def double(self, n=1):
-        """Double the acoustic S-matrix.
+        """Double an acoustic S-matrix.
 
-        By default this function doubles the S-matrix but it can also create a
+        By default, this function doubles the S-matrix, but it can also create a
         :math:`2^n`-fold repetition of itself:
 
         Args:
@@ -324,18 +323,18 @@ class AcousticSMatrices:
     def illuminate(self, illu, illu2=None, /, *, smat=None):
         """Field coefficients above and below the S-matrix.
 
-        Given an illumination defined by the coefficients of each incoming mode
-        calculate the coefficients for the outgoing field above and below the S-matrix.
-        If a second SMatrix is given, the field expansions in between are also
-        calculated.
+        Given an insonification defined by the coefficients of each incoming mode,
+        compute the coefficients of the outgoing modes above and below the S-matrix.
+        If a second S-matrix is given, the field expansions in between are also
+        computed.
 
         Args:
-            illu (array-like): Illumination, if `modetype` is specified, the direction
-                will be chosen accordingly.
-            illu2 (array-like, optional): Second illumination. If used, the first
+            illu (array-like): Insonification. If `modetype` is specified, the direction
+                is chosen accordingly.
+            illu2 (array-like, optional): Second insonification. If used, the first
                 argument is taken to be coming from below and this one to be coming from
                 above.
-            smat (AcousticSMatrix, optional): Second S-matrix for the calculation of the
+            smat (AcousticSMatrix, optional): Second S-matrix for computing the
                 field expansion between two S-matrices.
 
         Returns:
@@ -364,10 +363,10 @@ class AcousticSMatrices:
         """Transmittance and reflectance.
 
         Calculate the transmittance and reflectance for one S-matrix with the given
-        illumination and direction.
+        insonification and propagation direction.
 
         Args:
-            illu (complex, array_like): Expansion coefficients of the incoming wave
+            illu (complex, array_like): Expansion coefficients of the incoming wave.
 
         Returns:
             tuple
@@ -394,7 +393,7 @@ class AcousticSMatrices:
         return s_t / (s_i + s_ir), s_r / (s_i + s_ir)
 
     def periodic(self):
-        r"""Periodic repetition of the S-matrix.
+        r"""Periodic repetition of an S-matrix.
 
         Transform the S-matrix to an infinite periodic arrangement of itself defined
         by
@@ -426,7 +425,7 @@ class AcousticSMatrices:
     def bands_kz(self, az):
         r"""Band structure calculation.
 
-        Calculate the band structure for the given S-matrix, assuming it is periodically
+        Calculate the band structure for a given S-matrix, assuming it is periodically
         repeated along the z-axis. The function returns the z-components of the wave
         vector :math:`k_z` and the corresponding eigenvectors :math:`v` of
 
@@ -445,7 +444,7 @@ class AcousticSMatrices:
             \boldsymbol v\,.
 
         Args:
-            az (float): Lattice pitch along the z direction
+            az (float): Lattice pitch along the z-direction (m).
 
         Returns:
             tuple
@@ -464,7 +463,7 @@ class AcousticSMatrices:
 def poynting_avg_z(basis, k0, material=AcousticMaterial()):
     r"""Time-averaged z-component of the Poynting vector.
 
-    Calculate the time-averaged Poynting vector's z-component
+    Return the time-averaged Poynting vector's z-component
 
     .. math::
 

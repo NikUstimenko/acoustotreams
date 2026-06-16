@@ -1,7 +1,7 @@
 """Scattering coefficients for high-symmetry cases.
 
-Calculate the scattering coefficients for cases where they can be obtained analytically
-easily. This is a (multilayered) sphere using spherical waves (Mie coefficients), 
+Calculate the scattering coefficients for cases where they can be obtained analytically.
+Thes include a (multilayered) sphere using spherical waves (Mie coefficients), 
 a cylinder using cylindrical waves, and an infinitely extended planar
 interface (Fresnel coefficients).
 
@@ -19,7 +19,7 @@ import numpy as np
 from acoustotreams._materialacoustics import AcousticMaterial
 
 def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
-    """Solve a matrix for the boundary conditions at a spherical interface.
+    """Solve a matrix for the interface conditions at a spherical interface.
 
     Six types of interfaces are supported: fluid-fluid, fluid-solid, solid-fluid,
     solid-solid, soft-fluid, and hard-fluid.
@@ -29,14 +29,14 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
     and the hard medium has :math:`(\rho = \infty, c = 0, c_t = 0)`.
 
     Note:
-        The order of coefficients is LL, NL, LN, and NN.
+        The order of T-matrix entries is LL, NL, LN, and NN.
 
     Args:
-        tm: T-matrix of the previous layer.
-        l: Degree of the coefficient.
-        x: Size parameters in the air.
-        mat_sphere: Material of the sphere :math:`(\rho, c, c_t)`.
-        mat_env: Material of the medium :math:`(\rho, c, c_t)`.
+        tm (complex, array-like): T-matrix of the previous layer.
+        l (int): Degree of the coefficient.
+        x (float, array-like): Size parameters in the air.
+        mat_sphere (float or complex, tuple): Material of the sphere :math:`(\rho, c, c_t)`.
+        mat_env (float or complex, tuple): Material of the medium :math:`(\rho, c, c_t)`.
 
     Returns:
         complex 4-array
@@ -268,29 +268,29 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
     return res 
 
 def mie_acoustics(l, x, *materials):
-    r"""Mie scattering coefficient of degree l.
+    r"""Mie-scattering coefficient of degree :math:`l` for a sphere.
 
     The sphere is defined by its size parameter :math:`k_0 r`, where :math:`r` is the
-    radius and :math:`k_0` the wave number in air. A multilayered sphere is defined
-    by giving an array of ascending numbers, that define the size parameters of the
-    sphere and its shells starting from the center.
+    radius and :math:`k_0` the wavenumber in the air. A multilayered sphere is defined
+    by an array of ascending numbers that define the size parameters of the layers
+    starting from the center.
 
     Likewise, the material parameters are given from inside to outside. These arrays
-    are expected to be exactly one unit larger then the array `x`.
+    are expected to contain exactly one element more than the array `x`.
 
-    The result is a complex number relating incident with the scattered modes, which are 
-    index in the same way.
+    The result is a complex number relating the incident and scattered field coefficients,
+    both indexed identically.
 
     Note:
-        1. :math:`c_t` of the last material must be zero. 
+        1. :math:`c_t` of the **last** material must be zero. 
         2. For the soft and hard spheres, only one radius must be given. 
 
     Args:
-        l (integer): Degree :math:`l \geq 0`
-        x (float, array_like): Size parameters
-        rho (float or complex, array_like): Mass density
-        c (float or complex, array_like): Longitudinal speed of sound
-        c_t (float or complex, array_like): Transverse speed of sound
+        l (int): Degree :math:`l \geq 0`.
+        x (float, array_like): Size parameters in the array.
+        rho (float or complex, array_like): Mass density (kg/m^3).
+        c (float or complex, array_like): Longitudinal speed of sound (m/s).
+        c_t (float or complex, array_like): Transverse speed of sound (m/s). 
 
     Returns:
         complex array
@@ -309,7 +309,7 @@ def mie_acoustics(l, x, *materials):
     return res
 
 def _mie_acoustics_iter_cyl(tm, kz, m, k0, radius, mat_cyl, mat_env):
-    """Solve a matrix for the boundary conditions at a cylindrical interface.
+    """Solve a matrix for the interface conditions at a cylindrical interface.
 
     Three types of interfaces are supported: fluid-fluid, soft-fluid, and hard-fluid.
 
@@ -318,13 +318,13 @@ def _mie_acoustics_iter_cyl(tm, kz, m, k0, radius, mat_cyl, mat_env):
     and the hard medium has :math:`(\rho = \infty, c = 0, c_t = 0)`.
 
     Args:
-        tm: T-matrix of the previous layer.
-        kz: Z component of the wave vector.
-        m: Order.
-        k0: Wave number in air.
-        radius: Radius of the cylinder.
-        mat_cyl: Material of the cylinder :math:`(\rho, c, c_t)`.
-        mat_env: Material of the medium :math:`(\rho, c, c_t)`.
+        tm (complex, array-like): T-matrix of the previous layer.
+        kz (float): Z-component of the wave vector (rad/m).
+        m (int): Order.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        radius (float): Radius of the cylinder (m).
+        mat_cyl (float or complex, tuple): Material of the cylinder :math:`(\rho, c, c_t)`.
+        mat_env (float or complex, tuple): Material of the medium :math:`(\rho, c, c_t)`.
 
     Returns:
         complex
@@ -368,30 +368,30 @@ def _mie_acoustics_iter_cyl(tm, kz, m, k0, radius, mat_cyl, mat_env):
 
 
 def mie_acoustics_cyl(kz, m, k0, radii, *materials):
-    r"""Scattering coefficient at an infinite (fluid) cylinder
+    r"""Scattering coefficient at a cylindrical interface
 
     The cylinder is defined by its radii. A multilayered cylinder is defined
-    by giving an array of ascending numbers, that define the size parameters of the
-    cylinder and its shells starting from the center.
+    by giving an array of ascending numbers that define the size parameters of the
+    layers starting from the center.
 
     Likewise, the material parameters are given from inside to outside. These arrays
-    are expected to be exactly one unit larger then the array `radii`.
+    are expected to contain exactly one element more than the array `radii`.
 
-    The result is a complex number relating incident with the scattered modes, which are 
-    index in the same way.
+    The result is a complex number relating the incident and scattered field 
+    coefficients, both indexed identically.
 
     Note:
-        1. :math:`c_t` of all the materials must be zero. 
+        1. :math:`c_t` of **all** the materials must be zero. 
         2. For the soft and hard infinite cylinders, only one radius must be given. 
 
     Args:
-        kz (float): Z component of the wave vector
-        m (integer): Order
-        k0 (float or complex): Wave number in the air
-        radii (float, array_like): Radii of the layers
-        rho (float or complex, array_like): Mass density
-        c (float or complex, array_like): Longitudinal speed of sound
-        c_t (float or complex, array_like): Transverse speed of sound
+        kz (float): Z-component of the wave vector in the medium (rad/m).
+        m (int): Order.
+        k0 (float or complex): Angular wavenumber in the air (rad/m).
+        radii (float, array_like): Radii of the layers (m).
+        rho (float or complex, array_like): Mass density (kg/m^3).
+        c (float or complex, array_like): Longitudinal speed of sound (m/s).
+        c_t (float or complex, array_like): Transverse speed of sound (m/s).
 
     Returns:
         complex array
@@ -408,17 +408,16 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
 def fresnel_acoustics(kzs, rhos):
     r"""Fresnel coefficients for a planar interface.
 
-    The first two dimensions index the two media for the above
-    and below the S-matrix, the second two dimensions are added 
-    to meet the treams convention.
+    The first two dimensions index the media above and below the S-matrix, 
+    the second two dimensions were added to meet the acoustotreams convention.
 
-    The result is an array relating incoming with the outgoing modes, which 
-    are indexed in the same way. The first dimension of the array are the outgoing 
-    and the second dimension the incoming modes
+    The result is an array relating the incoming and the outgoing mode coefficients, 
+    both indexed identically. The first dimension of the array corresponds to 
+    the outgoing modes and the second one to the incoming modes.
 
     Args:
-        kzs (float): Z component of the waves
-        rhos (float or complex): Mass densities
+        kzs (float): Z-components of the wave vector (rad/m).
+        rhos (float or complex): Mass densities (kg/m^3).
 
     Returns:
         complex (2, 2, 1, 1)-array

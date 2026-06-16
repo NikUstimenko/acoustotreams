@@ -6,15 +6,15 @@ from treams import misc
 class AcousticMaterial:
     r"""Material definition.
 
-    The material properties are defined in the frequency domain through scalar values
+    The material properties are defined in the frequency domain by scalar values
     for density :math:`\rho`, the speed of longitudinal elastic waves :math:`c`, and
-    the speed of transverse elastic waves :math:`c`. Materials are, thus, assumed to be linear, 
-    time-invariant, homogeneous, isotropic, and local. Moreover, it is assumed that they have no gain.
+    the speed of transverse elastic waves :math:`c_t`. Materials are, thus, assumed to be linear, 
+    time-invariant, homogeneous, isotropic, local and to have no gain.
 
     Args:
-        rho (optional, complex): Mass density. Defaults to 1.3 [kg/m^3].
-        c (optional, complex): Longitudinal speed of sound. Defaults to 343 [m/s].
-        ct (optional, complex): Transverse speed of sound. Defaults to 0 [m/s].
+        rho (optional, complex): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.
+        c (optional, complex): Longitudinal speed of sound (m/s). Defaults to 343 m/s.
+        ct (optional, complex): Transverse speed of sound (m/s). Defaults to 0 m/s.
     """
 
     def __init__(self, rho=1.3, c=343., ct=0.):
@@ -79,8 +79,8 @@ class AcousticMaterial:
         :math:`c = \sqrt{\frac{\lambda+2\mu}{\rho}}` and :math:`c_t = \sqrt{\frac{\mu}{\rho}}`. 
 
         Args:
-            rho (complex, optional): Mass density. Defaults to 1.3.
-            params (complex, optional): Lamé parameters. Defaults to (151767.21, 0.).
+            rho (complex, optional): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.
+            params (complex, optional): Lamé parameters (Pa). Defaults to (151767.21, 0.) Pa.
 
         Returns:
             AcousticMaterial
@@ -97,8 +97,8 @@ class AcousticMaterial:
         :math:`c_t = c \sqrt{\frac{1 - 2\sigma}{2 - 2\sigma}}`. 
 
         Args:
-            rho (complex, optional): Mass density. Defaults to 1.3.
-            c (complex, optional): Longitudinal speed of sound. Defaults to 343.
+            rho (complex, optional): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.
+            c (complex, optional): Longitudinal speed of sound (m/s). Defaults to 343 m/s.
             pratio (complex, optional): Poisson's ratio. Defaults to 0.5.
 
         Returns:
@@ -109,7 +109,7 @@ class AcousticMaterial:
     
     @property
     def impedance(self):
-        r"""Relative impedance for longitudinal waves.
+        r"""Relative impedance for longitudinal waves (Pa*s/m^3).
 
         The relative impedance is defined by :math:`Z = \rho c`.
 
@@ -120,7 +120,7 @@ class AcousticMaterial:
     
     @property
     def impedancet(self):
-        r"""Relative impedance for transverse waves..
+        r"""Relative impedance for transverse waves (Pa*s/m^3).
 
         The relative impedance is defined by :math:`Z = \rho c_t`.
 
@@ -140,8 +140,8 @@ class AcousticMaterial:
     def __eq__(self, other):
         """Compare material parameters.
 
-        Materials are considered equal, when all material parameters are equal. Also,
-        compares with objects that contain at most three values.
+        Materials are considered equal if all material parameters are equal.
+        Moreover, compares objects that contain at most three values.
 
         Returns:
             bool
@@ -158,7 +158,7 @@ class AcousticMaterial:
     
     @property
     def isreal(self):
-        """Test if the material has purely real parameters.
+        """Test if the material has purely real-valued parameters.
 
         Returns:
             bool
@@ -167,7 +167,7 @@ class AcousticMaterial:
     
     @property
     def isshear(self):
-        """Test if the material supports transverse (shear) elastic waves.
+        """Test if the material sustains shear waves.
 
         Returns:
             bool
@@ -191,10 +191,10 @@ class AcousticMaterial:
         return self.__class__.__name__ + str(self)
 
     def ks(self, k0):
-        """Return the wave number of longitudinal waves in the medium.
+        """Return the wavenumber of longitudinal waves in the medium.
 
         Args:
-            k0 (float): Wave number in air.
+            k0 (float): Angular wavenumber in the air (rad/m).
 
         Returns:
             tuple
@@ -206,10 +206,10 @@ class AcousticMaterial:
 
         
     def kst(self, k0):
-        """Return the wave number of transverse waves in the medium.
+        """Return the wavenumber of transverse waves in the medium.
 
         Args:
-            k0 (float): Wave number in air.
+            k0 (float): Angular wavenumber in the air (rad/m).
 
         Returns:
             tuple
@@ -226,8 +226,8 @@ class AcousticMaterial:
         The returned values have non-negative imaginary parts.
 
         Args:
-            k0 (float): Wave number in air.
-            kz (float, array-like): z-component of the wave vector
+            k0 (float): Angular wavenumber in the air (rad/m).
+            kz (float, array-like): z-component of the wave vector (rad/m).
 
         Returns:
             complex, array-like
@@ -243,9 +243,9 @@ class AcousticMaterial:
         non-negative imaginary parts.
 
         Args:
-            k0 (float): Wave number in air.
-            kx (float, array-like): x-component of the wave vector
-            ky (float, array-like): y-component of the wave vector
+            k0 (float): Angular wavenumber in the air (rad/m).
+            kx (float, array-like): x-component of the wave vector (rad/m).
+            ky (float, array-like): y-component of the wave vector (rad/m).
 
         Returns:
             complex, array-like
@@ -260,8 +260,8 @@ class AcousticMaterial:
         The returned values have non-negative imaginary parts.
 
         Args:
-            k0 (float): Wave number in air.
-            kz (float, array-like): z-component of the wave vector
+            k0 (float): Angular wavenumber in the air (rad/m).
+            kz (float, array-like): z-component of the wave vector (rad/m).
 
         Returns:
             complex, array-like
@@ -277,9 +277,9 @@ class AcousticMaterial:
         non-negative imaginary parts.
 
         Args:
-            k0 (float): Wave number in air.
-            kx (float, array-like): x-component of the wave vector
-            ky (float, array-like): y-component of the wave vector
+            k0 (float): Angular wavenumber in the air (rad/m).
+            kx (float, array-like): x-component of the wave vector (rad/m).
+            ky (float, array-like): y-component of the wave vector (rad/m).
 
         Returns:
             complex, array-like

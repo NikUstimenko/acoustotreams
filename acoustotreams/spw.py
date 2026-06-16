@@ -18,14 +18,14 @@ import scipy.special as ss
 def translate(kx, ky, kz, x, y, z, *args, **kwargs):
     r"""translate(kx, ky, kz, x, y, z)
     
-    Translation coefficient for scalar plane wave modes
+    Translation coefficients for scalar plane waves.
 
     The translation coefficient is the phase factor
     :math:`\mathrm e^{\mathrm i \mathbf k \mathbf r}`.
 
     Args:
-        kx, ky, kz (float or complex, array_like): Wave vector components
-        x, y, z (float, array_like): Translation vector components
+        kx, ky, kz (float or complex, array_like): Wave vector components.
+        x, y, z (float, array_like): Translation vector components.
 
     Returns:
         complex
@@ -50,18 +50,18 @@ _to_ssw = np.vectorize(_to_ssw)
 def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
     """to_ssw(l, m, kx, ky, kz)
     
-    Coefficient for the expansion of a scalar plane wave in scalar spherical waves
+    Coefficients for the expansion of scalar plane waves in scalar spherical waves.
 
-    Returns the coefficient for the basis change from a scalar plane wave to a scalar spherical wave.
-    For multiple positions only diagonal values (with respect to the position) are
+    Return the coefficient for the basis change from scalar plane waves to scalar spherical waves.
+    For multiple positions, only the diagonal values (corresponding to identical positions) are
     returned.
 
     Args:
-        l (int, array_like): Degree of the scalar spherical wave
-        m (int, array_like): Order of the scalar spherical wave
-        kx (float, array_like): X component of scalar plane wave's wave vector
-        ky (float, array_like): Y component of scalar plane wave's wave vector
-        kz (float, array_like): Z component of scalar plane wave's wave vector
+        l (int, array_like): Degree of scalar spherical waves.
+        m (int, array_like): Order of scalar spherical waves.
+        kx (float, array_like): X-component of the wave vector of scalar plane waves.
+        ky (float, array_like): Y-component of the wave vector of scalar plane waves.
+        kz (float, array_like): Z-component of the wave vector of scalar plane waves.
 
     Returns:
         complex
@@ -87,17 +87,17 @@ _to_scw = np.vectorize(_to_scw)
 def to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
     """to_scw(qz, m, kx, ky, kz)
 
-    Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves
+    Coefficients for the expansion of scalar plane waves in scalar cylindrical waves.
 
-    Returns the coefficient for the basis change from a scalar plane wave to a scalar cylindrical wave.
-    For multiple positions only diagonal values (with respect to the position) are returned.
+    Return the coefficient for the basis change from scalar plane waves to scalar cylindrical waves.
+    For multiple positions, only the diagonal values (corresponding to identical positions) are returned.
 
     Args:
-        qz (float, array_like): Z component of the scalar cylindrical wave
-        m (int, array_like): Order of the scalar cylindrical wave
-        kx (float, array_like): X component of scalar plane wave's wave vector
-        ky (float, array_like): Y component of scalar plane wave's wave vector
-        kz (float, array_like): Z component of scalar plane wave's wave vector
+        qz (float, array_like): Z-component of the wave vector of scalar cylindrical waves.
+        m (int, array_like): Order of scalar cylindrical waves.
+        kx (float, array_like): X-component of the wave vector of scalar plane waves.
+        ky (float, array_like): Y-component of the wave vector of scalar plane waves.
+        kz (float, array_like): Z-component of the wave vector of scalar plane waves.
 
     Returns:
         complex
@@ -118,23 +118,23 @@ _xyz_to_yzx = np.vectorize(_xyz_to_yzx)
 def permute_xyz(kx, ky, kz, inverse=False, *args, **kwargs):
     """permute_xyz(kx, ky, kz, inverse=False)
     
-    Change the coordinate system of the plane wave
+    Change the coordinate system of the plane-wave basis.
 
-    A plane wave in the coordinate system :math:`(x, y, z)` with primary direction of
+    A plane wave in the coordinate system :math:`(x, y, z)` with the primary direction of
     propagation along the z-axis is described in the system :math:`(x', y', z') = (y, z, x)`. 
     The inverse transformation is also possible.
 
-    The function is essentially diagonal in the wave number, because we always describe
-    the source and destination mode in the unprimed coordinate system.
+    The function is essentially diagonal relative to the wavenumber, because we always describe
+    the input and output modes in the unprimed coordinate system.
 
     Args:
-        kxa (float, array_like): X component of destination mode wave vector
-        kya (float or complex, array_like): Y component of destination mode wave vector
-        kza (float, array_like): Z component of destination mode wave vector
-        kx (float, array_like): X component of source mode wave vector
-        ky (float, array_like): Y component of source mode wave vector
-        kz (float or complex, array_like): Z component of source mode wave vector
-        inverse (bool, optional): Use the inverse transformation.
+        kxa (float, array_like): X-component of the wave vector of output modes.
+        kya (float or complex, array_like): Y-component of the wave vector of output modes.
+        kza (float, array_like): Z-component of the wave vector of output modes.
+        kx (float, array_like): X-component of the wave vector of input modes.
+        ky (float, array_like): Y-component of the wave vector of input modes.
+        kz (float or complex, array_like): Z-component of the wave vector of input modes.
+        inverse (bool, optional): Defaults to False. If True, use the inverse transformation.
 
     Returns:
         complex

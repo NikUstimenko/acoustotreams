@@ -54,7 +54,7 @@ class TestSphere:
         )
 
     def test_invalid_material(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(NotImplementedError):
             AcousticTMatrix.sphere(2, 3, 4, [(200, 1000, 500), (900, 800, 10)])
 
 

@@ -13,10 +13,10 @@ from treams._lattice import Lattice, WaveVector
 from acoustotreams._materialacoustics import AcousticMaterial
 
 class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
-    """Scalar basis set base class.
+    """Parent class of scalar basis sets.
 
-    It is the base class for all basis sets used. They are expected to be an ordered
-    sequence of the modes, that are included in a expansion. Basis sets are expected to
+    It is the parent class for all basis sets used. They are expected to be an ordered
+    sequence of the modes included in an expansion. Basis sets are expected to
     be immutable.
     """
 
@@ -48,28 +48,28 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     r"""Basis of scalar spherical waves.
 
-    Functions of the spherical wave basis are defined by their angular momentum ``l``,
-    its projection onto the z-axis ``m``. If the basis
-    is defined with respect to a single origin it is referred to as "global", if it
-    contains multiple origins it is referred to as "local". In a local basis an
+    Functions of the spherical wave basis are defined by their degree ``l`` 
+    and order ``m``. If the basis is defined with respect to a single 
+    expansion center, it is referred to as "global". If it contains multiple 
+    expansion centers, it is referred to as "local". In a local basis, an
     additional position index ``pidx`` is used to link the modes to one of the
     specified ``positions``.
 
-    Spherical waves can be separated into incident and scattered fields. Depending 
-    on these combinations the basis modes refer to one of the functions :
-    func:`~acoustotreams.ssw_rPsi`, :func:`~acoustotreams.ssw_Psi`.
+    Spherical waves can be separated into regular and singular modes, which
+    describe incident and scattered fields, respectively. Therefore, 
+    the basis modes refer to one of the functions, :func:`~acoustotreams.special.ssw_rPsi` 
+    or :func:`~acoustotreams.special.ssw_Psi`, respectively.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``l``, and ``m``
-            or ``pidx``, ``l``, and ``m``.
-        positions (array-like, optional): The positions of the origins for the specified
-            modes. Defaults to ``[[0, 0, 0]]``.
+        modes (array-like): A tuple containing a list for each of ``l`` and ``m``,
+            or ``pidx``, ``l`` and ``m``.
+        positions (array-like, optional): The positions of the expansion centers 
+            for the specified modes (m). Defaults to ``[[0, 0, 0]]``.
 
     Attributes:
         pidx (array-like): Integer referring to a row in :attr:`positions`.
-        l (array-like): Angular momentum as an integer :math:`l \geq 0`
-        m (array-like): Angular momentum projection onto the z-axis, it is an integer
-            with :math:`m \leq |l|`.
+        l (array-like): Degree as an integer :math:`l \geq 0`
+        m (array-like): Order as an integer :math:`m \leq |l|`.
     """
 
     _names = ("pidx", "l", "m")
@@ -127,7 +127,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     @property
     def positions(self):
-        """Positions of the modes' origins.
+        """Positions of the modes' expansion centers.
 
         The positions are an immutable (N, 3)-array. Each row corresponds to a point in
         the three-dimensional Cartesian space.
@@ -141,7 +141,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     @property
     def isglobal(self):
-        """Basis is defined with respect to a single (global) origin.
+        """Basis is defined with respect to a single (global) expansion center.
 
         Returns:
             bool
@@ -160,13 +160,14 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function allows index into the basis set by an integer, a slice, a sequence
-        of integers or bools, an ellipsis, or an empty tuple. All of them except the
-        integer and the empty tuple results in another basis set being returned. In case
-        of the two exceptions a tuple is returned.
+        This function supports indexing the basis set using an integer, 
+        a slice, an ellipsis, an empty tuple, or a sequence of integers 
+        or booleans. Indexing with an integer or an empty tuple returns 
+        a tuple; all other index types return a new basis set.
 
-        Alternatively, the string "plm", or "lm" can be used to access only a
-        subset of :attr:`pidx`, :attr:`l`, and :attr:`m`.
+        Alternatively, the string "plm", or "lm" can be used to select 
+        only a corresponding subset of the attrubutes :attr:`pidx`, :attr:`l`, 
+        and :attr:`m`.
         """
         res = self.pidx[idx], self.l[idx], self.m[idx]
         if isinstance(idx, (int, np.integer)) or (
@@ -178,8 +179,8 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
     def __eq__(self, other):
         """Compare basis sets.
 
-        Basis sets are considered equal, when they have the same modes in the same order
-        and the specified origin :attr:`positions` are equal.
+        Two basis sets are considered equal if they contain the same modes 
+        in the same order and share identical expansion centers :attr:`positions`.
         """
         try:
             return self is other or (
@@ -193,13 +194,12 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     @classmethod
     def default(cls, lmax, nmax=1, positions=None):
-        """Default basis for the given maximal multipolar order.
+        """Default basis for a given maximum multipolar degree.
 
-        The default order contains separate blocks for each position index which are in
-        ascending order. Within each block the modes are sorted by angular momentum
-        :math:`l`, with the lowest angular momentum coming first. For each angular
-        momentum its z-projection is in ascending order from :math:`m = -l` to
-        :math:`m = l`.
+        By default, modes are grouped into separate blocks for each position 
+        index in ascending order. Within each block, modes are sorted by 
+        degree :math:`l` (lowest first) and then by order :math:m from 
+        :math:`m = -l` to :math:`m = l`.
 
         Example:
             >>> acoustotreams.ScalarSphericalWaveBasis.default(2)
@@ -218,9 +218,9 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
             )
 
         Args:
-            lmax (int): Maximal multipolar order.
-            nmax (int, optional): Number of positions, defaults to 1.
-            positions (array-like, optional): Positions of the origins.
+            lmax (int): Maximum multipolar degree.
+            nmax (int, optional): Number of positions. Defaults to 1.
+            positions (array-like, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
         """
         modes = [
             [n, l, m]
@@ -232,11 +232,10 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     @staticmethod
     def defaultlmax(dim, nmax=1):
-        """Calculate the default mode order for a given length.
+        """Calculate the maximum degree for a given number of modes.
 
-        Given the dimension of the T-matrix return the estimated maximal value of `l`.
-        This is the inverse of :meth:`defaultdim`. A value of zero is allowed for empty
-        T-matrices.
+        Return the estimated maximum value of `l` given the dimension of the T-matrix. 
+        This is the inverse of :meth:defaultdim. A value of zero is returned for empty T-matrices.
 
         Example:
             >>> acoustotreams.ScalarSphericalWaveBasis.defaultlmax(len(acoustotreams.ScalarSphericalWaveBasis.default(3)))
@@ -244,7 +243,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
         Args:
             dim (int): Dimension of the T-matrix, respectively number of modes.
-            nmax (int, optional): Number of particles, defaults to 1.
+            nmax (int, optional): Number of scatterers. Defaults to 1.
 
         Returns:
             int
@@ -257,21 +256,21 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     @staticmethod
     def defaultdim(lmax, nmax=1):
-        """Default number of modes for a given mulipolar order.
+        """Calculate the number of modes for a given mulipolar degree.
 
-        Given the maximal value of `l` return the size of the corresponding T-matrix.
+        Return the dimesion of the T-matrix given the maximum value of `l`. 
         This is the inverse of :meth:`defaultlmax`. A value of lmax=-1 is allowed.
 
         Args:
-            lmax (int): Maximal multipolar order
-            nmax (int, optional): Number of particles, defaults to `1`
+            lmax (int): Maximum multipolar degree
+            nmax (int, optional): Number of scatterers. Defaults to `1`
 
         Returns:
             int
         """
         # lmax=-1 is allowed and won't give an error
         if lmax < -1 or nmax < 0:
-            raise ValueError("maximal order must be non-negative")
+            raise ValueError("maximal degree must be non-negative")
         return (lmax + 1) * (lmax + 1) * nmax
 
     @classmethod
@@ -287,26 +286,26 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     r"""Basis of scalar cylindrical waves.
 
     Functions of the cylindrical wave basis are defined by the z-components of the wave
-    vector ``kz`` and the angular momentum  ``m``.
-    If the basis is defined with respect to a single origin it is referred to as
-    "global", if it contains multiple origins it is referred to as "local". In a local
-    basis an additional position index ``pidx`` is used to link the modes to one of the
-    specified ``positions``.
+    vector ``kz`` and the order  ``m``. If the basis is defined with respect to a single 
+    expansion center, it is referred to as "global". If it contains multiple expansion
+    centers, it is referred to as "local". In a local basis, an additional position index 
+    ``pidx`` is used to link the modes to one of the specified ``positions``.
 
-    Cylindrical can be separated into incident and scattered fields. 
-    Depending on these combinations the basis modes refer to one of the functions
-    :func:`~acoustotreams.scw_rPsi`, or :func:`~acoustotreams.scw_Psi`.
+    Cylindrical waves can be separated into regular and singular modes, which describe 
+    incident and scattered fields, respectively. Thus, the basis modes refer to one of 
+    the functions :func:`~acoustotreams.special.scw_rPsi` or :func:`~acoustotreams.special.scw_Psi`,
+    respectively.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``kz``, and ``m``,
-            or ``pidx``, ``kz``, and ``m``.
-        positions (array-like, optional): The positions of the origins for the specified
-            modes. Defaults to ``[[0, 0, 0]]``.
+        modes (array-like): A tuple containing a list for each of ``kz`` and ``m``,
+            or ``pidx``, ``kz`` and ``m``.
+        positions (array-like, optional): Positions of the expansion centers for the specified
+            modes (m). Defaults to ``[[0, 0, 0]]``.
 
     Attributes:
         pidx (array-like): Integer referring to a row in :attr:`positions`.
-        kz (array-like): Real valued z-component of the wave vector.
-        m (array-like): Integer angular momentum projection onto the z-axis.
+        kz (array-like): Real-valued z-component of the wave vector (rad/m).
+        m (array-like): Integer order.
     """
 
     _names = ("pidx", "kz", "m")
@@ -363,7 +362,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @property
     def positions(self):
-        """Positions of the modes' origins.
+        """Positions of the modes' expansion centers.
 
         The positions are an immutable (N, 3)-array. Each row corresponds to a point in
         the three-dimensional Cartesian space.
@@ -377,7 +376,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @property
     def isglobal(self):
-        """Basis is defined with respect to a single (global) origin.
+        """Basis is defined with respect to a single (global) expansion center.
 
         Returns:
             bool
@@ -396,13 +395,13 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function allows index into the basis set by an integer, a slice, a sequence
-        of integers or bools, an ellipsis, or an empty tuple. All of them except the
-        integer and the empty tuple results in another basis set being returned. In case
-        of the two exceptions a tuple is returned.
+        This function supports indexing the basis set using an integer, a slice, 
+        an ellipsis, an empty tuple, or a sequence of integers or booleans. Indexing 
+        with an integer or an empty tuple returns a tuple; all other index types 
+        return a new basis set.
 
-        Alternatively, the string "pkzm", or "kzm" can be used to access only a
-        subset of :attr:`pidx`, :attr:`kz`, and :attr:`m`.
+        Alternatively, the string "pkzm" or "kzm" can be used to select a 
+        corresponding subset of the attributes :attr:`pidx`, :attr:`kz`, and :attr:`m`.
         """
         res = self.pidx[idx], self.kz[idx], self.m[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
@@ -412,8 +411,8 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     def __eq__(self, other):
         """Compare basis sets.
 
-        Basis sets are considered equal, when they have the same modes in the same order
-        and the specified origin :attr:`positions` are equal.
+        Two basis sets are considered equal if they contain the same modes in the same 
+        order and share identical expansion centers :attr:`positions`.
         """
         try:
             return self is other or (
@@ -427,12 +426,12 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @classmethod
     def default(cls, kzs, mmax, nmax=1, positions=None):
-        """Default basis for the given z-components of wave vector and angular momentum.
+        """Default basis for given z-components of the wave vector and a given maximum order.
 
-        The default order contains separate blocks for each position index which are in
-        ascending order. Within each block the modes are sorted by the z-component of
-        the wave vector :math:`k_z`. For each of those values the z-projection of the
-        angular momentum is placed in ascending order.
+        By default, modes are grouped into separate blocks for each position 
+        index in ascending order. Within each block, modes are sorted by 
+        the z-component of the wave vector :math:`k_z` and then by order :math:m 
+        in asceding order.
 
         Example:
             >>> acoustotreams.ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)
@@ -451,10 +450,10 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
             )
 
         Args:
-            kzs (array-like, float): Maximal multipolar order.
-            mmax (int): Maximal value of the angular momentum z-component.
-            nmax (int, optional): Number of positions, defaults to 1.
-            positions (array-like, optional): Positions of the origins.
+            kzs (array-like, float): z-componets of the wave vector (rad/m).
+            mmax (int): Maximum value of order.
+            nmax (int, optional): Number of positions. Defaults to 1.
+            positions (array-like, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
         """
         kzs = np.atleast_1d(kzs)
         if kzs.ndim > 1:
@@ -469,7 +468,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @classmethod
     def diffr_orders(cls, kz, mmax, lattice, bmax, nmax=1, positions=None):
-        """Create a basis set for a system periodic in the z-direction.
+        """Creates a basis set for a system periodic in the z-direction.
 
         Example:
            >>> acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2 * np.pi, 1)
@@ -481,14 +480,14 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
            )
 
         Args:
-            kz (float): Wave vector z-component. Ideally it is in the first Brillouin
-                zone (use :func:`treams.misc.firstbrillouin1d`).
-            mmax (int): Maximal value for the z-component of the angular momentum.
+            kz (float): z-component of the wave vector. Ideally, it is defined within the 
+                first Brillouin zone (use :func:`treams.misc.firstbrillouin1d`).
+            mmax (int): Maximum value of the order.
             lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
-            bmax (float): Maximal change of the z-component of the wave vector. So,
-                this defines a maximal momentum transfer from the given value `kz`.
-            nmax (int, optional): Number of positions.
-            positions (array-like, optional): Positions of the origins.
+            bmax (float): Maximum length of reciprocal-lattice vectors that defines 
+                a maximum momentum transfer from the given value of `kz`.
+            nmax (int, optional): Number of expansion centers.
+            positions (array-like, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
         """
         lattice = Lattice(lattice)
         lattice_z = Lattice(lattice, "z")
@@ -515,20 +514,20 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @staticmethod
     def defaultmmax(dim, nkz=1, nmax=1):
-        """Calculate the default mode order for a given length.
+        """Calculate the maximum order for a given number of modes.
 
-        Given the dimension of the T-matrix return the estimated maximal value of `m`.
-        This is the inverse of :meth:`defaultdim`. A value of zero is allowed for empty
-        T-matrices.
+        Return the estimated maximum value of `m` given the dimension of the T-matrix.
+        This is the inverse of :meth:`defaultdim`. A value of zero is returned for 
+        empty T-matrices.
 
         Example:
             >>> acoustotreams.ScalarCylindricalWaveBasis.defaultmmax(len(acoustotreams.ScalarCylindricalWaveBasis.default([0], 2)), 1)
             2
 
         Args:
-            dim (int): Dimension of the T-matrix, respectively number of modes
-            nkz (int, optional): Number of z-components of the wave vector.
-            nmax (int, optional): Number of particles, defaults to 1.
+            dim (int): Dimension of the T-matrix, respectively number of modes.
+            nkz (int, optional): Number of z-components of the wave vector. Defaults to 1.
+            nmax (int, optional): Number of scatterers. Defaults to 1.
 
         Returns:
             int
@@ -542,15 +541,15 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @staticmethod
     def defaultdim(nkz, mmax, nmax=1):
-        """Default number of modes for a given mulipolar order.
+        """Calculate the number of modes for a given mulipolar order.
 
-        Given the maximal value of `m` and number of `k_z` return the size of the corresponding T-matrix.
-        A value of zero is allowed.
+        Return the dimension of the T-matrix given the maximum value of 
+        `m` and number of `k_z` components. A value of zero is allowed.
 
         Args:
             nkz (int): Number of z-components of the wave vector.
-            mmax (int): Maximal value of the angular momentum's z-component.
-            nmax (int, optional): Number of particles, defaults to 1.
+            mmax (int): Maximum value of the order.
+            nmax (int, optional): Number of scatterers. Defaults to 1.
 
         Returns:
             int
@@ -569,11 +568,11 @@ class ScalarPlaneWaveBasis(ScalarBasisSet):
 class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     """Scalar plane wave basis.
 
-    A plane wave basis is defined by a collection of wave vectors specified by the
-    Cartesian wave vector components ``qx``, ``qy``, and ``qz`` normalized to
+    A plane-wave basis is defined by a collection of wave vectors specified by their
+    Cartesian components ``qx``, ``qy``, and ``qz`` normalized to
     :math:`q_x^2 + q_y^2 + q_z^2 = 1`.
 
-    Plane waves can refer to:func:`~acoustotreams.spw_Psi`.
+    Plane waves can refer to:func:`~acoustotreams.special.spw_Psi`.
 
     Args:
         modes (array-like): A tuple containing a list for each of ``qx``, ``qy``,
@@ -586,7 +585,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     """
 
     _names = ("qx", "qy", "qz")
-    """A scalar plane wave basis is always global."""
+    """A scalar plane-wave basis is always global."""
 
     def __init__(self, modes):
         """Initialization."""
@@ -633,13 +632,12 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function allows index into the basis set by an integer, a slice, a sequence
-        of integers or bools, an ellipsis, or an empty tuple. All of them except the
-        integer and the empty tuple results in another basis set being returned. In case
-        of the two exceptions a tuple is returned.
+        This function supports indexing the basis set using an integer, a slice, an ellipsis, 
+        an empty tuple, or a sequence of integers or booleans. Indexing with an integer or 
+        an empty tuple returns a tuple; all other index types return a new basis set.
 
-        Alternatively, the string "xyz", "xy", or "z" can be used to access only a
-        subset of :attr:`qx`, :attr:`qy`, and :attr:`qz`.
+        Alternatively, the string "xyz", "xy" or "z" can be used to select only a
+        corresponding subset of the attributes :attr:`qx`, :attr:`qy`, and :attr:`qz`.
         """
         res = self.qx[idx], self.qy[idx], self.qz[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
@@ -659,7 +657,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
             )
 
         Args:
-            kvecs (array-like): Wave vectors in Cartesian coordinates.
+            kvecs (array-like): Wave vectors in Cartesian coordinates (rad/m).
         """
         kvecs = np.atleast_2d(kvecs)
         modes = np.empty((kvecs.shape[0], 3), kvecs.dtype)                           
@@ -680,10 +678,9 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         return obj
 
     def __eq__(self, other):
-        """Compare basis sets.
+        """Compares basis sets.
 
-        Basis sets are considered equal, when they have the same modes in the same
-        order.
+        Two basis sets are considered equal if they contain the same modes in the same order.
         """
         try:
             return self is other or (
@@ -695,21 +692,21 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
             return False
 
     def bycomp(self, k0, alignment="xy", material=AcousticMaterial()):
-        """Create a :class:`ScalarPlaneWaveBasisByComp`.
+        """Creates an instance of :class:`ScalarPlaneWaveBasisByComp`.
 
-        The plane wave basis is changed to a partial basis, where only two (real-valued)
-        wave vector components are defined the third component is then inferred from the
-        dispersion relation, which depends on the wave number and material, and a
-        ``modetype`` that specifies the sign of the third component.
+        The plane-wave basis is changed to a partial basis, where only two (real-valued)
+        wave-vector components are specified. A third component is then inferred from the
+        dispersion relation, which depends on the wavenumber, material and
+        ``modetype``, which determines the sign of the third component.
 
         Args:
-            alignment (str, optional): Wave vector components that are part of the
+            alignment (str, optional): Wave-vector components included in the
                 partial basis. Defaults to "xy", other permitted values are "yz" and
                 "zx".
-            k0 (float, optional): Wave number. If given, it is checked that the current
-                basis fulfils the dispersion relation.
-            material (:class:`acoustotreams.AcousticMaterial` or tuple): Material definition. Defaults
-                to air.
+            k0 (float, optional): Angular wavenumber in the air (rad/m). 
+                Verifies that the current basis satisfies the dispersion relation.
+            material (:class:`acoustotreams.AcousticMaterial` or tuple): Material definition. 
+                Defaults to the air.
         """
         ks = material.ks(k0)
         if alignment in ("xy", "yz", "zx"):
@@ -725,9 +722,9 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         """Wave vectors.
 
         Args:
-            k0 (float): Wave number.
-            material (:class:`acoustotreams.AcousticMaterial` or tuple, optional): Material
-                definition. Defaults to air.
+            k0 (float): Angular wavenumber in the air (rad/m).
+            material (:class:`acoustotreams.AcousticMaterial` or tuple, optional): Material 
+                definition. Defaults to the air.
             modetype (optional): Currently unused for this class.
         """
         # TODO: check kz depending on modetype (alignment?)
@@ -750,19 +747,19 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
 class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     """Partial scalar plane wave basis.
 
-    A partial plane wave basis is defined by two wave vector components out of all three
-    Cartesian wave vector components ``kx``, ``ky``, and ``kz``. 
+    A partial plane-wave basis is defined by two wave-vector components out of all three
+    Cartesian wave-vector components ``kx``, ``ky``, and ``kz``. 
     Which two components are given is specified in the :attr:`alignment`. This
     basis is mostly used for stratified media that are periodic or uniform in the two
-    alignment directions, such that the given wave vector components correspond to the
+    alignment directions, such that the given wave-vector components correspond to the
     diffraction orders.
 
-    Scalar plane waves can refer to :func:`~acoustotreams.spw_Psi`.
+    Scalar plane waves refer to :func:`~acoustotreams.special.spw_Psi`.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``k1``, and ``k2``.
-        alignment (str, optional): Definition which wave vector components are given.
-            Defaults to "xy", other possible values are "yz" and "zx".
+        modes (array-like): A tuple containing a list for each of ``k1`` and ``k2``.
+        alignment (str, optional): Wave-vector components included in the
+                partial basis. Defaults to "xy", other possible values are "yz" and "zx".
 
     Attributes:
         alignment (str): Alignment of the partial basis.
@@ -822,7 +819,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     def kx(self):
         """X-components of the wave vector.
 
-        If the components are not specified `None` is returned.
+        If the components are not specified, `None` is returned.
         """
         if self.alignment == "xy":
             return self._kx
@@ -834,7 +831,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     def ky(self):
         """Y-components of the wave vector.
 
-        If the components are not specified `None` is returned.
+        If the components are not specified, `None` is returned.
         """
         if self.alignment == "xy":
             return self._ky
@@ -846,7 +843,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     def kz(self):
         """Z-components of the wave vector.
 
-        If the components are not specified `None` is returned.
+        If the components are not specified, `None` is returned.
         """
         if self.alignment == "yz":
             return self._ky
@@ -866,10 +863,10 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function allows index into the basis set by an integer, a slice, a sequence
-        of integers or bools, an ellipsis, or an empty tuple. All of them except the
-        integer and the empty tuple results in another basis set being returned. In case
-        of the two exceptions a tuple is returned.
+        This function supports indexing the basis set using an integer, a slice, 
+        an ellipsis, an empty tuple, or a sequence of integers or booleans. 
+        Indexing with an integer or an empty tuple returns a tuple; 
+        all other index types return a new basis set.
         """
         res = self._kx[idx], self._ky[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
@@ -878,7 +875,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
     @classmethod
     def default(cls, kpars, alignment="xy"):
-        """Default basis from the given wave vectors.
+        """Default basis from given wave vectors.
 
         Example:
             >>> acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 3]])
@@ -888,9 +885,9 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
             )
 
         Args:
-            kpars (array-like): Wave vector components in Cartesian coordinates.
-            alignment (str, optional): Definition which wave vector components are
-                given. Defaults to "xy", other possible values are "yz" and "zx".
+            kpars (array-like): Two Cartesian components of the wave vectors (rad/m).
+            alignment (str, optional): Wave-vector components included in the
+                partial basis. Defaults to "xy", other possible values are "yz" and "zx".
 
         """
         kpars = np.atleast_2d(kpars)
@@ -899,10 +896,11 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
     @classmethod
     def diffr_orders(cls, kpar, lattice, bmax):
-        """Create a basis set for a two-dimensional periodic system.
+        """Creates a basis set for a two-dimensional periodic system.
 
-        The reciprocal lattice to the given lattice is taken to consider all diffraction
-        orders that lie within the defined maximal radius (in reciprocal space).
+        The reciprocal lattice of the given lattice is used to determine 
+        all diffraction orders within the defined maximum radius of the circle 
+        in the reciprocal space.
 
         Example:
             >>> acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], acoustotreams.Lattice.square(2 * np.pi), 1)
@@ -912,11 +910,11 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
             )
 
         Args:
-            kpar (float): Tangential wave vector components. Ideally they are in the
+            kpar (float): In-plane wave-vector components (rad/m). Ideally, they are defined within the
                 first Brillouin zone (use :func:`misc.firstbrillouin2d`).
             lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
-            bmax (float): Maximal change of tangential wave vector components. So,
-                this defines a maximal momentum transfer.
+            bmax (float): Maximum length of reciprocal-lattice vectors that defines a maximum
+                momentum transfer with respect to `kpar`.
         """
         lattice = Lattice(lattice)
         if lattice.dim != 2:
@@ -943,10 +941,9 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         return obj
 
     def __eq__(self, other):
-        """Compare basis sets.
+        """Compares basis sets.
 
-        Basis sets are considered equal, when they have the same modes in the same
-        order.
+        Two basis sets are considered equal if they contain the same modes in the same order
         """
         try:
             skx, sky, skz = self.kx, self.ky, self.kz
@@ -960,19 +957,19 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
             return False
 
     def byunitvector(self, k0, material=AcousticMaterial(), modetype="up"):
-        """Create a complete basis :class:`ScalarPlaneWaveBasis`.
+        """Creates an instance of complete basis :class:`ScalarPlaneWaveBasis`.
 
-        A plane wave basis is considered complete, when all three Cartesian components
-        are defined for each mode. So, the specified wave number,
-        material, and modetype is taken to calculate the third Cartesian wave vector.
-        The modetype "up" ("down") is for waves propagating in the positive (negative)
+        A plane-wave basis is considered complete when all three Cartesian components
+        are defined for each mode. A third Cartesian component is calculated from
+        the specified wavenumber, material, and modetype. The modetype "up" 
+        (resp. "down") corresponds to waves propagating in the positive (resp. negative)
         direction with respect to the Cartesian axis that is orthogonal to the
-        alignment.
+        alignment plane.
 
         Args:
-            k0 (float): Wave number.
-            material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material
-                definition. Defaults to air.
+            k0 (float): Angular wavenumber in the air (rad/m).
+            material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
+                definition. Defaults to the air.
             modetype (str, optional): Propagation direction. Defaults to "up".
         """
         if modetype not in ("up", "down"):
@@ -994,9 +991,9 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         """Wave vectors.
 
         Args:
-            k0 (float): Wave number.
+            k0 (float): Angular wavenumber in the air (rad/m).
             material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material
-                definition. Defaults to air.
+                definition. Defaults to the air.
             modetype (str, optional): Propagation direction. Defaults to "up".
         """
         if modetype not in ("up", "down"):
@@ -1024,15 +1021,14 @@ class ScalarPhysicsDict(util.AnnotationDict):
 
     Attributes:
         basis (:class:`ScalarBasisSet`): Basis set.
-        k0 (float): Wave number.
-        kpar (list): Parallel wave vector components. Usually, this is a list of length
-            3 with its items corresponding to the Cartesian axes. Unspecified items are
-            set to `nan`.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        kpar (list): In-plane wave-vector components (rad/m). Usually, this is a list of length
+            3 with its items corresponding to the Cartesian coordinates. Unspecified items
+            aree set to `nan`.
         lattice (:class:`~acoustotreams.Lattice`): Lattice definition.
         material (:class:`~acoustotreams.AcousticMaterial`): Material definition.
-        modetype (str): Mode type, for spherical and cylindrical waves this can be
-            "incident" and "scattered", for partial plane waves it can be "up" or
-            "down".
+        modetype (str): Mode type. For spherical and cylindrical waves, it can be
+            "incident" and "scattered"; for partial plane waves, "up" or "down".
     """
 
     properties = {
@@ -1041,9 +1037,9 @@ class ScalarPhysicsDict(util.AnnotationDict):
             lambda x: isinstance(x, ScalarBasisSet),
             _raise_basis_error,
         ),
-        "k0": ("Wave number.", lambda x: isinstance(x, float), float),
+        "k0": ("Angular wavenumber.", lambda x: isinstance(x, float), float),
         "kpar": (
-            "Wave vector components tangential to the lattice.",
+            "Wave-vector components tangential to the lattice.",
             lambda x: isinstance(x, WaveVector),
             WaveVector,
         ),
@@ -1062,7 +1058,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
     """Special properties tracked by the ScalarPhysicsDict."""
 
     def __setitem__(self, key, val):
-        """Set item specified by key to the defined value.
+        """Sets item specified by key to the defined value.
 
         When overwriting an existing key an :class:`AnnotationWarning` is emitted.
         Avoid the warning by explicitly deleting the key first. The special attributes
@@ -1086,7 +1082,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
 class AcousticsArray(util.AnnotatedArray):
     """Acoustics-aware array.
 
-    An acoustics aware array is a special type of :class`~treams.util.AnnotatedArray`.
+    An acoustics-aware array is a special type of :class`~treams.util.AnnotatedArray`.
     Additionally to keeping track of the annotations, it is enhanced by the ability to
     create suiting linear operators to perform tasks like rotations, translations, or
     expansions into different basis sets and by applying special rules for the
@@ -1141,7 +1137,7 @@ class AcousticsArray(util.AnnotatedArray):
 
     @ann.setter
     def ann(self, ann):
-        """Set array annotations.
+        """Sets array annotations.
 
         See also :meth:`treams.util.AnnotatedArray.__setitem__`.
         """
@@ -1166,7 +1162,7 @@ class AcousticsArray(util.AnnotatedArray):
         The checks are run on the last two dimensions. They include:
 
             * Dispersion relation checks for :class:`ScalarPlaneWaveBasis` if `basis`, `k0`
-              and `material` is defined`
+              and `material` are defined`
             * All lattices explicitly given and in the basis hints must be compatible.
             * All tangential wave vector compontents must be compatible.
         """
@@ -1177,10 +1173,10 @@ class AcousticsArray(util.AnnotatedArray):
             basis = a.get("basis", namedtuple("_basis", "lattice kpar")(None, None))
 
     def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
-        """Implement ufunc API.
+        """Implements ufunc API.
 
-        Additionally to keeping track of the annotations the special properties of an
-        ScalarPhysicsArray are also "transparent" in matrix multiplications.
+        In addition to keeping track of the annotations, the special properties of an
+        AcousticsArray are also "transparent" in matrix multiplications.
         """
         res = super().__array_ufunc__(ufunc, method, *inputs, **kwargs)
         if (

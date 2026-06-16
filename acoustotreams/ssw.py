@@ -35,21 +35,21 @@ _translate_r = np.vectorize(_translate_r)
 def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs):
     """translate(lambda_, mu, l, m, kr, theta, phi, singular=True)
 
-    Translation coefficient for spherical modes.
+    Translation coefficients for spherical waves.
 
-    Returns the correct translation coefficient from :func:acoustotreams.ssw.tl_ssw,
-    and :func:acoustotreams.ssw.tl_ssw_r or a combination thereof for the specified mode and
+    Returns the correct translation coefficients from :func:acoustotreams.ssw.tl_ssw
+    and :func:acoustotreams.ssw.tl_ssw_r or combinations thereof for the specified modes and
     basis.
 
     Args:
-        lambda_ (int, array_like): Degree of the destination mode
-        mu (int, array_like): Order of the destination mode
-        l (int, array_like): Degree of the source mode
-        m (int, array_like): Order of the source mode
-        kr (float or complex, array_like): Translation distance in units of the wave number
-        theta (float, array_like): Polar angle
-        phi (float, array_like): Azimuthal angle
-        singular (bool, optional): If true, singular translation coefficients are used,
+        lambda_ (int, array_like): Degree of output modes.
+        mu (int, array_like): Order of output modes.
+        l (int, array_like): Degree of input modes.
+        m (int, array_like): Order of input modes.
+        kr (float or complex, array_like): Translation distance in units of the wavenumber.
+        theta (float, array_like): Polar angle (rad).
+        phi (float, array_like): Azimuthal angle (rad).
+        singular (bool, optional): If True, singular translation coefficients are used,
             else regular coefficients. Defaults to ``True``.
 
     Returns:
@@ -62,8 +62,8 @@ def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs)
 
 def _rotate(lambda_, mu, l, m, phi, theta, psi, *args, **kwargs):
     """
-    Rotation coefficient for the rotation around the Euler angles phi, theta and psi.
-    It is intended to be used to construct the rotation matrix manually.
+    Rotation coefficients for the rotation by the Euler angles phi, theta, and psi.
+    It is intended to be used for constructing the rotation matrix manually.
     """
     if lambda_ == l:
         return sc.wignerd(l, mu, m, phi, theta, psi, *args, **kwargs)
@@ -76,22 +76,22 @@ _rotate = np.vectorize(_rotate)
 def rotate(lambda_, mu, l, m, phi, theta=0, psi=0, *args, **kwargs):
     """rotate(lambda_, mu, l, m, phi, theta=0, psi=0)
     
-    Rotation coefficient for scalar spherical modes.
+    Rotation coefficients for scalar spherical modes.
 
-    Returns the correct rotation coefficient from :func:`treams.special.wignerd`. The
-    angles are given as Euler angles in `z-y-z`-convention. In the intrinsic (object
-    fixed coordinate system) convention the rotations are applied in the order phi
-    first, theta second, psi third. In the extrinsic (global or reference frame fixed
-    coordinate system) the rotations are applied psi first, theta second, phi third.
+    Return the correct rotation coefficients from :func:`treams.special.wignerd`. The
+    angles are given as the Euler angles in `z-y-z`-convention. In the intrinsic (object
+    fixed coordinate system) convention, the rotations are applied in the order phi
+    first, theta second, and psi third. In the extrinsic (global or reference frame fixed
+    coordinate system), the rotations are applied psi first, theta second, phi third.
 
     Args:
-        lambda_ (int, array_like): Degree of the destination mode
-        mu (int, array_like): Order of the destination mode
-        l (int, array_like): Degree of the source mode
-        m (int, array_like): Order of the source mode
-        phi (float or complex, array_like): First Euler angle
-        theta (float, array_like): Second Euler angle
-        psi (float, array_like): Third Euler angle
+        lambda_ (int, array_like): Degree of output modes.
+        mu (int, array_like): Order of output modes.
+        l (int, array_like): Degree of input modes.
+        m (int, array_like): Order of input modes.
+        phi (float or complex, array_like): First Euler angle.
+        theta (float, array_like): Second Euler angle.
+        psi (float, array_like): Third Euler angle.
 
     Returns:
         complex
@@ -100,7 +100,7 @@ def rotate(lambda_, mu, l, m, phi, theta=0, psi=0, *args, **kwargs):
 
 
 def _transl_a_lattice(lambda_, mu, l, m, dlms):
-    """Singular translation coefficients in a lattice"""
+    """Singular translation coefficient for a scalar spherical wave on a lattice"""
     pref = np.power(-1, np.abs(m)) * np.sqrt(4 * np.pi * (2 * l + 1) * (2 * lambda_ + 1)) * np.power(1.0j, lambda_ - l)
     dlm = 0
     res = 0
@@ -111,24 +111,24 @@ def _transl_a_lattice(lambda_, mu, l, m, dlms):
 
 
 def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=lattice.lsumsw):
-    """Translation coefficients in a lattice.
+    """Translation coefficients for scalar spherical waves on a lattice.
 
-    Returns the translation coefficents for the given modes in a lattice. The calculation
-    uses the fast converging sums of :py:data:`~treams.lattice`.
+    Return the translation coefficents for the given modes on a lattice. The computations
+    employ the fast converging Ewald summation from :py:data:`~treams.lattice`.
 
 
     Args:
-        ks (float or complex): Wave number of longitudinal waves in the medium
-        kpar (float, (D,)-array): Parallel component of the wave, defines the dimension with `1 <= D <= 3`
-        a (float, (D,D)-array): Lattice vectors in each row of the array
-        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point
-        out (2- or 3-tuple of integer arrays): Output modes
-        in_ (2- or 3-tuple of integer arrays): Input modes, if none are given equal to
-            the output modes
-        rsin (float): Shift vectors to use with the input modes, if non are given equal
-            to `rs`
-        eta (float or complex, optional): Cut between real and reciprocal space
-            summation, if equal to zero, an estimation for the optimal value is done.
+        ks (float or complex): Wavenumber of longitudinal waves in the medium.
+        kpar (float, (D,)-array): Parallel component of the wave vector. Defines the dimension with `1 <= D <= 3`.
+        a (float, (D,D)-array): Lattice vectors in each row of the array.
+        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point.
+        out (2- or 3-tuple of integer arrays): Output modes.
+        in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, they are equal to
+            the output modes.
+        rsin (float): Shift vectors of the input modes. If None is given, they are equal to `rs`.
+        eta (float or complex, optional): Splitting parameter for the Ewald summation of
+            lattice sums. If zero, an estimation for the optimal value is done. Defaults
+            to zero.
 
     Returns:
         complex array
@@ -172,7 +172,7 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
          
 
 def _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
-    """Convert periodic spherical wave to plane wave"""
+    """Convert a periodic spherical wave into plane waves"""
     k = np.sqrt(kx * kx + ky * ky + kz * kz)
     phi = np.arctan2(ky, kx)
     kz_s = kz
@@ -195,20 +195,20 @@ _periodic_to_spw = np.vectorize(_periodic_to_spw)
 def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
     """periodic_to_spw(kx, ky, kz, l, m, area)
     
-    Convert periodic spherical wave to plane wave.
+    Convert periodic scalar spherical waves into plane waves.
 
-    Returns the coefficient for the basis change in a periodic arrangement of spherical
-    modes to plane waves. For multiple positions only diagonal values (with respect to
-    the position) are returned. A correct phase factor is still necessary for the full
+    Return the coefficient for the basis change from spherical waves on a lattice
+    to plane waves. For multiple positions, only the diagonal values (corresponding to
+    identical positions) are returned. A correct phase factor is still necessary for the correct
     result.
 
     Args:
-        kx (float, array_like): X component of destination mode wave vector
-        ky (float, array_like): Y component of destination mode wave vector
-        kz (float or complex, array_like): Z component of destination mode wave vector
-        l (int, array_like): Degree of the source mode
-        m (int, array_like): Order of the source mode
-        area (float, array_like): Unit cell area
+        kx (float, array_like): X-component of the wave vector of plane waves.
+        ky (float, array_like): Y-component of the wave vector of plane waves.
+        kz (float or complex, array_like): Z-component of the wave vector of plane waves.
+        l (int, array_like): Degree of spherical waves.
+        m (int, array_like): Order of spherical waves.
+        area (float, array_like): Unit cell area.
 
     Returns:
         complex
@@ -235,19 +235,19 @@ _periodic_to_scw = np.vectorize(_periodic_to_scw)
 def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):
     """periodic_to_scw(kz, m, l, mu, k, area)
     
-    Convert periodic spherical wave to cylindrical wave.
+    Convert periodic spherical waves into cylindrical waves.
 
-    Returns the coefficient for the basis change in a periodic arrangement of spherical
-    modes to cylindrical waves. For multiple positions only diagonal values (with respect to
-    the position) are returned. 
+    Return the coefficient for the basis change from spherical waves on a lattice
+    to cylindrical waves. For multiple positions, only the diagonal values (corresponding
+    to identical positions) are returned. 
 
     Args:
-        kz (float, array_like): Z component of destination mode wave vector
-        m (int, array_like): Order or the destination mode
-        l (int, array_like): Degree of the source mode
-        mu (int, array_like): Order of the source mode
-        k (float or complex, array_like): Wave number
-        area (float, array_like): Unit cell area
+        kz (float, array_like): Z-component of the wave vector of cylinbdrical waves.
+        m (int, array_like): Order or cylinbdrical waves.
+        l (int, array_like): Degree of spherical waves.
+        mu (int, array_like): Order of spherical waves.
+        k (float or complex, array_like): Angular wavenumber.
+        area (float, array_like): Unit cell area.
 
     Returns:
         complex
