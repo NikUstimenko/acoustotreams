@@ -328,7 +328,7 @@ class TestSPWBUV:
 
     def test_getitem_xyz(self):
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0, 4, -3]])
-        assert b.xyz == ([0], [0.8], [1])
+        assert b.xyz == ([0], [0.8], [-0.6])
 
     def test_getitem_invalid_index(self):
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[1, 0, 0]])
@@ -509,7 +509,7 @@ class TestAcousticsArray:
         b = acoustotreams.ScalarSphericalWaveBasis([[1, 0]])
         p = acoustotreams.AcousticsArray([1], basis=b)
         x = p.rotate.eval(1, 2, 3)
-        y = [acoustotreams.wignerd(1, 0, 0, 1, 2, 3)] * 2
+        y = [acoustotreams.special.wignerd(1, 0, 0, 1, 2, 3)] * 2
         assert (np.abs(x - y) < 1e-14).all()
 
     def test_rotate_inv(self):

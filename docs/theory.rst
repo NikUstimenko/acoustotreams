@@ -58,8 +58,8 @@ as Fourier transformation convention, and thus the inverse transformation is
 Solutions to the scalar Helmholtz equation
 ==========================================
 
-Instead of immediatly solving equations from above, we will study the
-Helmholtz equation which is commonly encountered when studying wave phenomena first.
+Instead of immediatly solving equations from above, we will first write the
+Helmholtz equation, which is commonly encountered when studying wave phenomena.
 This section mainly relies on [2]_.
 
 The scalar Helmholtz equation is
@@ -70,8 +70,8 @@ The scalar Helmholtz equation is
     = \boldsymbol{\nabla} \cdot (\boldsymbol{\nabla} p) - k^2 p
     = 0
 
-where :math:`\Delta` is the Laplace operator. Note, that by applying the divergence operator
-on equation :math:`\boldsymbol{\nabla}p=\mathrm i \omega \mathbf{v}` and using the equation
+where :math:`\Delta` is the Laplace operator. Please note that by applying the divergence operator
+to equation :math:`\boldsymbol{\nabla}p=\mathrm i \omega \mathbf{v}` and using the equation
 :math:`\boldsymbol{\nabla} \cdot \mathbf{v} = \frac{\mathrm i \omega}{\rho c^2}p`, the scalar
 Helmholtz equation can be obtained. Alternatively, we can apply the gradient to the second equation
 and get the vector Helmholtz equation

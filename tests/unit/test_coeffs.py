@@ -17,7 +17,7 @@ class TestMie:
         )
         assert np.all(
             np.abs(
-                cf.mie_acoustics([0, 1, 2], 2, [1000, 900], [1200, 800], [500, 0])
+                np.array(cf.mie_acoustics([0, 1, 2], 2, [1000, 900], [1200, 800], [500, 0]))
                 - expect
             )
             < EPSSQ
@@ -33,13 +33,13 @@ class TestMie:
         )
         assert np.all(
             np.abs(
-                cf.mie_acoustics(
+                np.array(cf.mie_acoustics(
                     [0, 1, 2], 
                     2, 
                     [1000 + 100j, 900], 
                     [1200 - 150j, 800], 
                     [500 - 50j, 0]
-                    )
+                    ))
                 - expect
             )
             < EPSSQ
