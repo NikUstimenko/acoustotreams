@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.ScalarCylindricalWaveBasis.default &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams.ScalarCylindricalWaveBasis.default &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.ScalarCylindricalWaveBasis.count.html" title="acoustotreams.ScalarCylindricalWaveBasis.count"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarCylindricalWaveBasis.html" accesskey="U">acoustotreams.ScalarCylindricalWaveBasis</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarCylindricalWaveBasis.default</a></li> 
@@ -59,10 +59,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.ScalarCylindricalWaveBasis.default">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ScalarCylindricalWaveBasis.</span></span><span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kzs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_coreacoustics.html#ScalarCylindricalWaveBasis.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.ScalarCylindricalWaveBasis.default" title="Link to this definition">¶</a></dt>
-<dd><p>Default basis for given z-components of the wave vector and a given maximum order.</p>
+<dd><p>Default basis for given Z-components of the wave vector and a given maximum order.</p>
 <p>By default, modes are grouped into separate blocks for each position
 index in ascending order. Within each block, modes are sorted by
-the z-component of the wave vector <span class="math notranslate nohighlight">\(k_z\)</span> and then by order :math:m
+the Z-component of the wave vector <span class="math notranslate nohighlight">\(k_z\)</span> and then by order :math:m
 in asceding order.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
@@ -84,10 +84,10 @@ in asceding order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>kzs</strong> (<em>array-like</em><em>, </em><em>float</em>) – z-componets of the wave vector (rad/m).</p></li>
+<li><p><strong>kzs</strong> (<em>array_like</em><em> of </em><em>float</em>) – Z-components of the wave vector (rad/m).</p></li>
 <li><p><strong>mmax</strong> (<em>int</em>) – Maximum value of order.</p></li>
 <li><p><strong>nmax</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of positions. Defaults to 1.</p></li>
-<li><p><strong>positions</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Positions of the expansion centers (m). Defaults to [[0, 0, 0]].</p></li>
+<li><p><strong>positions</strong> (<em>array_like</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Positions of the expansion centers (m). Defaults to [[0, 0, 0]].</p></li>
 </ul>
 </dd>
 </dl>
@@ -158,7 +158,7 @@ in asceding order.</p>
         <li class="right" >
           <a href="acoustotreams.ScalarCylindricalWaveBasis.count.html" title="acoustotreams.ScalarCylindricalWaveBasis.count"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ScalarCylindricalWaveBasis.html" >acoustotreams.ScalarCylindricalWaveBasis</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ScalarCylindricalWaveBasis.default</a></li> 

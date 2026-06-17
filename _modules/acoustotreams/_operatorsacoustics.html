@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._operatorsacoustics &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams._operatorsacoustics &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._operatorsacoustics</a></li> 
       </ul>
@@ -124,7 +124,7 @@
 <span class="sd">        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordingly; otherwise, </span>
 <span class="sd">            both sets of the modes are the same.</span>
-<span class="sd">        where (array-like, bool, optional): Only evaluate specified parts of the rotation matrix.</span>
+<span class="sd">        where (array_like, bool, optional): Only evaluate specified parts of the rotation matrix.</span>
 <span class="sd">            The input array must have a shape that matches the output shape.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
@@ -247,16 +247,16 @@
 <span class="sd">    Translate the given basis set of modes along the translation vector.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array-like): Translation vector (m).</span>
+<span class="sd">        r (array_like): Translation vector.</span>
 <span class="sd">        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordingly; otherwise, </span>
 <span class="sd">            both sets of modes are the same.</span>
-<span class="sd">        k0 (float, optional): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        k0 (float, optional): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type. Only used for</span>
 <span class="sd">            :class:`ScalarPlaneWaveBasisByComp`.</span>
-<span class="sd">        where (array-like, bool, optional): Only evaluate specified parts of the translation</span>
+<span class="sd">        where (array_like of bool, optional): Only evaluate specified parts of the translation</span>
 <span class="sd">            matrix. The given array must have a shape that matches the output shape.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
@@ -450,10 +450,10 @@
 <span class="sd">            both sets of modes are the same.</span>
 <span class="sd">        modetype (str, optional): Mode type, used for</span>
 <span class="sd">            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.</span>
-<span class="sd">        k0 (float, optional): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
-<span class="sd">        where (array-like, bool, optional): Only evaluate specified parts of the expansion </span>
+<span class="sd">        where (array_like of bool, optional): Only evaluate specified parts of the expansion </span>
 <span class="sd">            matrix. The given array must have a shape that matches the output shape.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
@@ -768,7 +768,7 @@
 <span class="sd">    a lattice, into another basis set.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        lattice (:class:`~treams.Lattice` or array-like, optional): Lattice definition (m).</span>
+<span class="sd">        lattice (:class:`~treams.Lattice` or array_like, optional): Lattice definition (m).</span>
 <span class="sd">            In some cases, this argument can be omitted when the lattice can be inferred</span>
 <span class="sd">            from the basis.</span>
 <span class="sd">        kpar (sequence, optional): The components of the wave vector tangential to the</span>
@@ -785,7 +785,7 @@
 <span class="sd">            definition. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type, used for</span>
 <span class="sd">            :class:`ScalarPlaneWaveBasisByComp`.</span>
-<span class="sd">        where (array-like, bool, optional): Only evaluate specified parts of the expansion </span>
+<span class="sd">        where (array_like of bool, optional): Only evaluate specified parts of the expansion </span>
 <span class="sd">            matrix. The given array must have a shape that matches the output shape.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
@@ -958,7 +958,7 @@
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordinglyp; otherwise, both sets</span>
 <span class="sd">            of modes are the same.</span>
-<span class="sd">        k0 (float, optional): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
@@ -1092,9 +1092,9 @@
 <span class="sd">    The velocity field is given in units of m/s.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array-like): Evaluation points (m).</span>
+<span class="sd">        r (array_like): Evaluation points.</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.</span>
-<span class="sd">        k0 (float): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.  </span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
@@ -1212,9 +1212,9 @@
 <span class="sd">    The pressure field is given in units of Pa.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array-like): Evaluation points (m).</span>
+<span class="sd">        r (array_like): Evaluation points.</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.</span>
-<span class="sd">        k0 (float): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
@@ -1313,9 +1313,9 @@
 <span class="sd">    The far-field amplitude is given in units of N/m.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array-like): Evaluation points (m).</span>
+<span class="sd">        r (array_like): Evaluation points.</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.</span>
-<span class="sd">        k0 (float): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">        k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
@@ -1385,7 +1385,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._operatorsacoustics</a></li> 
       </ul>

@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._smatrixacoustics &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams._smatrixacoustics &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._smatrixacoustics</a></li> 
       </ul>
@@ -142,7 +142,7 @@
 <span class="sd">        smats (AcousticSMatrix): Acoustic S-matrices.</span>
 <span class="sd">        k0 (float): Angular wavenumber in the air (rad/m).</span>
 <span class="sd">        basis (ScalarPlaneWaveBasisByComp): Basis for the S-matrices.</span>
-<span class="sd">        material (tuple, AcousticMaterial, optional): Material definition. If a tuple of length</span>
+<span class="sd">        material (tuple or AcousticMaterial, optional): Material definition. If a tuple of length</span>
 <span class="sd">            two is specified, it refers to the materials above and below the S-matrix.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">permute</span> <span class="o">=</span> <span class="n">OperatorAttributeSMatrices</span><span class="p">(</span><span class="s2">&quot;permute&quot;</span><span class="p">)</span>
@@ -310,9 +310,9 @@
 <span class="sd">        This S-matrix translates the reference origin along `r`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            r (float, (3,)-array): Translation vector (m).</span>
+<span class="sd">            r (float, (3,)-array): Translation vector.</span>
 <span class="sd">            basis (ScalarPlaneWaveBasis): Basis definition.</span>
-<span class="sd">            k0 (float): Angular wavenumber in the air (rad/m).</span>
+<span class="sd">            k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">            material (AcousticMaterial, optional): Material definition.</span>
 
 <span class="sd">        Returns:</span>
@@ -412,9 +412,9 @@
 <span class="sd">        computed.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            illu (array-like): Insonification. If `modetype` is specified, the direction</span>
+<span class="sd">            illu (complex or array_like): Insonification. If `modetype` is specified, the direction</span>
 <span class="sd">                is chosen accordingly.</span>
-<span class="sd">            illu2 (array-like, optional): Second insonification. If used, the first</span>
+<span class="sd">            illu2 (complex or array_like, optional): Second insonification. If used, the first</span>
 <span class="sd">                argument is taken to be coming from below and this one to be coming from</span>
 <span class="sd">                above.</span>
 <span class="sd">            smat (AcousticSMatrix, optional): Second S-matrix for computing the</span>
@@ -452,7 +452,7 @@
 <span class="sd">        insonification and propagation direction.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            illu (complex, array_like): Expansion coefficients of the incoming wave.</span>
+<span class="sd">            illu (complex or array_like): Expansion coefficients of the incoming wave.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple</span>
@@ -498,7 +498,7 @@
 <span class="sd">            \end{pmatrix}\,.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            complex, array_like</span>
+<span class="sd">            complex or array_like</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
@@ -617,7 +617,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._smatrixacoustics</a></li> 
       </ul>

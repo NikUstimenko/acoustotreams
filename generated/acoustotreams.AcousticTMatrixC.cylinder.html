@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.AcousticTMatrixC.cylinder &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams.AcousticTMatrixC.cylinder &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.AcousticTMatrixC.cumsum.html" title="acoustotreams.AcousticTMatrixC.cumsum"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.AcousticTMatrixC.html" accesskey="U">acoustotreams.AcousticTMatrixC</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticTMatrixC.cylinder</a></li> 
@@ -73,12 +73,13 @@ an arbitrary number of layers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>kzs</strong> (<em>float</em><em>, </em><em>array_like</em>) – Z-components of the wave vector in the medium (rad/m).</p></li>
+<li><p><strong>kzs</strong> (<em>float</em><em> or </em><em>array_like</em>) – Z-components of the wave vector in the medium (rad/m).</p></li>
 <li><p><strong>mmax</strong> (<em>int</em>) – Positive integer for the maximum order of the T-matrix.</p></li>
-<li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air (rad/m).</p></li>
-<li><p><strong>radii</strong> (<em>float</em>) – Radii from inside to outside of the cylinder (m). For a
+<li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air.</p></li>
+<li><p><strong>radii</strong> (<em>float</em>) – Radii from inside to outside of the cylinder. For a
 homogeneous cylinder, the radius can be given as a single number;
-for a multilayered cylinder, it is a list of increasing radii for all the shells.</p></li>
+for a multilayered cylinder, it is a list of increasing radii for all the shells.
+Has units of 1/k0.</p></li>
 <li><p><strong>material</strong> (<em>list</em><em>[</em><a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><em>AcousticMaterial</em></a><em>]</em>) – The material parameters from the inside to the
 outside. The last material in the list specifies the background medium.</p></li>
 </ul>
@@ -154,7 +155,7 @@ outside. The last material in the list specifies the background medium.</p></li>
         <li class="right" >
           <a href="acoustotreams.AcousticTMatrixC.cumsum.html" title="acoustotreams.AcousticTMatrixC.cumsum"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.AcousticTMatrixC.html" >acoustotreams.AcousticTMatrixC</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.AcousticTMatrixC.cylinder</a></li> 

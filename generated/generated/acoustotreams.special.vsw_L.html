@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.special.vsw_L &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams.special.vsw_L &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="acoustotreams.special.ssw_psi.html" title="acoustotreams.special.ssw_psi"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../acoustotreams.special.html" accesskey="U">acoustotreams.special</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.special.vsw_L</a></li> 
@@ -61,7 +61,7 @@
 <span class="sig-prename descclassname"><span class="pre">acoustotreams.special.</span></span><span class="sig-name descname"><span class="pre">vsw_L</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/acoustotreams/special/_wavesacoustics.html#vsw_L"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.special.vsw_L" title="Link to this definition">¶</a></dt>
 <dd><p>Singular longitudinal vector spherical wave L</p>
 <blockquote>
-<div><p>The singular vector spherical wave is defined by</p>
+<div><p>The singular vector spherical wave is defined as</p>
 </div></blockquote>
 <div class="math notranslate nohighlight">
 \[\mathbf{L}_{lm}^{(3)}(x, \theta, \varphi)
@@ -69,20 +69,20 @@
 + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
 <p>with <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsh_Z()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsh_Y()</span></code>,
 <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.spherical_hankel1()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.spherical_hankel1()</span></code>.</p>
-<p>This function describes a solution to the vector Helmholtz wave
-equation.</p>
+<p>This function describes a longitudinal solution to the vector Helmholtz wave
+equation in spherical coordinates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>l</strong> (<em>int</em><em>, </em><em>array_like</em>) – Degree <span class="math notranslate nohighlight">\(l \geq 0\)</span></p></li>
-<li><p><strong>m</strong> (<em>int</em><em>, </em><em>array_like</em>) – Order <span class="math notranslate nohighlight">\(|m| \leq l\)</span></p></li>
-<li><p><strong>x</strong> (<em>float</em><em> or </em><em>complex</em><em>, </em><em>array_like</em>) – Distance in units of the wave number in the medium <span class="math notranslate nohighlight">\(kr\)</span></p></li>
-<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>complex</em><em>, </em><em>array_like</em>) – Polar angle</p></li>
-<li><p><strong>phi</strong> (<em>float</em><em>, </em><em>array_like</em>) – Azimuthal angle</p></li>
+<li><p><strong>l</strong> (<em>int</em><em> or </em><em>array_like</em>) – Degree <span class="math notranslate nohighlight">\(l \geq 0\)</span>.</p></li>
+<li><p><strong>m</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order <span class="math notranslate nohighlight">\(|m| \leq l\)</span>.</p></li>
+<li><p><strong>x</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Distance in units of the wave number in the medium <span class="math notranslate nohighlight">\(kr\)</span>.</p></li>
+<li><p><strong>theta</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Polar angle (rad).</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angle (rad).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>complex, 3-array</p>
+<dd class="field-even"><p>complex 3-array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -152,7 +152,7 @@ equation.</p>
         <li class="right" >
           <a href="acoustotreams.special.ssw_psi.html" title="acoustotreams.special.ssw_psi"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="../acoustotreams.special.html" >acoustotreams.special</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.special.vsw_L</a></li> 

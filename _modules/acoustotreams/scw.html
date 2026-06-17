@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams.scw &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams.scw &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.scw</a></li> 
       </ul>
@@ -89,19 +89,19 @@
 <span class="sd">    basis.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kz (float, array_like): Z-component of the wave vector of output modes.</span>
-<span class="sd">        mu (int, array_like): Order of output modes.</span>
-<span class="sd">        qz (float, array_like): Z component of the wave vector of input modes.</span>
-<span class="sd">        m (int, array_like): Order of input modes.</span>
-<span class="sd">        krr (float or complex, array_like): Translation distance in units of </span>
+<span class="sd">        kz (float or array_like): Z-component of the wave vector of output modes.</span>
+<span class="sd">        mu (int or array_like): Order of output modes.</span>
+<span class="sd">        qz (float or array_like): Z component of the wave vector of input modes. Has units of kz.</span>
+<span class="sd">        m (int or array_like): Order of input modes.</span>
+<span class="sd">        krr (float or complex or array_like): Translation distance in units of </span>
 <span class="sd">            the radial component of the wave vector.</span>
-<span class="sd">        phi (float, array_like): Azimuthal angle (rad).</span>
-<span class="sd">        z (float, array_like): Z-coordinate.</span>
+<span class="sd">        phi (float or array_like): Azimuthal angle (rad).</span>
+<span class="sd">        z (float or array_like): Z-coordinate. Has units of 1/kz.</span>
 <span class="sd">        singular (bool, optional): If true, singular translation coefficients are used,</span>
 <span class="sd">            else regular coefficients. Defaults to ``True``.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex</span>
+<span class="sd">        complex or array_like</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">singular</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_translate_s</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">krr</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -110,7 +110,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_rotate</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">kz</span> <span class="o">==</span> <span class="n">qz</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="n">mu</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">m</span> <span class="o">*</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">0.</span><span class="o">+</span><span class="mf">0.</span><span class="n">j</span>
     
@@ -126,14 +126,14 @@
 <span class="sd">    Return the rotation coefficients or a combination thereof for the specified modes.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kz (float, array_like): Z-component of the wave vector of output modes.</span>
-<span class="sd">        mu (int, array_like): Order of output modes.</span>
-<span class="sd">        qz (float, array_like): Z-component of the wave vector of input modes.</span>
-<span class="sd">        m (int, array_like): Order of input modes.</span>
-<span class="sd">        phi (float, array_like): Rotation angle (rad).</span>
+<span class="sd">        kz (float or array_like): Z-component of the wave vector of output modes.</span>
+<span class="sd">        mu (int or array_like): Order of output modes.</span>
+<span class="sd">        qz (float or array_like): Z-component of the wave vector of input modes. Has units of kz.</span>
+<span class="sd">        m (int or array_like): Order of input modes.</span>
+<span class="sd">        phi (float or array_like): Rotation angle (rad).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex</span>
+<span class="sd">        complex or array_like</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_rotate</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -167,15 +167,15 @@
 <span class="sd">    identical positions) are returned.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kx (float, array_like): X-component of the wave vector of plane waves.</span>
-<span class="sd">        ky (float or complex, array_like): Y-component of the wave vector of plane wavs.</span>
-<span class="sd">        kz (float, array_like): Z-component of the wave vector of plane waves.</span>
-<span class="sd">        qz (float, array_like): Z-component of the waver vector of cylindrical waves.</span>
-<span class="sd">        m (int, array_like): Order of cylindrical waves.</span>
-<span class="sd">        area (float, array_like): Unit cell area.</span>
+<span class="sd">        kx (float or array_like): X-component of the wave vector of plane waves.</span>
+<span class="sd">        ky (float or complex or array_like): Y-component of the wave vector of plane waves. Has units of kx.</span>
+<span class="sd">        kz (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.</span>
+<span class="sd">        qz (float or array_like): Z-component of the waver vector of cylindrical waves. Has units of kx.</span>
+<span class="sd">        m (int or array_like): Order of cylindrical waves.</span>
+<span class="sd">        area (float or array_like): Unit cell area.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex</span>
+<span class="sd">        complex or array_like</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_periodic_to_spw</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kzpw</span><span class="p">,</span> <span class="n">kzcw</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
@@ -205,14 +205,14 @@
 <span class="sd">    (corresponding to identical positions) are returned.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        l (int, array_like): Degree of spherical waves.</span>
-<span class="sd">        m (int, array_like): Order of spherical waves.</span>
-<span class="sd">        kz (float, array_like): Z-component of the wave vector of cylindrical waves.</span>
-<span class="sd">        mu (int, array_like): Order of cylindrical waves.</span>
-<span class="sd">        k (float or complex, array_like): Angular wavenumber in the medium.</span>
+<span class="sd">        l (int or array_like): Degree of spherical waves.</span>
+<span class="sd">        m (int or array_like): Order of spherical waves.</span>
+<span class="sd">        kz (float or array_like): Z-component of the wave vector of cylindrical waves.</span>
+<span class="sd">        mu (int or array_like): Order of cylindrical waves.</span>
+<span class="sd">        k (float or complex or array_like): Angular wavenumber in the medium. Has units of kz.</span>
 <span class="sd">    </span>
 <span class="sd">    Returns:</span>
-<span class="sd">        complex array</span>
+<span class="sd">        complex or array_like</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_to_ssw</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -227,22 +227,22 @@
 <span class="sd">    computations employ the fast converging Ewald summation from :mod:`treams.lattice`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        k (float or complex): Angular wavenumber in the medium (rad/m).</span>
-<span class="sd">        kpar (float, (D,)-array): Parallel component of the wave vector. </span>
+<span class="sd">        k (float or complex): Angular wavenumber in the medium.</span>
+<span class="sd">        kpar ((D,)-array of float): Parallel component of the wave vector. Has units of k.</span>
 <span class="sd">            Defines the dimension with `1 &lt;= D &lt;= 2`.</span>
-<span class="sd">        a (float, (D,D)-array): Lattice vectors in each row of the array.</span>
-<span class="sd">        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point.</span>
-<span class="sd">        out (2- or 3-tuple of integer arrays): Output modes</span>
+<span class="sd">        a ((D,D)-array of float): Lattice vectors in each row of the array. Have units of 1/k.</span>
+<span class="sd">        rs ((M, 3)-array of float): Shift vectors with respect to one lattice point. Have units of 1/k. </span>
+<span class="sd">        out (2- or 3-tuple of integer arrays): Output modes.</span>
 <span class="sd">        in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, </span>
 <span class="sd">            they are equal to the output modes.</span>
 <span class="sd">        rsin (float): Shift vectors of the input modes. If None is given, they are equal</span>
-<span class="sd">            to `rs`.</span>
+<span class="sd">            to `rs`. Have units of 1/k.</span>
 <span class="sd">        eta (float or complex, optional): Splitting parameter for the Ewald summation of</span>
 <span class="sd">            lattice sums. If zero, an estimation for the optimal value is done. Defaults</span>
 <span class="sd">            to zero.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex array</span>
+<span class="sd">        array_like of complex</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">in_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">in_</span> <span class="o">=</span> <span class="n">out</span>
@@ -322,7 +322,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.scw</a></li> 
       </ul>

@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>acoustotreams.ssw.translate_periodic &#8212; acoustotreams 0.2.37 documentation</title>
+    <title>acoustotreams.ssw.translate_periodic &#8212; acoustotreams 0.2.38 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=f4ec84db" />
-    <script src="../_static/documentation_options.js?v=8fa6aa5b"></script>
+    <script src="../_static/documentation_options.js?v=67bc0999"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="acoustotreams.ssw.translate.html" title="acoustotreams.ssw.translate"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ssw.html" accesskey="U">acoustotreams.ssw</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ssw.translate_periodic</a></li> 
@@ -65,20 +65,23 @@ employ the fast converging Ewald summation from <code class="xref py py-data doc
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ks</strong> (<em>float</em><em> or </em><em>complex</em>) – Wavenumber of longitudinal waves in the medium.</p></li>
-<li><p><strong>kpar</strong> (<em>float</em><em>, </em><em>(</em><em>D</em><em>,</em><em>)</em><em>-array</em>) – Parallel component of the wave vector. Defines the dimension with <cite>1 &lt;= D &lt;= 3</cite>.</p></li>
-<li><p><strong>a</strong> (<em>float</em><em>, </em><em>(</em><em>D</em><em>,</em><em>D</em><em>)</em><em>-array</em>) – Lattice vectors in each row of the array.</p></li>
-<li><p><strong>rs</strong> (<em>float</em><em>, </em><em>(</em><em>M</em><em>, </em><em>3</em><em>)</em><em>-array</em>) – Shift vectors with respect to one lattice point.</p></li>
+<li><p><strong>kpar</strong> (<em>(</em><em>D</em><em>,</em><em>)</em><em>-array</em><em> of </em><em>float</em>) – Parallel component of the wave vector.
+Defines the dimension with <cite>1 &lt;= D &lt;= 3</cite>. Has units of ks.</p></li>
+<li><p><strong>a</strong> (<em>(</em><em>D</em><em>,</em><em>D</em><em>)</em><em>-array</em><em> of </em><em>float</em>) – Lattice vectors in each row of the array.</p></li>
+<li><p><strong>rs</strong> (<em>(</em><em>M</em><em>, </em><em>3</em><em>)</em><em>-array</em><em> of </em><em>float</em>) – Shift vectors with respect to one lattice point.
+Have units of 1/ks.</p></li>
 <li><p><strong>out</strong> (<em>2-</em><em> or </em><em>3-tuple</em><em> of </em><em>integer arrays</em>) – Output modes.</p></li>
 <li><p><strong>in</strong> (<em>2-</em><em> or </em><em>3-tuple</em><em> of </em><em>integer arrays</em>) – Input modes. If None is given, they are equal to
 the output modes.</p></li>
-<li><p><strong>rsin</strong> (<em>float</em>) – Shift vectors of the input modes. If None is given, they are equal to <cite>rs</cite>.</p></li>
+<li><p><strong>rsin</strong> (<em>float</em>) – Shift vectors of the input modes. If None is given, they are equal to <cite>rs</cite>.
+Have units of 1/ks.</p></li>
 <li><p><strong>eta</strong> (<em>float</em><em> or </em><em>complex</em><em>, </em><em>optional</em>) – Splitting parameter for the Ewald summation of
 lattice sums. If zero, an estimation for the optimal value is done. Defaults
 to zero.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>complex array</p>
+<dd class="field-even"><p>array_like of complex</p>
 </dd>
 </dl>
 </dd></dl>
@@ -148,7 +151,7 @@ to zero.</p></li>
         <li class="right" >
           <a href="acoustotreams.ssw.translate.html" title="acoustotreams.ssw.translate"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.37 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">acoustotreams 0.2.38 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../acoustotreams.html" >Reference</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="acoustotreams.ssw.html" >acoustotreams.ssw</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.ssw.translate_periodic</a></li> 
