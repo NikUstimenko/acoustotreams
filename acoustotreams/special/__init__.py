@@ -125,7 +125,7 @@ Wigner 3j-symbols
 :py:data:`~treams.special.wigner3j`
 
 Vector spherical harmonics
------------------
+--------------------------
    
 :py:data:`~treams.special.pi_fun`
 :py:data:`~treams.special.tau_fun`

@@ -6,7 +6,7 @@ setup(
 
     name='acoustotreams',
 
-    version='0.2.40',
+    version='0.2.41',
 
     author='Nikita Ustimenko',
 

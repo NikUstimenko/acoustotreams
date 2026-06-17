@@ -1214,18 +1214,15 @@ def _scw_pamplitudeff(r, basis, k0, material, modetype):
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
     rcyl = basis.positions
     res = None
-    if krhos.imag != 0:
-        res = 0.j
-    else:
-        res = ats.scw_psi(
-                basis.kz,
-                basis.m,
-                rcyl[..., basis.pidx, 0],
-                rcyl[..., basis.pidx, 1],
-                r[..., basis.pidx, 1],
-                r[..., basis.pidx, 2],
-                krhos,
-            )   
+    res = ats.scw_psi(
+            basis.kz,
+            basis.m,
+            rcyl[..., basis.pidx, 0],
+            rcyl[..., basis.pidx, 1],
+            r[..., basis.pidx, 1],
+            r[..., basis.pidx, 2],
+            krhos,
+        )   
     if res is None:
         raise ValueError("invalid parameters")
     res = util.AnnotatedArray(np.array([res]).T)  

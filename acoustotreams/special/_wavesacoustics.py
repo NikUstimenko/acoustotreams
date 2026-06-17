@@ -99,7 +99,7 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
     .. math::
 
         \psi_{lm}(x, y, z, \theta, \varphi)
-        = \frac{\mathrm{i}^{-l-1}}{k} 
+        = \frac{\mathrm{(-i)}^{l+1}}{k} 
         Y_{lm}(\theta, \varphi)
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
 
@@ -211,11 +211,17 @@ def scw_psi(kz, m, x, y, phi, z, krho):
     Returns:
         complex
      """
-     return (np.exp(1j * m * phi + 1j * kz * z) * 
-             np.sqrt(2 / (np.pi * krho)) *
-             np.exp(-1j * ((krho * x * np.cos(phi) + krho * y * np.sin(phi)))) *
-             np.power(-1j, m) * 
-             np.exp(-1j * np.pi/4))
+     res = []
+     for i in range(len(x)):
+        if krho[i].imag != 0:
+            res.append(0j)
+        else:
+            res.append(np.exp(1j * m[i] * phi[i] + 1j * kz[i] * z[i]) * 
+                    np.sqrt(2 / (np.pi * krho[i])) *
+                    np.exp(-1j * ((krho[i] * x[i] * np.cos(phi[i]) + krho[i] * y[i] * np.sin(phi[i])))) *
+                    np.power(-1j, m[i]) * 
+                    np.exp(-1j * np.pi/4))
+     return np.array(res)
 
 def scw_rPsi(kz, m, krr, phi, z):
      r"""Regular scalar cylindrical wave :math:`\Psi`
