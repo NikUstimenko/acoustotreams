@@ -22,31 +22,31 @@ simplify computations of the scattering of acoustic waves in acoustic metamateri
 The supported geometries include single particles as well as finite and periodically infinite arrangements. 
 All methods are suitable for the use of lossy materials. The periodic systems can have 
 one-, two-, or three-dimensional lattices. The lattice computations are performed 
-by the functions imported from :mod:`treams.lattice` which accelerates them 
-by converting the occurring slowly converging summations to exponentially fast convergent series. 
-From :mod:`acoustotreams.special` the mathematical functions, which are typically necessary 
-in T-Matrix method computations, are also imported.
+by the functions imported from :mod:`treams.lattice`, which accelerates them 
+by converting the occurring slowly converging sums to exponentially fast convergent series
+using the Ewald summation technique. From :mod:`acoustotreams.special` the mathematical functions, 
+which are typically necessary in T-matrix computations, are also imported.
 
-To accommodate the periodic structures of different dimensionalities, three types of
-solutions to the scalar Helmholtz equation are employed: plane waves, cylindrical
-waves, and spherical waves. For each of those solution sets, the typical manipulations,
-e.g. translations and rotations, are implemented, as well as transformations between
-them.
+To accommodate acoustic scatterers of different symmetry and also the periodic structures 
+of different dimensionalities, three types of solutions to the scalar Helmholtz equation 
+are employed: plane waves, cylindrical waves, and spherical waves. For each of those solution sets, 
+the typical manipulations, e.g., translations and rotations, are implemented, as well as 
+transformations between them.
 
-Finally, three classes are the main point of interaction for the user. They allow access
-to the underlying functions operating directly on the spherical and cylindrical
-acoustic T-matrices or the acoustic S-matrices based on the plane-wave solutions.
+Finally, three classes are the main point of interaction for the user. They allow for access
+to the underlying functions that directly transorm acoustic T-matrices in the spherical- or 
+cylindrical-wave basis and acoustic S-matrices in the plane-wave basis.
 
 .. todo:: clean up intro
 
 Features
 ========
 
-* T-matrix calculations using a spherical or cylindrical wave basis set
-* Scattering from clusters of particles
-* Scattering from particles and clusters arranged in 3d-, 2d-, and 1d-lattices
-* Calculation of sound propagation in stratified media
-* Band calculation in crystal structures
+* T-matrix-based computations using a spherical- or cylindrical-wave basis set
+* Scattering by clusters of scatterers
+* Scattering by individiual scatterers or clusters thereof arranged in 3d-, 2d-, and 1d-lattices
+* Simulation of propagation of acoustic fields in stratified media
+* Band calculation for crystal structures
 
 Indices and tables
 ==================

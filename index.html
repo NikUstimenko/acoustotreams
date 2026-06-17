@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to acoustotreams’s documentation! &#8212; acoustotreams 0.2.38 documentation</title>
+    <title>Welcome to acoustotreams’s documentation! &#8212; acoustotreams 0.2.39 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=67bc0999"></script>
+    <script src="_static/documentation_options.js?v=c3c48d80"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="gettingstarted.html" title="Getting started"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">acoustotreams 0.2.38 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">acoustotreams 0.2.39 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to acoustotreams’s documentation!</a></li> 
       </ul>
     </div>  
@@ -64,27 +64,27 @@ simplify computations of the scattering of acoustic waves in acoustic metamateri
 The supported geometries include single particles as well as finite and periodically infinite arrangements.
 All methods are suitable for the use of lossy materials. The periodic systems can have
 one-, two-, or three-dimensional lattices. The lattice computations are performed
-by the functions imported from <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code> which accelerates them
-by converting the occurring slowly converging summations to exponentially fast convergent series.
-From <a class="reference internal" href="generated/acoustotreams.special.html#module-acoustotreams.special" title="acoustotreams.special"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams.special</span></code></a> the mathematical functions, which are typically necessary
-in T-Matrix method computations, are also imported.</p>
-<p>To accommodate the periodic structures of different dimensionalities, three types of
-solutions to the scalar Helmholtz equation are employed: plane waves, cylindrical
-waves, and spherical waves. For each of those solution sets, the typical manipulations,
-e.g. translations and rotations, are implemented, as well as transformations between
-them.</p>
-<p>Finally, three classes are the main point of interaction for the user. They allow access
-to the underlying functions operating directly on the spherical and cylindrical
-acoustic T-matrices or the acoustic S-matrices based on the plane-wave solutions.</p>
+by the functions imported from <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code>, which accelerates them
+by converting the occurring slowly converging sums to exponentially fast convergent series
+using the Ewald summation technique. From <a class="reference internal" href="generated/acoustotreams.special.html#module-acoustotreams.special" title="acoustotreams.special"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams.special</span></code></a> the mathematical functions,
+which are typically necessary in T-matrix computations, are also imported.</p>
+<p>To accommodate acoustic scatterers of different symmetry and also the periodic structures
+of different dimensionalities, three types of solutions to the scalar Helmholtz equation
+are employed: plane waves, cylindrical waves, and spherical waves. For each of those solution sets,
+the typical manipulations, e.g., translations and rotations, are implemented, as well as
+transformations between them.</p>
+<p>Finally, three classes are the main point of interaction for the user. They allow for access
+to the underlying functions that directly transorm acoustic T-matrices in the spherical- or
+cylindrical-wave basis and acoustic S-matrices in the plane-wave basis.</p>
 </section>
 <section id="features">
 <h1>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h1>
 <ul class="simple">
-<li><p>T-matrix calculations using a spherical or cylindrical wave basis set</p></li>
-<li><p>Scattering from clusters of particles</p></li>
-<li><p>Scattering from particles and clusters arranged in 3d-, 2d-, and 1d-lattices</p></li>
-<li><p>Calculation of sound propagation in stratified media</p></li>
-<li><p>Band calculation in crystal structures</p></li>
+<li><p>T-matrix-based computations using a spherical- or cylindrical-wave basis set</p></li>
+<li><p>Scattering by clusters of scatterers</p></li>
+<li><p>Scattering by individiual scatterers or clusters thereof arranged in 3d-, 2d-, and 1d-lattices</p></li>
+<li><p>Simulation of propagation of acoustic fields in stratified media</p></li>
+<li><p>Band calculation for crystal structures</p></li>
 </ul>
 </section>
 <section id="indices-and-tables">
@@ -151,7 +151,7 @@ acoustic T-matrices or the acoustic S-matrices based on the plane-wave solutions
         <li class="right" >
           <a href="gettingstarted.html" title="Getting started"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">acoustotreams 0.2.38 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">acoustotreams 0.2.39 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Welcome to acoustotreams’s documentation!</a></li> 
       </ul>
     </div>
