@@ -61,15 +61,15 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
     or :func:`~acoustotreams.special.ssw_Psi`, respectively.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``l`` and ``m``,
+        modes (array_like): A tuple containing a list for each of ``l`` and ``m``,
             or ``pidx``, ``l`` and ``m``.
-        positions (array-like, optional): The positions of the expansion centers 
+        positions (array_like, optional): The positions of the expansion centers 
             for the specified modes (m). Defaults to ``[[0, 0, 0]]``.
 
     Attributes:
-        pidx (array-like): Integer referring to a row in :attr:`positions`.
-        l (array-like): Degree as an integer :math:`l \geq 0`
-        m (array-like): Order as an integer :math:`m \leq |l|`.
+        pidx (array_like): Integer referring to a row in :attr:`positions`.
+        l (array_like): Degree as an integer :math:`l \geq 0`
+        m (array_like): Order as an integer :math:`m \leq |l|`.
     """
 
     _names = ("pidx", "l", "m")
@@ -220,7 +220,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         Args:
             lmax (int): Maximum multipolar degree.
             nmax (int, optional): Number of positions. Defaults to 1.
-            positions (array-like, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
+            positions (array_like of float, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
         """
         modes = [
             [n, l, m]
@@ -285,7 +285,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 class ScalarCylindricalWaveBasis(ScalarBasisSet):
     r"""Basis of scalar cylindrical waves.
 
-    Functions of the cylindrical wave basis are defined by the z-components of the wave
+    Functions of the cylindrical wave basis are defined by the Z-components of the wave
     vector ``kz`` and the order  ``m``. If the basis is defined with respect to a single 
     expansion center, it is referred to as "global". If it contains multiple expansion
     centers, it is referred to as "local". In a local basis, an additional position index 
@@ -297,15 +297,15 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     respectively.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``kz`` and ``m``,
+        modes (array_like): A tuple containing a list for each of ``kz`` and ``m``,
             or ``pidx``, ``kz`` and ``m``.
-        positions (array-like, optional): Positions of the expansion centers for the specified
+        positions (array_like, optional): Positions of the expansion centers for the specified
             modes (m). Defaults to ``[[0, 0, 0]]``.
 
     Attributes:
-        pidx (array-like): Integer referring to a row in :attr:`positions`.
-        kz (array-like): Real-valued z-component of the wave vector (rad/m).
-        m (array-like): Integer order.
+        pidx (array_like): Integer referring to a row in :attr:`positions`.
+        kz (array_like): Real-valued Z-component of the wave vector (rad/m).
+        m (array_like): Integer order.
     """
 
     _names = ("pidx", "kz", "m")
@@ -426,11 +426,11 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @classmethod
     def default(cls, kzs, mmax, nmax=1, positions=None):
-        """Default basis for given z-components of the wave vector and a given maximum order.
+        """Default basis for given Z-components of the wave vector and a given maximum order.
 
         By default, modes are grouped into separate blocks for each position 
         index in ascending order. Within each block, modes are sorted by 
-        the z-component of the wave vector :math:`k_z` and then by order :math:m 
+        the Z-component of the wave vector :math:`k_z` and then by order :math:m 
         in asceding order.
 
         Example:
@@ -450,10 +450,10 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
             )
 
         Args:
-            kzs (array-like, float): z-componets of the wave vector (rad/m).
+            kzs (array_like of float): Z-components of the wave vector (rad/m).
             mmax (int): Maximum value of order.
             nmax (int, optional): Number of positions. Defaults to 1.
-            positions (array-like, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
+            positions (array_like of float, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
         """
         kzs = np.atleast_1d(kzs)
         if kzs.ndim > 1:
@@ -480,14 +480,14 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
            )
 
         Args:
-            kz (float): z-component of the wave vector. Ideally, it is defined within the 
+            kz (float): Z-component of the wave vector. Ideally, it is defined within the 
                 first Brillouin zone (use :func:`treams.misc.firstbrillouin1d`).
             mmax (int): Maximum value of the order.
             lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
             bmax (float): Maximum length of reciprocal-lattice vectors that defines 
                 a maximum momentum transfer from the given value of `kz`.
             nmax (int, optional): Number of expansion centers.
-            positions (array-like, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
+            positions (array_like of float, optional): Positions of the expansion centers (m). Defaults to [[0, 0, 0]].
         """
         lattice = Lattice(lattice)
         lattice_z = Lattice(lattice, "z")
@@ -526,7 +526,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
         Args:
             dim (int): Dimension of the T-matrix, respectively number of modes.
-            nkz (int, optional): Number of z-components of the wave vector. Defaults to 1.
+            nkz (int, optional): Number of Z-components of the wave vector. Defaults to 1.
             nmax (int, optional): Number of scatterers. Defaults to 1.
 
         Returns:
@@ -547,7 +547,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         `m` and number of `k_z` components. A value of zero is allowed.
 
         Args:
-            nkz (int): Number of z-components of the wave vector.
+            nkz (int): Number of Z-components of the wave vector.
             mmax (int): Maximum value of the order.
             nmax (int, optional): Number of scatterers. Defaults to 1.
 
@@ -575,13 +575,13 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     Plane waves can refer to:func:`~acoustotreams.special.spw_Psi`.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``qx``, ``qy``,
+        modes (array_like): A tuple containing a list for each of ``qx``, ``qy``,
             and ``qz``.
 
     Attributes:
-        qx (array-like): X-component of the normalized wave vector.
-        qy (array-like): Y-component of the normalized wave vector.
-        qz (array-like): Z-component of the normalized wave vector.
+        qx (array_like): X-component of the normalized wave vector.
+        qy (array_like): Y-component of the normalized wave vector.
+        qz (array_like): Z-component of the normalized wave vector.
     """
 
     _names = ("qx", "qy", "qz")
@@ -657,7 +657,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
             )
 
         Args:
-            kvecs (array-like): Wave vectors in Cartesian coordinates (rad/m).
+            kvecs (array_like): Wave vectors in Cartesian coordinates (rad/m).
         """
         kvecs = np.atleast_2d(kvecs)
         modes = np.empty((kvecs.shape[0], 3), kvecs.dtype)                           
@@ -757,7 +757,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     Scalar plane waves refer to :func:`~acoustotreams.special.spw_Psi`.
 
     Args:
-        modes (array-like): A tuple containing a list for each of ``k1`` and ``k2``.
+        modes (array_like): A tuple containing a list for each of ``k1`` and ``k2``.
         alignment (str, optional): Wave-vector components included in the
                 partial basis. Defaults to "xy", other possible values are "yz" and "zx".
 
@@ -885,7 +885,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
             )
 
         Args:
-            kpars (array-like): Two Cartesian components of the wave vectors (rad/m).
+            kpars (array_like): Two Cartesian components of the wave vectors (rad/m).
             alignment (str, optional): Wave-vector components included in the
                 partial basis. Defaults to "xy", other possible values are "yz" and "zx".
 

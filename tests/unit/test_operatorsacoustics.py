@@ -558,7 +558,7 @@ class TestPField:
             modetype="singular",
         )
         rcyl = acoustotreams.special.car2cyl(r[:, None] - positions)
-        y = acoustotreams.special.special.scw_Psi(
+        y = acoustotreams.special.scw_Psi(
             [0.3, 0.1],
             [-2, 1],
             rcyl[..., 0] * [np.sqrt(4 - 0.3 ** 2), np.sqrt(4 - 0.1 ** 2)],

@@ -60,11 +60,11 @@ class AcousticTMatrix(AcousticsArray):
     specified.
 
     Args:
-        arr (float or complex, array-like): T-matrix itself.
-        k0 (float): Angular wavenumber in the air (rad/m).
+        arr (float or complex or array_like): T-matrix itself.
+        k0 (float): Angular wavenumber in the air.
         basis (ScalarSphericalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Background material. Defaults to the air.
-        lattice (Lattice, optional): Lattice definition (m). If specified, the T-matrix is
+        lattice (Lattice, optional): Lattice definition. If specified, the T-matrix is
             assumed to be placed on the defined lattice.
         kpar (list, optional): Bloch wave vector for the effective T-Matrix.
     """
@@ -111,10 +111,11 @@ class AcousticTMatrix(AcousticsArray):
 
         Args:
             lmax (int): Non-negative integer for the maximum degree of the T-matrix.
-            k0 (float): Angular wavenumber in air (rad/m).
-            radii (float or array): Radii from inside to outside of the sphere (m). For a
+            k0 (float): Angular wavenumber in air.
+            radii (float or array): Radii from inside to outside of the sphere. For a
                 homogeneous sphere, the radius can be given as a single number; 
                 for a multilayered sphere, it is a list of increasing radii for all the shells.
+                Has units of 1/k0.
             material (list[AcousticMaterial]): The material parameters from the inside to the
                 outside. The last material in the list specifies the background medium.
 
@@ -273,7 +274,7 @@ class AcousticTMatrix(AcousticsArray):
         and :math:`T` is the T-matrix.
 
         Args:
-            inc (complex, array): Incident wave or its expansion coefficients
+            inc (array_like): Incident wave or its expansion coefficients
 
         Returns:
             AcousticsArray
@@ -308,8 +309,8 @@ class AcousticTMatrix(AcousticsArray):
         repeated indices are summed over. The incoming flux is :math:`I`.
 
         Args:
-            inc (complex, array): Incident wave or its expansion coefficients.
-            flux (optional): Input flux corresponding to the incident wave. Used for
+            inc (array_like): Incident wave or its expansion coefficients.
+            flux (float, optional): Input flux corresponding to the incident wave. Used for
                 the result's normalization. A plane pressure wave has the flux `0.5` in this 
                 normalization, which is used as default.
 
@@ -339,9 +340,9 @@ class AcousticTMatrix(AcousticsArray):
         select those that are outside the spheres of the given radii.
 
         Args:
-            grid (array-like): Points (m). The last dimension needs length three
+            grid (array_like): Points. The last dimension needs length three
                 and corresponds to the Cartesian coordinates.
-            radii (Sequence[float]): Radii of the circumscribing spheres (m). Each radius
+            radii (Sequence[float]): Radii of the circumscribing spheres. Each radius
                 corresponds to an expansion center in the basis.
 
         Returns:
@@ -374,11 +375,11 @@ class AcousticTMatrixC(AcousticsArray):
     the material :attr:`material` are specified.
 
     Args:
-        arr (float or complex, array-like): T-matrix itself.
-        k0 (float): Angular wavenumber in the air (rad/m).
+        arr (float or complex or array_like): T-matrix itself.
+        k0 (float): Angular wavenumber in the air.
         basis (ScalarCylindricalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Background material. Defaults to air.
-        lattice (Lattice, optional): Lattice definition (m). If specified, the T-matrix is
+        lattice (Lattice, optional): Lattice definition. If specified, the T-matrix is
             assumed to be placed on the defined lattice.
         kpar (list, optional): Bloch wave vector for the effective T-Matrix.
     """
@@ -438,12 +439,13 @@ class AcousticTMatrixC(AcousticsArray):
             2. For the soft and hard cylinders, only one radius must be given.  
 
         Args:
-            kzs (float, array_like): Z-components of the wave vector in the medium (rad/m).
+            kzs (float or array_like): Z-components of the wave vector in the medium (rad/m).
             mmax (int): Positive integer for the maximum order of the T-matrix.
-            k0 (float): Angular wavenumber in the air (rad/m).
-            radii (float): Radii from inside to outside of the cylinder (m). For a
+            k0 (float): Angular wavenumber in the air.
+            radii (float): Radii from inside to outside of the cylinder. For a
                 homogeneous cylinder, the radius can be given as a single number; 
                 for a multilayered cylinder, it is a list of increasing radii for all the shells.
+                Has units of 1/k0.
             material (list[AcousticMaterial]): The material parameters from the inside to the
                 outside. The last material in the list specifies the background medium.
 
@@ -463,7 +465,7 @@ class AcousticTMatrixC(AcousticsArray):
         for kz in kzs:
             for m in range(-mmax, mmax + 1):
                 miecoeffs = mie_acoustics_cyl(kz, m, k0, radii, *zip(*materials))
-                tmat[idx, idx] = miecoeffs
+                tmat[idx, idx] = miecoeffs[0]
                 idx += 1
         return cls(tmat, k0=k0, basis=SCWB.default(kzs, mmax), material=materials[-1])
 
@@ -490,7 +492,7 @@ class AcousticTMatrixC(AcousticsArray):
 
         Args:
             tmats (Sequence): List of T-matrices.
-            positions (array): The positions of all individual objects in the cluster (m).
+            positions (array): The positions of all individual objects in the cluster.
 
         Returns:
             AcousticTMatrixC
@@ -619,7 +621,7 @@ class AcousticTMatrixC(AcousticsArray):
         and :math:`T` is the T-matrix.
 
         Args:
-            inc (complex, array): Incident wave or its expansion coefficients
+            inc (array_like): Incident wave or its expansion coefficients
 
         Returns:
             AcousticsArray
@@ -654,8 +656,8 @@ class AcousticTMatrixC(AcousticsArray):
         are summed over. The flux of a plane pressure wave is :math:`I = 0.5`.
 
         Args:
-            inc (complex, array): Incident wave or its expansion coefficients
-            flux (optional): Ingoing flux corresponding to the incident wave. Used for
+            inc (array_like): Incident wave or its expansion coefficients
+            flux (float, optional): Ingoing flux corresponding to the incident wave. Used for
                 the result's normalization. A plane wave has the flux `0.5` in this 
                 normalization, which is used as default.
 
@@ -685,9 +687,9 @@ class AcousticTMatrixC(AcousticsArray):
         select those that are outside the cylinders of the given radii.
 
         Args:
-            grid (array-like): Points (m). The last dimension needs length two or three
+            grid (array-like): Points. The last dimension needs length two or three
                 and corresponds to the Cartesian coordinates.
-            radii (Sequence[float]): Radii of the circumscribing cylinders (m). Each radius
+            radii (Sequence[float]): Radii of the circumscribing cylinders. Each radius
                 corresponds to an expansion center of the basis.
 
         Returns:
@@ -749,9 +751,9 @@ def plane_wave_scalar(
     """Array describing a scalar plane wave.
 
     Args:
-        kvec (Sequence): Wave vector in the air (rad/m).
+        kvec (Sequence): Wave vector in the air.
         basis (ScalarPlaneWaveBasis, optional): Basis definition.
-        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        k0 (float, optional): Angular wavenumber in the air.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).
     """
@@ -793,7 +795,7 @@ def spherical_wave_scalar(
     Args:
         l (int): Degree :math:`l \geq 0`.
         m (int): Order :math:`|m| \leq 0`.
-        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        k0 (float, optional): Angular wavenumber in the air.
         basis (ScalarPlaneWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).
@@ -815,9 +817,9 @@ def cylindrical_wave_scalar(
     """Array describing a scalar cylindrical wave.
 
     Args:
-        kz (float): Z-component of the wave vector in the medium (rad/m).
+        kz (float): Z-component of the wave vector in the medium.
         m (int): Order.
-        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        k0 (float, optional): Angular wavenumber in the air. Has units of kz.
         basis (ScalarPlaneWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).

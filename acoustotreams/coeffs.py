@@ -32,11 +32,11 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
         The order of T-matrix entries is LL, NL, LN, and NN.
 
     Args:
-        tm (complex, array-like): T-matrix of the previous layer.
+        tm (array_like of float or complex): T-matrix of the previous layer.
         l (int): Degree of the coefficient.
-        x (float, array-like): Size parameters in the air.
-        mat_sphere (float or complex, tuple): Material of the sphere :math:`(\rho, c, c_t)`.
-        mat_env (float or complex, tuple): Material of the medium :math:`(\rho, c, c_t)`.
+        x (float): Size parameters in the air.
+        mat_sphere (array_like of float or complex): Material of the sphere :math:`(\rho, c, c_t)`.
+        mat_env (array_like of float or complex): Material of the medium :math:`(\rho, c, c_t)`.
 
     Returns:
         complex 4-array
@@ -286,11 +286,11 @@ def mie_acoustics(l, x, *materials):
         2. For the soft and hard spheres, only one radius must be given. 
 
     Args:
-        l (int): Degree :math:`l \geq 0`.
-        x (float, array_like): Size parameters in the array.
-        rho (float or complex, array_like): Mass density (kg/m^3).
-        c (float or complex, array_like): Longitudinal speed of sound (m/s).
-        c_t (float or complex, array_like): Transverse speed of sound (m/s). 
+        l (int or array_like): Degree :math:`l \geq 0`.
+        x (float or array_like): Size parameters in the array.
+        rho (array_like of float or complex): Mass density (kg/m^3). The length must be at least two.
+        c (array_like of float or complex): Longitudinal speed of sound (m/s). The length must be at least two.
+        c_t (array_like of float or complex): Transverse speed of sound (m/s). The length must be at least two.
 
     Returns:
         complex array
@@ -318,13 +318,13 @@ def _mie_acoustics_iter_cyl(tm, kz, m, k0, radius, mat_cyl, mat_env):
     and the hard medium has :math:`(\rho = \infty, c = 0, c_t = 0)`.
 
     Args:
-        tm (complex, array-like): T-matrix of the previous layer.
-        kz (float): Z-component of the wave vector (rad/m).
+        tm (complex): T-matrix of the previous layer.
+        kz (float): Z-component of the wave vector.
         m (int): Order.
-        k0 (float): Angular wavenumber in the air (rad/m).
-        radius (float): Radius of the cylinder (m).
-        mat_cyl (float or complex, tuple): Material of the cylinder :math:`(\rho, c, c_t)`.
-        mat_env (float or complex, tuple): Material of the medium :math:`(\rho, c, c_t)`.
+        k0 (float): Angular wavenumber in the air.
+        radius (float): Radius of the cylinder.
+        mat_cyl (array_like of float or complex): Material of the cylinder :math:`(\rho, c, c_t)`.
+        mat_env (array_like of float or complex): Material of the medium :math:`(\rho, c, c_t)`.
 
     Returns:
         complex
@@ -385,13 +385,13 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
         2. For the soft and hard infinite cylinders, only one radius must be given. 
 
     Args:
-        kz (float): Z-component of the wave vector in the medium (rad/m).
-        m (int): Order.
-        k0 (float or complex): Angular wavenumber in the air (rad/m).
-        radii (float, array_like): Radii of the layers (m).
-        rho (float or complex, array_like): Mass density (kg/m^3).
-        c (float or complex, array_like): Longitudinal speed of sound (m/s).
-        c_t (float or complex, array_like): Transverse speed of sound (m/s).
+        kz (float): Z-component of the wave vector in the medium.
+        m (int or array_like): Order.
+        k0 (float or complex): Angular wavenumber in the air. Has units of :math:`kz`.
+        radii (float or array_like): Radii of the layers. Has units of :math:`1/kz`.
+        rho (float or complex or array_like): Mass density (kg/m^3).
+        c (float or complex or array_like): Longitudinal speed of sound (m/s).
+        c_t (float or complex or array_like): Transverse speed of sound (m/s).
 
     Returns:
         complex array
@@ -399,11 +399,15 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
     
     mat = list(zip(*materials))
     radii = np.atleast_1d(radii)
-    mie = 0
-    for i in range(len(list(mat)) - 1):
-        mat_cyl, mat_env = mat[i], mat[i + 1]
-        mie = _mie_acoustics_iter_cyl(mie, kz, m, k0, radii[i], mat_cyl, mat_env)
-    return mie
+    m = np.atleast_1d(m)
+    res = []
+    for j in m:
+        mie = 0
+        for i in range(len(list(mat)) - 1):
+            mat_cyl, mat_env = mat[i], mat[i + 1]
+            mie = _mie_acoustics_iter_cyl(mie, kz, j, k0, radii[i], mat_cyl, mat_env)
+        res.append(mie)
+    return res
 
 def fresnel_acoustics(kzs, rhos):
     r"""Fresnel coefficients for a planar interface.

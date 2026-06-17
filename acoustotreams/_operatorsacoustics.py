@@ -76,7 +76,7 @@ def rotate(phi, theta=0, psi=0, *, basis, where=True):
         basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordingly; otherwise, 
             both sets of the modes are the same.
-        where (array-like, bool, optional): Only evaluate specified parts of the rotation matrix.
+        where (array_like, bool, optional): Only evaluate specified parts of the rotation matrix.
             The input array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
@@ -196,16 +196,16 @@ def translate(
     Translate the given basis set of modes along the translation vector.
 
     Args:
-        r (array-like): Translation vector (m).
+        r (array_like): Translation vector.
         basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordingly; otherwise, 
             both sets of modes are the same.
-        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        k0 (float, optional): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type. Only used for
             :class:`ScalarPlaneWaveBasisByComp`.
-        where (array-like, bool, optional): Only evaluate specified parts of the translation
+        where (array_like of bool, optional): Only evaluate specified parts of the translation
             matrix. The given array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
@@ -396,10 +396,10 @@ def expand(
             both sets of modes are the same.
         modetype (str, optional): Mode type, used for
             :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.
-        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        k0 (float, optional): Angular wavenumber in the air.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
-        where (array-like, bool, optional): Only evaluate specified parts of the expansion 
+        where (array_like of bool, optional): Only evaluate specified parts of the expansion 
             matrix. The given array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
@@ -711,7 +711,7 @@ def expandlattice(
     a lattice, into another basis set.
 
     Args:
-        lattice (:class:`~treams.Lattice` or array-like, optional): Lattice definition (m).
+        lattice (:class:`~treams.Lattice` or array_like, optional): Lattice definition (m).
             In some cases, this argument can be omitted when the lattice can be inferred
             from the basis.
         kpar (sequence, optional): The components of the wave vector tangential to the
@@ -728,7 +728,7 @@ def expandlattice(
             definition. Defaults to the air.
         modetype (str, optional): Mode type, used for
             :class:`ScalarPlaneWaveBasisByComp`.
-        where (array-like, bool, optional): Only evaluate specified parts of the expansion 
+        where (array_like of bool, optional): Only evaluate specified parts of the expansion 
             matrix. The given array must have a shape that matches the output shape.
     """
     if isinstance(basis, (tuple, list)):
@@ -898,7 +898,7 @@ def permute(n=1, *, basis, k0=None, material=None, modetype=None):
         basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordinglyp; otherwise, both sets
             of modes are the same.
-        k0 (float, optional): Angular wavenumber in the air (rad/m).
+        k0 (float, optional): Angular wavenumber in the air.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type.
@@ -1029,9 +1029,9 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The velocity field is given in units of m/s.
 
     Args:
-        r (array-like): Evaluation points (m).
+        r (array_like): Evaluation points.
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
-        k0 (float): Angular wavenumber in the air (rad/m).
+        k0 (float): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.  
         modetype (str, optional): Mode type.
@@ -1146,9 +1146,9 @@ def pfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The pressure field is given in units of Pa.
 
     Args:
-        r (array-like): Evaluation points (m).
+        r (array_like): Evaluation points.
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
-        k0 (float): Angular wavenumber in the air (rad/m).
+        k0 (float): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type.
@@ -1244,9 +1244,9 @@ def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The far-field amplitude is given in units of N/m.
 
     Args:
-        r (array-like): Evaluation points (m).
+        r (array_like): Evaluation points.
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
-        k0 (float): Angular wavenumber in the air (rad/m).
+        k0 (float): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type.

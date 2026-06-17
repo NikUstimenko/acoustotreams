@@ -41,19 +41,19 @@ def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
     basis.
 
     Args:
-        kz (float, array_like): Z-component of the wave vector of output modes.
-        mu (int, array_like): Order of output modes.
-        qz (float, array_like): Z component of the wave vector of input modes.
-        m (int, array_like): Order of input modes.
-        krr (float or complex, array_like): Translation distance in units of 
+        kz (float or array_like): Z-component of the wave vector of output modes.
+        mu (int or array_like): Order of output modes.
+        qz (float or array_like): Z component of the wave vector of input modes. Has units of kz.
+        m (int or array_like): Order of input modes.
+        krr (float or complex or array_like): Translation distance in units of 
             the radial component of the wave vector.
-        phi (float, array_like): Azimuthal angle (rad).
-        z (float, array_like): Z-coordinate.
+        phi (float or array_like): Azimuthal angle (rad).
+        z (float or array_like): Z-coordinate. Has units of 1/kz.
         singular (bool, optional): If true, singular translation coefficients are used,
             else regular coefficients. Defaults to ``True``.
 
     Returns:
-        complex
+        complex or array_like
     """
     if singular:
         return _translate_s(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
@@ -61,7 +61,7 @@ def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
 
 def _rotate(kz, mu, qz, m, phi, *args, **kwargs):
     if (kz == qz) and (m == mu):
-        return np.exp(1j * m * phi, *args, **kwargs)
+        return np.exp(-1j * m * phi, *args, **kwargs)
     else:
         return 0.+0.j
     
@@ -75,14 +75,14 @@ def rotate(kz, mu, qz, m, phi, *args, **kwargs):
     Return the rotation coefficients or a combination thereof for the specified modes.
 
     Args:
-        kz (float, array_like): Z-component of the wave vector of output modes.
-        mu (int, array_like): Order of output modes.
-        qz (float, array_like): Z-component of the wave vector of input modes.
-        m (int, array_like): Order of input modes.
-        phi (float, array_like): Rotation angle (rad).
+        kz (float or array_like): Z-component of the wave vector of output modes.
+        mu (int or array_like): Order of output modes.
+        qz (float or array_like): Z-component of the wave vector of input modes. Has units of kz.
+        m (int or array_like): Order of input modes.
+        phi (float or array_like): Rotation angle (rad).
 
     Returns:
-        complex
+        complex or array_like
     """
     return _rotate(kz, mu, qz, m, phi, *args, **kwargs)
 
@@ -113,15 +113,15 @@ def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
     identical positions) are returned.
 
     Args:
-        kx (float, array_like): X-component of the wave vector of plane waves.
-        ky (float or complex, array_like): Y-component of the wave vector of plane wavs.
-        kz (float, array_like): Z-component of the wave vector of plane waves.
-        qz (float, array_like): Z-component of the waver vector of cylindrical waves.
-        m (int, array_like): Order of cylindrical waves.
-        area (float, array_like): Unit cell area.
+        kx (float or array_like): X-component of the wave vector of plane waves.
+        ky (float or complex or array_like): Y-component of the wave vector of plane waves. Has units of kx.
+        kz (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.
+        qz (float or array_like): Z-component of the waver vector of cylindrical waves. Has units of kx.
+        m (int or array_like): Order of cylindrical waves.
+        area (float or array_like): Unit cell area.
 
     Returns:
-        complex
+        complex or array_like
 
     """
     return _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs)
@@ -148,14 +148,14 @@ def to_ssw(l, m, kz, mu, k, *args, **kwargs):
     (corresponding to identical positions) are returned.
 
     Args:
-        l (int, array_like): Degree of spherical waves.
-        m (int, array_like): Order of spherical waves.
-        kz (float, array_like): Z-component of the wave vector of cylindrical waves.
-        mu (int, array_like): Order of cylindrical waves.
-        k (float or complex, array_like): Angular wavenumber in the medium.
+        l (int or array_like): Degree of spherical waves.
+        m (int or array_like): Order of spherical waves.
+        kz (float or array_like): Z-component of the wave vector of cylindrical waves.
+        mu (int or array_like): Order of cylindrical waves.
+        k (float or complex or array_like): Angular wavenumber in the medium. Has units of kz.
     
     Returns:
-        complex array
+        complex or array_like
     """
     return _to_ssw(l, m, kz, mu, k, *args, **kwargs)
 
@@ -167,22 +167,22 @@ def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
     computations employ the fast converging Ewald summation from :mod:`treams.lattice`.
 
     Args:
-        k (float or complex): Angular wavenumber in the medium (rad/m).
-        kpar (float, (D,)-array): Parallel component of the wave vector. 
+        k (float or complex): Angular wavenumber in the medium.
+        kpar ((D,)-array of float): Parallel component of the wave vector. Has units of k.
             Defines the dimension with `1 <= D <= 2`.
-        a (float, (D,D)-array): Lattice vectors in each row of the array.
-        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point.
-        out (2- or 3-tuple of integer arrays): Output modes
+        a ((D,D)-array of float): Lattice vectors in each row of the array. Have units of 1/k.
+        rs ((M, 3)-array of float): Shift vectors with respect to one lattice point. Have units of 1/k. 
+        out (2- or 3-tuple of integer arrays): Output modes.
         in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, 
             they are equal to the output modes.
         rsin (float): Shift vectors of the input modes. If None is given, they are equal
-            to `rs`.
+            to `rs`. Have units of 1/k.
         eta (float or complex, optional): Splitting parameter for the Ewald summation of
             lattice sums. If zero, an estimation for the optimal value is done. Defaults
             to zero.
 
     Returns:
-        complex array
+        array_like of complex
     """
     if in_ is None:
         in_ = out

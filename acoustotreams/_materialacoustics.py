@@ -12,9 +12,9 @@ class AcousticMaterial:
     time-invariant, homogeneous, isotropic, local and to have no gain.
 
     Args:
-        rho (optional, complex): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.
-        c (optional, complex): Longitudinal speed of sound (m/s). Defaults to 343 m/s.
-        ct (optional, complex): Transverse speed of sound (m/s). Defaults to 0 m/s.
+        rho (complex, optional): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.
+        c (complex, optional): Longitudinal speed of sound (m/s). Defaults to 343 m/s.
+        ct (complex, optional): Transverse speed of sound (m/s). Defaults to 0 m/s.
     """
 
     def __init__(self, rho=1.3, c=343., ct=0.):
@@ -194,7 +194,7 @@ class AcousticMaterial:
         """Return the wavenumber of longitudinal waves in the medium.
 
         Args:
-            k0 (float): Angular wavenumber in the air (rad/m).
+            k0 (float): Angular wavenumber in the air.
 
         Returns:
             tuple
@@ -209,7 +209,7 @@ class AcousticMaterial:
         """Return the wavenumber of transverse waves in the medium.
 
         Args:
-            k0 (float): Angular wavenumber in the air (rad/m).
+            k0 (float): Angular wavenumber in the air.
 
         Returns:
             tuple
@@ -226,11 +226,11 @@ class AcousticMaterial:
         The returned values have non-negative imaginary parts.
 
         Args:
-            k0 (float): Angular wavenumber in the air (rad/m).
-            kz (float, array-like): z-component of the wave vector (rad/m).
+            k0 (float): Angular wavenumber in the air.
+            kz (float or array_like): Z-component of the wave vector. Has units of k0.
 
         Returns:
-            complex, array-like
+            complex or array_like
         """
         ks = self.ks(k0)
         return misc.wave_vec_z(kz, 0, ks)
@@ -243,12 +243,12 @@ class AcousticMaterial:
         non-negative imaginary parts.
 
         Args:
-            k0 (float): Angular wavenumber in the air (rad/m).
-            kx (float, array-like): x-component of the wave vector (rad/m).
-            ky (float, array-like): y-component of the wave vector (rad/m).
+            k0 (float): Angular wavenumber in the air.
+            kx (float or array_like): X-component of the wave vector. Has units of k0.
+            ky (float or array_like): Y-component of the wave vector. Has units of k0.
 
         Returns:
-            complex, array-like
+            complex or array_like
         """
         ks = self.ks(k0)
         return misc.wave_vec_z(kx, ky, ks)   
@@ -260,11 +260,11 @@ class AcousticMaterial:
         The returned values have non-negative imaginary parts.
 
         Args:
-            k0 (float): Angular wavenumber in the air (rad/m).
-            kz (float, array-like): z-component of the wave vector (rad/m).
+            k0 (float): Angular wavenumber in the air.
+            kz (float or array_like): Z-component of the wave vector. Has units of k0.
 
         Returns:
-            complex, array-like
+            complex or array_like
         """
         ks = self.kst(k0)
         return misc.wave_vec_z(kz, 0, ks)
@@ -277,12 +277,12 @@ class AcousticMaterial:
         non-negative imaginary parts.
 
         Args:
-            k0 (float): Angular wavenumber in the air (rad/m).
-            kx (float, array-like): x-component of the wave vector (rad/m).
-            ky (float, array-like): y-component of the wave vector (rad/m).
+            k0 (float): Angular wavenumber in the air.
+            kx (float or array_like): X-component of the wave vector. Has units of k0.
+            ky (float or array_like): Y-component of the wave vector. Has units of k0.
 
         Returns:
-            complex, array-like
+            complex or array_like
         """
         ks = self.kst(k0)
         return misc.wave_vec_z(kx, ky, ks) 

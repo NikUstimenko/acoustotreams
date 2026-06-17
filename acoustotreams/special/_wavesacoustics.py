@@ -7,23 +7,23 @@ import cmath
 def spw_Psi(kx, ky, kz, x, y, z):
     r"""Scalar plane wave :math:`\Psi` 
 
-    The scalar plane wave is defined by
+    The scalar plane wave is defined as
 
     .. math::
 
-        \psi_{\mathbf k}(\mathbf r)
+        \Psi_{\mathbf k}(\mathbf r)
         = \mathrm e^{\mathrm i \mathbf k \mathbf r}.
 
     This function describes a solution to the scalar Helmholtz wave
-    equation.
+    equation in Cartesian coordinates.
 
     Args:
-        kx (float or complex, array_like): X component of the wave vector
-        ky (float or complex, array_like): Y component of the wave vector
-        kz (float or complex, array_like): Z component of the wave vector
-        x (float, array_like): Y coordinate
-        y (float, array_like): X coordinate
-        z (float, array_like): Z coordinate
+        kx (float or complex or array_like): X-component of the wave vector.
+        ky (float or complex or array_like): Y-component of the wave vector.
+        kz (float or complex or array_like): Z-component of the wave vector.
+        x (float or array_like): X-coordinate. Has units of 1/kx.
+        y (float or array_like): Y-coordinate. Has units of 1/ky.
+        z (float or array_like): Z-coordinate. Has units of 1/kz.
 
     Returns:
         complex
@@ -35,7 +35,7 @@ def spw_Psi(kx, ky, kz, x, y, z):
 def vpw_L(kx, ky, kz, x, y, z):
     r"""Longitudinal vector plane wave L
     
-    The longitudinal vector plane wave is defined by
+    The longitudinal vector plane wave is defined as
 
     .. math::
 
@@ -43,15 +43,15 @@ def vpw_L(kx, ky, kz, x, y, z):
         = \frac{\mathbf k}{k} \mathrm e^{\mathrm i \mathbf k \mathbf r}.
 
     This function describes a longitudinal solution to the vector Helmholtz wave
-    equation.
+    equation in Cartesian coordinates.
 
     Args:
-        kx (float or complex, array_like): X component of the wave vector
-        ky (float or complex, array_like): Y component of the wave vector
-        kz (float or complex, array_like): Z component of the wave vector
-        x (float, array_like): Y coordinate
-        y (float, array_like): X coordinate
-        z (float, array_like): Z coordinate
+        kx (float or complex or array_like): X-component of the wave vector.
+        ky (float or complex or array_like): Y-component of the wave vector. Has units of kx.
+        kz (float or complex or array_like): Z-component of the wave vector. Has units of kx.
+        x (float or array_like): X-coordinate. Has units of 1/kx.
+        y (float or array_like): Y-coordinate. Has units of 1/kx.
+        z (float or array_like): Z-coordinate. Has units of 1/kx.
 
     Returns:
         complex, 3-array
@@ -62,29 +62,29 @@ def vpw_L(kx, ky, kz, x, y, z):
     if k == 0:
         return np.asarray([np.nan, np.nan, np.nan]).T
     else:
-        return 1j * np.asarray([kx * phase, ky * phase, kz * phase], np.complex128).T / k
+        return 1j * np.asarray([kx * phase, ky * phase, kz * phase], complex).T / k
 
 def ssw_Psi(l, m, kr, theta, phi):
     r"""Singular scalar spherical wave :math:`\Psi`
 
-    The singular scalar spherical wave is defined by
+    The singular scalar spherical wave is defined as
 
     .. math::
 
         \Psi_{lm}^{(3)}(x, \theta, \varphi)
         = h_l^{(1)}(x) Y_{lm}(\theta, \varphi)
 
-    with :func:`acoustotreams.special.sph_harm`, and :func:`acoustotreams.special.spherical_hankel1`.
+    with :func:`acoustotreams.special.sph_harm` and :func:`acoustotreams.special.spherical_hankel1`.
 
     This function describes a solution to the scalar Helmholtz wave
-    equation.
+    equation in spherical coordinates.
 
     Args:
-        l (int, array_like): Degree :math:`l \geq 0`
-        m (int, array_like): Order :math:`|m| \leq l`
-        x (float or complex, array_like): Distance in units of the wave number in the medium :math:`kr`
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angle
+        l (int or array_like): Degree :math:`l \geq 0`.
+        m (int or array_like): Order :math:`|m| \leq l`.
+        x (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
         complex
@@ -93,7 +93,8 @@ def ssw_Psi(l, m, kr, theta, phi):
 
 def ssw_psi(l, m, x, y, z, theta, phi, k):
      r"""Far-field amplitude of singular scalar spherical wave :math:`\psi`
-     Defined by
+
+     It is defined as
 
     .. math::
 
@@ -104,18 +105,19 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
 
     with :func:`acoustotreams.special.sph_harm`.
 
-    This function describes a solution to the vector Helmholtz wave
-    equation in the limit of :math:`kr \to +\infty`.
+    This function describes a part of the solution to the vector Helmholtz wave
+    equation in spherical coordinates that does not depend on :math:`r` 
+    in the limit of :math:`kr \to +\infty`.
 
     Args:
-        l (int, array_like): Degree :math:`l \geq 0`
-        m (int, array_like): Order :math:`|m| \leq l`
-        x (float or complex, array_like): X coordinate of the source
-        y (float or complex, array_like): Y coordinate of the source
-        z (float or complex, array_like): Z coordinate of the source
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angle
-        k (float or complex, array_like): Wave number in the medium
+        l (int or array_like): Degree :math:`l \geq 0`.
+        m (int or array_like): Order :math:`|m| \leq l`.
+        x (float or complex or array_like): X-coordinate of the source.
+        y (float or complex or array_like): Y-coordinate of the source. Has units of x.
+        z (float or complex or array_like): Z-coordinate of the source. Has units of x.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angle (rad).
+        k (float or complex or array_like): Angular wavenumber in the medium. Has units of 1/x.
 
     Returns:
         complex
@@ -129,24 +131,24 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
 def ssw_rPsi(l, m, kr, theta, phi):
      r"""Regular scalar spherical wave :math:`\Psi`
 
-     The regular scalar spherical wave is defined by
+     The regular scalar spherical wave is defined as
 
     .. math::
 
         \Psi_{lm}^{(1)}(x, \theta, \varphi)
         = j_l(x) Y_{lm}(\theta, \varphi)
 
-    with :func:`acoustotreams.special.sph_harm`, and :func:`acoustotreams.special.spherical_jn`.
+    with :func:`acoustotreams.special.sph_harm` and :func:`acoustotreams.special.spherical_jn`.
 
     This function describes a solution to the scalar Helmholtz wave
-    equation.
+    equation in spherical coordinates.
 
     Args:
-        l (int, array_like): Degree :math:`l \geq 0`
-        m (int, array_like): Order :math:`|m| \leq l`
-        x (float or complex, array_like): Distance in units of the wave number in the medium :math:`kr`
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angle
+        l (int or array_like): Degree :math:`l \geq 0`.
+        m (int or array_like): Order :math:`|m| \leq l`.
+        x (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
         complex
@@ -157,24 +159,24 @@ def ssw_rPsi(l, m, kr, theta, phi):
 def scw_Psi(kz, m, krr, phi, z):
      r"""Singular scalar cylindrical wave :math:`\Psi`
 
-     The singular scalar cylindrical wave is defined by
+     The singular scalar cylindrical wave is defined as
 
      .. math::
 
-         \psi_{k_z m}^{(3)}(x_\rho, \varphi, z)
+         \Psi_{k_z m}^{(3)}(x_\rho, \varphi, z)
         = H_m^{(1)}(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
      using :func:`acoustotreams.special.hankel1`.
 
      This function describes a solution to the scalar Helmholtz wave
-     equation.
+     equation in cylindrical coordinates.
 
      Args:
-         kz (float, array_like): Z component of the wave vector
-         m (int, array_like): Order :math:`|m| \leq l`
-         xrho (float or complex, array_like): Radial distance in units of the radial component of the wave number in the medium :math:`k_\rho \rho`
-         phi (float, array_like): Azimuthal angle
-         z (float, array_like): Z coordinate
+         kz (float or array_like): Z-component of the wave vector.
+         m (int or array_like): Order :math:`|m| \leq l`.
+         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         phi (float or array_like): Azimuthal angle (rad).
+         z (float or array_like): Z-coordinate. Has units of 1/kz.
 
      Returns:
          complex
@@ -184,26 +186,27 @@ def scw_Psi(kz, m, krr, phi, z):
 def scw_psi(kz, m, x, y, phi, z, krho):
      r"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`
 
-     Defined by
+     It is defined as
 
     .. math::
 
         \psi_{k_z m}(x, y, \varphi)
-        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-m} \mathrm{e}^{-\mathrm{i} \pi/4}
+        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-|m|} \mathrm{e}^{-\mathrm{i} \pi/4}
         \mathrm{e}^{-\mathrm{i} k_{\rho} \left(x \cos \varphi + y \sin \varphi\right)}
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
-    This function describes a solution to the vector Helmholtz wave
-    equation in the limit of :math:`k_{\rho} \rho \to +\infty`.
+    This function describes a part of the solution to the vector Helmholtz wave
+    equation in cylindrical coordinates that does not depend on :math:`\rho` 
+    in the limit of :math:`k_{\rho} \rho \to +\infty`.
 
     Args:
-        kz (float, array_like): Z component of the wave vector
-        m (int, array_like): Order
-        x (float or complex, array_like): X coordinate of the source
-        y (float or complex, array_like): Y coordinate of the source
-        phi (float, array_like): Azimuthal angle
-        z (float or complex, array_like): Z coordinate of the source
-        krho (float or complex, array_like): Radial component of the wave vector
+        kz (float or array_like): Z-component of the wave vector.
+        m (int or array_like): Order.
+        x (float or complex or array_like): X-coordinate of the source.
+        y (float or complex or array_like): Y-coordinate of the source. Has units of x.
+        phi (float or array_like): Azimuthal angle (rad).
+        z (float or complex or array_like): Z-coordinate of the source. Has units of 1/kz.
+        krho (float or complex or array_like): Radial component of the wave vector. Has units of 1/x.
 
     Returns:
         complex
@@ -217,24 +220,24 @@ def scw_psi(kz, m, x, y, phi, z, krho):
 def scw_rPsi(kz, m, krr, phi, z):
      r"""Regular scalar cylindrical wave :math:`\Psi`
 
-     The regular scalar cylindrical wave is defined by
+     The regular scalar cylindrical wave is defined as
 
      .. math::
 
-         \psi_{k_z m}^{(1)}(x_\rho, \varphi, z)
+         \Psi_{k_z m}^{(1)}(x_\rho, \varphi, z)
         = J_m(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
      using :func:`acoustotreams.special.jv`.
 
      This function describes a solution to the scalar Helmholtz wave
-     equation.
+     equation in cylindrical coordinates.
 
      Args:
-         kz (float, array_like): Z component of the wave vector
-         m (int, array_like): Order :math:`|m| \leq l`
-         xrho (float or complex, array_like): Radial distance in units of the radial component of the wave number in the medium :math:`k_\rho \rho`
-         phi (float, array_like): Azimuthal angle
-         z (float, array_like): Z coordinate
+         kz (float or array_like): Z-component of the wave vector.
+         m (int or array_like): Order.
+         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         phi (float or array_like): Azimuthal angle (rad).
+         z (float or array_like): Z-coordinate. Has units of 1/kz.
 
      Returns:
          complex
@@ -245,7 +248,7 @@ def scw_rPsi(kz, m, krr, phi, z):
 def vsw_L(l, m, kr, theta, phi):
      r"""Singular longitudinal vector spherical wave L
 
-     The singular vector spherical wave is defined by
+     The singular vector spherical wave is defined as
 
     .. math::
 
@@ -256,18 +259,18 @@ def vsw_L(l, m, kr, theta, phi):
     with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, 
     :func:`acoustotreams.special.spherical_hankel1`, and :func:`acoustotreams.special.spherical_hankel1`.
 
-    This function describes a solution to the vector Helmholtz wave
-    equation.
+    This function describes a longitudinal solution to the vector Helmholtz wave
+    equation in spherical coordinates.
 
     Args:
-        l (int, array_like): Degree :math:`l \geq 0`
-        m (int, array_like): Order :math:`|m| \leq l`
-        x (float or complex, array_like): Distance in units of the wave number in the medium :math:`kr`
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angle
+        l (int or array_like): Degree :math:`l \geq 0`.
+        m (int or array_like): Order :math:`|m| \leq l`.
+        x (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
-        complex, 3-array
+        complex 3-array
      """
      return np.transpose(sc.vsh_Z(l, m, theta, phi).T * sc.spherical_hankel1_d(l, kr)  + np.sqrt(
          l * (l + 1)
@@ -276,7 +279,7 @@ def vsw_L(l, m, kr, theta, phi):
 def vsw_rL(l, m, kr, theta, phi):
      r"""Regular longitudinal vector spherical wave L
 
-     The regular vector spherical wave is defined by
+     The regular vector spherical wave is defined as
 
     .. math::
 
@@ -287,15 +290,15 @@ def vsw_rL(l, m, kr, theta, phi):
     with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, 
     and :func:`acoustotreams.special.spherical_jn`.
 
-    This function describes a solution to the vector Helmholtz wave
-    equation.
+    This function describes a longitudinal solution to the vector Helmholtz wave
+    equation in spherical coordinates.
 
     Args:
-        l (int, array_like): Degree :math:`l \geq 0`
-        m (int, array_like): Order :math:`|m| \leq l`
-        x (float or complex, array_like): Distance in units of the wave number in the medium :math:`kr`
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angle
+        l (int or array_like): Degree :math:`l \geq 0`.
+        m (int or array_like): Order :math:`|m| \leq l`.
+        x (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
         complex, 3-array
@@ -325,7 +328,7 @@ def vsw_rL(l, m, kr, theta, phi):
 def vcw_L(kz, m, krr, phi, z, krho, k):
      r"""Singular longitudinal vector cylindrical wave L
 
-     The singular vector cylindrical wave is defined by
+     The singular vector cylindrical wave is defined as
 
      .. math::
 
@@ -338,19 +341,19 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
      using :func:`acoustotreams.special.hankel1_d` and :func:`acoustotreams.special.hankel1`.
 
      This function describes a longitudinal solution to the vector Helmholtz wave
-     equation.
+     equation in cylindrical coordinates.
 
      Args:
-         kz (float, array_like): Z component of the wave vector
-         m (int, array_like): Order
-         xrho (float or complex, array_like): Radial distance in units of the radial component of the wave number in the medium :math:`k_\rho \rho`
-         phi (float, array_like): Azimuthal angle
-         z (float, array_like): Z coordinate
-         krho (float or complex, array_like): Radial component of the wave vector
-         k (float or complex, array_like): Wavenumber in the medium 
+         kz (float or array_like): Z-component of the wave vector.
+         m (int or array_like): Order.
+         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         phi (float or array_like): Azimuthal angle (rad).
+         z (float or array_like): Z-coordinate. Has units of 1/kz.
+         krho (float or complex or array_like): Radial component of the wave vector. Has units of kz.
+         k (float or complex or array_like): Angular wavenumber in the medium. Has units of kz.
 
      Returns:
-         complex, 3-array
+         complex 3-array
       """
      return np.transpose(
          np.array(
@@ -379,19 +382,19 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
      using :func:`acoustotreams.special.jv_d` and :func:`acoustotreams.special.jv`.
 
      This function describes a longitudinal solution to the vector Helmholtz wave
-     equation.
+     equation in cylindrical coordinates.
 
      Args:
-         kz (float, array_like): Z component of the wave vector
-         m (int, array_like): Order
-         xrho (float or complex, array_like): Radial distance in units of the radial component of the wave number in the medium :math:`k_\rho \rho`
-         phi (float, array_like): Azimuthal angle
-         z (float, array_like): Z coordinate
-         krho (float or complex, array_like): Radial component of the wave vector
-         k (float or complex): Wavenumber in the medium 
+         kz (float or array_like): Z-component of the wave vector.
+         m (int or array_like): Order.
+         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         phi (float or array_like): Azimuthal angle (rad).
+         z (float or array_like): Z-coordinate. Has units of 1/kz.
+         krho (float or complex or array_like): Radial component of the wave vector. Has units of kz.
+         k (float or complex or array_like): Angular wavenumber in the medium. Has units of kz.
 
      Returns:
-         complex, 3-array
+         complex 3-array
      """
      # todo: implement for k as array_like
      res = []
@@ -431,7 +434,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
 def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     r"""tl_ssw(lambda_, mu, l, m, kr, theta, phi)
     
-    Singular translation coefficient of scalar and longitudinal vector spherical waves
+    Singular translation coefficient of scalar and longitudinal vector spherical waves.
 
     Definded by
 
@@ -456,13 +459,13 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     These coefficients are used to translate from scattered to incident modes.
 
     Args:
-        lambda (integer, array_like): Degree of the destination mode
-        mu (integer, array_like): Order of the destination mode
-        l (integer, array_like): Degree of the source mode
-        m (integer, array_like): Order of the source mode
-        x (complex, array_like): Translation in units of the wave number in the medium
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angel
+        lambda (int or array_like): Degree of the output mode.
+        mu (int or array_like): Order of the output mode.
+        l (int or array_like): Degree of the input mode.
+        m (int or array_like): Order of the input mode.
+        x (float or complex or array_like): Translation in units of the wavenumber in the medium.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angel (rad).
 
     Returns:
         complex
@@ -483,7 +486,7 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
 def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     r"""tl_ssw_r(lambda_, mu, l, m, kr, theta, phi)
     
-    Regular translation coefficient of scalar and longitudinal vector spherical waves
+    Regular translation coefficient of scalar and longitudinal vector spherical waves.
 
     Definded by
 
@@ -509,13 +512,13 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     from incident to incident modes.
 
     Args:
-        lambda (integer, array_like): Degree of the destination mode
-        mu (integer, array_like): Order of the destination mode
-        l (integer, array_like): Degree of the source mode
-        m (integer, array_like): Order of the source mode
-        x (complex, array_like): Translation in units of the wave number in the medium
-        theta (float or complex, array_like): Polar angle
-        phi (float, array_like): Azimuthal angel
+        lambda (int or array_like): Degree of the output mode.
+        mu (int or array_like): Order of the output mode.
+        l (int or array_like): Degree of the input mode.
+        m (int or array_like): Order of the input mode.
+        x (float or complex or array_like): Translation in units of the wavenumber in the medium.
+        theta (float or complex or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angel (rad).
 
     Returns:
         complex
@@ -535,7 +538,7 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
 def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     r"""tl_scw(kz1, mu, kz2, m, krr, phi, z)
     
-    Singular translation coefficient of scalar and longitudinal vector cylindrical waves
+    Singular translation coefficient of scalar and longitudinal vector cylindrical waves.
 
     Definded by
 
@@ -553,13 +556,14 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     from incident to incident modes.
 
     Args:
-        kz1 (float, array_like): Z component of the destination mode's wave vector
-        mu (integer, array_like): Order of the destination mode
-        kz2 (float, array_like): Z component of the source mode's wave vector
-        m (integer, array_like): Order of the source mode
-        xrho (complex, array_like): Translation in radial direction in units of the radial component of the wave number in the medium :math:`k_\rho \rho`
-        phi (float, array_like): Azimuthal angel
-        z (float, array_like): Translation in z direction
+        kz1 (float or array_like): Z-component of the wave vector of the output mode.
+        mu (int or array_like): Order of the output mode
+        kz2 (float or array_like): Z-component of the wave vector of the input mode. Has units of kz1.
+        m (int or array_like): Order of the input mode.
+        xrho (float or complex or array_like): Translation in radial direction in units of 
+            the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+        phi (float or array_like): Azimuthal angel.
+        z (float or array_like): Translation in the z-direction. Has units of 1/kz1.
 
     Returns:
         complex
@@ -572,7 +576,7 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
 def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     r"""tl_scw_r(kz1, mu, kz2, m, krr, phi, z)
     
-    Regular translation coefficient of scalar and longitudinal vector cylindrical waves
+    Regular translation coefficient of scalar and longitudinal vector cylindrical waves.
 
     Definded by
 
@@ -589,13 +593,14 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     These coefficients are used to translate from scattered to incident modes.
 
     Args:
-        kz1 (float, array_like): Z component of the destination mode's wave vector
-        mu (integer, array_like): Order of the destination mode
-        kz2 (float, array_like): Z component of the source mode's wave vector
-        m (integer, array_like): Order of the source mode
-        xrho (complex, array_like): Translation in radial direction in units of the radial component of the wave number in the medium :math:`k_\rho \rho`
-        phi (float, array_like): Azimuthal angel
-        z (float, array_like): Translation in z direction
+        kz1 (float or array_like): Z-component of the wave vector of the output mode.
+        mu (int or array_like): Order of the output mode
+        kz2 (float or array_like): Z-component of the wave vector of the input mode. Has units of kz1.
+        m (int or array_like): Order of the input mode.
+        xrho (float or complex or array_like): Translation in radial direction in units of 
+            the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+        phi (float or array_like): Azimuthal angel.
+        z (float or array_like): Translation in the z-direction. Has units of 1/kz1.
 
     Returns:
         complex

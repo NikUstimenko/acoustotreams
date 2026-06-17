@@ -91,7 +91,7 @@ class AcousticSMatrices:
         smats (AcousticSMatrix): Acoustic S-matrices.
         k0 (float): Angular wavenumber in the air (rad/m).
         basis (ScalarPlaneWaveBasisByComp): Basis for the S-matrices.
-        material (tuple, AcousticMaterial, optional): Material definition. If a tuple of length
+        material (tuple or AcousticMaterial, optional): Material definition. If a tuple of length
             two is specified, it refers to the materials above and below the S-matrix.
     """
     permute = OperatorAttributeSMatrices("permute")
@@ -239,9 +239,9 @@ class AcousticSMatrices:
         This S-matrix translates the reference origin along `r`.
 
         Args:
-            r (float, (3,)-array): Translation vector (m).
+            r (float, (3,)-array): Translation vector.
             basis (ScalarPlaneWaveBasis): Basis definition.
-            k0 (float): Angular wavenumber in the air (rad/m).
+            k0 (float): Angular wavenumber in the air. Has units of 1/r.
             material (AcousticMaterial, optional): Material definition.
 
         Returns:
@@ -329,9 +329,9 @@ class AcousticSMatrices:
         computed.
 
         Args:
-            illu (array-like): Insonification. If `modetype` is specified, the direction
+            illu (complex or array_like): Insonification. If `modetype` is specified, the direction
                 is chosen accordingly.
-            illu2 (array-like, optional): Second insonification. If used, the first
+            illu2 (complex or array_like, optional): Second insonification. If used, the first
                 argument is taken to be coming from below and this one to be coming from
                 above.
             smat (AcousticSMatrix, optional): Second S-matrix for computing the
@@ -366,7 +366,7 @@ class AcousticSMatrices:
         insonification and propagation direction.
 
         Args:
-            illu (complex, array_like): Expansion coefficients of the incoming wave.
+            illu (complex or array_like): Expansion coefficients of the incoming wave.
 
         Returns:
             tuple
@@ -409,7 +409,7 @@ class AcousticSMatrices:
             \end{pmatrix}\,.
 
         Returns:
-            complex, array_like
+            complex or array_like
 
         """
         dim = len(self.basis)

@@ -118,7 +118,7 @@ class TestSSWB:
             acoustotreams.ScalarSphericalWaveBasis.defaultlmax(2)
 
     def test_defaultdim(self):
-        assert acoustotreams.ScalarSphericalWaveBasis.defaultlmax(3, 2) == 32
+        assert acoustotreams.ScalarSphericalWaveBasis.defaultdim(3, 2) == 32
 
     def test_defaultdim_fail(self):
         with pytest.raises(ValueError):
@@ -202,11 +202,11 @@ class TestSCWB:
 
     def test_getitem_pzm(self):
         b = acoustotreams.ScalarCylindricalWaveBasis([[0, 2, -1]])
-        assert b.pzms == ([0], [2], [-1])
+        assert b.pzm == ([0], [2], [-1])
 
     def test_getitem_zm(self):
         b = acoustotreams.ScalarCylindricalWaveBasis([[2, -1]])
-        assert b.zms == ([2], [-1])
+        assert b.zm == ([2], [-1])
 
     def test_getitem_invalid_index(self):
         b = acoustotreams.ScalarCylindricalWaveBasis([[1, 0]])
@@ -215,7 +215,7 @@ class TestSCWB:
 
     def test_getitem_int(self):
         b = acoustotreams.ScalarCylindricalWaveBasis([[1, 0], [1, -1]])
-        assert b[0] == (0, 1.0, -1)
+        assert b[1] == (0, 1.0, -1)
 
     def test_getitem_tuple(self):
         b = acoustotreams.ScalarCylindricalWaveBasis([[1, 0], [1, -1]])
@@ -255,7 +255,7 @@ class TestSCWB:
             acoustotreams.ScalarCylindricalWaveBasis.defaultdim(1, -1)
 
     def test_property_isglobal_true(self):
-        b = acoustotreams.ScalarCylindricalWaveBasis.defaultdim([[1, 0], [1, 1]])
+        b = acoustotreams.ScalarCylindricalWaveBasis([[1, 0], [1, 1]])
         assert b.isglobal
 
     def test_property_isglobal_false(self):
@@ -265,12 +265,12 @@ class TestSCWB:
         assert not b.isglobal
 
     def test_from_iterable(self):
-        a = acoustotreams.ScalarCylindricalWaveBasis(0, 1)
-        b = acoustotreams.ScalarCylindricalWaveBasis(0, 2)
+        a = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
+        b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 2)
         assert a & b == a
 
     def test_neq(self):
-        b = acoustotreams.ScalarCylindricalWaveBasis(0, 1)
+        b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
         assert not b == []
 
     def test_diffr_orders(self):
@@ -326,9 +326,9 @@ class TestSPWBUV:
 )"""
         )
 
-    def test_getitem_xys(self):
+    def test_getitem_xyz(self):
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0, 4, -3]])
-        assert b.xys == ([0], [0.8], [1])
+        assert b.xyz == ([0], [0.8], [1])
 
     def test_getitem_invalid_index(self):
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[1, 0, 0]])
@@ -516,7 +516,7 @@ class TestAcousticsArray:
         b = acoustotreams.ScalarSphericalWaveBasis([[1, -1], [1, 0], [1, 1]])
         p = acoustotreams.AcousticsArray([1], basis=b)
         x = p.rotate.eval_inv(1, 2, 3)
-        y = acoustotreams.wignerd(1, [[-1], [0], [1]], [-1, 0, 1], 1, 2, 3)
+        y = acoustotreams.special.wignerd(1, [[-1], [0], [1]], [-1, 0, 1], 1, 2, 3)
         assert (np.abs(x - y.conj().T) < 1e-14).all()
 
     def test_translate(self):

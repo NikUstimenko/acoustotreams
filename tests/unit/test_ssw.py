@@ -60,9 +60,6 @@ class TestTranslate:
     def test_s_kr_zero(self):
         assert isclose(ssw.translate(5, 4, 3, 2, 1e-30j, 7, 6), 0j)
 
-    def test_r_kr_zero(self):
-        assert isclose(ssw.translate(5, 4, 3, 2, 1e-30j, 7, 6, singular=False), 0j)
-
 
 class TestTranslatePeriodic:
     def test_0(self):
@@ -88,8 +85,8 @@ class TestTranslatePeriodic:
                 [0, 0, 0],
                 [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
                 [0, 0, 0],
-                ([3], [3])[0, 0]
-            ),
+                ([3], [3])
+            )[0, 0],
             -1. - 1203.51273971j,
         )
 

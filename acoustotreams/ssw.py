@@ -42,18 +42,18 @@ def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs)
     basis.
 
     Args:
-        lambda_ (int, array_like): Degree of output modes.
-        mu (int, array_like): Order of output modes.
-        l (int, array_like): Degree of input modes.
-        m (int, array_like): Order of input modes.
-        kr (float or complex, array_like): Translation distance in units of the wavenumber.
-        theta (float, array_like): Polar angle (rad).
-        phi (float, array_like): Azimuthal angle (rad).
+        lambda_ (int or array_like): Degree of output modes.
+        mu (int or array_like): Order of output modes.
+        l (int or array_like): Degree of input modes.
+        m (int or array_like): Order of input modes.
+        kr (float or complex or array_like): Translation distance in units of the wavenumber.
+        theta (float or array_like): Polar angle (rad).
+        phi (float or array_like): Azimuthal angle (rad).
         singular (bool, optional): If True, singular translation coefficients are used,
             else regular coefficients. Defaults to ``True``.
 
     Returns:
-        complex
+        complex or array_like
     """
     if singular:
         return _translate_s(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs)
@@ -85,16 +85,16 @@ def rotate(lambda_, mu, l, m, phi, theta=0, psi=0, *args, **kwargs):
     coordinate system), the rotations are applied psi first, theta second, phi third.
 
     Args:
-        lambda_ (int, array_like): Degree of output modes.
-        mu (int, array_like): Order of output modes.
-        l (int, array_like): Degree of input modes.
-        m (int, array_like): Order of input modes.
-        phi (float or complex, array_like): First Euler angle.
-        theta (float, array_like): Second Euler angle.
-        psi (float, array_like): Third Euler angle.
+        lambda_ (int or array_like): Degree of output modes.
+        mu (int or array_like): Order of output modes.
+        l (int or array_like): Degree of input modes.
+        m (int or array_like): Order of input modes.
+        phi (float or complex or array_like): First Euler angle.
+        theta (float or array_like): Second Euler angle.
+        psi (float or array_like): Third Euler angle.
 
     Returns:
-        complex
+        complex or array_like
     """
     return _rotate(lambda_, mu, l, m, phi, theta, psi, *args, **kwargs)
 
@@ -119,19 +119,22 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
 
     Args:
         ks (float or complex): Wavenumber of longitudinal waves in the medium.
-        kpar (float, (D,)-array): Parallel component of the wave vector. Defines the dimension with `1 <= D <= 3`.
-        a (float, (D,D)-array): Lattice vectors in each row of the array.
-        rs (float, (M, 3)-array): Shift vectors with respect to one lattice point.
+        kpar ((D,)-array of float): Parallel component of the wave vector. 
+            Defines the dimension with `1 <= D <= 3`. Has units of ks.
+        a ((D,D)-array of float): Lattice vectors in each row of the array.
+        rs ((M, 3)-array of float): Shift vectors with respect to one lattice point. 
+            Have units of 1/ks.
         out (2- or 3-tuple of integer arrays): Output modes.
         in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, they are equal to
             the output modes.
         rsin (float): Shift vectors of the input modes. If None is given, they are equal to `rs`.
+            Have units of 1/ks.
         eta (float or complex, optional): Splitting parameter for the Ewald summation of
             lattice sums. If zero, an estimation for the optimal value is done. Defaults
             to zero.
 
     Returns:
-        complex array
+        array_like of complex
     """
     if in_ is None:
         in_ = out
@@ -203,12 +206,12 @@ def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
     result.
 
     Args:
-        kx (float, array_like): X-component of the wave vector of plane waves.
-        ky (float, array_like): Y-component of the wave vector of plane waves.
-        kz (float or complex, array_like): Z-component of the wave vector of plane waves.
-        l (int, array_like): Degree of spherical waves.
-        m (int, array_like): Order of spherical waves.
-        area (float, array_like): Unit cell area.
+        kx (float or array_like): X-component of the wave vector of plane waves.
+        ky (float or array_like): Y-component of the wave vector of plane waves.
+        kz (float or complex or array_like): Z-component of the wave vector of plane waves.
+        l (int or array_like): Degree of spherical waves.
+        m (int or array_like): Order of spherical waves.
+        area (float or array_like): Unit cell area.
 
     Returns:
         complex
@@ -242,12 +245,12 @@ def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):
     to identical positions) are returned. 
 
     Args:
-        kz (float, array_like): Z-component of the wave vector of cylinbdrical waves.
-        m (int, array_like): Order or cylinbdrical waves.
-        l (int, array_like): Degree of spherical waves.
-        mu (int, array_like): Order of spherical waves.
-        k (float or complex, array_like): Angular wavenumber.
-        area (float, array_like): Unit cell area.
+        kz (float or array_like): Z-component of the wave vector of cylinbdrical waves.
+        m (int or array_like): Order or cylinbdrical waves.
+        l (int or array_like): Degree of spherical waves.
+        mu (int or array_like): Order of spherical waves.
+        k (float or complex or array_like): Angular wavenumber.
+        area (float or array_like): Unit cell area.
 
     Returns:
         complex

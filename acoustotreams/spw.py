@@ -24,11 +24,15 @@ def translate(kx, ky, kz, x, y, z, *args, **kwargs):
     :math:`\mathrm e^{\mathrm i \mathbf k \mathbf r}`.
 
     Args:
-        kx, ky, kz (float or complex, array_like): Wave vector components.
-        x, y, z (float, array_like): Translation vector components.
+        kx (float or complex or array_like): X-component of the wave vector.
+        ky (float or complex or array_like): Y-component of the wave vector.
+        kz (float or complex or array_like): Z-component of the wave vector.
+        x (float or array_like): X-coordinate. Has units of 1/kx.
+        y (float or array_like): Y-coordinate. Has units of 1/ky.
+        z (float or array_like): Z-coordinate. Has units of 1/kz.
 
     Returns:
-        complex
+        complex or array_like
     """
     return np.exp(1j * (kx * x + ky * y + kz * z), *args, **kwargs)
 
@@ -57,14 +61,14 @@ def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
     returned.
 
     Args:
-        l (int, array_like): Degree of scalar spherical waves.
-        m (int, array_like): Order of scalar spherical waves.
-        kx (float, array_like): X-component of the wave vector of scalar plane waves.
-        ky (float, array_like): Y-component of the wave vector of scalar plane waves.
-        kz (float, array_like): Z-component of the wave vector of scalar plane waves.
-
+        l (int or array_like): Degree of scalar spherical waves.
+        m (int or array_like): Order of scalar spherical waves.
+        kx (float or array_like): X-component of the wave vector of scalar plane waves.
+        ky (float or array_like): Y-component of the wave vector of scalar plane waves. Has units of kx.
+        kz (float or array_like): Z-component of the wave vector of scalar plane waves. has units of kx.
+ 
     Returns:
-        complex
+        complex or array_like
     """
     return _to_ssw(l, m, kx, ky, kz, *args, **kwargs)
 
@@ -93,14 +97,14 @@ def to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
     For multiple positions, only the diagonal values (corresponding to identical positions) are returned.
 
     Args:
-        qz (float, array_like): Z-component of the wave vector of scalar cylindrical waves.
-        m (int, array_like): Order of scalar cylindrical waves.
-        kx (float, array_like): X-component of the wave vector of scalar plane waves.
-        ky (float, array_like): Y-component of the wave vector of scalar plane waves.
-        kz (float, array_like): Z-component of the wave vector of scalar plane waves.
+        qz (float or array_like): Z-component of the wave vector of scalar cylindrical waves.
+        m (int or array_like): Order of scalar cylindrical waves.
+        kx (float or array_like): X-component of the wave vector of scalar plane waves. Has units of qz.
+        ky (float or array_like): Y-component of the wave vector of scalar plane waves. Has units of qz.
+        kz (float or array_like): Z-component of the wave vector of scalar plane waves. Has units of qz.
 
     Returns:
-        complex
+        complex or array_like
     """
     return _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs)
 
@@ -128,16 +132,13 @@ def permute_xyz(kx, ky, kz, inverse=False, *args, **kwargs):
     the input and output modes in the unprimed coordinate system.
 
     Args:
-        kxa (float, array_like): X-component of the wave vector of output modes.
-        kya (float or complex, array_like): Y-component of the wave vector of output modes.
-        kza (float, array_like): Z-component of the wave vector of output modes.
-        kx (float, array_like): X-component of the wave vector of input modes.
-        ky (float, array_like): Y-component of the wave vector of input modes.
-        kz (float or complex, array_like): Z-component of the wave vector of input modes.
+        kx (float or array_like): X-component of the wave vector.
+        ky (float or array_like): Y-component of the wave vector.
+        kz (float or complex or array_like): Z-component of the wave vector.
         inverse (bool, optional): Defaults to False. If True, use the inverse transformation.
 
     Returns:
-        complex
+        complex or array_like
     """
     if inverse:
         return _xyz_to_zxy(kx, ky, kz, *args, **kwargs)
