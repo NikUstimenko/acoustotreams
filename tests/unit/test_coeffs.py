@@ -17,7 +17,7 @@ class TestMie:
         )
         assert np.all(
             np.abs(
-                np.array(cf.mie_acoustics([0, 1, 2], 2, [1000, 900], [1200, 800], [500, 0]))
+                cf.mie_acoustics([0, 1, 2], 2, [1000, 900], [1200, 800], [500, 0])
                 - expect
             )
             < EPSSQ
@@ -33,13 +33,13 @@ class TestMie:
         )
         assert np.all(
             np.abs(
-                np.array(cf.mie_acoustics(
+                cf.mie_acoustics(
                     [0, 1, 2], 
                     2, 
                     [1000 + 100j, 900], 
                     [1200 - 150j, 800], 
                     [500 - 50j, 0]
-                    ))
+                    )
                 - expect
             )
             < EPSSQ
@@ -148,7 +148,7 @@ class TestMieCyl:
         expect = 1.7330362995685293e-20 + 0.0002685792010794467j
         assert (
             np.abs(
-                cf.mie_acoustics_cyl(0.5, -2, 1, 2, [1000, 900], [1200, 800], [0, 0])
+                np.array(cf.mie_acoustics_cyl(0.5, -2, 1, 2, [1000, 900], [1200, 800], [0, 0]))
                 - expect
             )
             < EPSSQ
@@ -157,7 +157,7 @@ class TestMieCyl:
     def test_complex(self):
         expect = -0.00038763204996962404 + 0.0002836447825423364j
         assert (np.abs(
-                    cf.mie_acoustics_cyl(
+                    np.array(cf.mie_acoustics_cyl(
                         0.5, 
                         -2,
                         1,
@@ -165,7 +165,7 @@ class TestMieCyl:
                         [1000 + 100j, 900], 
                         [1200 - 150j, 800], 
                         [0, 0]
-                        )
+                        ))
                     - expect
                 ) 
                 < EPSSQ
