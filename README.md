@@ -31,7 +31,9 @@ The documentation can be found at https://NikUstimenko.github.io/acoustotreams.
 
 ## Publications
 
-When using this code please cite:
+When using this code, please cite:
+
+[N. Ustimenko, and C. Rockstuhl, acoustotreams -- A Python package for acoustic-wave scattering based on the T-matrix method, arXiv 2606.22573 (2026).](https://arxiv.org/abs/2606.22573)
 
 The following publications document the developments and methods for different parts of the code:
 
