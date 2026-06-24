@@ -7,7 +7,9 @@
 
 # acoustotreams
 
-The package `acoustotreams` adopts the framework of the `treams` package for pressure-wave scattering in arrangements of multiple acoustic scatterers, with and without peridic boundary conditions, using the T-matrix method.
+The package `acoustotreams` adopts the framework of the `treams` package for pressure-wave scattering in arrangements of multiple acoustic scatterers, with and without peridic boundary conditions, using the T-matrix method. 
+
+The package supports Python versions up to 3.13.
 
 ## Installation
 
@@ -18,7 +20,7 @@ To install the package with pip, use
 ```sh
 pip install acoustotreams
 ```
-Preliminarily, you have to also install original `treams` as well as `numpy<2` and `scipy<1.11`
+Preliminarily, you have to also install original `treams` as well as `numpy` and `scipy`. 
 ```sh
 pip install treams
 ```
