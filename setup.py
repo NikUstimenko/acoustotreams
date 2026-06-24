@@ -6,7 +6,7 @@ setup(
 
     name='acoustotreams',
 
-    version='0.2.45',
+    version='0.2.46',
 
     author='Nikita Ustimenko',
 
@@ -38,10 +38,10 @@ setup(
 
     ],
 
-    python_requires='>=3.8,<3.14',
+    python_requires='>=3.9,<3.14',
 
     install_requires=[
-        "numpy",
+        "numpy<2",
         "scipy>=1.6,<1.14; python_version <= '3.9'",
         "scipy>=1.14.1,<1.16; python_version >= '3.10'",
         "treams"
