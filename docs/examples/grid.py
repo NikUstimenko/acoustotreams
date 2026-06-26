@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0 =  2 * np.pi * 50000 / 343
+k0 =  2 * np.pi * 50000 / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
             acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 3

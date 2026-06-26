@@ -18,10 +18,6 @@ To install the package with pip, use
 ```sh
 pip install acoustotreams
 ```
-Preliminarily, you have to also install original `treams` as well as `numpy` and `scipy`. 
-```sh
-pip install treams
-```
 
 ## Documentation
 

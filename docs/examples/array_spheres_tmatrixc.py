@@ -4,14 +4,14 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s =  2 * np.pi * np.linspace(1000, 45000, 100) / 343
+k0s =  2 * np.pi * np.linspace(1000, 45000, 100) / acoustotreams.AcousticMaterial().c
 material_slab = acoustotreams.AcousticMaterial(698, 950)
 thickness = 0.0025
 period = 0.025
 lattice = acoustotreams.Lattice.square(period)
 materials = [acoustotreams.AcousticMaterial(1050, 2350), 
             acoustotreams.AcousticMaterial(998, 1497)]
-n = 343 / 1497
+n = acoustotreams.AcousticMaterial().c / 1497
 radius = 0.0075
 lmax = mmax = 3
 
@@ -43,7 +43,7 @@ tr = np.array(
 
 fig, ax = plt.subplots()
 ax.set_xlabel("Frequency (kHz)")
-ax.plot(343 * k0s / (2 * np.pi) / 1000, tr[:, 0])
-ax.plot(343 * k0s / (2 * np.pi) / 1000, tr[:, 1])
+ax.plot(acoustotreams.AcousticMaterial().c * k0s / (2 * np.pi) / 1000, tr[:, 0])
+ax.plot(acoustotreams.AcousticMaterial().c * k0s / (2 * np.pi) / 1000, tr[:, 1])
 ax.legend(["$T$", "$R$"])
 fig.show()
