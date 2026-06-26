@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Acoustic T-Matrices &#8212; acoustotreams 0.2.46 documentation</title>
+    <title>Acoustic T-Matrices &#8212; acoustotreams 0.2.47 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=cec019df"></script>
+    <script src="_static/documentation_options.js?v=6ab89dc6"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="operators.html" title="Operators"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.46 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.47 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>
@@ -83,7 +83,7 @@ lattices can consist of an arbitrary number of objects described by the acoustic
 <p>It’s possible to calculate the acoustic T-matrix of a single sphere with the
 method <a class="reference internal" href="generated/acoustotreams.AcousticTMatrix.sphere.html#acoustotreams.AcousticTMatrix.sphere" title="acoustotreams.AcousticTMatrix.sphere"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sphere()</span></code></a>. We start by defining the relevant parameters for
 our calculation and creating the acoustic T-matrices themselves.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">500000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">500000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
              <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">10</span>
@@ -177,7 +177,7 @@ the direction of incidence of the plane wave.</p>
 <p>Multi-scattering calculations in a cluster of particles is a typical application of the
 T-matrix method. We first construct an object from two spheres. Using the definition
 of the relevant parameters</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">150000</span> <span class="o">/</span> <span class="mi">343</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">150000</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
              <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
@@ -271,7 +271,7 @@ scattering from an array of spheres. Intentionally, we choose a unit cell with t
 different spheres that overlap along the z direction, but are not placed exactly along
 the same line. This is the most general case for the implemented lattice sums.
 After the common setup of the parameters, we simply create a cluster in a local basis.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">50000</span> <span class="o">/</span> <span class="mi">343</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">50000</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
             <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
@@ -355,7 +355,7 @@ however, in the dipole approximation.</p>
 <p>The case of periodicity in two directions is similar to the case of the previous section
 with one-dimensional periodicity. Here, by convention the array has to be in the
 xy plane.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">50000</span> <span class="o">/</span> <span class="mi">343</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">50000</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
             <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
@@ -411,7 +411,7 @@ reciprocal space. The calculated system consists of a single sphere in a cubic l
 In our very crude analysis, we blindly select the lowest singular value of the lattice
 interaction matrix. Besides the mode when the frequency tends to zero, there are two
 additional modes at higher frequencies in the chosen range.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">40000</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="o">/</span> <span class="mi">343</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">40000</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">2350</span><span class="p">),</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">radius</span> <span class="o">=</span> <span class="mf">0.005</span>
@@ -495,7 +495,7 @@ additional modes at higher frequencies in the chosen range.</p>
         <li class="right" >
           <a href="operators.html" title="Operators"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.46 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.47 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Acoustic T-Matrices</a></li> 
       </ul>

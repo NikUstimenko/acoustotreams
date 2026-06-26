@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / 343
+k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
              acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 10
@@ -50,10 +50,10 @@ import matplotlib
 matplotlib.use("Agg")
 
 fig, ax = plt.subplots()
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext)
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca)
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_ext_lmax1, color="C0", linestyle=":")
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xs_sca_lmax1, color="C1", linestyle=":")
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xs_ext)
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xs_sca)
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xs_ext_lmax1, color="C0", linestyle=":")
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xs_sca_lmax1, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $l_{\\rm max}=1$", "Scattering $l_{\\rm max}=1$"])

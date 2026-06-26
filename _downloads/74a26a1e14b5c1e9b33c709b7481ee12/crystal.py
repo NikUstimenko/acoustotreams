@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s = 2 * np.pi * np.linspace(1000, 40000, 400) / 343
+k0s = 2 * np.pi * np.linspace(1000, 40000, 400) / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050, 2350), acoustotreams.AcousticMaterial(998, 1497)]
 lmax = 3
 radius = 0.005
@@ -20,5 +20,5 @@ res = Parallel(n_jobs=-1)(delayed(compute_svd)(k0s[i]) for i in range(len(k0s)))
 fig, ax = plt.subplots()
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Smallest singular value")
-ax.semilogy(343 * k0s / (2 * np.pi) / 1000, res)
+ax.semilogy(acoustotreams.AcousticMaterial().c * k0s / (2 * np.pi) / 1000, res)
 fig.show()

@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / 343
+k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
              acoustotreams.AcousticMaterial(998, 1497)]
 kzs = [0]
@@ -51,10 +51,10 @@ radpattern = Parallel(n_jobs=-1)(
 )
 
 fig, ax = plt.subplots()
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xw_ext)
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xw_sca)
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xw_ext_mmax0, color="C0", linestyle=":")
-ax.plot(k0s * 343 / (2 * np.pi) / 1000, xw_sca_mmax0, color="C1", linestyle=":")
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_ext)
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_sca)
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_ext_mmax0, color="C0", linestyle=":")
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_sca_mmax0, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $m_{\\rm max}=1$", "Scattering $m_{\\rm max}=1$"])

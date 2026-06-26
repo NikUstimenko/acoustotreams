@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 
 import acoustotreams
 
-k0 =  2 * np.pi * 50000 / 343
+k0 =  2 * np.pi * 50000 / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
             acoustotreams.AcousticMaterial(998, 1497)]
 lmax = mmax = 3
@@ -13,7 +13,7 @@ positions = [[-0.004, 0, -0.0075], [0.004, 0, 0.0075]]
 period = 0.035
 lattice = acoustotreams.Lattice(period)
 kz = 0.1 * k0
-n = 343 / 1497
+n = acoustotreams.AcousticMaterial().c / 1497
 
 spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, r, materials) for r in radii]
 chain = acoustotreams.AcousticTMatrix.cluster(spheres, positions).latticeinteraction.solve(lattice, kz * n)
