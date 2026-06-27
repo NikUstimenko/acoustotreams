@@ -172,9 +172,12 @@ def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
             Defines the dimension with `1 <= D <= 2`.
         a ((D,D)-array of float): Lattice vectors in each row of the array. Have units of 1/k.
         rs ((M, 3)-array of float): Shift vectors with respect to one lattice point. Have units of 1/k. 
-        out (2- or 3-tuple of integer arrays): Output modes.
-        in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, 
-            they are equal to the output modes.
+        out (2- or 3-tuple of arrays): Output modes. If `len(out) == 2`, `out[0]` may be float 
+            and `out[1]` must be integer. If `len(out) == 3`, `out[1]` may be float, while `out[0]` 
+            and `out[2]` must be integer.
+        in_ (2- or 3-tuple of arrays): Input modes. If None is given, they are equal to the output 
+            modes. If `len(in_) == 2`, `in_[0]` may be float and `in_[1]` must be integer. 
+            If `len(in_) == 3`, `in_[1]` may be float, while `in_[0]` and `in_[2]` must be integer.
         rsin (float): Shift vectors of the input modes. If None is given, they are equal
             to `rs`. Have units of 1/k.
         eta (float or complex, optional): Splitting parameter for the Ewald summation of
