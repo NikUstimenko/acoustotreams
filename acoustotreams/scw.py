@@ -36,8 +36,8 @@ def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
     
     Translation coefficients for scalar cylindrical modes.
 
-    Returns the correct translation coefficients from :func:acoustotreams.scw.tl_scw
-    and :func:acoustotreams.scw.tl_scw_r or combinations thereof for the specified modes and
+    Returns the correct translation coefficients from :func:`acoustotreams.scw.tl_scw`
+    and :func:`acoustotreams.scw.tl_scw_r` or combinations thereof for the specified modes and
     basis.
 
     Args:
@@ -211,7 +211,7 @@ def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
     rsin = np.array(rsin)
     if rsin.ndim == 1:
         rsin = rsin.reshape((1, -1))
-    rsdiff = -rs[out[0], None, :] + rsin[in_[0], :]
+    rsdiff = -rs[out[0].astype(int), None, :] + rsin[in_[0].astype(int), :]
     if kpar.ndim == 0 or kpar.shape[-1] == 1:
         dlms = lattice.lsumcw1d_shift(modes[compute], krhos[compute], kpar, a, rsdiff[compute, :2], eta)
     else:

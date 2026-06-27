@@ -425,7 +425,7 @@ def fresnel_acoustics(kzs, rhos):
 
     Returns:
         complex (2, 2, 1, 1)-array
-    """,
+    """
     res = np.zeros((2, 2, 1, 1), complex)
     res[1][1][0][0] = 2 * rhos[0] * kzs[1] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])
     res[0][0][0][0] = 2 * rhos[1] * kzs[0] / (rhos[0] * kzs[1] + rhos[1] * kzs[0])

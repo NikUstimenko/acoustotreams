@@ -37,8 +37,8 @@ def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs)
 
     Translation coefficients for spherical waves.
 
-    Returns the correct translation coefficients from :func:acoustotreams.ssw.tl_ssw
-    and :func:acoustotreams.ssw.tl_ssw_r or combinations thereof for the specified modes and
+    Returns the correct translation coefficients from :func:`acoustotreams.ssw.tl_ssw`
+    and :func:`acoustotreams.ssw.tl_ssw_r` or combinations thereof for the specified modes and
     basis.
 
     Args:
@@ -114,7 +114,7 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
     """Translation coefficients for scalar spherical waves on a lattice.
 
     Return the translation coefficents for the given modes on a lattice. The computations
-    employ the fast converging Ewald summation from :py:data:`~treams.lattice`.
+    employ the fast converging Ewald summation from :mod:`treams.lattice`.
 
 
     Args:

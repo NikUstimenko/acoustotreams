@@ -40,7 +40,7 @@ def vpw_L(kx, ky, kz, x, y, z):
     .. math::
 
        \mathbf L_{\mathbf k}(\mathbf r)
-        = \frac{\mathbf k}{k} \mathrm e^{\mathrm i \mathbf k \mathbf r}.
+        = \mathrm i \frac{\mathbf k}{k} \mathrm e^{\mathrm i \mathbf k \mathbf r}.
 
     This function describes a longitudinal solution to the vector Helmholtz wave
     equation in Cartesian coordinates.

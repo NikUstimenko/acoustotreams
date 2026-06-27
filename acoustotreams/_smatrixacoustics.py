@@ -68,7 +68,7 @@ class AcousticSMatrices:
     plane-wave basis, given by functions :func:`acoustotreams.speical.spw_Psi`. The primary
     direction of propagation is parallel or anti-parallel to the z-axis. The scattering
     structure itself is infinitely elongated in the x- and y-directions. The S-matrix 
-    contains four blocks :math:`S_{\uparrow \uparrow}`,:math:`S_{\uparrow \downarrow}`, 
+    contains four blocks :math:`S_{\uparrow \uparrow}`, :math:`S_{\uparrow \downarrow}`, 
     :math:`S_{\downarrow \uparrow}`, and :math:`S_{\downarrow \downarrow}`:
 
     .. math::

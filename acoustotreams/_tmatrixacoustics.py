@@ -54,7 +54,7 @@ class AcousticTMatrix(AcousticsArray):
     """Acoustic T-matrix in a spherical-wave basis.
 
     The acoustic T-matrix is a square matrix that maps incident (regular) fields
-    func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered (singular) fields 
+    :func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered (singular) fields 
     :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in :attr:`basis`. 
     Moreover, the wavenumber :attr:`k0` and, if not air, the material :attr:`material` are
     specified.
