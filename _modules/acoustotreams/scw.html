@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams.scw &#8212; acoustotreams 0.2.47 documentation</title>
+    <title>acoustotreams.scw &#8212; acoustotreams 0.2.48 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=6ab89dc6"></script>
+    <script src="../../_static/documentation_options.js?v=82a23e04"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.47 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.48 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.scw</a></li> 
       </ul>
@@ -84,8 +84,8 @@
 <span class="sd">    </span>
 <span class="sd">    Translation coefficients for scalar cylindrical modes.</span>
 
-<span class="sd">    Returns the correct translation coefficients from :func:acoustotreams.scw.tl_scw</span>
-<span class="sd">    and :func:acoustotreams.scw.tl_scw_r or combinations thereof for the specified modes and</span>
+<span class="sd">    Returns the correct translation coefficients from :func:`acoustotreams.scw.tl_scw`</span>
+<span class="sd">    and :func:`acoustotreams.scw.tl_scw_r` or combinations thereof for the specified modes and</span>
 <span class="sd">    basis.</span>
 
 <span class="sd">    Args:</span>
@@ -271,7 +271,7 @@
     <span class="n">rsin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rsin</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">rsin</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">rsin</span> <span class="o">=</span> <span class="n">rsin</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">rsdiff</span> <span class="o">=</span> <span class="o">-</span><span class="n">rs</span><span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">rsin</span><span class="p">[</span><span class="n">in_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="n">rsdiff</span> <span class="o">=</span> <span class="o">-</span><span class="n">rs</span><span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">rsin</span><span class="p">[</span><span class="n">in_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="p">:]</span>
     <span class="k">if</span> <span class="n">kpar</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">kpar</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">dlms</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">lsumcw1d_shift</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="n">compute</span><span class="p">],</span> <span class="n">krhos</span><span class="p">[</span><span class="n">compute</span><span class="p">],</span> <span class="n">kpar</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">rsdiff</span><span class="p">[</span><span class="n">compute</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">eta</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -322,7 +322,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.47 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.48 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.scw</a></li> 
       </ul>
