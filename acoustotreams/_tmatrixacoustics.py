@@ -673,9 +673,11 @@ class AcousticTMatrixC(AcousticsArray):
             inc = inc.expand(self.basis, "regular")
         p = self @ inc
         p_invksq = p * np.power(self.ks, -1)
+        # Evanescent modes do not contribute to the scattered power
+        prop = self.basis.kz * self.basis.kz <= self.ks * self.ks
         del inc.modetype
         return (
-            2.0 * np.real(p.conjugate().T @ p_invksq.expand(p.basis)) / flux,
+            2.0 * np.real(p[prop].conjugate().T @ p_invksq.expand(p.basis)[prop]) / flux,
             -2.0 * np.real(inc.conjugate().T @ p_invksq) / flux,
         )
 

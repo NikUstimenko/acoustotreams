@@ -121,3 +121,20 @@ class TestSca:
         assert (isclose(sca[0], 0.3506619987521309 + 0.14429243052400523j,) 
                 and isclose(sca[1], -0.8225873645046986 - 0.38088979145646645j)
                 and isclose(sca[2], -0.3506619987521309 - 0.14429243052400523j))
+        
+
+def test_xw_evanescent():
+    # Chain of lossy spheres, the basis includes evanescent modes with kz > ks
+    k0 =  2 * np.pi * 50000 / acoustotreams.AcousticMaterial().c
+    materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
+                acoustotreams.AcousticMaterial(998, 1497)]
+    lattice = acoustotreams.Lattice(0.035)
+    sphere = acoustotreams.AcousticTMatrix.sphere(5, k0, 0.0075, materials)
+    chain = sphere.latticeinteraction.solve(lattice, 0)
+    bmax = 2.1 * lattice.reciprocal
+    basis = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0, 5, lattice, bmax)
+    tmc = AcousticTMatrixC.from_array(chain, basis)
+    assert np.any(tmc.basis.kz**2 > tmc.ks**2)
+    inc = acoustotreams.plane_wave_scalar([k0, 0, 0], k0=k0, material=materials[-1])
+    sca, ext = tmc.xw(inc.expand(tmc.basis))
+    assert 0 < sca < ext
