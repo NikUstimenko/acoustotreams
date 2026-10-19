@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.2.49 documentation</title>
+    <title>Scalar basis sets and other core parameters &#8212; acoustotreams 0.2.50 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4ec84db" />
-    <script src="_static/documentation_options.js?v=26daba1d"></script>
+    <script src="_static/documentation_options.js?v=c5fedd4f"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="intro.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.49 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.50 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" accesskey="U">Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>
@@ -269,9 +269,9 @@ without any parameters. For other cases, the parameters can be given in the orde
 </div>
 <p>It is also possible to calculate the impedance for longitudinal and transverse waves</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">impedance</span>
-<span class="go">&#39;445.90000000000003&#39;</span>
+<span class="go">'445.90000000000003'</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">impedancet</span>
-<span class="go">&#39;0.0&#39;</span>
+<span class="go">'0.0'</span>
 </pre></div>
 </div>
 <p>Moreover, we can get the speeds from the Lamé parameters as</p>
@@ -291,14 +291,14 @@ without any parameters. For other cases, the parameters can be given in the orde
 <p>The periodicity of arrangements is given by defining an instance of the class
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code>. A lattice can be one-, two-, or three-dimensional.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">Lattice(1.0, alignment=&#39;z&#39;)</span>
+<span class="go">Lattice(1.0, alignment='z')</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="go">Lattice([[ 1.   0.5]</span>
-<span class="go">         [-0.5  1. ]], alignment=&#39;xy&#39;)</span>
+<span class="go">         [-0.5  1. ]], alignment='xy')</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="go">Lattice([[1. 0. 0.]</span>
 <span class="go">         [0. 2. 0.]</span>
-<span class="go">         [0. 0. 3.]], alignment=&#39;xyz&#39;)</span>
+<span class="go">         [0. 0. 3.]], alignment='xyz')</span>
 </pre></div>
 </div>
 <p>The one- and two-dimensional lattices have to be aligned with one and two, respectively,
@@ -308,24 +308,24 @@ sufficient to just specify the diagonal entries. It is also possible to automati
 create lattices with special unit cells, for example</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="o">.</span><span class="n">hexagonal</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">Lattice([[2.    0.   ]</span>
-<span class="go">         [1.    1.732]], alignment=&#39;xy&#39;)</span>
+<span class="go">         [1.    1.732]], alignment='xy')</span>
 </pre></div>
 </div>
 <p>creates a hexagonal lattice with sidelength 2. It is also possible to extract a
 lower-dimensional sublattice</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lat_3d</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">lat_3d</span><span class="p">,</span> <span class="s2">&quot;zx&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">lat_3d</span><span class="p">,</span> <span class="s2">"zx"</span><span class="p">)</span>
 <span class="go">Lattice([[0. 1.]</span>
-<span class="go">         [3. 0.]], alignment=&#39;zx&#39;)</span>
+<span class="go">         [3. 0.]], alignment='zx')</span>
 </pre></div>
 </div>
 <p>or to combine and compare lattices</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span> <span class="o">|</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">)</span>
 <span class="go">Lattice([[1. 0.]</span>
-<span class="go">         [0. 2.]], alignment=&#39;xy&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;xy&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;yz&quot;</span><span class="p">)</span>
-<span class="go">Lattice(2.0, alignment=&#39;y&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;xy&quot;</span><span class="p">)</span>
+<span class="go">         [0. 2.]], alignment='xy')</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">"xy"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">"yz"</span><span class="p">)</span>
+<span class="go">Lattice(2.0, alignment='y')</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">"xy"</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -352,7 +352,7 @@ different lattice sites <span class="math notranslate nohighlight">\(\mathrm{e}^
 <span class="go">WaveVector(nan, nan, nan)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">WaveVector(nan, nan, 1)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span>
 <span class="go">WaveVector(1, nan, nan)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">WaveVector(1, 2, nan)</span>
@@ -362,11 +362,11 @@ different lattice sites <span class="math notranslate nohighlight">\(\mathrm{e}^
 </div>
 <p>where unspecified directions are represented as <code class="docutils literal notranslate"><span class="pre">nan</span></code>. The wave vectors can be
 combined and compared.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">|</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;yz&quot;</span><span class="p">)</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">|</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">"yz"</span><span class="p">)</span>
 <span class="go">WaveVector(nan, 2, nan)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">)</span>
 <span class="go">WaveVector(1, 2, nan)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">WaveVector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -437,7 +437,7 @@ combined and compared.</p>
         <li class="right" >
           <a href="intro.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.49 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">acoustotreams 0.2.50 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="intro.html" >Examples</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Scalar basis sets and other core parameters</a></li> 
       </ul>

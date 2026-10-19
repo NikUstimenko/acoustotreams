@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams.coeffs &#8212; acoustotreams 0.2.49 documentation</title>
+    <title>acoustotreams.coeffs &#8212; acoustotreams 0.2.50 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=26daba1d"></script>
+    <script src="../../_static/documentation_options.js?v=c5fedd4f"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.49 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.50 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.coeffs</a></li> 
       </ul>
@@ -44,7 +44,7 @@
           <div class="body" role="main">
             
   <h1>Source code for acoustotreams.coeffs</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Scattering coefficients for high-symmetry cases.</span>
+<span></span><span class="sd">"""Scattering coefficients for high-symmetry cases.</span>
 
 <span class="sd">Calculate the scattering coefficients for cases where they can be obtained analytically.</span>
 <span class="sd">Thes include a (multilayered) sphere using spherical waves (Mie coefficients), </span>
@@ -58,14 +58,14 @@
 <span class="sd">   mie_acoustics_cyl</span>
 <span class="sd">   fresnel_acoustics</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">treams.special</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._materialacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticMaterial</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_mie_acoustics_iter</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mat_sphere</span><span class="p">,</span> <span class="n">mat_env</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve a matrix for the interface conditions at a spherical interface.</span>
+<span class="w">    </span><span class="sd">"""Solve a matrix for the interface conditions at a spherical interface.</span>
 
 <span class="sd">    Six types of interfaces are supported: fluid-fluid, fluid-solid, solid-fluid,</span>
 <span class="sd">    solid-solid, soft-fluid, and hard-fluid.</span>
@@ -86,7 +86,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex 4-array</span>
-<span class="sd">    &quot;&quot;&quot;</span> 
+<span class="sd">    """</span> 
     <span class="n">x_env</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">mat_env</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">j</span> <span class="o">=</span> <span class="n">treams</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x_env</span><span class="p">,</span> <span class="n">derivative</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -316,7 +316,7 @@
 <div class="viewcode-block" id="mie_acoustics">
 <a class="viewcode-back" href="../../generated/acoustotreams.coeffs.mie_acoustics.html#acoustotreams.coeffs.mie_acoustics">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mie_acoustics</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">materials</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Mie-scattering coefficient of degree :math:`l` for a sphere.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Mie-scattering coefficient of degree :math:`l` for a sphere.</span>
 
 <span class="sd">    The sphere is defined by its size parameter :math:`k_0 r`, where :math:`r` is the</span>
 <span class="sd">    radius and :math:`k_0` the wavenumber in the air. A multilayered sphere is defined</span>
@@ -342,7 +342,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     
     <span class="n">mat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">materials</span><span class="p">))</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
@@ -358,7 +358,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_mie_acoustics_iter_cyl</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">mat_cyl</span><span class="p">,</span> <span class="n">mat_env</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve a matrix for the interface conditions at a cylindrical interface.</span>
+<span class="w">    </span><span class="sd">"""Solve a matrix for the interface conditions at a cylindrical interface.</span>
 
 <span class="sd">    Three types of interfaces are supported: fluid-fluid, soft-fluid, and hard-fluid.</span>
 
@@ -377,7 +377,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
-<span class="sd">    &quot;&quot;&quot;</span> 
+<span class="sd">    """</span> 
 
     <span class="n">k_env</span> <span class="o">=</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">mat_env</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span>
     <span class="n">krho_env</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k_env</span> <span class="o">*</span> <span class="n">k_env</span> <span class="o">-</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">kz</span><span class="p">)</span>
@@ -419,7 +419,7 @@
 <div class="viewcode-block" id="mie_acoustics_cyl">
 <a class="viewcode-back" href="../../generated/acoustotreams.coeffs.mie_acoustics_cyl.html#acoustotreams.coeffs.mie_acoustics_cyl">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mie_acoustics_cyl</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radii</span><span class="p">,</span> <span class="o">*</span><span class="n">materials</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scattering coefficient at a cylindrical interface</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Scattering coefficient at a cylindrical interface</span>
 
 <span class="sd">    The cylinder is defined by its radii. A multilayered cylinder is defined</span>
 <span class="sd">    by giving an array of ascending numbers that define the size parameters of the</span>
@@ -446,7 +446,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     
     <span class="n">mat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">materials</span><span class="p">))</span>
     <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
@@ -464,7 +464,7 @@
 <div class="viewcode-block" id="fresnel_acoustics">
 <a class="viewcode-back" href="../../generated/acoustotreams.coeffs.fresnel_acoustics.html#acoustotreams.coeffs.fresnel_acoustics">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fresnel_acoustics</span><span class="p">(</span><span class="n">kzs</span><span class="p">,</span> <span class="n">rhos</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fresnel coefficients for a planar interface.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Fresnel coefficients for a planar interface.</span>
 
 <span class="sd">    The first two dimensions index the media above and below the S-matrix, </span>
 <span class="sd">    the second two dimensions were added to meet the acoustotreams convention.</span>
@@ -479,7 +479,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex (2, 2, 1, 1)-array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">complex</span><span class="p">)</span>
     <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rhos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">kzs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">rhos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">kzs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">rhos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">kzs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rhos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">kzs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">rhos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">kzs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">rhos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">kzs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -528,7 +528,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.49 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.50 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams.coeffs</a></li> 
       </ul>

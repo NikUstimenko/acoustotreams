@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._materialacoustics &#8212; acoustotreams 0.2.49 documentation</title>
+    <title>acoustotreams._materialacoustics &#8212; acoustotreams 0.2.50 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=26daba1d"></script>
+    <script src="../../_static/documentation_options.js?v=c5fedd4f"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.49 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.50 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._materialacoustics</a></li> 
       </ul>
@@ -52,7 +52,7 @@
 <div class="viewcode-block" id="AcousticMaterial">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AcousticMaterial</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Material definition.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Material definition.</span>
 
 <span class="sd">    The material properties are defined in the frequency domain by scalar values</span>
 <span class="sd">    for density :math:`\rho`, the speed of longitudinal elastic waves :math:`c`, and</span>
@@ -63,10 +63,10 @@
 <span class="sd">        rho (complex, optional): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.</span>
 <span class="sd">        c (complex, optional): Longitudinal speed of sound (m/s). Defaults to 343 m/s.</span>
 <span class="sd">        ct (complex, optional): Transverse speed of sound (m/s). Defaults to 0 m/s.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">343.</span><span class="p">,</span> <span class="n">ct</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialization.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Initialization."""</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">AcousticMaterial</span><span class="p">):</span>
             <span class="n">rho</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ct</span> <span class="o">=</span> <span class="n">rho</span><span class="p">()</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
@@ -79,51 +79,51 @@
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">rho</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ct</span> <span class="o">=</span> <span class="n">rho</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid material definition&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"invalid material definition"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span> <span class="o">=</span> <span class="n">rho</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_c</span> <span class="o">=</span> <span class="n">c</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ct</span> <span class="o">=</span> <span class="n">ct</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rho</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mass density.</span>
+<span class="w">        </span><span class="sd">"""Mass density.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float or complex</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Speed of longitudinal elastic waves.</span>
+<span class="w">        </span><span class="sd">"""Speed of longitudinal elastic waves.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float or complex</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_c</span>
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Speed of transverse elastic waves.</span>
+<span class="w">        </span><span class="sd">"""Speed of transverse elastic waves.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float or complex</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ct</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterator for a tuple containing the material parameters.</span>
+<span class="w">        </span><span class="sd">"""Iterator for a tuple containing the material parameters.</span>
 
 <span class="sd">        Useful for unpacking the material parameters into a function that takes these</span>
 <span class="sd">        parameters separately, e.g. ``foo(*material)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">))</span>
     
 <div class="viewcode-block" id="AcousticMaterial.from_params">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.from_params.html#acoustotreams.AcousticMaterial.from_params">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="mf">151767.21</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create acoustic material from Lamé parameters.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Create acoustic material from Lamé parameters.</span>
 
 <span class="sd">        This function calculates the longitudinal and transverse speeds of sound with</span>
 <span class="sd">        :math:`c = \sqrt{\frac{\lambda+2\mu}{\rho}}` and :math:`c_t = \sqrt{\frac{\mu}{\rho}}`. </span>
@@ -134,7 +134,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticMaterial</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">cmath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">rho</span><span class="p">)</span>
         <span class="n">ct</span> <span class="o">=</span> <span class="n">cmath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">rho</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span></div>
@@ -144,7 +144,7 @@
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.from_pratio.html#acoustotreams.AcousticMaterial.from_pratio">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_pratio</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">343</span><span class="p">,</span> <span class="n">pratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create acoustic material from Poisson&#39;s ratio.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Create acoustic material from Poisson's ratio.</span>
 
 <span class="sd">        This function calculates the transverse speed of sound with</span>
 <span class="sd">        :math:`c_t = c \sqrt{\frac{1 - 2\sigma}{2 - 2\sigma}}`. </span>
@@ -152,59 +152,59 @@
 <span class="sd">        Args:</span>
 <span class="sd">            rho (complex, optional): Mass density (kg/m^3). Defaults to 1.3 kg/m^3.</span>
 <span class="sd">            c (complex, optional): Longitudinal speed of sound (m/s). Defaults to 343 m/s.</span>
-<span class="sd">            pratio (complex, optional): Poisson&#39;s ratio. Defaults to 0.5.</span>
+<span class="sd">            pratio (complex, optional): Poisson's ratio. Defaults to 0.5.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticMaterial</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ct</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cmath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pratio</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pratio</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ct</span><span class="p">)</span></div>
 
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">impedance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Relative impedance for longitudinal waves (Pa*s/m^3).</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Relative impedance for longitudinal waves (Pa*s/m^3).</span>
 
 <span class="sd">        The relative impedance is defined by :math:`Z = \rho c`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">impedancet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Relative impedance for transverse waves (Pa*s/m^3).</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Relative impedance for transverse waves (Pa*s/m^3).</span>
 
 <span class="sd">        The relative impedance is defined by :math:`Z = \rho c_t`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span>
     
 <div class="viewcode-block" id="AcousticMaterial.__call__">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.__call__.html#acoustotreams.AcousticMaterial.__call__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a tuple containing all material parameters.</span>
+<span class="w">        </span><span class="sd">"""Return a tuple containing all material parameters.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span></div>
 
 
 <div class="viewcode-block" id="AcousticMaterial.__eq__">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.__eq__.html#acoustotreams.AcousticMaterial.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare material parameters.</span>
+<span class="w">        </span><span class="sd">"""Compare material parameters.</span>
 
 <span class="sd">        Materials are considered equal if all material parameters are equal.</span>
 <span class="sd">        Moreover, compares objects that contain at most three values.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">AcousticMaterial</span><span class="p">):</span>
@@ -218,55 +218,55 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">isreal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test if the material has purely real-valued parameters.</span>
+<span class="w">        </span><span class="sd">"""Test if the material has purely real-valued parameters.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">imag</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">isshear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test if the material sustains shear waves.</span>
+<span class="w">        </span><span class="sd">"""Test if the material sustains shear waves.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span> <span class="o">!=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="AcousticMaterial.__str__">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.__str__.html#acoustotreams.AcousticMaterial.__str__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;All three material parameters.</span>
+<span class="w">        </span><span class="sd">"""All three material parameters.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">()])</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span></div>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="s2">"("</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">()])</span> <span class="o">+</span> <span class="s2">")"</span></div>
 
 
 <div class="viewcode-block" id="AcousticMaterial.__repr__">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.__repr__.html#acoustotreams.AcousticMaterial.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Representation that allows recreating the object.</span>
+<span class="w">        </span><span class="sd">"""Representation that allows recreating the object.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AcousticMaterial.ks">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.ks.html#acoustotreams.AcousticMaterial.ks">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">ks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the wavenumber of longitudinal waves in the medium.</span>
+<span class="w">        </span><span class="sd">"""Return the wavenumber of longitudinal waves in the medium.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            k0 (float): Angular wavenumber in the air.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
             <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -277,14 +277,14 @@
 <div class="viewcode-block" id="AcousticMaterial.kst">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.kst.html#acoustotreams.AcousticMaterial.kst">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">kst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the wavenumber of transverse waves in the medium.</span>
+<span class="w">        </span><span class="sd">"""Return the wavenumber of transverse waves in the medium.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            k0 (float): Angular wavenumber in the air.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
             <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">ct</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -294,7 +294,7 @@
 <div class="viewcode-block" id="AcousticMaterial.krhos">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.krhos.html#acoustotreams.AcousticMaterial.krhos">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">krhos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kz</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The (cylindrically) radial part of the wave vector for longitudinal waves .</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The (cylindrically) radial part of the wave vector for longitudinal waves .</span>
 
 <span class="sd">        The cylindrically radial part is defined by :math:`k_\rho = \sqrt(k^2 - k_z^2)`.</span>
 <span class="sd">        The returned values have non-negative imaginary parts.</span>
@@ -305,7 +305,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex or array_like</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">misc</span><span class="o">.</span><span class="n">wave_vec_z</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span></div>
 
@@ -313,7 +313,7 @@
 <div class="viewcode-block" id="AcousticMaterial.kzs">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.kzs.html#acoustotreams.AcousticMaterial.kzs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">kzs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The z-component of the wave vector for longitudinal waves.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The z-component of the wave vector for longitudinal waves.</span>
 
 <span class="sd">        The z-component of the wave vector is defined by</span>
 <span class="sd">        :math:`k_z = \sqrt(k^2 - k_x^2 - k_y^2)`. The returned values have</span>
@@ -326,7 +326,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex or array_like</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">misc</span><span class="o">.</span><span class="n">wave_vec_z</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span>   </div>
 
@@ -334,7 +334,7 @@
 <div class="viewcode-block" id="AcousticMaterial.krhost">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.krhost.html#acoustotreams.AcousticMaterial.krhost">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">krhost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kz</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The (cylindrically) radial part of the wave vector for transverse waves.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The (cylindrically) radial part of the wave vector for transverse waves.</span>
 
 <span class="sd">        The cylindrically radial part is defined by :math:`k_\rho = \sqrt(k^2 - k_z^2)`.</span>
 <span class="sd">        The returned values have non-negative imaginary parts.</span>
@@ -345,7 +345,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex or array_like</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kst</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">misc</span><span class="o">.</span><span class="n">wave_vec_z</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span></div>
 
@@ -353,7 +353,7 @@
 <div class="viewcode-block" id="AcousticMaterial.kzst">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticMaterial.kzst.html#acoustotreams.AcousticMaterial.kzst">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">kzst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The z-component of the wave vector for transverse waves.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The z-component of the wave vector for transverse waves.</span>
 
 <span class="sd">        The z-component of the wave vector is defined by</span>
 <span class="sd">        :math:`k_z = \sqrt(k^2 - k_x^2 - k_y^2)`. The returned values have</span>
@@ -366,7 +366,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex or array_like</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">ks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kst</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">misc</span><span class="o">.</span><span class="n">wave_vec_z</span><span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span> </div>
 </div>
@@ -412,7 +412,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.49 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.50 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._materialacoustics</a></li> 
       </ul>
