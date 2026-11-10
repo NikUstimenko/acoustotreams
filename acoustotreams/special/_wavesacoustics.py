@@ -412,8 +412,8 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
                 elif abs(m[i]) == 1:
                    val = np.array(
                                   [
-                       0.5 * krho[i] / k,
-                       0.5 * 1j * m[i] * krho[i] / k,
+                       0.5 * m[i] * krho[i] / k,
+                       0.5j * krho[i] / k,
                        0. 
                        ]).T * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
                    res.append(val)
