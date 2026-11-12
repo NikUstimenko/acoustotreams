@@ -56,6 +56,12 @@ jobs:
           Path("htmlcov/endpoint.json").write_text(json.dumps(badge) + "\n")
           PY
 
+      - name: Prepare coverage files for publishing
+        run: |
+          rm -f htmlcov/.gitignore
+          test -s htmlcov/index.html
+          test -s htmlcov/endpoint.json
+
       - name: Deploy report
         if: ${{ matrix.python-version == '3.11' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
         uses: peaceiris/actions-gh-pages@v4
@@ -63,9 +69,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: htmlcov
           publish_dir: ./htmlcov
-
-      - name: Prepare coverage files for publishing
-        run: |
-          rm -f htmlcov/.gitignore
-          test -s htmlcov/index.html
-          test -s htmlcov/endpoint.json
