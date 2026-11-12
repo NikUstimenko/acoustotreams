@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acoustotreams._tmatrixacoustics &#8212; acoustotreams 0.2.51 documentation</title>
+    <title>acoustotreams._tmatrixacoustics &#8212; acoustotreams 0.2.52 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=0c472235" />
     <link rel="stylesheet" type="text/css" href="../../_static/pyramid.css?v=424f8d56" />
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4ec84db" />
-    <script src="../../_static/documentation_options.js?v=61865956"></script>
+    <script src="../../_static/documentation_options.js?v=567ed33c"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.51 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.52 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._tmatrixacoustics</a></li> 
       </ul>
@@ -271,7 +271,7 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \sigma_\mathrm{ext} \rangle</span>
-<span class="sd">            = 2 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},</span>
+<span class="sd">            = 4 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},</span>
 
 <span class="sd">        where :math:`k` is the angular wavenumber in the background medium.    </span>
 
@@ -297,7 +297,7 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \sigma_\mathrm{sca} \rangle</span>
-<span class="sd">            = 2 \pi \sum_{lm} \sum_{l'm'}</span>
+<span class="sd">            = 4 \pi \sum_{lm} \sum_{l'm'}</span>
 <span class="sd">            \frac{|T_{lm,l'm'}|^2}{k^2},</span>
 
 <span class="sd">        where :math:`k` is the angular wavenumber in the background medium. </span>
@@ -625,10 +625,10 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{ext} \rangle</span>
-<span class="sd">            = -\frac{2 \pi}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},</span>
+<span class="sd">            = -\frac{4}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},</span>
 
 <span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>
-<span class="sd">        is the number of :math:`k_z` components included in the basis of the T-matrix. </span>
+<span class="sd">        is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. </span>
 <span class="sd">        The average is taken over all given z-components of the wave vector and </span>
 <span class="sd">        rotations about the z-axis. </span>
 <span class="sd">        </span>
@@ -639,8 +639,18 @@
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-        <span class="n">nk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ks</span> <span class="o">*</span> <span class="n">nk</span><span class="p">)</span>                 
+        <span class="c1"># Evanescent modes do not contribute to the scattered power</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span>
+        <span class="n">nkz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">[</span><span class="n">prop</span><span class="p">])</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">if</span> <span class="n">nkz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"No propagating kz components: the average is undefined."</span>
+            <span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">prop</span><span class="p">)])</span>
+                <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ks</span> <span class="o">*</span> <span class="n">nkz</span><span class="p">)</span>
+        <span class="p">)</span>                 
         <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">imag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">real</span>
         <span class="k">return</span> <span class="n">res</span>
@@ -654,11 +664,11 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{sca} \rangle</span>
-<span class="sd">            = \frac{2 \pi}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}'m'}</span>
+<span class="sd">            = \frac{4}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}'m'}</span>
 <span class="sd">            \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},</span>
 
 <span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>
-<span class="sd">        is the number of :math:`k_z` components included in the basis of the T-matrix. </span>
+<span class="sd">        is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. </span>
 <span class="sd">        The average is taken over all given z-components of the wave vector and </span>
 <span class="sd">        rotations about the z-axis. </span>
 <span class="sd">        </span>
@@ -670,10 +680,16 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
         <span class="n">ks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span>
-        <span class="n">re</span><span class="p">,</span> <span class="n">im</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span>
-        <span class="n">nk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">re</span> <span class="o">*</span> <span class="n">re</span> <span class="o">+</span> <span class="n">im</span> <span class="o">*</span> <span class="n">im</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ks</span> <span class="o">*</span> <span class="n">nk</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">real</span>
+        <span class="c1"># Evanescent modes do not contribute to the scattered power</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ks</span>
+        <span class="n">nkz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">[</span><span class="n">prop</span><span class="p">])</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">if</span> <span class="n">nkz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"No propagating kz components: the average is undefined."</span>
+            <span class="p">)</span>
+        <span class="n">tprop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">prop</span><span class="p">)]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tprop</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ks</span> <span class="o">*</span> <span class="n">nkz</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">isglobal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -725,13 +741,13 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \lambda_\mathrm{sca}</span>
-<span class="sd">            = \frac{1}{2 I}</span>
-<span class="sd">            b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-2}</span>
+<span class="sd">            = \frac{2}{I}</span>
+<span class="sd">            b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-1}</span>
 <span class="sd">            C_{{k_z}'m',{k_z}''m''}^{(1)}</span>
 <span class="sd">            T_{{k_z}''m'',{k_z}'''m'''} b_{{k_z}'''m'''} \\</span>
 <span class="sd">            \sigma_\mathrm{ext}</span>
-<span class="sd">            = -\frac{1}{2 I}</span>
-<span class="sd">            b_{k_z m}^\ast k^{-2} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}</span>
+<span class="sd">            = -\frac{2}{I}</span>
+<span class="sd">            b_{k_z m}^\ast k^{-1} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}</span>
 
 <span class="sd">        where :math:`b_{k_z m}` are the expansion coefficients of the incident wave,</span>
 <span class="sd">        :math:`T` is the T-matrix, :math:`C^{(1)}` is the (regular) translation</span>
@@ -757,11 +773,11 @@
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>
         <span class="n">p_invksq</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="c1"># Evanescent modes do not contribute to the scattered power</span>
-        <span class="n">prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span>
         <span class="k">del</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">basis</span><span class="p">)[</span><span class="n">prop</span><span class="p">])</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>
-            <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="p">)</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>
+            <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">inc</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="p">[</span><span class="n">prop</span><span class="p">])</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -979,7 +995,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.51 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.52 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">acoustotreams._tmatrixacoustics</a></li> 
       </ul>
