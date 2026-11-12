@@ -40,14 +40,26 @@ jobs:
 
       - name: Get coverage report
         run: |
-          python -m coverage json
-          # generate endpoint.json here
+          python -m coverage json -o coverage.json
+          python - <<'PY
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("coverage.json").read_text())
+          percent = report["totals"]["percent_covered"]
+          badge = {
+              "schemaVersion": 1,
+              "label": "coverage",
+              "message": f"{percent:.1f}%",
+              "color": "brightgreen" if percent >= 90 else "yellow" if percent >= 75 else "red",
+          }
+          Path("htmlcov/endpoint.json").write_text(json.dumps(badge) + "\n")
+          PY
 
       - name: Deploy report
-        if: ${{ matrix.python-version == '3.11' }}
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: htmlcov
-          FOLDER: htmlcov
+        if: ${{ matrix.python-version == '3.11' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: htmlcov
+          publish_dir: ./htmlcov

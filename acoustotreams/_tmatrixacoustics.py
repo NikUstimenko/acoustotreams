@@ -217,7 +217,7 @@ class AcousticTMatrix(AcousticsArray):
         .. math::
 
             \langle \sigma_\mathrm{ext} \rangle
-            = 2 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},
+            = 4 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},
 
         where :math:`k` is the angular wavenumber in the background medium.    
 
@@ -243,7 +243,7 @@ class AcousticTMatrix(AcousticsArray):
         .. math::
 
             \langle \sigma_\mathrm{sca} \rangle
-            = 2 \pi \sum_{lm} \sum_{l'm'}
+            = 4 \pi \sum_{lm} \sum_{l'm'}
             \frac{|T_{lm,l'm'}|^2}{k^2},
 
         where :math:`k` is the angular wavenumber in the background medium. 
@@ -547,10 +547,10 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{ext} \rangle
-            = -\frac{2 \pi}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},
+            = -\frac{4}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 
-        is the number of :math:`k_z` components included in the basis of the T-matrix. 
+        is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. 
         The average is taken over all given z-components of the wave vector and 
         rotations about the z-axis. 
         
@@ -561,8 +561,18 @@ class AcousticTMatrixC(AcousticsArray):
         """
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
-        nk = np.unique(self.basis.kz).size
-        res = -4 * np.real(np.trace(self)) / (self.ks * nk)                 
+        # Evanescent modes do not contribute to the scattered power
+        prop = np.abs(self.basis.kz) < self.ks
+        nkz = np.unique(self.basis.kz[prop]).size
+        if nkz == 0:
+            raise ValueError(
+                "No propagating kz components: the average is undefined."
+            )
+        res = (
+            -4 * np.real(
+                np.trace(np.asarray(self)[np.ix_(prop, prop)])
+                ) / (self.ks * nkz)
+        )                 
         if res.imag == 0:
             return res.real
         return res
@@ -576,11 +586,11 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{sca} \rangle
-            = \frac{2 \pi}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}'m'}
+            = \frac{4}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}'m'}
             \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 
-        is the number of :math:`k_z` components included in the basis of the T-matrix. 
+        is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. 
         The average is taken over all given z-components of the wave vector and 
         rotations about the z-axis. 
         
@@ -592,10 +602,16 @@ class AcousticTMatrixC(AcousticsArray):
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
         ks = self.ks
-        re, im = self.real, self.imag
-        nk = np.unique(self.basis.kz).size
-        res = 4 * np.sum((re * re + im * im) / (ks * nk))
-        return res.real
+        # Evanescent modes do not contribute to the scattered power
+        prop = np.abs(self.basis.kz) < ks
+        nkz = np.unique(self.basis.kz[prop]).size
+        if nkz == 0:
+            raise ValueError(
+                "No propagating kz components: the average is undefined."
+            )
+        tprop = np.asarray(self)[np.ix_(prop, prop)]
+        res = 4 * np.sum(np.abs(tprop)**2) / (ks * nkz)
+        return res
 
     @property
     def isglobal(self):
@@ -642,13 +658,13 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \lambda_\mathrm{sca}
-            = \frac{1}{2 I}
-            b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-2}
+            = \frac{2}{I}
+            b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-1}
             C_{{k_z}'m',{k_z}''m''}^{(1)}
             T_{{k_z}''m'',{k_z}'''m'''} b_{{k_z}'''m'''} \\
             \sigma_\mathrm{ext}
-            = -\frac{1}{2 I}
-            b_{k_z m}^\ast k^{-2} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}
+            = -\frac{2}{I}
+            b_{k_z m}^\ast k^{-1} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}
 
         where :math:`b_{k_z m}` are the expansion coefficients of the incident wave,
         :math:`T` is the T-matrix, :math:`C^{(1)}` is the (regular) translation
@@ -674,11 +690,11 @@ class AcousticTMatrixC(AcousticsArray):
         p = self @ inc
         p_invksq = p * np.power(self.ks, -1)
         # Evanescent modes do not contribute to the scattered power
-        prop = self.basis.kz * self.basis.kz <= self.ks * self.ks
+        prop = np.abs(self.basis.kz) < self.ks
         del inc.modetype
         return (
             2.0 * np.real(p[prop].conjugate().T @ p_invksq.expand(p.basis)[prop]) / flux,
-            -2.0 * np.real(inc.conjugate().T @ p_invksq) / flux,
+            -2.0 * np.real(inc[prop].conjugate().T @ p_invksq[prop]) / flux,
         )
 
     def valid_points(self, grid, radii):
