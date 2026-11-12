@@ -41,7 +41,7 @@ jobs:
       - name: Get coverage report
         run: |
           python -m coverage json -o coverage.json
-          python - <<'PY
+          python - <<'PY'
           import json
           from pathlib import Path
 
