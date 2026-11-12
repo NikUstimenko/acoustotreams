@@ -63,3 +63,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: htmlcov
           publish_dir: ./htmlcov
+
+      - name: Prepare coverage files for publishing
+        run: |
+          rm -f htmlcov/.gitignore
+          test -s htmlcov/index.html
+          test -s htmlcov/endpoint.json
