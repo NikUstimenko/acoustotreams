@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_557d234e890bff6d_spw_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-12 16:19 +0000
+            created at 2026-11-18 17:08 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -156,7 +156,7 @@
     <p class="pln"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t"><span class="str">        \Psi_{lm}^{(3)}(x, \theta, \varphi)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t"><span class="str">        = h_l^{(1)}(x) Y_{lm}(\theta, \varphi)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t"><span class="str">    with :func:`acoustotreams.special.sph_harm` and :func:`acoustotreams.special.spherical_hankel1`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t"><span class="str">    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_hankel1`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t78" href="#t78">78</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t79" href="#t79">79</a></span><span class="t"><span class="str">    This function describes a solution to the scalar Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t80" href="#t80">80</a></span><span class="t"><span class="str">    equation in spherical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -164,7 +164,7 @@
     <p class="pln"><span class="n"><a id="t82" href="#t82">82</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t83" href="#t83">83</a></span><span class="t"><span class="str">        l (int or array_like): Degree :math:`l \geq 0`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t"><span class="str">        m (int or array_like): Order :math:`|m| \leq l`.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t"><span class="str">        x (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t"><span class="str">        kr (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t"><span class="str">        theta (float or complex or array_like): Polar angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -185,7 +185,7 @@
     <p class="pln"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t"><span class="str">        Y_{lm}(\theta, \varphi)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t"><span class="str">        \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t"><span class="str">    with :func:`acoustotreams.special.sph_harm`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t"><span class="str">    with :py:obj:`treams.special.sph_harm`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t"><span class="str">    This function describes a part of the solution to the vector Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t"><span class="str">    equation in spherical coordinates that does not depend on :math:`r` </span>&nbsp;</span><span class="r"></span></p>
@@ -220,7 +220,7 @@
     <p class="pln"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t"><span class="str">        \Psi_{lm}^{(1)}(x, \theta, \varphi)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t"><span class="str">        = j_l(x) Y_{lm}(\theta, \varphi)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t"><span class="str">    with :func:`acoustotreams.special.sph_harm` and :func:`acoustotreams.special.spherical_jn`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t"><span class="str">    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_jn`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t143" href="#t143">143</a></span><span class="t"><span class="str">    This function describes a solution to the scalar Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t144" href="#t144">144</a></span><span class="t"><span class="str">    equation in spherical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -228,7 +228,7 @@
     <p class="pln"><span class="n"><a id="t146" href="#t146">146</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t147" href="#t147">147</a></span><span class="t"><span class="str">        l (int or array_like): Degree :math:`l \geq 0`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t148" href="#t148">148</a></span><span class="t"><span class="str">        m (int or array_like): Order :math:`|m| \leq l`.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t149" href="#t149">149</a></span><span class="t"><span class="str">        x (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t149" href="#t149">149</a></span><span class="t"><span class="str">        kr (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t"><span class="str">        theta (float or complex or array_like): Polar angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t152" href="#t152">152</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -248,7 +248,7 @@
     <p class="pln"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t"><span class="str">         \Psi_{k_z m}^{(3)}(x_\rho, \varphi, z)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t"><span class="str">        = H_m^{(1)}(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t"><span class="str">     using :func:`acoustotreams.special.hankel1`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t"><span class="str">     using :py:obj:`scipy.special.hankel1`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t"><span class="str">     This function describes a solution to the scalar Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t"><span class="str">     equation in cylindrical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -256,7 +256,7 @@
     <p class="pln"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t"><span class="str">     Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t"><span class="str">         kz (float or array_like): Z-component of the wave vector.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t"><span class="str">         m (int or array_like): Order :math:`|m| \leq l`.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t"><span class="str">         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t"><span class="str">         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t"><span class="str">         phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t"><span class="str">         z (float or array_like): Z-coordinate. Has units of 1/kz.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -315,7 +315,7 @@
     <p class="pln"><span class="n"><a id="t233" href="#t233">233</a></span><span class="t"><span class="str">         \Psi_{k_z m}^{(1)}(x_\rho, \varphi, z)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t234" href="#t234">234</a></span><span class="t"><span class="str">        = J_m(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t235" href="#t235">235</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t236" href="#t236">236</a></span><span class="t"><span class="str">     using :func:`acoustotreams.special.jv`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t236" href="#t236">236</a></span><span class="t"><span class="str">     using :py:obj:`scipy.special.jv`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t237" href="#t237">237</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t238" href="#t238">238</a></span><span class="t"><span class="str">     This function describes a solution to the scalar Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t239" href="#t239">239</a></span><span class="t"><span class="str">     equation in cylindrical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -323,7 +323,7 @@
     <p class="pln"><span class="n"><a id="t241" href="#t241">241</a></span><span class="t"><span class="str">     Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t242" href="#t242">242</a></span><span class="t"><span class="str">         kz (float or array_like): Z-component of the wave vector.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t243" href="#t243">243</a></span><span class="t"><span class="str">         m (int or array_like): Order.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t244" href="#t244">244</a></span><span class="t"><span class="str">         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t244" href="#t244">244</a></span><span class="t"><span class="str">         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t245" href="#t245">245</a></span><span class="t"><span class="str">         phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t246" href="#t246">246</a></span><span class="t"><span class="str">         z (float or array_like): Z-coordinate. Has units of 1/kz.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t247" href="#t247">247</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -344,8 +344,8 @@
     <p class="pln"><span class="n"><a id="t262" href="#t262">262</a></span><span class="t"><span class="str">        = -\mathrm{i} \left[{h_l^{(1)}}&#x27;(x) \mathbf{Z}_{lm}(\theta, \varphi) </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t263" href="#t263">263</a></span><span class="t"><span class="str">        + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t264" href="#t264">264</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t265" href="#t265">265</a></span><span class="t"><span class="str">    with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, </span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t266" href="#t266">266</a></span><span class="t"><span class="str">    :func:`acoustotreams.special.spherical_hankel1`, and :func:`acoustotreams.special.spherical_hankel1`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t265" href="#t265">265</a></span><span class="t"><span class="str">    with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, </span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t266" href="#t266">266</a></span><span class="t"><span class="str">    :py:obj:`treams.special.spherical_hankel1`, and :py:obj:`treams.special.spherical_hankel1_d`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t267" href="#t267">267</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t268" href="#t268">268</a></span><span class="t"><span class="str">    This function describes a longitudinal solution to the vector Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t269" href="#t269">269</a></span><span class="t"><span class="str">    equation in spherical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -353,7 +353,7 @@
     <p class="pln"><span class="n"><a id="t271" href="#t271">271</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t272" href="#t272">272</a></span><span class="t"><span class="str">        l (int or array_like): Degree :math:`l \geq 0`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t273" href="#t273">273</a></span><span class="t"><span class="str">        m (int or array_like): Order :math:`|m| \leq l`.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t274" href="#t274">274</a></span><span class="t"><span class="str">        x (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t274" href="#t274">274</a></span><span class="t"><span class="str">        kr (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t275" href="#t275">275</a></span><span class="t"><span class="str">        theta (float or complex or array_like): Polar angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t276" href="#t276">276</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t277" href="#t277">277</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -375,8 +375,8 @@
     <p class="pln"><span class="n"><a id="t293" href="#t293">293</a></span><span class="t"><span class="str">        = -\mathrm{i} \left[j_l&#x27;(x) \mathbf{Z}_{lm}(\theta, \varphi) </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t294" href="#t294">294</a></span><span class="t"><span class="str">        + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t295" href="#t295">295</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t296" href="#t296">296</a></span><span class="t"><span class="str">    with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, </span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t297" href="#t297">297</a></span><span class="t"><span class="str">    and :func:`acoustotreams.special.spherical_jn`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t296" href="#t296">296</a></span><span class="t"><span class="str">    with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, </span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t297" href="#t297">297</a></span><span class="t"><span class="str">    and :py:obj:`scipy.special.spherical_jn`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t298" href="#t298">298</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t299" href="#t299">299</a></span><span class="t"><span class="str">    This function describes a longitudinal solution to the vector Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t300" href="#t300">300</a></span><span class="t"><span class="str">    equation in spherical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -384,7 +384,7 @@
     <p class="pln"><span class="n"><a id="t302" href="#t302">302</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t303" href="#t303">303</a></span><span class="t"><span class="str">        l (int or array_like): Degree :math:`l \geq 0`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t304" href="#t304">304</a></span><span class="t"><span class="str">        m (int or array_like): Order :math:`|m| \leq l`.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t305" href="#t305">305</a></span><span class="t"><span class="str">        x (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t305" href="#t305">305</a></span><span class="t"><span class="str">        kr (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t306" href="#t306">306</a></span><span class="t"><span class="str">        theta (float or complex or array_like): Polar angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t307" href="#t307">307</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t308" href="#t308">308</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -426,7 +426,7 @@
     <p class="pln"><span class="n"><a id="t344" href="#t344">344</a></span><span class="t"><span class="str">        + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t345" href="#t345">345</a></span><span class="t"><span class="str">        \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t346" href="#t346">346</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t347" href="#t347">347</a></span><span class="t"><span class="str">     using :func:`acoustotreams.special.hankel1_d` and :func:`acoustotreams.special.hankel1`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t347" href="#t347">347</a></span><span class="t"><span class="str">     using :py:obj:`treams.special.hankel1_d` and :py:obj:`scipy.special.hankel1`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t348" href="#t348">348</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t349" href="#t349">349</a></span><span class="t"><span class="str">     This function describes a longitudinal solution to the vector Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t350" href="#t350">350</a></span><span class="t"><span class="str">     equation in cylindrical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -434,7 +434,7 @@
     <p class="pln"><span class="n"><a id="t352" href="#t352">352</a></span><span class="t"><span class="str">     Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t353" href="#t353">353</a></span><span class="t"><span class="str">         kz (float or array_like): Z-component of the wave vector.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t354" href="#t354">354</a></span><span class="t"><span class="str">         m (int or array_like): Order.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t355" href="#t355">355</a></span><span class="t"><span class="str">         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t355" href="#t355">355</a></span><span class="t"><span class="str">         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t356" href="#t356">356</a></span><span class="t"><span class="str">         phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t357" href="#t357">357</a></span><span class="t"><span class="str">         z (float or array_like): Z-coordinate. Has units of 1/kz.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t358" href="#t358">358</a></span><span class="t"><span class="str">         krho (float or complex or array_like): Radial component of the wave vector. Has units of kz.</span>&nbsp;</span><span class="r"></span></p>
@@ -467,7 +467,7 @@
     <p class="pln"><span class="n"><a id="t385" href="#t385">385</a></span><span class="t"><span class="str">        + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t386" href="#t386">386</a></span><span class="t"><span class="str">        \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t387" href="#t387">387</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t388" href="#t388">388</a></span><span class="t"><span class="str">     using :func:`acoustotreams.special.jv_d` and :func:`acoustotreams.special.jv`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t388" href="#t388">388</a></span><span class="t"><span class="str">     using :py:obj:`treams.special.jv_d` and :py:obj:`scipy.special.jv`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t389" href="#t389">389</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t390" href="#t390">390</a></span><span class="t"><span class="str">     This function describes a longitudinal solution to the vector Helmholtz wave</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t391" href="#t391">391</a></span><span class="t"><span class="str">     equation in cylindrical coordinates.</span>&nbsp;</span><span class="r"></span></p>
@@ -475,7 +475,7 @@
     <p class="pln"><span class="n"><a id="t393" href="#t393">393</a></span><span class="t"><span class="str">     Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t394" href="#t394">394</a></span><span class="t"><span class="str">         kz (float or array_like): Z-component of the wave vector.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t395" href="#t395">395</a></span><span class="t"><span class="str">         m (int or array_like): Order.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t396" href="#t396">396</a></span><span class="t"><span class="str">         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t396" href="#t396">396</a></span><span class="t"><span class="str">         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t397" href="#t397">397</a></span><span class="t"><span class="str">         phi (float or array_like): Azimuthal angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t398" href="#t398">398</a></span><span class="t"><span class="str">         z (float or array_like): Z-coordinate. Has units of 1/kz.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t399" href="#t399">399</a></span><span class="t"><span class="str">         krho (float or complex or array_like): Radial component of the wave vector. Has units of kz.</span>&nbsp;</span><span class="r"></span></p>
@@ -539,9 +539,9 @@
     <p class="pln"><span class="n"><a id="t457" href="#t457">457</a></span><span class="t"><span class="str">            0&amp; 0&amp; 0</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t458" href="#t458">458</a></span><span class="t"><span class="str">        \end{pmatrix}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t459" href="#t459">459</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t460" href="#t460">460</a></span><span class="t"><span class="str">    with the Wigner 3j-symbols (:func:`acoustotreams.special.wigner3j`), the spherical Hankel</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t461" href="#t461">461</a></span><span class="t"><span class="str">    functions (:func:`acoustotreams.special.spherical_hankel1`), and the spherical harmonics</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t462" href="#t462">462</a></span><span class="t"><span class="str">    (:func:`acoustotreams.special.sph_harm`). The summation runs over all</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t460" href="#t460">460</a></span><span class="t"><span class="str">    with the Wigner 3j-symbols (:py:obj:`treams.special.wigner3j`), the spherical Hankel</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t461" href="#t461">461</a></span><span class="t"><span class="str">    functions (:py:obj:`treams.special.spherical_hankel1`), and the spherical harmonics</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t462" href="#t462">462</a></span><span class="t"><span class="str">    (:py:obj:`treams.special.sph_harm`). The summation runs over all</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t463" href="#t463">463</a></span><span class="t"><span class="str">    :math:`q \in \{\lambda + l, \lambda + l - 2, \dots, \max(|\lambda - l|, |\mu - m|)\}`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t464" href="#t464">464</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t465" href="#t465">465</a></span><span class="t"><span class="str">    These coefficients are used to translate from scattered to incident modes.</span>&nbsp;</span><span class="r"></span></p>
@@ -591,9 +591,9 @@
     <p class="pln"><span class="n"><a id="t509" href="#t509">509</a></span><span class="t"><span class="str">            0&amp; 0&amp; 0</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t510" href="#t510">510</a></span><span class="t"><span class="str">        \end{pmatrix}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t511" href="#t511">511</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t512" href="#t512">512</a></span><span class="t"><span class="str">    with the Wigner 3j-symbols (:func:`acoustotreams.special.wigner3j`), the spherical Bessel</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t513" href="#t513">513</a></span><span class="t"><span class="str">    functions (:func:`acoustotreams.special.spherical_jn`), and the spherical harmonics</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t514" href="#t514">514</a></span><span class="t"><span class="str">    (:func:`acoustotreams.special.sph_harm`). The summation runs over all</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t512" href="#t512">512</a></span><span class="t"><span class="str">    with the Wigner 3j-symbols (:py:obj:`treams.special.wigner3j`), the spherical Bessel</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t513" href="#t513">513</a></span><span class="t"><span class="str">    functions (:py:obj:`scipy.special.spherical_jn`), and the spherical harmonics</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t514" href="#t514">514</a></span><span class="t"><span class="str">    (:py:obj:`treams.special.sph_harm`). The summation runs over all</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t515" href="#t515">515</a></span><span class="t"><span class="str">    :math:`q \in \{\lambda + l, \lambda + l - 2, \dots, \max(|\lambda - l|, |\mu - m|)\}`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t516" href="#t516">516</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t517" href="#t517">517</a></span><span class="t"><span class="str">    These coefficients are used to translate from scattered to scattered modes and</span>&nbsp;</span><span class="r"></span></p>
@@ -604,7 +604,7 @@
     <p class="pln"><span class="n"><a id="t522" href="#t522">522</a></span><span class="t"><span class="str">        mu (int or array_like): Order of the output mode.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t523" href="#t523">523</a></span><span class="t"><span class="str">        l (int or array_like): Degree of the input mode.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t524" href="#t524">524</a></span><span class="t"><span class="str">        m (int or array_like): Order of the input mode.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t525" href="#t525">525</a></span><span class="t"><span class="str">        x (float or complex or array_like): Translation in units of the wavenumber in the medium.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t525" href="#t525">525</a></span><span class="t"><span class="str">        kr (float or complex or array_like): Translation in units of the wavenumber in the medium.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t526" href="#t526">526</a></span><span class="t"><span class="str">        theta (float or complex or array_like): Polar angle (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t527" href="#t527">527</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angel (rad).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t528" href="#t528">528</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -638,7 +638,7 @@
     <p class="pln"><span class="n"><a id="t556" href="#t556">556</a></span><span class="t"><span class="str">            0 &amp; \text{otherwise}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t557" href="#t557">557</a></span><span class="t"><span class="str">        \end{cases}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t558" href="#t558">558</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t559" href="#t559">559</a></span><span class="t"><span class="str">    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:func:`acoustotreams.special.hankel1`).</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t559" href="#t559">559</a></span><span class="t"><span class="str">    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:py:obj:`scipy.special.hankel1`).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t560" href="#t560">560</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t561" href="#t561">561</a></span><span class="t"><span class="str">    These coefficients are used to translate from scattered to scattered modes and</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t562" href="#t562">562</a></span><span class="t"><span class="str">    from incident to incident modes.</span>&nbsp;</span><span class="r"></span></p>
@@ -648,7 +648,7 @@
     <p class="pln"><span class="n"><a id="t566" href="#t566">566</a></span><span class="t"><span class="str">        mu (int or array_like): Order of the output mode</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t567" href="#t567">567</a></span><span class="t"><span class="str">        kz2 (float or array_like): Z-component of the wave vector of the input mode. Has units of kz1.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t568" href="#t568">568</a></span><span class="t"><span class="str">        m (int or array_like): Order of the input mode.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t569" href="#t569">569</a></span><span class="t"><span class="str">        xrho (float or complex or array_like): Translation in radial direction in units of </span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t569" href="#t569">569</a></span><span class="t"><span class="str">        krr (float or complex or array_like): Translation in radial direction in units of </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t570" href="#t570">570</a></span><span class="t"><span class="str">            the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t571" href="#t571">571</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angel.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t572" href="#t572">572</a></span><span class="t"><span class="str">        z (float or array_like): Translation in the z-direction. Has units of 1/kz1.</span>&nbsp;</span><span class="r"></span></p>
@@ -676,7 +676,7 @@
     <p class="pln"><span class="n"><a id="t594" href="#t594">594</a></span><span class="t"><span class="str">            0 &amp; \text{otherwise}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t595" href="#t595">595</a></span><span class="t"><span class="str">        \end{cases}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t596" href="#t596">596</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t597" href="#t597">597</a></span><span class="t"><span class="str">    where :math:`J_{m - \mu}` are the Bessel functions (:func:`acoustotreams.special.jv`).</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t597" href="#t597">597</a></span><span class="t"><span class="str">    where :math:`J_{m - \mu}` are the Bessel functions (:py:obj:`scipy.special.jv`).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t598" href="#t598">598</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t599" href="#t599">599</a></span><span class="t"><span class="str">    These coefficients are used to translate from scattered to incident modes.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t600" href="#t600">600</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -685,7 +685,7 @@
     <p class="pln"><span class="n"><a id="t603" href="#t603">603</a></span><span class="t"><span class="str">        mu (int or array_like): Order of the output mode</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t604" href="#t604">604</a></span><span class="t"><span class="str">        kz2 (float or array_like): Z-component of the wave vector of the input mode. Has units of kz1.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t605" href="#t605">605</a></span><span class="t"><span class="str">        m (int or array_like): Order of the input mode.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t606" href="#t606">606</a></span><span class="t"><span class="str">        xrho (float or complex or array_like): Translation in radial direction in units of </span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t606" href="#t606">606</a></span><span class="t"><span class="str">        krr (float or complex or array_like): Translation in radial direction in units of </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t607" href="#t607">607</a></span><span class="t"><span class="str">            the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t608" href="#t608">608</a></span><span class="t"><span class="str">        phi (float or array_like): Azimuthal angel.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t609" href="#t609">609</a></span><span class="t"><span class="str">        z (float or array_like): Translation in the z-direction. Has units of 1/kz1.</span>&nbsp;</span><span class="r"></span></p>
@@ -705,7 +705,7 @@
             <a class="nav" href="z_557d234e890bff6d_spw_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-12 16:19 +0000
+            created at 2026-11-18 17:08 +0000
         </p>
     </div>
 </footer>

@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_557d234e890bff6d_scw_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-12 16:19 +0000
+            created at 2026-11-18 17:08 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -83,7 +83,7 @@
     <p class="pln"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="str">&quot;&quot;&quot;Scattering coefficients for high-symmetry cases.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t"><span class="str">Calculate the scattering coefficients for cases where they can be obtained analytically.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="str">Thes include a (multilayered) sphere using spherical waves (Mie coefficients), </span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="str">These include a (multilayered) sphere using spherical waves (Mie coefficients), </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t"><span class="str">a cylinder using cylindrical waves, and an infinitely extended planar</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t6" href="#t6">6</a></span><span class="t"><span class="str">interface (Fresnel coefficients).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -101,7 +101,7 @@
     <p class="run"><span class="n"><a id="t19" href="#t19">19</a></span><span class="t"><span class="key">from</span> <span class="nam">acoustotreams</span><span class="op">.</span><span class="nam">_materialacoustics</span> <span class="key">import</span> <span class="nam">AcousticMaterial</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t20" href="#t20">20</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t"><span class="key">def</span> <span class="nam">_mie_acoustics_iter</span><span class="op">(</span><span class="nam">tm</span><span class="op">,</span> <span class="nam">l</span><span class="op">,</span> <span class="nam">x</span><span class="op">,</span> <span class="nam">mat_sphere</span><span class="op">,</span> <span class="nam">mat_env</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t">    <span class="str">&quot;&quot;&quot;Solve a matrix for the interface conditions at a spherical interface.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t">    <span class="str">r&quot;&quot;&quot;Solve a matrix for the interface conditions at a spherical interface.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t23" href="#t23">23</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t"><span class="str">    Six types of interfaces are supported: fluid-fluid, fluid-solid, solid-fluid,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t25" href="#t25">25</a></span><span class="t"><span class="str">    solid-solid, soft-fluid, and hard-fluid.</span>&nbsp;</span><span class="r"></span></p>
@@ -391,7 +391,7 @@
     <p class="run"><span class="n"><a id="t309" href="#t309">309</a></span><span class="t">    <span class="key">return</span> <span class="nam">res</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t310" href="#t310">310</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t311" href="#t311">311</a></span><span class="t"><span class="key">def</span> <span class="nam">_mie_acoustics_iter_cyl</span><span class="op">(</span><span class="nam">tm</span><span class="op">,</span> <span class="nam">kz</span><span class="op">,</span> <span class="nam">m</span><span class="op">,</span> <span class="nam">k0</span><span class="op">,</span> <span class="nam">radius</span><span class="op">,</span> <span class="nam">mat_cyl</span><span class="op">,</span> <span class="nam">mat_env</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t312" href="#t312">312</a></span><span class="t">    <span class="str">&quot;&quot;&quot;Solve a matrix for the interface conditions at a cylindrical interface.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t312" href="#t312">312</a></span><span class="t">    <span class="str">r&quot;&quot;&quot;Solve a matrix for the interface conditions at a cylindrical interface.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t313" href="#t313">313</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t314" href="#t314">314</a></span><span class="t"><span class="str">    Three types of interfaces are supported: fluid-fluid, soft-fluid, and hard-fluid.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t315" href="#t315">315</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -523,7 +523,7 @@
             <a class="nav" href="z_557d234e890bff6d_scw_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-12 16:19 +0000
+            created at 2026-11-18 17:08 +0000
         </p>
     </div>
 </footer>
