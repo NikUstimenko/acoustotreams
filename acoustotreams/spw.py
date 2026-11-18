@@ -97,11 +97,11 @@ def to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
     For multiple positions, only the diagonal values (corresponding to identical positions) are returned.
 
     Args:
-        qz (float or array_like): Z-component of the wave vector of scalar cylindrical waves.
+        kzcw (float or array_like): Z-component of the wave vector of scalar cylindrical waves.
         m (int or array_like): Order of scalar cylindrical waves.
         kx (float or array_like): X-component of the wave vector of scalar plane waves. Has units of qz.
         ky (float or array_like): Y-component of the wave vector of scalar plane waves. Has units of qz.
-        kz (float or array_like): Z-component of the wave vector of scalar plane waves. Has units of qz.
+        kzpw (float or array_like): Z-component of the wave vector of scalar plane waves. Has units of qz.
 
     Returns:
         complex or array_like

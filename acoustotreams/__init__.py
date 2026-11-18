@@ -1,4 +1,4 @@
-"""ACOUSTOTREAMS: A Python package for acoustic wave scattering based on the T-matrix method.
+r"""ACOUSTOTREAMS: A Python package for acoustic wave scattering based on the T-matrix method.
 
 .. currentmodule:: acoustotreams
 
@@ -67,51 +67,44 @@ Scalar wave functions
    plane_wave_angle_scalar
    spherical_wave_scalar
 
-Functions imported from SciPy
------------------------------
+Other
+-----
 
-+------------------------------------------------------------+-------------------------+
-| :py:data:`~scipy.special.hankel1`\(v, z[, out])            | Hankel function of the  |
-|                                                            | first kind.             |
-+------------------------------------------------------------+-------------------------+
-| :py:data:`~scipy.special.hankel2`\(v, z[, out])            | Hankel function of the  |
-|                                                            | second kind.            |
-+------------------------------------------------------------+-------------------------+
-| :py:data:`~scipy.special.jv`\(v, z[, out])                 | Bessel function of the  |
-|                                                            | first kind of real      |
-|                                                            | order and complex       |
-|                                                            | argument.               |
-+------------------------------------------------------------+-------------------------+
-| :py:data:`~scipy.special.yv`\(v, z[, out])                 | Bessel function of the  |
-|                                                            | second kind of real     |
-|                                                            | order and complex       |
-|                                                            | argument.               |
-+------------------------------------------------------------+-------------------------+
-| | :py:func:`spherical_jn <scipy.special.spherical_jn>`\(n, | Spherical Bessel        |
-|   z[, derivative])                                         | function of the first   |
-|                                                            | kind or its derivative. |
-+------------------------------------------------------------+-------------------------+
-| | :py:func:`spherical_yn <scipy.special.spherical_yn>`\(n, | Spherical Bessel        |
-|   z[, derivative])                                         | function of the second  |
-|                                                            | kind or its derivative. |
-+------------------------------------------------------------+-------------------------+
+.. autosummary::
+   :toctree: generated/
 
-Functions imported from treams.special, treams.misc, and treams.lattice
------------------------------------------------------------------------
+   poynting_avg_z
 
-+------------------------------------------------------------+-----------------------------+
-| :py:data:`~treams.special.spherical_jn_d`\(n, z)           | Derivative of the spherical | 
-|                                                            | Bessel function of the      |
-|                                                            | first kind.                 |   
-+------------------------------------------------------------+-----------------------------+
-| :py:data:`~treams.special.spherical_yn_d`\(n, z)           | Derivative of the spherical | 
-|                                                            | Bessel function of the      |
-|                                                            | second kind.                |   
-+------------------------------------------------------------+-----------------------------+
+Functions and classes imported from treams
+------------------------------------------
+
+Special functions, including those imported from SciPy and treams, are available in
+:mod:`acoustotreams.special`.
+
++--------------------------------------------------------------+-------------------------------+
+| :py:func:`~treams.misc.wave_vec_z`\(kx, ky, k)               | Z component of the wave       |
+|                                                              | vector with positive          |
+|                                                              | imaginary part.               |
++--------------------------------------------------------------+-------------------------------+
+| :py:func:`~treams.misc.firstbrillouin1d`\(kpar, b)           | Map wave vector to the first  |
+|                                                              | Brillouin zone in 1D.         |
++--------------------------------------------------------------+-------------------------------+
+| :py:func:`~treams.misc.firstbrillouin2d`\(kpar, b, n=2)      | Map wave vector to the first  |
+|                                                              | Brillouin zone in 2D.         |
++--------------------------------------------------------------+-------------------------------+
+| :py:func:`~treams.misc.firstbrillouin3d`\(kpar, b, n=2)      | Map wave vector to the first  |
+|                                                              | Brillouin zone in 3D.         |
++--------------------------------------------------------------+-------------------------------+
+| :py:class:`~treams.Lattice`\(arr, alignment=None)            | Lattice definition in one,    |
+|                                                              | two, or three dimensions.     |
++--------------------------------------------------------------+-------------------------------+
+| :py:class:`~treams.WaveVector`\(seq=(), alignment=None)      | Wave vector with up to three  |
+|                                                              | components and an alignment.  |
++--------------------------------------------------------------+-------------------------------+
 
 """
 
-_version__ = "0.2.52"
+__version__ = "0.2.52"
 
 from treams.misc import(  # noqa: F401,
     wave_vec_z,
@@ -120,7 +113,7 @@ from treams.misc import(  # noqa: F401,
     firstbrillouin3d,
 )
 
-from treams._lattice import *   # noqa: F401
+from treams._lattice import Lattice, WaveVector  # noqa: F401
 
 from acoustotreams._materialacoustics import AcousticMaterial  # noqa: F401
 

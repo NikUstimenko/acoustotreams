@@ -11,6 +11,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import doctest
+
 from importlib.metadata import version
 
 import numpy as np
@@ -54,13 +56,22 @@ extensions = [
 autosectionlabel_prefix_document = True
 doctest_global_setup = """
 import numpy as np
+import treams
+import acoustotreams
 from acoustotreams import *
 
-np.set_printoptions(precision=3, suppress=True)
+np.set_printoptions(precision=3, suppress=True, legacy="1.25")
 """
+doctest_default_flags = (
+    doctest.ELLIPSIS
+    | doctest.IGNORE_EXCEPTION_DETAIL
+    | doctest.DONT_ACCEPT_TRUE_FOR_1
+    | doctest.NORMALIZE_WHITESPACE
+)
 intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy", None),
     "numpy": ("https://numpy.org/doc/stable", None),
+    "treams": ("https://tfp-photonics.github.io/treams", None),
 }
 todo_include_todos = False
 
@@ -88,3 +99,10 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+# Give functions whose names differ only in capitalization distinct page files,
+# so the docs also build correctly on case-insensitive file systems (macOS, Windows).
+autosummary_filename_map = {
+    "acoustotreams.special.ssw_psi": "acoustotreams.special.ssw_psi_farfield",
+    "acoustotreams.special.scw_psi": "acoustotreams.special.scw_psi_farfield",
+}

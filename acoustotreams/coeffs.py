@@ -1,7 +1,7 @@
 """Scattering coefficients for high-symmetry cases.
 
 Calculate the scattering coefficients for cases where they can be obtained analytically.
-Thes include a (multilayered) sphere using spherical waves (Mie coefficients), 
+These include a (multilayered) sphere using spherical waves (Mie coefficients), 
 a cylinder using cylindrical waves, and an infinitely extended planar
 interface (Fresnel coefficients).
 
@@ -19,7 +19,7 @@ import numpy as np
 from acoustotreams._materialacoustics import AcousticMaterial
 
 def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
-    """Solve a matrix for the interface conditions at a spherical interface.
+    r"""Solve a matrix for the interface conditions at a spherical interface.
 
     Six types of interfaces are supported: fluid-fluid, fluid-solid, solid-fluid,
     solid-solid, soft-fluid, and hard-fluid.
@@ -309,7 +309,7 @@ def mie_acoustics(l, x, *materials):
     return res
 
 def _mie_acoustics_iter_cyl(tm, kz, m, k0, radius, mat_cyl, mat_env):
-    """Solve a matrix for the interface conditions at a cylindrical interface.
+    r"""Solve a matrix for the interface conditions at a cylindrical interface.
 
     Three types of interfaces are supported: fluid-fluid, soft-fluid, and hard-fluid.
 

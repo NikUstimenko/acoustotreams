@@ -1,5 +1,3 @@
-import copy
-
 import numpy as np
 
 from treams import util
@@ -65,7 +63,7 @@ class AcousticSMatrices:
     r"""Collection of four acoustic S-matrices with a scalar plane-wave basis.
 
     The S-matrix describes the scattering of incoming into outgoing modes using a 
-    plane-wave basis, given by functions :func:`acoustotreams.speical.spw_Psi`. The primary
+    plane-wave basis, given by functions :func:`acoustotreams.special.spw_Psi`. The primary
     direction of propagation is parallel or anti-parallel to the z-axis. The scattering
     structure itself is infinitely elongated in the x- and y-directions. The S-matrix 
     contains four blocks :math:`S_{\uparrow \uparrow}`, :math:`S_{\uparrow \downarrow}`, 
@@ -192,7 +190,7 @@ class AcousticSMatrices:
         Args:
             k0 (float): Angular wavenumber in air (rad/m).
             basis (ScalarPlaneWaveBasisByComp): Basis definition.
-            tickness (Sequence[Float]): Thickness of the slab or the thicknesses of all
+            thickness (Sequence[Float]): Thickness of the slab or the thicknesses of all
                 slabs in order from negative to positive z.
             materials (Sequence[AcousticMaterial]): Material definitions from negative to
                 positive z.
@@ -266,7 +264,6 @@ class AcousticSMatrices:
         Args:
             tm (AcousticTMatrix or AcousticTMatrixC): (Cylindrical) T-matrix to place on array.
             basis (ScalarPlaneWaveBasisByComp): Basis definition.
-            eta (float or complex, optional): Splitting parameter in the lattice sum.
 
         Returns:
             SMatrix
@@ -468,13 +465,21 @@ def poynting_avg_z(basis, k0, material=AcousticMaterial()):
     .. math::
 
         \langle S_z \rangle
-        = \frac{1}{2} \Re (p v_z^\ast) \boldsymbol{\hat{z}}
+        = \frac{1}{2} \Re (p v_z^\ast)
 
     on one side of the S-matrix with the given coefficients.
 
+    Args:
+        basis (ScalarPlaneWaveBasisByComp or ScalarPlaneWaveBasisByUnitVector): Basis
+            definition.
+        k0 (float): Angular wavenumber in the air (rad/m).
+        material (AcousticMaterial or tuple, optional): Material of the medium on this side of
+            the S-matrix. Defaults to the air.
+
     Returns:
-        tuple
+        array-like
     """
+    material = AcousticMaterial(material)
     kx, ky, kzs = basis.kvecs(k0, material)
     selection = (kx[:, None] == kx) & (ky[:, None] == ky)
     gamma = kzs / (material.ks(k0) * material.impedance)

@@ -1150,7 +1150,7 @@ class AcousticsArray(util.AnnotatedArray):
         For a more managable output only the special physics properties are shown
         alongside the array itself.
         """
-        repr_arr = "    " + repr(self._array)[5:-1].replace("\n  ", "\n") + ","        
+        repr_arr = "    " + repr(self._array)[6:-1].replace("\n  ", "\n") + ","        
         for key in ScalarPhysicsDict.properties:
             if getattr(self, key) is not None:
                 repr_arr += f"\n    {key}={repr(getattr(self, key))},"

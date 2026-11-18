@@ -14,7 +14,7 @@ setup(
 
     description='A Python package for acoustic-wave scattering based on the T-matrix method',
 
-    license = 'MIT',
+    license_expression = 'MIT',
 
     long_description=open('README.md').read(),
 
@@ -31,8 +31,6 @@ setup(
     classifiers=[
 
         'Programming Language :: Python :: 3',
-
-        'License :: OSI Approved :: MIT License',
 
         'Operating System :: OS Independent',
 

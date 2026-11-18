@@ -7,41 +7,56 @@
 
 # acoustotreams
 
-The package `acoustotreams` adopts the framework of the `treams` package for pressure-wave scattering in arrangements of multiple acoustic scatterers, with and without peridic boundary conditions, using the T-matrix method. 
+The package `acoustotreams` adopts the framework of the `treams` package for pressure-wave scattering in arrangements of multiple acoustic scatterers, with and without periodic boundary conditions, using the T-matrix method. 
 
 ## Installation
 
 ### Installation using pip
 
-`acoustotreams` requires Python 3.9–3.13. To install the package with pip, use
+`acoustotreams` supports Python 3.9–3.13. We recommend installing it in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) or a [conda environment]( https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html). Create and activate one with a supported Python version.
+
+Inside an activated environment, install the package with
 
 ```sh
 pip install acoustotreams
 ```
 
-Alternatively, on macOS or Linux, invoke pip through Python 3:
+or
 
 ```sh
-python3 -m pip install acoustotreams
+python -m pip install acoustotreams
 ```
 
-This runs pip with the selected Python 3 interpreter. Required dependencies, including `treams`, are installed automatically.
+Required dependencies (`treams`, `numpy`, `scipy`) are installed automatically. To update later, run `python -m pip install --upgrade acoustotreams`.
 
-On Windows, use:
+> **Note:** Python 3.14 and newer are not supported yet. With these versions, pip falls back to an outdated release and the installation fails with a compiler error. If your default Python is 3.14 or newer, create the environment with an older version as shown above.
+
+If you are not using a virtual environment, invoke pip through a supported interpreter directly, for example Python 3.13.
+
+On macOS or Linux:
 
 ```sh
-py -m pip install acoustotreams
+python3.13 -m pip install acoustotreams
 ```
 
-To verify the installation on macOS or Linux, run:
+On Windows:
+
+```bat
+py -3.13 -m pip install acoustotreams
+```
+
+To verify the installation, run
 
 ```sh
-python3 -c "import acoustotreams; print('acoustotreams imported successfully')"
+python -c "import acoustotreams; from importlib.metadata import version; print('acoustotreams', version('acoustotreams'))"
 ```
 
-On Windows, replace `python3` with `py` in the verification command.
+Outside a virtual environment, replace `python` with `python3.13` (macOS / Linux) or `py -3.13` (Windows). The command should print the latest version listed on [PyPI](https://pypi.org/project/acoustotreams/).
 
-We recommend installing in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
+#### Other platforms
+
+Pre-built `treams` packages are available for Linux (x86_64), macOS (Apple Silicon) and Windows (64-bit). There are none for other platforms, such as Intel Macs or ARM-based Linux, and pip cannot install a working version of `treams` there automatically. Build `treams` from source first (requires git and a C compiler), then install `acoustotreams`.
+
 
 ## Documentation
 
@@ -56,7 +71,7 @@ When using this code, please cite:
 The following publications document the developments and methods for different parts of the code:
 
 * [N. Ustimenko, I. Fernandez-Corbaton, and C. Rockstuhl, Singular value decomposition to describe bound states in the continuum in periodic metasurfaces, Phys. Rev. B 113, 235418 (2026).](https://doi.org/10.1103/gx73-kyj9)
-* [O. Demeulenaere, N. Ustimenko, A. G. Athanassiadis,  L. Gulati, C. Rockstuhl, and P. Fischer, Ultrasonic metamaterial at MHz frequencies using microstructured glass, Science Advances 12, aef0666 (2026).](https://doi.org/10.1126/sciadv.aef0666)
+* [O. Demeulenaere, N. Ustimenko, A. G. Athanassiadis,  L. Gulati, C. Rockstuhl, and P. Fischer, Ultrasonic metamaterial at MHz frequencies using microstructured glass, Science Advances 12, eaef0666 (2026).](https://doi.org/10.1126/sciadv.aef0666)
 * [N. Ustimenko, A. B. Evlyukhin, V. Kyrimi, A. V. Kildishev, and C. Rockstuhl, Lattice-induced sound trapping in biperiodic metasurfaces of acoustic resonators, Phys. Rev. Res. 8, 013074 (2026).](https://doi.org/10.1103/wnmk-zhrb)
 * [N. Ustimenko, C. Rockstuhl, and A. V. Kildishev, Optimal multipole center for subwavelength acoustic scatterers, Appl. Phys. Lett. 126, 142201 (2025).](https://doi.org/10.1063/5.0257760)
 

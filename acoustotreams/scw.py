@@ -36,8 +36,8 @@ def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
     
     Translation coefficients for scalar cylindrical modes.
 
-    Returns the correct translation coefficients from :func:`acoustotreams.scw.tl_scw`
-    and :func:`acoustotreams.scw.tl_scw_r` or combinations thereof for the specified modes and
+    Returns the correct translation coefficients from :func:`acoustotreams.special.tl_scw`
+    and :func:`acoustotreams.special.tl_scw_r` or combinations thereof for the specified modes and
     basis.
 
     Args:
@@ -115,8 +115,8 @@ def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
     Args:
         kx (float or array_like): X-component of the wave vector of plane waves.
         ky (float or complex or array_like): Y-component of the wave vector of plane waves. Has units of kx.
-        kz (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.
-        qz (float or array_like): Z-component of the waver vector of cylindrical waves. Has units of kx.
+        kzpw (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.
+        kzcw (float or array_like): Z-component of the waver vector of cylindrical waves. Has units of kx.
         m (int or array_like): Order of cylindrical waves.
         area (float or array_like): Unit cell area.
 

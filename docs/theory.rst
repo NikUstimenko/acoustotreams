@@ -147,7 +147,7 @@ of cylindrical coordinates. The functions :math:`Z_m^{(n)}` are the Bessel and H
 For a complete set of solutions, it is necessary to select two of them. We generally use the (regular)
 Bessel functions :math:`J_m = Z_m^{(1)}` and the Hankel functions of the first kind
 :math:`H_m^{(1)} = Z_m^{(3)}`, which are singular at :math:`\rho \to 0` and correspond to radiating waves,
-(:func:`acoustotreams.special.jv`, :func:`acoustotreams.special.hankel1`). The vector cylindrical waves are then
+(:py:obj:`scipy.special.jv`, :py:obj:`scipy.special.hankel1`). The vector cylindrical waves are then
 
 .. math::
 
@@ -173,9 +173,9 @@ Finally, we define the spherical wave solutions
 given by (:func:`acoustotreams.special.ssw_rPsi`, and :func:`acoustotreams.special.ssw_Psi`)
 where :math:`z_l^{(n)}` are the spherical Bessel and Hankel functions. 
 We choose :math:`j_l = z_l^{(1)}` and :math:`h_l^{(1)} = z_l^{(3)}` in complete analogy 
-to the cylindrical waves case (:func:`acoustotreams.special.spherical_jn`,
-:func:`acoustotreams.special.spherical_hankel1`). :math:`Y_{lm}` are the spherical harmonics 
-(:func:`acoustotreams.special.sph_harm`). The value :math:`l \in \mathbb N \cup \{0\}` refers to 
+to the cylindrical waves case (:py:obj:`scipy.special.spherical_jn`,
+:py:obj:`treams.special.spherical_hankel1`). :math:`Y_{lm}` are the spherical harmonics 
+(:py:obj:`treams.special.sph_harm`). The value :math:`l \in \mathbb N \cup \{0\}` refers to 
 the angular momentum or degree. The projection of the angular momentum onto the z axis or order is 
 :math:`m \in \mathbb Z` with :math:`|m| \leq l`. Hence, the vector spherical waves are defined as
 
@@ -203,12 +203,12 @@ the angular momentum or degree. The projection of the angular momentum onto the 
     \mathbf Z_{lm} (\theta, \varphi)
     = \mathrm i Y_{lm}(\theta, \varphi) \mathbf{\hat r}
 
-are the vector spherical harmonics (:func:`acoustotreams.special.vsh_X`,
-:func:`acoustotreams.special.vsh_Y`, and :func:`acoustotreams.special.vsh_Z`). 
+are the vector spherical harmonics (:py:obj:`treams.special.vsh_X`,
+:py:obj:`treams.special.vsh_Y`, and :py:obj:`treams.special.vsh_Z`). 
 These are themselves defined by the functions :math:`\pi_l^m(x) = \frac{m P_l^m(x)}{\sqrt{1 - x^2}}`,
 :math:`\tau_l^m(x) = \frac{\mathrm d}{\mathrm d \theta}P_l^m(x = \cos\theta)`, and
-the associated Legendre polynomials :math:`P_l^m` (:func:`acoustotreams.special.pi_fun`,
-:func:`acoustotreams.special.tau_fun`, and :func:`acoustotreams.special.lpmv`). 
+the associated Legendre polynomials :math:`P_l^m` (:py:obj:`treams.special.pi_fun`,
+:py:obj:`treams.special.tau_fun`, and :py:obj:`treams.special.lpmv`). 
 The vector spherical harmonics are orthogonal to each other and normalized to 1 upon integration over the
 solid angle.
 

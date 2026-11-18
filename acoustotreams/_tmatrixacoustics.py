@@ -116,7 +116,7 @@ class AcousticTMatrix(AcousticsArray):
                 homogeneous sphere, the radius can be given as a single number; 
                 for a multilayered sphere, it is a list of increasing radii for all the shells.
                 Has units of 1/k0.
-            material (list[AcousticMaterial]): The material parameters from the inside to the
+            materials (list[AcousticMaterial]): The material parameters from the inside to the
                 outside. The last material in the list specifies the background medium.
 
         Returns:
@@ -446,7 +446,7 @@ class AcousticTMatrixC(AcousticsArray):
                 homogeneous cylinder, the radius can be given as a single number; 
                 for a multilayered cylinder, it is a list of increasing radii for all the shells.
                 Has units of 1/k0.
-            material (list[AcousticMaterial]): The material parameters from the inside to the
+            materials (list[AcousticMaterial]): The material parameters from the inside to the
                 outside. The last material in the list specifies the background medium.
 
         Returns:
@@ -795,6 +795,26 @@ def plane_wave_scalar(
 
 
 def plane_wave_angle_scalar(theta, phi, **kwargs):
+    r"""Array describing a scalar plane wave given by its propagation angles.
+
+    The propagation direction is the unit vector
+    :math:`(\sin\theta \cos\varphi, \sin\theta \sin\varphi, \cos\theta)`.
+    The wave is created with :func:`~acoustotreams.plane_wave_scalar`.
+
+    Args:
+        theta (float): Polar angle of the propagation direction, measured from the
+            z axis (rad).
+        phi (float): Azimuthal angle of the propagation direction, measured from the
+            x axis in the xy plane (rad).
+        **kwargs: Keyword arguments passed to
+            :func:`~acoustotreams.plane_wave_scalar`: ``k0``, ``basis``, ``material``,
+            and ``modetype``. If no basis is given, a
+            :class:`~acoustotreams.ScalarPlaneWaveBasisByUnitVector` containing only
+            this propagation direction is used.
+
+    Returns:
+        AcousticsArray
+    """
     qvec = [np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), np.cos(theta)]
     return plane_wave_scalar(qvec, **kwargs)
 
@@ -808,11 +828,11 @@ def spherical_wave_scalar(
     material=None,
     modetype=None
 ):
-    """Array describing a scalar spherical wave.
+    r"""Array describing a scalar spherical wave.
 
     Args:
         l (int): Degree :math:`l \geq 0`.
-        m (int): Order :math:`|m| \leq 0`.
+        m (int): Order :math:`|m| \leq l`.
         k0 (float, optional): Angular wavenumber in the air.
         basis (ScalarPlaneWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Material definition.
@@ -838,7 +858,7 @@ def cylindrical_wave_scalar(
         kz (float): Z-component of the wave vector in the medium.
         m (int): Order.
         k0 (float, optional): Angular wavenumber in the air. Has units of kz.
-        basis (ScalarPlaneWaveBasis, optional): Basis definition.
+        basis (ScalarCylindricalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).
     """

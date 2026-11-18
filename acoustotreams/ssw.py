@@ -37,8 +37,8 @@ def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs)
 
     Translation coefficients for spherical waves.
 
-    Returns the correct translation coefficients from :func:`acoustotreams.ssw.tl_ssw`
-    and :func:`acoustotreams.ssw.tl_ssw_r` or combinations thereof for the specified modes and
+    Returns the correct translation coefficients from :func:`acoustotreams.special.tl_ssw`
+    and :func:`acoustotreams.special.tl_ssw_r` or combinations thereof for the specified modes and
     basis.
 
     Args:

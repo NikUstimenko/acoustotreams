@@ -72,7 +72,7 @@ class AcousticMaterial:
         return iter((self.rho, self.c, self.ct))
     
     @classmethod
-    def from_params(cls, rho=1.3, params=(151767.21, 0.)):
+    def from_params(cls, rho=1.3, params=(152943.7, 0.)):
         r"""Create acoustic material from Lamé parameters.
 
         This function calculates the longitudinal and transverse speeds of sound with
@@ -109,7 +109,7 @@ class AcousticMaterial:
     
     @property
     def impedance(self):
-        r"""Relative impedance for longitudinal waves (Pa*s/m^3).
+        r"""Relative impedance for longitudinal waves (Pa*s/m).
 
         The relative impedance is defined by :math:`Z = \rho c`.
 
@@ -120,7 +120,7 @@ class AcousticMaterial:
     
     @property
     def impedancet(self):
-        r"""Relative impedance for transverse waves (Pa*s/m^3).
+        r"""Relative impedance for transverse waves (Pa*s/m).
 
         The relative impedance is defined by :math:`Z = \rho c_t`.
 

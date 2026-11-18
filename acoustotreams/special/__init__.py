@@ -5,8 +5,8 @@ r"""Special (mathematical) functions.
 Special mathematical functions used in :mod:`acoustotreams`. Some functions are imported from
 :py:mod:`scipy.special` and :py:mod:`treams.special`.
 
-Available functions
-===================
+Implemented functions
+=====================
 
 Spherical waves
 ---------------
@@ -46,9 +46,10 @@ Plane waves
    spw_Psi
    vpw_L
 
+Functions imported from SciPy
+=============================
 
-Those functions are just imported from Scipy. So, one only needs to import this
-package within acoustotreams.
+These functions are imported from :py:mod:`scipy.special`, so they are also available as ``acoustotreams.special.<name>``.
 
 +------------------------------------------------------------+-------------------------+
 | :py:data:`~scipy.special.hankel1`\(v, z[, out])            | Hankel function of the  |
@@ -76,83 +77,85 @@ package within acoustotreams.
 |                                                            | kind or its derivative. |
 +------------------------------------------------------------+-------------------------+
 
-The following functions are just imported from treams. So, one only needs to import this
-package within treams.
+Functions imported from treams
+==============================
+
+The following functions are imported from :py:mod:`treams.special`, so they are also available as ``acoustotreams.special.<name>``.
 
 Bessel and Hankel functions, with their spherical counterparts, derivatives
 ---------------------------------------------------------------------------
 
-:py:data:`~treams.special.hankel1_d`
-:py:data:`~treams.special.hankel2_d`
-:py:data:`~treams.special.jv_d`
-:py:data:`~treams.special.yv_d`
-:py:data:`~treams.special.spherical_hankel1`
-:py:data:`~treams.special.spherical_hankel2`
-:py:data:`~treams.special.spherical_hankel1_d`
-:py:data:`~treams.special.spherical_hankel2_d`
+* :py:data:`~treams.special.hankel1_d`
+* :py:data:`~treams.special.hankel2_d`
+* :py:data:`~treams.special.jv_d`
+* :py:data:`~treams.special.yv_d`
+* :py:data:`~treams.special.spherical_hankel1`
+* :py:data:`~treams.special.spherical_hankel2`
+* :py:data:`~treams.special.spherical_hankel1_d`
+* :py:data:`~treams.special.spherical_hankel2_d`
 
-Those functions just wrap Scipy functions with special optional arguments to be able to
+Those functions just wrap SciPy functions with special optional arguments to be able to
 analogously access them like their non-spherical counterparts:
 
-:py:data:`~treams.special.spherical_jn_d`
-:py:data:`~treams.special.spherical_yn_d`
+* :py:data:`~treams.special.spherical_jn_d`
+* :py:data:`~treams.special.spherical_yn_d`
 
 
-Scipy functions with enhanced domain
+SciPy functions with enhanced domain
 ------------------------------------
 
-:py:data:`~treams.special.sph_harm`
-:py:data:`~treams.special.lpmv`
+* :py:data:`~treams.special.sph_harm`
+* :py:data:`~treams.special.lpmv`
 
 
 Integrals for the Ewald summation
 ---------------------------------
 
-:py:data:`~treams.special.incgamma`
-:py:data:`~treams.special.intkambe`
+* :py:data:`~treams.special.incgamma`
+* :py:data:`~treams.special.intkambe`
 
 
 Wigner d- and Wigner D-matrix elements
 --------------------------------------
 
-:py:data:`~treams.special.wignersmalld`
-:py:data:`~treams.special.wignerd`
+* :py:data:`~treams.special.wignersmalld`
+* :py:data:`~treams.special.wignerd`
 
 
 Wigner 3j-symbols
 -----------------
 
-:py:data:`~treams.special.wigner3j`
+* :py:data:`~treams.special.wigner3j`
 
 Vector spherical harmonics
 --------------------------
    
-:py:data:`~treams.special.pi_fun`
-:py:data:`~treams.special.tau_fun`
-:py:data:`~treams.special.vsh_X`
-:py:data:`~treams.special.vsh_Y`
-:py:data:`~treams.special.vsh_Z`
+* :py:data:`~treams.special.pi_fun`
+* :py:data:`~treams.special.tau_fun`
+* :py:data:`~treams.special.vsh_X`
+* :py:data:`~treams.special.vsh_Y`
+* :py:data:`~treams.special.vsh_Z`
 
 
 Coordinate system transformations
 ---------------------------------
 
-:py:data:`~treams.special.car2cyl`
-:py:data:`~treams.special.car2sph`
-:py:data:`~treams.special.cyl2car`
-:py:data:`~treams.special.cyl2sph`
-:py:data:`~treams.special.sph2car`
-:py:data:`~treams.special.sph2cyl`
-:py:data:`~treams.special.vcar2cyl`
-:py:data:`~treams.special.vcar2sph`
-:py:data:`~treams.special.vcyl2car`
-:py:data:`~treams.special.vcyl2sph`
-:py:data:`~treams.special.vsph2car`
-:py:data:`~treams.special.vsph2cyl`
-:py:data:`~treams.special.car2pol`
-:py:data:`~treams.special.pol2car`
-:py:data:`~treams.special.vcar2pol`
-:py:data:`~treams.special.vpol2car`
+* :py:data:`~treams.special.car2cyl`
+* :py:data:`~treams.special.car2sph`
+* :py:data:`~treams.special.cyl2car`
+* :py:data:`~treams.special.cyl2sph`
+* :py:data:`~treams.special.sph2car`
+* :py:data:`~treams.special.sph2cyl`
+* :py:data:`~treams.special.vcar2cyl`
+* :py:data:`~treams.special.vcar2sph`
+* :py:data:`~treams.special.vcyl2car`
+* :py:data:`~treams.special.vcyl2sph`
+* :py:data:`~treams.special.vsph2car`
+* :py:data:`~treams.special.vsph2cyl`
+* :py:data:`~treams.special.car2pol`
+* :py:data:`~treams.special.pol2car`
+* :py:data:`~treams.special.vcar2pol`
+* :py:data:`~treams.special.vpol2car`
 
 """
 
@@ -166,6 +169,14 @@ from scipy.special import (  # noqa: F401
 )
 
 from treams.special import(   # noqa: F401
+    hankel1_d,
+    hankel2_d,
+    jv_d,
+    yv_d,
+    spherical_hankel1,
+    spherical_hankel2,
+    spherical_hankel1_d,
+    spherical_hankel2_d,
     spherical_jn_d,
     spherical_yn_d,
     sph_harm,

@@ -74,7 +74,7 @@ def ssw_Psi(l, m, kr, theta, phi):
         \Psi_{lm}^{(3)}(x, \theta, \varphi)
         = h_l^{(1)}(x) Y_{lm}(\theta, \varphi)
 
-    with :func:`acoustotreams.special.sph_harm` and :func:`acoustotreams.special.spherical_hankel1`.
+    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_hankel1`.
 
     This function describes a solution to the scalar Helmholtz wave
     equation in spherical coordinates.
@@ -82,7 +82,7 @@ def ssw_Psi(l, m, kr, theta, phi):
     Args:
         l (int or array_like): Degree :math:`l \geq 0`.
         m (int or array_like): Order :math:`|m| \leq l`.
-        x (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.
+        kr (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.
         theta (float or complex or array_like): Polar angle (rad).
         phi (float or array_like): Azimuthal angle (rad).
 
@@ -103,7 +103,7 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
         Y_{lm}(\theta, \varphi)
         \mathrm{e}^{-\mathrm{i} k \left(x \sin \theta \cos \varphi + y \sin \theta \sin \varphi + z \cos \theta\right)}
 
-    with :func:`acoustotreams.special.sph_harm`.
+    with :py:obj:`treams.special.sph_harm`.
 
     This function describes a part of the solution to the vector Helmholtz wave
     equation in spherical coordinates that does not depend on :math:`r` 
@@ -138,7 +138,7 @@ def ssw_rPsi(l, m, kr, theta, phi):
         \Psi_{lm}^{(1)}(x, \theta, \varphi)
         = j_l(x) Y_{lm}(\theta, \varphi)
 
-    with :func:`acoustotreams.special.sph_harm` and :func:`acoustotreams.special.spherical_jn`.
+    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_jn`.
 
     This function describes a solution to the scalar Helmholtz wave
     equation in spherical coordinates.
@@ -146,7 +146,7 @@ def ssw_rPsi(l, m, kr, theta, phi):
     Args:
         l (int or array_like): Degree :math:`l \geq 0`.
         m (int or array_like): Order :math:`|m| \leq l`.
-        x (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.
+        kr (float or complex or array_like): Distance in units of the wavenumber in the medium :math:`kr`.
         theta (float or complex or array_like): Polar angle (rad).
         phi (float or array_like): Azimuthal angle (rad).
 
@@ -166,7 +166,7 @@ def scw_Psi(kz, m, krr, phi, z):
          \Psi_{k_z m}^{(3)}(x_\rho, \varphi, z)
         = H_m^{(1)}(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
-     using :func:`acoustotreams.special.hankel1`.
+     using :py:obj:`scipy.special.hankel1`.
 
      This function describes a solution to the scalar Helmholtz wave
      equation in cylindrical coordinates.
@@ -174,7 +174,7 @@ def scw_Psi(kz, m, krr, phi, z):
      Args:
          kz (float or array_like): Z-component of the wave vector.
          m (int or array_like): Order :math:`|m| \leq l`.
-         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
          phi (float or array_like): Azimuthal angle (rad).
          z (float or array_like): Z-coordinate. Has units of 1/kz.
 
@@ -233,7 +233,7 @@ def scw_rPsi(kz, m, krr, phi, z):
          \Psi_{k_z m}^{(1)}(x_\rho, \varphi, z)
         = J_m(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
-     using :func:`acoustotreams.special.jv`.
+     using :py:obj:`scipy.special.jv`.
 
      This function describes a solution to the scalar Helmholtz wave
      equation in cylindrical coordinates.
@@ -241,7 +241,7 @@ def scw_rPsi(kz, m, krr, phi, z):
      Args:
          kz (float or array_like): Z-component of the wave vector.
          m (int or array_like): Order.
-         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
          phi (float or array_like): Azimuthal angle (rad).
          z (float or array_like): Z-coordinate. Has units of 1/kz.
 
@@ -262,8 +262,8 @@ def vsw_L(l, m, kr, theta, phi):
         = -\mathrm{i} \left[{h_l^{(1)}}'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
         + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
-    with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, 
-    :func:`acoustotreams.special.spherical_hankel1`, and :func:`acoustotreams.special.spherical_hankel1`.
+    with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, 
+    :py:obj:`treams.special.spherical_hankel1`, and :py:obj:`treams.special.spherical_hankel1_d`.
 
     This function describes a longitudinal solution to the vector Helmholtz wave
     equation in spherical coordinates.
@@ -271,7 +271,7 @@ def vsw_L(l, m, kr, theta, phi):
     Args:
         l (int or array_like): Degree :math:`l \geq 0`.
         m (int or array_like): Order :math:`|m| \leq l`.
-        x (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.
+        kr (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.
         theta (float or complex or array_like): Polar angle (rad).
         phi (float or array_like): Azimuthal angle (rad).
 
@@ -293,8 +293,8 @@ def vsw_rL(l, m, kr, theta, phi):
         = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
         + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
-    with :func:`acoustotreams.special.vsh_Z`, :func:`acoustotreams.special.vsh_Y`, 
-    and :func:`acoustotreams.special.spherical_jn`.
+    with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, 
+    and :py:obj:`scipy.special.spherical_jn`.
 
     This function describes a longitudinal solution to the vector Helmholtz wave
     equation in spherical coordinates.
@@ -302,7 +302,7 @@ def vsw_rL(l, m, kr, theta, phi):
     Args:
         l (int or array_like): Degree :math:`l \geq 0`.
         m (int or array_like): Order :math:`|m| \leq l`.
-        x (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.
+        kr (float or complex or array_like): Distance in units of the wave number in the medium :math:`kr`.
         theta (float or complex or array_like): Polar angle (rad).
         phi (float or array_like): Azimuthal angle (rad).
 
@@ -344,7 +344,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
         + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
-     using :func:`acoustotreams.special.hankel1_d` and :func:`acoustotreams.special.hankel1`.
+     using :py:obj:`treams.special.hankel1_d` and :py:obj:`scipy.special.hankel1`.
 
      This function describes a longitudinal solution to the vector Helmholtz wave
      equation in cylindrical coordinates.
@@ -352,7 +352,7 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
      Args:
          kz (float or array_like): Z-component of the wave vector.
          m (int or array_like): Order.
-         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
          phi (float or array_like): Azimuthal angle (rad).
          z (float or array_like): Z-coordinate. Has units of 1/kz.
          krho (float or complex or array_like): Radial component of the wave vector. Has units of kz.
@@ -385,7 +385,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
         + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
-     using :func:`acoustotreams.special.jv_d` and :func:`acoustotreams.special.jv`.
+     using :py:obj:`treams.special.jv_d` and :py:obj:`scipy.special.jv`.
 
      This function describes a longitudinal solution to the vector Helmholtz wave
      equation in cylindrical coordinates.
@@ -393,7 +393,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
      Args:
          kz (float or array_like): Z-component of the wave vector.
          m (int or array_like): Order.
-         xrho (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
          phi (float or array_like): Azimuthal angle (rad).
          z (float or array_like): Z-coordinate. Has units of 1/kz.
          krho (float or complex or array_like): Radial component of the wave vector. Has units of kz.
@@ -457,9 +457,9 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
             0& 0& 0
         \end{pmatrix}
 
-    with the Wigner 3j-symbols (:func:`acoustotreams.special.wigner3j`), the spherical Hankel
-    functions (:func:`acoustotreams.special.spherical_hankel1`), and the spherical harmonics
-    (:func:`acoustotreams.special.sph_harm`). The summation runs over all
+    with the Wigner 3j-symbols (:py:obj:`treams.special.wigner3j`), the spherical Hankel
+    functions (:py:obj:`treams.special.spherical_hankel1`), and the spherical harmonics
+    (:py:obj:`treams.special.sph_harm`). The summation runs over all
     :math:`q \in \{\lambda + l, \lambda + l - 2, \dots, \max(|\lambda - l|, |\mu - m|)\}`.
 
     These coefficients are used to translate from scattered to incident modes.
@@ -509,9 +509,9 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
             0& 0& 0
         \end{pmatrix}
 
-    with the Wigner 3j-symbols (:func:`acoustotreams.special.wigner3j`), the spherical Bessel
-    functions (:func:`acoustotreams.special.spherical_jn`), and the spherical harmonics
-    (:func:`acoustotreams.special.sph_harm`). The summation runs over all
+    with the Wigner 3j-symbols (:py:obj:`treams.special.wigner3j`), the spherical Bessel
+    functions (:py:obj:`scipy.special.spherical_jn`), and the spherical harmonics
+    (:py:obj:`treams.special.sph_harm`). The summation runs over all
     :math:`q \in \{\lambda + l, \lambda + l - 2, \dots, \max(|\lambda - l|, |\mu - m|)\}`.
 
     These coefficients are used to translate from scattered to scattered modes and
@@ -522,7 +522,7 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
         mu (int or array_like): Order of the output mode.
         l (int or array_like): Degree of the input mode.
         m (int or array_like): Order of the input mode.
-        x (float or complex or array_like): Translation in units of the wavenumber in the medium.
+        kr (float or complex or array_like): Translation in units of the wavenumber in the medium.
         theta (float or complex or array_like): Polar angle (rad).
         phi (float or array_like): Azimuthal angel (rad).
 
@@ -556,7 +556,7 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
             0 & \text{otherwise}
         \end{cases}
 
-    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:func:`acoustotreams.special.hankel1`).
+    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:py:obj:`scipy.special.hankel1`).
 
     These coefficients are used to translate from scattered to scattered modes and
     from incident to incident modes.
@@ -566,7 +566,7 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
         mu (int or array_like): Order of the output mode
         kz2 (float or array_like): Z-component of the wave vector of the input mode. Has units of kz1.
         m (int or array_like): Order of the input mode.
-        xrho (float or complex or array_like): Translation in radial direction in units of 
+        krr (float or complex or array_like): Translation in radial direction in units of 
             the radial component of the wave vector in the medium :math:`k_\rho \rho`.
         phi (float or array_like): Azimuthal angel.
         z (float or array_like): Translation in the z-direction. Has units of 1/kz1.
@@ -594,7 +594,7 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
             0 & \text{otherwise}
         \end{cases}
 
-    where :math:`J_{m - \mu}` are the Bessel functions (:func:`acoustotreams.special.jv`).
+    where :math:`J_{m - \mu}` are the Bessel functions (:py:obj:`scipy.special.jv`).
 
     These coefficients are used to translate from scattered to incident modes.
 
@@ -603,7 +603,7 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
         mu (int or array_like): Order of the output mode
         kz2 (float or array_like): Z-component of the wave vector of the input mode. Has units of kz1.
         m (int or array_like): Order of the input mode.
-        xrho (float or complex or array_like): Translation in radial direction in units of 
+        krr (float or complex or array_like): Translation in radial direction in units of 
             the radial component of the wave vector in the medium :math:`k_\rho \rho`.
         phi (float or array_like): Azimuthal angel.
         z (float or array_like): Translation in the z-direction. Has units of 1/kz1.
