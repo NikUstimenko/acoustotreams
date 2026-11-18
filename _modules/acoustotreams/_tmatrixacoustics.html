@@ -166,7 +166,7 @@
 <span class="sd">                homogeneous sphere, the radius can be given as a single number; </span>
 <span class="sd">                for a multilayered sphere, it is a list of increasing radii for all the shells.</span>
 <span class="sd">                Has units of 1/k0.</span>
-<span class="sd">            material (list[AcousticMaterial]): The material parameters from the inside to the</span>
+<span class="sd">            materials (list[AcousticMaterial]): The material parameters from the inside to the</span>
 <span class="sd">                outside. The last material in the list specifies the background medium.</span>
 
 <span class="sd">        Returns:</span>
@@ -517,7 +517,7 @@
 <span class="sd">                homogeneous cylinder, the radius can be given as a single number; </span>
 <span class="sd">                for a multilayered cylinder, it is a list of increasing radii for all the shells.</span>
 <span class="sd">                Has units of 1/k0.</span>
-<span class="sd">            material (list[AcousticMaterial]): The material parameters from the inside to the</span>
+<span class="sd">            materials (list[AcousticMaterial]): The material parameters from the inside to the</span>
 <span class="sd">                outside. The last material in the list specifies the background medium.</span>
 
 <span class="sd">        Returns:</span>
@@ -891,6 +891,26 @@
 <div class="viewcode-block" id="plane_wave_angle_scalar">
 <a class="viewcode-back" href="../../generated/acoustotreams.plane_wave_angle_scalar.html#acoustotreams.plane_wave_angle_scalar">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plane_wave_angle_scalar</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Array describing a scalar plane wave given by its propagation angles.</span>
+
+<span class="sd">    The propagation direction is the unit vector</span>
+<span class="sd">    :math:`(\sin\theta \cos\varphi, \sin\theta \sin\varphi, \cos\theta)`.</span>
+<span class="sd">    The wave is created with :func:`~acoustotreams.plane_wave_scalar`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        theta (float): Polar angle of the propagation direction, measured from the</span>
+<span class="sd">            z axis (rad).</span>
+<span class="sd">        phi (float): Azimuthal angle of the propagation direction, measured from the</span>
+<span class="sd">            x axis in the xy plane (rad).</span>
+<span class="sd">        **kwargs: Keyword arguments passed to</span>
+<span class="sd">            :func:`~acoustotreams.plane_wave_scalar`: ``k0``, ``basis``, ``material``,</span>
+<span class="sd">            and ``modetype``. If no basis is given, a</span>
+<span class="sd">            :class:`~acoustotreams.ScalarPlaneWaveBasisByUnitVector` containing only</span>
+<span class="sd">            this propagation direction is used.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray</span>
+<span class="sd">    """</span>
     <span class="n">qvec</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">plane_wave_scalar</span><span class="p">(</span><span class="n">qvec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -907,11 +927,11 @@
     <span class="n">material</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Array describing a scalar spherical wave.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Array describing a scalar spherical wave.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        l (int): Degree :math:`l \geq 0`.</span>
-<span class="sd">        m (int): Order :math:`|m| \leq 0`.</span>
+<span class="sd">        m (int): Order :math:`|m| \leq l`.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        basis (ScalarPlaneWaveBasis, optional): Basis definition.</span>
 <span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
@@ -940,7 +960,7 @@
 <span class="sd">        kz (float): Z-component of the wave vector in the medium.</span>
 <span class="sd">        m (int): Order.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air. Has units of kz.</span>
-<span class="sd">        basis (ScalarPlaneWaveBasis, optional): Basis definition.</span>
+<span class="sd">        basis (ScalarCylindricalWaveBasis, optional): Basis definition.</span>
 <span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
 <span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
 <span class="sd">    """</span>

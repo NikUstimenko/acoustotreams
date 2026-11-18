@@ -6,6 +6,7 @@ Acoustics-aware arrays
 
    import numpy as np
    import acoustotreams
+   import treams
 
 A core building block of the underlying features of *acoustotreams* are acoustics-aware arrays.
 In most of their properties they behave similar to numpy arrays and one can easily

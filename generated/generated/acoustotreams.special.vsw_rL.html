@@ -67,8 +67,8 @@
 \[\mathbf{L}_{lm}^{(1)}(x, \theta, \varphi)
 = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi)
 + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
-<p>with <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsh_Z()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsh_Y()</span></code>,
-and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.spherical_jn()</span></code>.</p>
+<p>with <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Z.html#treams.special.vsh_Z" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Z</span></code></a>, <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Y.html#treams.special.vsh_Y" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Y</span></code></a>,
+and <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_jn.html#scipy.special.spherical_jn" title="(in SciPy v1.18.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.special.spherical_jn</span></code></a>.</p>
 <p>This function describes a longitudinal solution to the vector Helmholtz wave
 equation in spherical coordinates.</p>
 <dl class="field-list simple">
@@ -76,7 +76,7 @@ equation in spherical coordinates.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>l</strong> (<em>int</em><em> or </em><em>array_like</em>) – Degree <span class="math notranslate nohighlight">\(l \geq 0\)</span>.</p></li>
 <li><p><strong>m</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order <span class="math notranslate nohighlight">\(|m| \leq l\)</span>.</p></li>
-<li><p><strong>x</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Distance in units of the wave number in the medium <span class="math notranslate nohighlight">\(kr\)</span>.</p></li>
+<li><p><strong>kr</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Distance in units of the wave number in the medium <span class="math notranslate nohighlight">\(kr\)</span>.</p></li>
 <li><p><strong>theta</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Polar angle (rad).</p></li>
 <li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angle (rad).</p></li>
 </ul>

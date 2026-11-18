@@ -13,6 +13,7 @@
     <script src="../_static/documentation_options.js?v=567ed33c"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -57,7 +58,29 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="acoustotreams.plane_wave_angle_scalar">
 <span class="sig-prename descclassname"><span class="pre">acoustotreams.</span></span><span class="sig-name descname"><span class="pre">plane_wave_angle_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_tmatrixacoustics.html#plane_wave_angle_scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.plane_wave_angle_scalar" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Array describing a scalar plane wave given by its propagation angles.</p>
+<p>The propagation direction is the unit vector
+<span class="math notranslate nohighlight">\((\sin\theta \cos\varphi, \sin\theta \sin\varphi, \cos\theta)\)</span>.
+The wave is created with <a class="reference internal" href="acoustotreams.plane_wave_scalar.html#acoustotreams.plane_wave_scalar" title="acoustotreams.plane_wave_scalar"><code class="xref py py-func docutils literal notranslate"><span class="pre">plane_wave_scalar()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<em>float</em>) – Polar angle of the propagation direction, measured from the
+z axis (rad).</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – Azimuthal angle of the propagation direction, measured from the
+x axis in the xy plane (rad).</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to
+<a class="reference internal" href="acoustotreams.plane_wave_scalar.html#acoustotreams.plane_wave_scalar" title="acoustotreams.plane_wave_scalar"><code class="xref py py-func docutils literal notranslate"><span class="pre">plane_wave_scalar()</span></code></a>: <code class="docutils literal notranslate"><span class="pre">k0</span></code>, <code class="docutils literal notranslate"><span class="pre">basis</span></code>, <code class="docutils literal notranslate"><span class="pre">material</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">modetype</span></code>. If no basis is given, a
+<a class="reference internal" href="acoustotreams.ScalarPlaneWaveBasisByUnitVector.html#acoustotreams.ScalarPlaneWaveBasisByUnitVector" title="acoustotreams.ScalarPlaneWaveBasisByUnitVector"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByUnitVector</span></code></a> containing only
+this propagation direction is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>AcousticsArray</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 

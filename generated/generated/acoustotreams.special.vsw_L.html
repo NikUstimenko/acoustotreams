@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="acoustotreams.special.ssw_rPsi" href="acoustotreams.special.ssw_rPsi.html" />
-    <link rel="prev" title="acoustotreams.special.ssw_psi" href="acoustotreams.special.ssw_psi.html" />
+    <link rel="prev" title="acoustotreams.special.ssw_psi" href="acoustotreams.special.ssw_psi_farfield.html" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -40,7 +40,7 @@
           <a href="acoustotreams.special.ssw_rPsi.html" title="acoustotreams.special.ssw_rPsi"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.special.ssw_psi.html" title="acoustotreams.special.ssw_psi"
+          <a href="acoustotreams.special.ssw_psi_farfield.html" title="acoustotreams.special.ssw_psi"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.52 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../acoustotreams.html" >Reference</a> &#187;</li>
@@ -67,8 +67,8 @@
 \[\mathbf{L}_{lm}^{(3)}(x, \theta, \varphi)
 = -\mathrm{i} \left[{h_l^{(1)}}'(x) \mathbf{Z}_{lm}(\theta, \varphi)
 + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
-<p>with <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsh_Z()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.vsh_Y()</span></code>,
-<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.spherical_hankel1()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.spherical_hankel1()</span></code>.</p>
+<p>with <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Z.html#treams.special.vsh_Z" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Z</span></code></a>, <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Y.html#treams.special.vsh_Y" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Y</span></code></a>,
+<a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.spherical_hankel1.html#treams.special.spherical_hankel1" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.spherical_hankel1</span></code></a>, and <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.spherical_hankel1_d.html#treams.special.spherical_hankel1_d" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.spherical_hankel1_d</span></code></a>.</p>
 <p>This function describes a longitudinal solution to the vector Helmholtz wave
 equation in spherical coordinates.</p>
 <dl class="field-list simple">
@@ -76,7 +76,7 @@ equation in spherical coordinates.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>l</strong> (<em>int</em><em> or </em><em>array_like</em>) – Degree <span class="math notranslate nohighlight">\(l \geq 0\)</span>.</p></li>
 <li><p><strong>m</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order <span class="math notranslate nohighlight">\(|m| \leq l\)</span>.</p></li>
-<li><p><strong>x</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Distance in units of the wave number in the medium <span class="math notranslate nohighlight">\(kr\)</span>.</p></li>
+<li><p><strong>kr</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Distance in units of the wave number in the medium <span class="math notranslate nohighlight">\(kr\)</span>.</p></li>
 <li><p><strong>theta</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Polar angle (rad).</p></li>
 <li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angle (rad).</p></li>
 </ul>
@@ -108,7 +108,7 @@ equation in spherical coordinates.</p>
 
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="acoustotreams.special.ssw_psi.html"
+    <p class="topless"><a href="acoustotreams.special.ssw_psi_farfield.html"
                           title="previous chapter">acoustotreams.special.ssw_psi</a></p>
   </div>
   <div>
@@ -150,7 +150,7 @@ equation in spherical coordinates.</p>
           <a href="acoustotreams.special.ssw_rPsi.html" title="acoustotreams.special.ssw_rPsi"
              >next</a> |</li>
         <li class="right" >
-          <a href="acoustotreams.special.ssw_psi.html" title="acoustotreams.special.ssw_psi"
+          <a href="acoustotreams.special.ssw_psi_farfield.html" title="acoustotreams.special.ssw_psi"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">acoustotreams 0.2.52 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../acoustotreams.html" >Reference</a> &#187;</li>

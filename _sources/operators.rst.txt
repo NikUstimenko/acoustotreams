@@ -111,7 +111,7 @@ Cartesian translation vector.
 
 .. doctest::
 
-    >>> t = acoustotreams.AcousticsArray(np.eye(6), basis=acoustotreams.ScalarSphericalWaveBasis.default(1), k0=1)
+    >>> t = acoustotreams.AcousticsArray(np.eye(4), basis=acoustotreams.ScalarSphericalWaveBasis.default(1), k0=1)
     >>> t.translate([1, 2, 3])
     AcousticsArray(
         [[...]],
@@ -122,7 +122,7 @@ Cartesian translation vector.
         positions=[[0. 0. 0.]],
     ),
         k0=1.0,
-        material=Material(1.3, 343.0, 0.0),
+        material=AcousticMaterial(1.3, 343.0, 0.0),
     )
 
 For the translation we have to specify the basis and the vacuum wave number. In the
@@ -197,7 +197,7 @@ Next, we can expand this plane wave also in cylindrical and in spherical waves.
           0.        +4.91196820e+00j -2.60496452-1.59508073e-16j   ],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
-        l=[1 1 1 1],
+        l=[0 1 1 1],
         m=[0 -1 0 1],
         positions=[[0. 0. 0.]],
     ),
@@ -288,7 +288,7 @@ unit matrix.
 
 .. doctest::
 
-    >>> sw_global.expand(acoustotreams.ScalarSphericalWaveBasis.default(1))
+    >>> ssw_global.expand(acoustotreams.ScalarSphericalWaveBasis.default(1))
     AcousticsArray(
         [0.+0.j 0.+0.j 1.+0.j 0.+0.j],
         basis=ScalarSphericalWaveBasis(
@@ -360,7 +360,7 @@ of the spherical and cylindrical waves must be equal.
 
 .. doctest::
 
-    >>> sscw = acoustotreams.cylindrical_wave_scalar(0, 1, k0=1, material=1, modetype="regular")
+    >>> sscw = acoustotreams.cylindrical_wave_scalar(0, 1, k0=1, material=1.3, modetype="regular")
     >>> sscw.expand(acoustotreams.ScalarSphericalWaveBasis.default(1))
     AcousticsArray(
         [0.+0.j  0.+0.j  0.+0.j -4.34160753+0.j],
@@ -438,9 +438,9 @@ lattice along the z axis can be expanded in cylindrical waves
     AcousticsArray(
         [0.+0.17490069j 0.-0.02192843j 0.-0.21875755j],
         basis=ScalarCylindricalWaveBasis(
-        pidx=[0 0 0 0 0 0],
+        pidx=[0 0 0],
         kz=[-0.7975979  0.1        0.9975979],
-        m=[0 0 0 0 0 0],
+        m=[0 0 0],
         positions=[[0. 0. 0.]],
     ),
         k0=1.0,
@@ -539,9 +539,10 @@ the velocity field :math:`\mathbf v` in Cartesian coordinates can be computed.
     AcousticsArray(
         [0.14715177+0.j],
     )
-    >>> sssw.vfield([0, 0, 1])
+    >>> with np.printoptions(precision=8):
+    ...     sssw.vfield([0, 0, 1])
     AcousticsArray(
-        [0.+0.j         0.+0.j         0.-0.00026203j],
+        [0.+0.j        , 0.+0.j        , 0.-0.00026203j],
     )
 
 Evaluate the far-field amplitude

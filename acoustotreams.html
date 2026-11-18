@@ -153,7 +153,7 @@
 <td><p>Array describing a scalar plane wave.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.plane_wave_angle_scalar.html#acoustotreams.plane_wave_angle_scalar" title="acoustotreams.plane_wave_angle_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plane_wave_angle_scalar</span></code></a>(theta, phi, **kwargs)</p></td>
-<td><p></p></td>
+<td><p>Array describing a scalar plane wave given by its propagation angles.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.spherical_wave_scalar.html#acoustotreams.spherical_wave_scalar" title="acoustotreams.spherical_wave_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spherical_wave_scalar</span></code></a>(l, m, *[, k0, basis, ...])</p></td>
 <td><p>Array describing a scalar spherical wave.</p></td>
@@ -161,64 +161,46 @@
 </tbody>
 </table>
 </section>
-<section id="functions-imported-from-scipy">
-<h3>Functions imported from SciPy<a class="headerlink" href="#functions-imported-from-scipy" title="Link to this heading">¶</a></h3>
-<table class="docutils align-default">
+<section id="id1">
+<h3>Other<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel1.html#scipy.special.hankel1" title="(in SciPy v1.18.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1</span></code></a>(v, z[, out])</p></td>
-<td><p>Hankel function of the
-first kind.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel2.html#scipy.special.hankel2" title="(in SciPy v1.18.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel2</span></code></a>(v, z[, out])</p></td>
-<td><p>Hankel function of the
-second kind.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.jv.html#scipy.special.jv" title="(in SciPy v1.18.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">jv</span></code></a>(v, z[, out])</p></td>
-<td><p>Bessel function of the
-first kind of real
-order and complex
-argument.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.yv.html#scipy.special.yv" title="(in SciPy v1.18.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">yv</span></code></a>(v, z[, out])</p></td>
-<td><p>Bessel function of the
-second kind of real
-order and complex
-argument.</p></td>
-</tr>
-<tr class="row-odd"><td><div class="line-block">
-<div class="line"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_jn.html#scipy.special.spherical_jn" title="(in SciPy v1.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">spherical_jn</span></code></a>(n,
-z[, derivative])</div>
-</div>
-</td>
-<td><p>Spherical Bessel
-function of the first
-kind or its derivative.</p></td>
-</tr>
-<tr class="row-even"><td><div class="line-block">
-<div class="line"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_yn.html#scipy.special.spherical_yn" title="(in SciPy v1.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">spherical_yn</span></code></a>(n,
-z[, derivative])</div>
-</div>
-</td>
-<td><p>Spherical Bessel
-function of the second
-kind or its derivative.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.poynting_avg_z.html#acoustotreams.poynting_avg_z" title="acoustotreams.poynting_avg_z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poynting_avg_z</span></code></a>(basis, k0[, material])</p></td>
+<td><p>Time-averaged z-component of the Poynting vector.</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="functions-imported-from-treams-special-treams-misc-and-treams-lattice">
-<h3>Functions imported from treams.special, treams.misc, and treams.lattice<a class="headerlink" href="#functions-imported-from-treams-special-treams-misc-and-treams-lattice" title="Link to this heading">¶</a></h3>
+<section id="functions-and-classes-imported-from-treams">
+<h3>Functions and classes imported from treams<a class="headerlink" href="#functions-and-classes-imported-from-treams" title="Link to this heading">¶</a></h3>
+<p>Special functions, including those imported from SciPy and treams, are available in
+<a class="reference internal" href="generated/acoustotreams.special.html#module-acoustotreams.special" title="acoustotreams.special"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams.special</span></code></a>.</p>
 <table class="docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code>(n, z)</p></td>
-<td><p>Derivative of the spherical
-Bessel function of the
-first kind.</p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.misc.wave_vec_z.html#treams.misc.wave_vec_z" title="(in Project name not set)"><code class="xref py py-func docutils literal notranslate"><span class="pre">wave_vec_z()</span></code></a>(kx, ky, k)</p></td>
+<td><p>Z component of the wave
+vector with positive
+imaginary part.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code>(n, z)</p></td>
-<td><p>Derivative of the spherical
-Bessel function of the
-second kind.</p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.misc.firstbrillouin1d.html#treams.misc.firstbrillouin1d" title="(in Project name not set)"><code class="xref py py-func docutils literal notranslate"><span class="pre">firstbrillouin1d()</span></code></a>(kpar, b)</p></td>
+<td><p>Map wave vector to the first
+Brillouin zone in 1D.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.misc.firstbrillouin2d.html#treams.misc.firstbrillouin2d" title="(in Project name not set)"><code class="xref py py-func docutils literal notranslate"><span class="pre">firstbrillouin2d()</span></code></a>(kpar, b, n=2)</p></td>
+<td><p>Map wave vector to the first
+Brillouin zone in 2D.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.misc.firstbrillouin3d.html#treams.misc.firstbrillouin3d" title="(in Project name not set)"><code class="xref py py-func docutils literal notranslate"><span class="pre">firstbrillouin3d()</span></code></a>(kpar, b, n=2)</p></td>
+<td><p>Map wave vector to the first
+Brillouin zone in 3D.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.Lattice_class.html#treams.Lattice" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code></a>(arr, alignment=None)</p></td>
+<td><p>Lattice definition in one,
+two, or three dimensions.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">WaveVector</span></code>(seq=(), alignment=None)</p></td>
+<td><p>Wave vector with up to three
+components and an alignment.</p></td>
 </tr>
 </tbody>
 </table>
@@ -230,7 +212,7 @@ second kind.</p></td>
 one module, like translations and rotations as well as transformations among them.
 The functions in there provide an intermediate stage between the purely mathematical
 functions, either implemented within <a class="reference internal" href="#module-acoustotreams" title="acoustotreams"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams</span></code></a> or imported from
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code>, and the
+<a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.html#module-treams.special" title="(in Project name not set)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code></a> and <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.lattice.html#module-treams.lattice" title="(in Project name not set)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.lattice</span></code></a>, and the
 higher-level classes and functions.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>

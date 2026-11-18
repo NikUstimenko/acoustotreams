@@ -1,0 +1,6 @@
+﻿acoustotreams.poynting\_avg\_z
+==============================
+
+.. currentmodule:: acoustotreams
+
+.. autofunction:: poynting_avg_z

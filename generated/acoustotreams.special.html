@@ -57,9 +57,9 @@
 <span id="acoustotreams-special"></span><h1>acoustotreams.special<a class="headerlink" href="#module-acoustotreams.special" title="Link to this heading">¶</a></h1>
 <p>Special (mathematical) functions.</p>
 <p>Special mathematical functions used in <a class="reference internal" href="../acoustotreams.html#module-acoustotreams" title="acoustotreams"><code class="xref py py-mod docutils literal notranslate"><span class="pre">acoustotreams</span></code></a>. Some functions are imported from
-<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.18.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code>.</p>
-<section id="available-functions">
-<h2>Available functions<a class="headerlink" href="#available-functions" title="Link to this heading">¶</a></h2>
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.18.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a> and <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.html#module-treams.special" title="(in Project name not set)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code></a>.</p>
+<section id="implemented-functions">
+<h2>Implemented functions<a class="headerlink" href="#implemented-functions" title="Link to this heading">¶</a></h2>
 <section id="spherical-waves">
 <h3>Spherical waves<a class="headerlink" href="#spherical-waves" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
@@ -67,7 +67,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.ssw_Psi.html#acoustotreams.special.ssw_Psi" title="acoustotreams.special.ssw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_Psi</span></code></a>(l, m, kr, theta, phi)</p></td>
 <td><p>Singular scalar spherical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.ssw_psi.html#acoustotreams.special.ssw_psi" title="acoustotreams.special.ssw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_psi</span></code></a>(l, m, x, y, z, theta, phi, k)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.ssw_psi_farfield.html#acoustotreams.special.ssw_psi" title="acoustotreams.special.ssw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssw_psi</span></code></a>(l, m, x, y, z, theta, phi, k)</p></td>
 <td><p>Far-field amplitude of singular scalar spherical wave <span class="math notranslate nohighlight">\(\psi\)</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.vsw_L.html#acoustotreams.special.vsw_L" title="acoustotreams.special.vsw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vsw_L</span></code></a>(l, m, kr, theta, phi)</p></td>
@@ -95,7 +95,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.scw_Psi.html#acoustotreams.special.scw_Psi" title="acoustotreams.special.scw_Psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_Psi</span></code></a>(kz, m, krr, phi, z)</p></td>
 <td><p>Singular scalar cylindrical wave <span class="math notranslate nohighlight">\(\Psi\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.scw_psi.html#acoustotreams.special.scw_psi" title="acoustotreams.special.scw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_psi</span></code></a>(kz, m, x, y, phi, z, krho)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/acoustotreams.special.scw_psi_farfield.html#acoustotreams.special.scw_psi" title="acoustotreams.special.scw_psi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scw_psi</span></code></a>(kz, m, x, y, phi, z, krho)</p></td>
 <td><p>Far-field amplitude of singular scalar cylindrical wave <span class="math notranslate nohighlight">\(\psi\)</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/acoustotreams.special.vcw_L.html#acoustotreams.special.vcw_L" title="acoustotreams.special.vcw_L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vcw_L</span></code></a>(kz, m, krr, phi, z, krho, k)</p></td>
@@ -128,8 +128,11 @@
 </tr>
 </tbody>
 </table>
-<p>Those functions are just imported from Scipy. So, one only needs to import this
-package within acoustotreams.</p>
+</section>
+</section>
+<section id="functions-imported-from-scipy">
+<h2>Functions imported from SciPy<a class="headerlink" href="#functions-imported-from-scipy" title="Link to this heading">¶</a></h2>
+<p>These functions are imported from <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/special.html#module-scipy.special" title="(in SciPy v1.18.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.special</span></code></a>, so they are also available as <code class="docutils literal notranslate"><span class="pre">acoustotreams.special.&lt;name&gt;</span></code>.</p>
 <table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.hankel1.html#scipy.special.hankel1" title="(in SciPy v1.18.0)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1</span></code></a>(v, z[, out])</p></td>
@@ -172,69 +175,86 @@ kind or its derivative.</p></td>
 </tr>
 </tbody>
 </table>
-<p>The following functions are just imported from treams. So, one only needs to import this
-package within treams.</p>
 </section>
+<section id="functions-imported-from-treams">
+<h2>Functions imported from treams<a class="headerlink" href="#functions-imported-from-treams" title="Link to this heading">¶</a></h2>
+<p>The following functions are imported from <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.html#module-treams.special" title="(in Project name not set)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">treams.special</span></code></a>, so they are also available as <code class="docutils literal notranslate"><span class="pre">acoustotreams.special.&lt;name&gt;</span></code>.</p>
 <section id="bessel-and-hankel-functions-with-their-spherical-counterparts-derivatives">
 <h3>Bessel and Hankel functions, with their spherical counterparts, derivatives<a class="headerlink" href="#bessel-and-hankel-functions-with-their-spherical-counterparts-derivatives" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1_d</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">hankel2_d</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">jv_d</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">yv_d</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel1</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel2</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel1_d</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel2_d</span></code></p>
-<p>Those functions just wrap Scipy functions with special optional arguments to be able to
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.hankel1_d.html#treams.special.hankel1_d" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel1_d</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.hankel2_d.html#treams.special.hankel2_d" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">hankel2_d</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.jv_d.html#treams.special.jv_d" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">jv_d</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.yv_d.html#treams.special.yv_d" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">yv_d</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.spherical_hankel1.html#treams.special.spherical_hankel1" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel1</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.spherical_hankel2.html#treams.special.spherical_hankel2" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel2</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.spherical_hankel1_d.html#treams.special.spherical_hankel1_d" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel1_d</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.spherical_hankel2_d.html#treams.special.spherical_hankel2_d" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_hankel2_d</span></code></a></p></li>
+</ul>
+<p>Those functions just wrap SciPy functions with special optional arguments to be able to
 analogously access them like their non-spherical counterparts:</p>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code></p>
+<ul class="simple">
+<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_jn_d</span></code></p></li>
+<li><p><code class="xref py py-data docutils literal notranslate"><span class="pre">spherical_yn_d</span></code></p></li>
+</ul>
 </section>
 <section id="scipy-functions-with-enhanced-domain">
-<h3>Scipy functions with enhanced domain<a class="headerlink" href="#scipy-functions-with-enhanced-domain" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">sph_harm</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">lpmv</span></code></p>
+<h3>SciPy functions with enhanced domain<a class="headerlink" href="#scipy-functions-with-enhanced-domain" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.sph_harm.html#treams.special.sph_harm" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sph_harm</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.lpmv.html#treams.special.lpmv" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">lpmv</span></code></a></p></li>
+</ul>
 </section>
 <section id="integrals-for-the-ewald-summation">
 <h3>Integrals for the Ewald summation<a class="headerlink" href="#integrals-for-the-ewald-summation" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">incgamma</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">intkambe</span></code></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.incgamma.html#treams.special.incgamma" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">incgamma</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.intkambe.html#treams.special.intkambe" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">intkambe</span></code></a></p></li>
+</ul>
 </section>
 <section id="wigner-d-and-wigner-d-matrix-elements">
 <h3>Wigner d- and Wigner D-matrix elements<a class="headerlink" href="#wigner-d-and-wigner-d-matrix-elements" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">wignersmalld</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">wignerd</span></code></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.wignersmalld.html#treams.special.wignersmalld" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">wignersmalld</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.wignerd.html#treams.special.wignerd" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">wignerd</span></code></a></p></li>
+</ul>
 </section>
 <section id="wigner-3j-symbols">
 <h3>Wigner 3j-symbols<a class="headerlink" href="#wigner-3j-symbols" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">wigner3j</span></code></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.wigner3j.html#treams.special.wigner3j" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">wigner3j</span></code></a></p></li>
+</ul>
 </section>
 <section id="vector-spherical-harmonics">
 <h3>Vector spherical harmonics<a class="headerlink" href="#vector-spherical-harmonics" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">pi_fun</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">tau_fun</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_X</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_Y</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_Z</span></code></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.pi_fun.html#treams.special.pi_fun" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">pi_fun</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.tau_fun.html#treams.special.tau_fun" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">tau_fun</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_X.html#treams.special.vsh_X" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_X</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Y.html#treams.special.vsh_Y" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_Y</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Z.html#treams.special.vsh_Z" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vsh_Z</span></code></a></p></li>
+</ul>
 </section>
 <section id="coordinate-system-transformations">
 <h3>Coordinate system transformations<a class="headerlink" href="#coordinate-system-transformations" title="Link to this heading">¶</a></h3>
-<p><code class="xref py py-data docutils literal notranslate"><span class="pre">car2cyl</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">car2sph</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">cyl2car</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">cyl2sph</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">sph2car</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">sph2cyl</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2cyl</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2sph</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vcyl2car</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vcyl2sph</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vsph2car</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vsph2cyl</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">car2pol</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">pol2car</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2pol</span></code>
-<code class="xref py py-data docutils literal notranslate"><span class="pre">vpol2car</span></code></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.car2cyl.html#treams.special.car2cyl" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">car2cyl</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.car2sph.html#treams.special.car2sph" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">car2sph</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.cyl2car.html#treams.special.cyl2car" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">cyl2car</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.cyl2sph.html#treams.special.cyl2sph" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">cyl2sph</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.sph2car.html#treams.special.sph2car" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sph2car</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.sph2cyl.html#treams.special.sph2cyl" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sph2cyl</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vcar2cyl.html#treams.special.vcar2cyl" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2cyl</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vcar2sph.html#treams.special.vcar2sph" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2sph</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vcyl2car.html#treams.special.vcyl2car" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vcyl2car</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vcyl2sph.html#treams.special.vcyl2sph" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vcyl2sph</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsph2car.html#treams.special.vsph2car" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vsph2car</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsph2cyl.html#treams.special.vsph2cyl" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vsph2cyl</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.car2pol.html#treams.special.car2pol" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">car2pol</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.pol2car.html#treams.special.pol2car" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">pol2car</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vcar2pol.html#treams.special.vcar2pol" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vcar2pol</span></code></a></p></li>
+<li><p><a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vpol2car.html#treams.special.vpol2car" title="(in Project name not set)"><code class="xref py py-data docutils literal notranslate"><span class="pre">vpol2car</span></code></a></p></li>
+</ul>
 </section>
 </section>
 </section>

@@ -67,7 +67,7 @@
     &amp; \text{if }k_{z,1} = k_{z,2} \\
     0 &amp; \text{otherwise}
 \end{cases}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(J_{m - \mu}\)</span> are the Bessel functions (<code class="xref py py-func docutils literal notranslate"><span class="pre">acoustotreams.special.jv()</span></code>).</p>
+<p>where <span class="math notranslate nohighlight">\(J_{m - \mu}\)</span> are the Bessel functions (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.jv.html#scipy.special.jv" title="(in SciPy v1.18.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.special.jv</span></code></a>).</p>
 <p>These coefficients are used to translate from scattered to incident modes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -76,7 +76,7 @@
 <li><p><strong>mu</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order of the output mode</p></li>
 <li><p><strong>kz2</strong> (<em>float</em><em> or </em><em>array_like</em>) – Z-component of the wave vector of the input mode. Has units of kz1.</p></li>
 <li><p><strong>m</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order of the input mode.</p></li>
-<li><p><strong>xrho</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Translation in radial direction in units of
+<li><p><strong>krr</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Translation in radial direction in units of
 the radial component of the wave vector in the medium <span class="math notranslate nohighlight">\(k_\rho \rho\)</span>.</p></li>
 <li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angel.</p></li>
 <li><p><strong>z</strong> (<em>float</em><em> or </em><em>array_like</em>) – Translation in the z-direction. Has units of 1/kz1.</p></li>

@@ -24,8 +24,8 @@ coordinate systems. While being in principle equivalent, for different scenarios
 beneficial to use suitable solution sets that represent the waves with sufficient
 precision when truncated to a finite number of modes. The chosen finite number of
 modes is given in the classes :class:`~acoustotreams.ScalarSphericalWaveBasis`,
-:class:`~acoustotreams.ScalarCylindricalWaveBasis`, and :class:`~acoustotreams._core.ScalarPlaneWaveBasis`, which
-are all children of the base call :class:`~acoustotreams._core.ScalarBasisSet`.
+:class:`~acoustotreams.ScalarCylindricalWaveBasis`, and :class:`~acoustotreams._coreacoustics.ScalarPlaneWaveBasis`, which
+are all children of the base call :class:`~acoustotreams._coreacoustics.ScalarBasisSet`.
 
 The modes of the spherical basis can are defined by their degree ``l``, and the order ``m``. 
 The basis is then simply the collection of multiple of these modes, 
@@ -35,7 +35,7 @@ each given in a tuple with exactly that order, for example
 
     >>> acoustotreams.ScalarSphericalWaveBasis([(0, 0), (1, -1), (1, 0), (1, 1)])
     ScalarSphericalWaveBasis(
-        pidx=[0 0 0],
+        pidx=[0 0 0 0],
         l=[0 1 1 1],
         m=[0 -1  0  1],
         positions=[[0. 0. 0.]],
@@ -198,11 +198,11 @@ Polarization
 ============
 
 In *acoustotreams* we consider acoustic waves that can be described by scalar pressure fields. 
-The scalar waves are defined in :func:`acoustotreams.specail.ssw_Psi`, :func:`acoustotreams.special.ssw_rPsi`,
-:func:`acoustotreams.specail.scw_Psi`, :func:`acoustotreams.specail.scw_rPsi`, and :func:`acoustotreams.specail.spw_Psi`.
-These scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.specail.vsw_L`, 
-:func:`acoustotreams.specail.vsw_rL`, :func:`acoustotreams.specail.vcw_L`, :func:`acoustotreams.specail.vcw_rL`, 
-and :func:`acoustotreams.specail.vpw_L`.
+The scalar waves are defined in :func:`acoustotreams.special.ssw_Psi`, :func:`acoustotreams.special.ssw_rPsi`,
+:func:`acoustotreams.special.scw_Psi`, :func:`acoustotreams.special.scw_rPsi`, and :func:`acoustotreams.special.spw_Psi`.
+These scalar waves correspond to the longitudinal vector fields: :func:`acoustotreams.special.vsw_L`, 
+:func:`acoustotreams.special.vsw_rL`, :func:`acoustotreams.special.vcw_L`, :func:`acoustotreams.special.vcw_rL`, 
+and :func:`acoustotreams.special.vpw_L`.
 
 Mode types
 ==========
@@ -262,9 +262,9 @@ It is also possible to calculate the impedance for longitudinal and transverse w
 .. doctest::
 
     >>> acoustotreams.AcousticMaterial().impedance
-    '445.90000000000003'
+    445.90000000000003
     >>> acoustotreams.AcousticMaterial().impedancet
-    '0.0'
+    0.0
 
 Moreover, we can get the speeds from the Lamé parameters as
 
