@@ -97,8 +97,8 @@ Bessel and Hankel functions, with their spherical counterparts, derivatives
 Those functions just wrap SciPy functions with special optional arguments to be able to
 analogously access them like their non-spherical counterparts:
 
-* :py:data:`~treams.special.spherical_jn_d`
-* :py:data:`~treams.special.spherical_yn_d`
+* :py:func:`~treams.special.spherical_jn_d`
+* :py:func:`~treams.special.spherical_yn_d`
 
 
 SciPy functions with enhanced domain

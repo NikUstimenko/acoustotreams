@@ -37,7 +37,7 @@ each given in a tuple with exactly that order, for example
     ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
         l=[0 1 1 1],
-        m=[0 -1  0  1],
+        m=[ 0 -1  0  1],
         positions=[[0. 0. 0.]],
     )
 
@@ -140,8 +140,8 @@ where ``bmax`` defines a distance in reciprocal space.
 
 The plane wave basis behaves a little bit different. First, it is currently only defined
 with respect to a single origin, so that the ``pidx`` and ``positions`` are not defined. Moreover,
-the basis can be defined in two ways: :class:`ScalarPlaneWaveBasisByUnitVector` and
-:class:`ScalarPlaneWaveBasisByComp`. In the first case, the definition is given by the unit
+the basis can be defined in two ways: :class:`~acoustotreams.ScalarPlaneWaveBasisByUnitVector` and
+:class:`~acoustotreams.ScalarPlaneWaveBasisByComp`. In the first case, the definition is given by the unit
 vector which, multiplied by the wave number in the medium, provides the full wave vector.
 In the second case, two components of the wave vector are given and the remaining third
 Cartesian component is defined such that it fulfils the dispersion relation.
@@ -188,10 +188,10 @@ used for a range of diffraction orders
 .. doctest::
 
     >>> acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], np.eye(2), 7)
-        ScalarPlaneWaveBasisByComp(
-            kx=[ 0.          0.          0.          6.28318531 -6.28318531],
-            ky=[ 0.          6.28318531 -6.28318531  0.          0.        ],
-        )
+    ScalarPlaneWaveBasisByComp(
+        kx=[ 0.     0.     0.     6.283 -6.283],
+        ky=[ 0.     6.283 -6.283  0.     0.   ],
+    )
 
 
 Polarization
@@ -271,7 +271,7 @@ Moreover, we can get the speeds from the Lamé parameters as
 .. doctest::
 
     >>> acoustotreams.AcousticMaterial.from_params(1000, (1.6e7, 2e6))
-    AcousticMaterial(1000, 141.421+0j, 44.7213+0j)
+    AcousticMaterial(1000, (141.4213562373095+0j), (44.721359549995796+0j))
 
 where the first is agrument is density and the second one is tuple :math:`(\lambda, \mu)`.
 
@@ -280,7 +280,7 @@ We can also get the speed of transverse waves from Poisson's ratio as
 .. doctest::
 
     >>> acoustotreams.AcousticMaterial.from_pratio(1000, 141.421+0j, 0.44444)
-        AcousticMaterial(1000, 141.421+0j, 44.7228+0j)
+    AcousticMaterial(1000, (141.421+0j), (44.72285682089808+0j))
 
 
 Lattices

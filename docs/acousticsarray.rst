@@ -53,7 +53,7 @@ by setting the corresponding attribute
     >>> m
     AcousticsArray(
         [1, 2],
-        material=AcousticMaterial(4000, 1000, 0),
+        material=AcousticMaterial(4000, 1000, 0.0),
     )
 
 where we now have a material with the mass density :math:`4000 kg/m^3` and speed of sound :math:`1000 m/s`. 
