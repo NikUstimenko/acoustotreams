@@ -53,6 +53,24 @@ extensions = [
     'matplotlib.sphinxext.plot_directive',
 ]
 
+if os.environ.get("SKIP_PLOTS"):
+    extensions.remove("matplotlib.sphinxext.plot_directive")
+
+
+def setup(app):
+    if os.environ.get("SKIP_PLOTS"):
+        from docutils.parsers.rst import Directive
+
+        class SkipPlot(Directive):
+            optional_arguments = 1
+            final_argument_whitespace = True
+            has_content = True
+
+            def run(self):
+                return []
+
+        app.add_directive("plot", SkipPlot)
+        
 autosectionlabel_prefix_document = True
 doctest_global_setup = """
 import numpy as np
