@@ -80,6 +80,18 @@ class TestSSWB:
         b = acoustotreams.ScalarSphericalWaveBasis([[2, -1]])
         assert b.lm == ([2], [-1])
 
+    def test_getitem_str(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[0, 2, -1]])
+        assert b["plm"] == b.plm == ([0], [2], [-1])
+        assert b["lm"] == b.lm == ([2], [-1])
+
+    def test_getitem_str_invalid(self):
+        b = acoustotreams.ScalarSphericalWaveBasis([[0, 2, -1]])
+        with pytest.raises(KeyError):
+            b["lmk"]
+        with pytest.raises(AttributeError):
+            b.lmk
+
     def test_getitem_invalid_index(self):
         b = acoustotreams.ScalarSphericalWaveBasis([[0, 0]])
         with pytest.raises(AttributeError):
@@ -208,6 +220,16 @@ class TestSCWB:
         b = acoustotreams.ScalarCylindricalWaveBasis([[2, -1]])
         assert b.zm == ([2], [-1])
 
+    def test_getitem_str(self):
+        b = acoustotreams.ScalarCylindricalWaveBasis([[0, 2, -1]])
+        assert b["pzm"] == b.pzm == ([0], [2], [-1])
+        assert b["zm"] == b.zm == ([2], [-1])
+
+    def test_getitem_str_invalid(self):
+        b = acoustotreams.ScalarCylindricalWaveBasis([[0, 2, -1]])
+        with pytest.raises(KeyError):
+            b["kzm"]
+
     def test_getitem_invalid_index(self):
         b = acoustotreams.ScalarCylindricalWaveBasis([[1, 0]])
         with pytest.raises(AttributeError):
@@ -330,6 +352,10 @@ class TestSPWBUV:
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0, 4, -3]])
         assert b.xyz == ([0], [0.8], [-0.6])
 
+    def test_getitem_str(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0, 4, -3]])
+        assert b["xyz"] == b.xyz == ([0], [0.8], [-0.6])
+
     def test_getitem_invalid_index(self):
         b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[1, 0, 0]])
         with pytest.raises(AttributeError):
@@ -424,6 +450,11 @@ class TestSPWBC:
     def test_getitem_int(self):
         b = acoustotreams.ScalarPlaneWaveBasisByComp([[1, 0], [0, 1]])
         assert b[1] == (0, 1)
+
+    def test_getitem_str(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByComp([[1, 2]], "zx")
+        assert b["zx"] == b.zx == ([1], [2])
+        assert b["xyz"] == ([2], None, [1])
 
     def test_getitem_tuple(self):
         b = acoustotreams.ScalarPlaneWaveBasisByComp([[1, 0], [0, 1]])

@@ -23,6 +23,42 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
     _names = ()
     """Names of the relevant parameters"""
 
+    _aliases = {}
+    """Single-character shorthands of the attributes.
+
+    They allow selecting several attributes at once, e.g. ``basis.lm`` or
+    ``basis["lm"]``.
+    """
+
+    def _select(self, key):
+        """Select attributes by a string of single-character shorthands.
+
+        Args:
+            key (str): Combination of characters defined in :attr:`_aliases`.
+
+        Returns:
+            tuple
+
+        Raises:
+            KeyError: If ``key`` is empty or contains an undefined character.
+        """
+        if not key or any(k not in self._aliases for k in key):
+            raise KeyError(
+                f"invalid selection '{key}' for '{type(self).__name__}', "
+                f"use a combination of '{''.join(self._aliases)}'"
+            )
+        return tuple(getattr(self, self._aliases[k]) for k in key)
+
+    def __getattr__(self, key):
+        # Only called if the regular lookup fails. Real attribute names are excluded
+        # to avoid an infinite recursion when they are not set yet.
+        if key not in self._aliases.values():
+            try:
+                return self._select(key)
+            except KeyError:
+                pass
+        raise AttributeError(f"'{type(self).__name__}' object has no attribute '{key}'")
+
     def __repr__(self):
         """String representation.
 
@@ -147,28 +183,23 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
             bool
         """
         return len(self) == 0 or np.all(self.pidx == self.pidx[0])
-
-    def __getattr__(self, key):
-        dct = {"l": "l", "m": "m", "p": "pidx"}
-        try:
-            return tuple(getattr(self, dct[k]) for k in key)
-        except KeyError:
-            raise AttributeError(
-                f"'{type(self).__name__}' object has no attribute '{key}'"
-            ) from None
+        
+    _aliases = {"p": "pidx", "l": "l", "m": "m"}
 
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function supports indexing the basis set using an integer, 
-        a slice, an ellipsis, an empty tuple, or a sequence of integers 
-        or booleans. Indexing with an integer or an empty tuple returns 
+        This function supports indexing the basis set using an integer,
+        a slice, an ellipsis, an empty tuple, or a sequence of integers
+        or booleans. Indexing with an integer or an empty tuple returns
         a tuple; all other index types return a new basis set.
 
-        Alternatively, the string "plm", or "lm" can be used to select 
-        only a corresponding subset of the attributes :attr:`pidx`, :attr:`l`, 
-        and :attr:`m`.
+        Alternatively, a string such as "plm" or "lm" can be used to select
+        a tuple of the corresponding attributes :attr:`pidx` (``p``), :attr:`l`,
+        and :attr:`m`. This is equivalent to ``basis.plm`` or ``basis.lm``.
         """
+        if isinstance(idx, str):
+            return self._select(idx)
         res = self.pidx[idx], self.l[idx], self.m[idx]
         if isinstance(idx, (int, np.integer)) or (
             isinstance(idx, tuple) and len(idx) == 0
@@ -383,26 +414,22 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         """
         return len(self) == 0 or np.all(self.pidx == self.pidx[0])
 
-    def __getattr__(self, key):
-        dct = {"z": "kz", "m": "m", "p": "pidx"}
-        try:
-            return tuple(getattr(self, dct[k]) for k in key)
-        except KeyError:
-            raise AttributeError(
-                f"'{type(self).__name__}' object has no attribute '{key}'"
-            ) from None
+    _aliases = {"p": "pidx", "z": "kz", "m": "m"}
 
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function supports indexing the basis set using an integer, a slice, 
-        an ellipsis, an empty tuple, or a sequence of integers or booleans. Indexing 
-        with an integer or an empty tuple returns a tuple; all other index types 
+        This function supports indexing the basis set using an integer, a slice,
+        an ellipsis, an empty tuple, or a sequence of integers or booleans. Indexing
+        with an integer or an empty tuple returns a tuple; all other index types
         return a new basis set.
 
-        Alternatively, the string "pzm" or "zm" can be used to select a 
-        corresponding subset of the attributes :attr:`pidx`, :attr:`kz`, and :attr:`m`.
+        Alternatively, a string such as "pzm" or "zm" can be used to select a
+        tuple of the corresponding attributes :attr:`pidx` (``p``), :attr:`kz` (``z``),
+        and :attr:`m`. This is equivalent to ``basis.pzm`` or ``basis.zm``.
         """
+        if isinstance(idx, str):
+            return self._select(idx)
         res = self.pidx[idx], self.kz[idx], self.m[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res
@@ -620,25 +647,21 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         """Number of modes."""
         return len(self.qx) 
 
-    def __getattr__(self, key):
-        dct = {"x": "qx", "y": "qy", "z": "qz"}
-        try:
-            return tuple(getattr(self, dct[k]) for k in key)
-        except KeyError:
-            raise AttributeError(
-                f"'{type(self).__name__}' object has no attribute '{key}'"
-            ) from None
+    _aliases = {"x": "qx", "y": "qy", "z": "qz"}
 
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function supports indexing the basis set using an integer, a slice, an ellipsis, 
-        an empty tuple, or a sequence of integers or booleans. Indexing with an integer or 
+        This function supports indexing the basis set using an integer, a slice, an ellipsis,
+        an empty tuple, or a sequence of integers or booleans. Indexing with an integer or
         an empty tuple returns a tuple; all other index types return a new basis set.
 
-        Alternatively, the string "xyz", "xy" or "z" can be used to select only a
-        corresponding subset of the attributes :attr:`qx`, :attr:`qy`, and :attr:`qz`.
+        Alternatively, a string such as "xyz", "xy" or "z" can be used to select a tuple
+        of the corresponding attributes :attr:`qx`, :attr:`qy`, and :attr:`qz`. This is
+        equivalent to ``basis.xyz``, ``basis.xy``, or ``basis.z``.
         """
+        if isinstance(idx, str):
+            return self._select(idx)
         res = self.qx[idx], self.qy[idx], self.qz[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res
@@ -849,23 +872,23 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
             return self._kx
         return None
 
-    def __getattr__(self, key):
-        dct = {"x": "kx", "y": "ky", "z": "kz"}
-        try:
-            return tuple(getattr(self, dct[k]) for k in key)
-        except KeyError:
-            raise AttributeError(
-                f"'{type(self).__name__}' object has no attribute '{key}'"
-            ) from None
+    _aliases = {"x": "kx", "y": "ky", "z": "kz"}
 
     def __getitem__(self, idx):
         """Get a subset of the basis.
 
-        This function supports indexing the basis set using an integer, a slice, 
-        an ellipsis, an empty tuple, or a sequence of integers or booleans. 
-        Indexing with an integer or an empty tuple returns a tuple; 
+        This function supports indexing the basis set using an integer, a slice,
+        an ellipsis, an empty tuple, or a sequence of integers or booleans.
+        Indexing with an integer or an empty tuple returns a tuple;
         all other index types return a new basis set.
+
+        Alternatively, a string such as "xy" can be used to select a tuple of the
+        corresponding attributes :attr:`kx`, :attr:`ky`, and :attr:`kz`. Components
+        not contained in the :attr:`alignment` are `None`. This is equivalent to
+        ``basis.xy``.
         """
+        if isinstance(idx, str):
+            return self._select(idx)
         res = self._kx[idx], self._ky[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res

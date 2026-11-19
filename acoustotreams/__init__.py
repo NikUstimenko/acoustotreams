@@ -104,7 +104,7 @@ Special functions, including those imported from SciPy and treams, are available
 
 """
 
-__version__ = "0.2.52"
+__version__ = "0.2.53"
 
 from treams.misc import(  # noqa: F401,
     wave_vec_z,
