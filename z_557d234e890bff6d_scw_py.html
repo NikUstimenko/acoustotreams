@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_90c9f2ce08862335___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-18 17:56 +0000
+            created at 2026-11-19 13:56 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -198,9 +198,9 @@
     <p class="pln"><span class="n"><a id="t116" href="#t116">116</a></span><span class="t"><span class="str">        kx (float or array_like): X-component of the wave vector of plane waves.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t"><span class="str">        ky (float or complex or array_like): Y-component of the wave vector of plane waves. Has units of kx.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t"><span class="str">        kzpw (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t"><span class="str">        kzcw (float or array_like): Z-component of the waver vector of cylindrical waves. Has units of kx.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t"><span class="str">        kzcw (float or array_like): Z-component of the wave vector of cylindrical waves. Has units of kx.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t"><span class="str">        m (int or array_like): Order of cylindrical waves.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t"><span class="str">        area (float or array_like): Unit cell area.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t"><span class="str">        area (float or array_like): Lattice period a one-dimensional lattice.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t"><span class="str">    Returns:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t"><span class="str">        complex or array_like</span>&nbsp;</span><span class="r"></span></p>
@@ -245,7 +245,7 @@
     <p class="run"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t"><span class="key">def</span> <span class="nam">translate_periodic</span><span class="op">(</span><span class="nam">k</span><span class="op">,</span> <span class="nam">kpar</span><span class="op">,</span> <span class="nam">a</span><span class="op">,</span> <span class="nam">rs</span><span class="op">,</span> <span class="nam">out</span><span class="op">,</span> <span class="nam">in_</span><span class="op">=</span><span class="key">None</span><span class="op">,</span> <span class="nam">rsin</span><span class="op">=</span><span class="key">None</span><span class="op">,</span> <span class="nam">eta</span><span class="op">=</span><span class="num">0</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">    <span class="str">&quot;&quot;&quot;Translation coefficients for cylindrical waves on a lattice.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t"><span class="str">    Return the translation coefficents for the given modes on a lattice. The</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t"><span class="str">    Return the translation coefficients for the given modes on a lattice. The</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t"><span class="str">    computations employ the fast converging Ewald summation from :mod:`treams.lattice`.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
@@ -260,7 +260,7 @@
     <p class="pln"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t"><span class="str">        in_ (2- or 3-tuple of arrays): Input modes. If None is given, they are equal to the output </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t"><span class="str">            modes. If `len(in_) == 2`, `in_[0]` may be float and `in_[1]` must be integer. </span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t"><span class="str">            If `len(in_) == 3`, `in_[1]` may be float, while `in_[0]` and `in_[2]` must be integer.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t"><span class="str">        rsin (float): Shift vectors of the input modes. If None is given, they are equal</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t"><span class="str">        rsin ((M, 3)-array of float): Shift vectors of the input modes. If None is given, they are equal</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t182" href="#t182">182</a></span><span class="t"><span class="str">            to `rs`. Have units of 1/k.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t183" href="#t183">183</a></span><span class="t"><span class="str">        eta (float or complex, optional): Splitting parameter for the Ewald summation of</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t184" href="#t184">184</a></span><span class="t"><span class="str">            lattice sums. If zero, an estimation for the optimal value is done. Defaults</span>&nbsp;</span><span class="r"></span></p>
@@ -314,7 +314,7 @@
             <a class="nav" href="z_90c9f2ce08862335___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-18 17:56 +0000
+            created at 2026-11-19 13:56 +0000
         </p>
     </div>
 </footer>
