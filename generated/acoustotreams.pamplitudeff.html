@@ -60,17 +60,28 @@
 <dd><p>Far-field amplitude of pressure field.</p>
 <p>The resulting matrix maps the scattered pressure field coefficients in the scalar
 spherical or cylindrical wave basis to the far-field amplitude of the pressure field.</p>
-<p>The far-field amplitude is given in units of N/m.</p>
+<p>The far-field amplitude is given in units of N/m for spherical waves and
+Pa*m^1/2 for cylindrical waves.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> (<em>array_like</em>) – Evaluation points.</p></li>
+<li><p><strong>r</strong> (<em>array_like</em>) – Directions as Cartesian coordinates in the last
+dimension, which must have length 3.</p></li>
 <li><p><strong>basis</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarBasisSet</span></code>) – Basis set.</p></li>
 <li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air. Has units of 1/r.</p></li>
 <li><p><strong>material</strong> (<a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a> or tuple, optional) – Material
 parameters. Defaults to the air.</p></li>
 <li><p><strong>modetype</strong> (<em>str</em><em>, </em><em>optional</em>) – Mode type.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of shape <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">1,</span> <span class="pre">len(basis))</span></code>, where <code class="docutils literal notranslate"><span class="pre">...</span></code>
+is the shape of <code class="docutils literal notranslate"><span class="pre">r</span></code> without its last dimension. Multiplied with the expansion
+coefficients of the scattered field, it gives the far-field amplitude in the
+directions of <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>treams.util.AnnotatedArray</p>
 </dd>
 </dl>
 </dd></dl>

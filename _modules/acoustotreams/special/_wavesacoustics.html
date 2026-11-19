@@ -105,15 +105,15 @@
 <span class="sd">        z (float or array_like): Z-coordinate. Has units of 1/kx.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex, 3-array</span>
+<span class="sd">        complex array</span>
 <span class="sd">    </span>
 <span class="sd">    """</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">kx</span> <span class="o">+</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">ky</span> <span class="o">+</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">kz</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">kx</span> <span class="o">+</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">ky</span> <span class="o">+</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">kz</span><span class="p">))</span>
     <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">kx</span> <span class="o">*</span> <span class="n">phase</span><span class="p">,</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">phase</span><span class="p">,</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">phase</span><span class="p">],</span> <span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">/</span> <span class="n">k</span></div>
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">broadcast_arrays</span><span class="p">(</span><span class="n">kx</span> <span class="o">*</span> <span class="n">phase</span><span class="p">,</span> <span class="n">ky</span> <span class="o">*</span> <span class="n">phase</span><span class="p">,</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">phase</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">vec</span> <span class="o">/</span> <span class="n">k</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ssw_Psi">
@@ -125,8 +125,8 @@
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \Psi_{lm}^{(3)}(x, \theta, \varphi)</span>
-<span class="sd">        = h_l^{(1)}(x) Y_{lm}(\theta, \varphi)</span>
+<span class="sd">        \Psi_{lm}^{(3)}(kr, \theta, \varphi)</span>
+<span class="sd">        = h_l^{(1)}(kr) Y_{lm}(\theta, \varphi)</span>
 
 <span class="sd">    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_hankel1`.</span>
 
@@ -149,9 +149,9 @@
 <div class="viewcode-block" id="ssw_psi">
 <a class="viewcode-back" href="../../../generated/generated/acoustotreams.special.ssw_psi_farfield.html#acoustotreams.special.ssw_psi">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ssw_psi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-<span class="w">     </span><span class="sa">r</span><span class="sd">"""Far-field amplitude of singular scalar spherical wave :math:`\psi`</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Far-field amplitude of singular scalar spherical wave :math:`\psi`</span>
 
-<span class="sd">     It is defined as</span>
+<span class="sd">    It is defined as</span>
 
 <span class="sd">    .. math::</span>
 
@@ -179,7 +179,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
 <span class="sd">     """</span>
-     <span class="k">return</span> <span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
              <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">((</span><span class="n">k</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> 
                              <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)))</span>
              <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -189,16 +189,16 @@
 <div class="viewcode-block" id="ssw_rPsi">
 <a class="viewcode-back" href="../../../generated/generated/acoustotreams.special.ssw_rPsi.html#acoustotreams.special.ssw_rPsi">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ssw_rPsi</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
-<span class="w">     </span><span class="sa">r</span><span class="sd">"""Regular scalar spherical wave :math:`\Psi`</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Regular scalar spherical wave :math:`\Psi`</span>
 
-<span class="sd">     The regular scalar spherical wave is defined as</span>
+<span class="sd">    The regular scalar spherical wave is defined as</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \Psi_{lm}^{(1)}(x, \theta, \varphi)</span>
-<span class="sd">        = j_l(x) Y_{lm}(\theta, \varphi)</span>
+<span class="sd">        \Psi_{lm}^{(1)}(kr, \theta, \varphi)</span>
+<span class="sd">        = j_l(kr) Y_{lm}(\theta, \varphi)</span>
 
-<span class="sd">    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_jn`.</span>
+<span class="sd">    with :py:obj:`treams.special.sph_harm` and :py:obj:`scipy.special.spherical_jn`.</span>
 
 <span class="sd">    This function describes a solution to the scalar Helmholtz wave</span>
 <span class="sd">    equation in spherical coordinates.</span>
@@ -213,51 +213,51 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
 <span class="sd">    """</span>
-     <span class="k">return</span> <span class="n">sc</span><span class="o">.</span><span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">kr</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">sc</span><span class="o">.</span><span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">kr</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="scw_Psi">
 <a class="viewcode-back" href="../../../generated/generated/acoustotreams.special.scw_Psi.html#acoustotreams.special.scw_Psi">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scw_Psi</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">krr</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="w">     </span><span class="sa">r</span><span class="sd">"""Singular scalar cylindrical wave :math:`\Psi`</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Singular scalar cylindrical wave :math:`\Psi`</span>
 
-<span class="sd">     The singular scalar cylindrical wave is defined as</span>
+<span class="sd">    The singular scalar cylindrical wave is defined as</span>
 
-<span class="sd">     .. math::</span>
+<span class="sd">    .. math::</span>
 
-<span class="sd">         \Psi_{k_z m}^{(3)}(x_\rho, \varphi, z)</span>
-<span class="sd">        = H_m^{(1)}(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}</span>
+<span class="sd">        \Psi_{k_z m}^{(3)}(k_\rho \rho, \varphi, z)</span>
+<span class="sd">        = H_m^{(1)}(k_\rho \rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}</span>
 
-<span class="sd">     using :py:obj:`scipy.special.hankel1`.</span>
+<span class="sd">    using :py:obj:`scipy.special.hankel1`.</span>
 
-<span class="sd">     This function describes a solution to the scalar Helmholtz wave</span>
-<span class="sd">     equation in cylindrical coordinates.</span>
+<span class="sd">    This function describes a solution to the scalar Helmholtz wave</span>
+<span class="sd">    equation in cylindrical coordinates.</span>
 
-<span class="sd">     Args:</span>
-<span class="sd">         kz (float or array_like): Z-component of the wave vector.</span>
-<span class="sd">         m (int or array_like): Order :math:`|m| \leq l`.</span>
-<span class="sd">         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>
-<span class="sd">         phi (float or array_like): Azimuthal angle (rad).</span>
-<span class="sd">         z (float or array_like): Z-coordinate. Has units of 1/kz.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        kz (float or array_like): Z-component of the wave vector.</span>
+<span class="sd">        m (int or array_like): Order :math:`m`.</span>
+<span class="sd">        krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>
+<span class="sd">        phi (float or array_like): Azimuthal angle (rad).</span>
+<span class="sd">        z (float or array_like): Z-coordinate. Has units of 1/kz.</span>
 
-<span class="sd">     Returns:</span>
-<span class="sd">         complex</span>
-<span class="sd">      """</span>
-     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">+</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">hankel1</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">krr</span><span class="p">)</span></div>
+<span class="sd">    Returns:</span>
+<span class="sd">        complex</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">+</span> <span class="n">kz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">hankel1</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">krr</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="scw_psi">
 <a class="viewcode-back" href="../../../generated/generated/acoustotreams.special.scw_psi_farfield.html#acoustotreams.special.scw_psi">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">scw_psi</span><span class="p">(</span><span class="n">kz</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">krho</span><span class="p">):</span>
-<span class="w">     </span><span class="sa">r</span><span class="sd">"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`</span>
 
-<span class="sd">     It is defined as</span>
+<span class="sd">    It is defined as</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        \psi_{k_z m}(x, y, \varphi)</span>
-<span class="sd">        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-|m|} \mathrm{e}^{-\mathrm{i} \pi/4}</span>
+<span class="sd">        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-m} \mathrm{e}^{-\mathrm{i} \pi/4}</span>
 <span class="sd">        \mathrm{e}^{-\mathrm{i} k_{\rho} \left(x \cos \varphi + y \sin \varphi\right)}</span>
 <span class="sd">        \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}</span>
 
@@ -277,8 +277,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
 <span class="sd">     """</span>
-     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">krho</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="n">j</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -287,7 +287,7 @@
                     <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">((</span><span class="n">krho</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">krho</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">]))))</span> <span class="o">*</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> 
                     <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
-     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="scw_rPsi">
@@ -299,8 +299,8 @@
 
 <span class="sd">     .. math::</span>
 
-<span class="sd">         \Psi_{k_z m}^{(1)}(x_\rho, \varphi, z)</span>
-<span class="sd">        = J_m(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}</span>
+<span class="sd">         \Psi_{k_z m}^{(1)}(k_\rho \rho, \varphi, z)</span>
+<span class="sd">        = J_m(k_\rho \rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}</span>
 
 <span class="sd">     using :py:obj:`scipy.special.jv`.</span>
 
@@ -324,15 +324,15 @@
 <div class="viewcode-block" id="vsw_L">
 <a class="viewcode-back" href="../../../generated/generated/acoustotreams.special.vsw_L.html#acoustotreams.special.vsw_L">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">vsw_L</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
-<span class="w">     </span><span class="sa">r</span><span class="sd">"""Singular longitudinal vector spherical wave L</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Singular longitudinal vector spherical wave L</span>
 
-<span class="sd">     The singular vector spherical wave is defined as</span>
+<span class="sd">    The singular vector spherical wave is defined as</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \mathbf{L}_{lm}^{(3)}(x, \theta, \varphi)</span>
-<span class="sd">        = -\mathrm{i} \left[{h_l^{(1)}}'(x) \mathbf{Z}_{lm}(\theta, \varphi) </span>
-<span class="sd">        + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]</span>
+<span class="sd">        \mathbf{L}_{lm}^{(3)}(kr, \theta, \varphi)</span>
+<span class="sd">        = -\mathrm{i} \left[{h_l^{(1)}}'(kr) \mathbf{Z}_{lm}(\theta, \varphi) </span>
+<span class="sd">        + \sqrt{l(l+1)} \frac{h_l^{(1)}(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]</span>
 
 <span class="sd">    with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, </span>
 <span class="sd">    :py:obj:`treams.special.spherical_hankel1`, and :py:obj:`treams.special.spherical_hankel1_d`.</span>
@@ -350,7 +350,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        complex 3-array</span>
 <span class="sd">     """</span>
-     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">vsh_Z</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">spherical_hankel1_d</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">kr</span><span class="p">)</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">vsh_Z</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">spherical_hankel1_d</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">kr</span><span class="p">)</span>  <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
          <span class="n">l</span> <span class="o">*</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
      <span class="p">)</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">vsh_Y</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">sc</span><span class="o">.</span><span class="n">spherical_hankel1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">kr</span><span class="p">)</span> <span class="o">/</span> <span class="n">kr</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="n">j</span><span class="p">)</span></div>
 
@@ -358,15 +358,15 @@
 <div class="viewcode-block" id="vsw_rL">
 <a class="viewcode-back" href="../../../generated/generated/acoustotreams.special.vsw_rL.html#acoustotreams.special.vsw_rL">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">vsw_rL</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kr</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
-<span class="w">     </span><span class="sa">r</span><span class="sd">"""Regular longitudinal vector spherical wave L</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Regular longitudinal vector spherical wave L</span>
 
-<span class="sd">     The regular vector spherical wave is defined as</span>
+<span class="sd">    The regular vector spherical wave is defined as</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \mathbf{L}_{lm}^{(1)}(x, \theta, \varphi)</span>
-<span class="sd">        = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) </span>
-<span class="sd">        + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]</span>
+<span class="sd">        \mathbf{L}_{lm}^{(1)}(kr, \theta, \varphi)</span>
+<span class="sd">        = -\mathrm{i} \left[j_l'(kr) \mathbf{Z}_{lm}(\theta, \varphi) </span>
+<span class="sd">        + \sqrt{l(l+1)}\frac{j_l(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]</span>
 
 <span class="sd">    with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, </span>
 <span class="sd">    and :py:obj:`scipy.special.spherical_jn`.</span>
@@ -384,8 +384,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        complex, 3-array</span>
 <span class="sd">     """</span>
-     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kr</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kr</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
@@ -403,7 +403,7 @@
                     <span class="n">sc</span><span class="o">.</span><span class="n">vsh_Y</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> 
                     <span class="n">sc</span><span class="o">.</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">kr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">kr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="n">j</span><span class="p">)</span>
                 <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
 
 
 
@@ -416,10 +416,10 @@
 
 <span class="sd">     .. math::</span>
 
-<span class="sd">         \mathbf{L}_{k_z m}^{(3)}(x_\rho, \varphi, z)</span>
-<span class="sd">        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}' \hat{\boldsymbol{\rho}} </span>
-<span class="sd">        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} </span>
-<span class="sd">        + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] </span>
+<span class="sd">         \mathbf{L}_{k_z m}^{(3)}(k_\rho \rho, \varphi, z)</span>
+<span class="sd">        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(k_\rho \rho)}' \hat{\boldsymbol{\rho}} </span>
+<span class="sd">        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(k_\rho \rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} </span>
+<span class="sd">        + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(k_\rho \rho) \hat{\mathbf{z}} \right] </span>
 <span class="sd">        \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}</span>
 
 <span class="sd">     using :py:obj:`treams.special.hankel1_d` and :py:obj:`scipy.special.hankel1`.</span>
@@ -460,10 +460,10 @@
 
 <span class="sd">     .. math::</span>
 
-<span class="sd">         \mathbf{L}_{k_z m}^{(1)}(x_\rho, \varphi, z)</span>
-<span class="sd">        = \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}' \hat{\boldsymbol{\rho}} </span>
-<span class="sd">        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} </span>
-<span class="sd">        + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] </span>
+<span class="sd">         \mathbf{L}_{k_z m}^{(1)}(k_\rho \rho, \varphi, z)</span>
+<span class="sd">        = \left[\frac{k_{\rho}}{k} {J_m(k_\rho \rho)}' \hat{\boldsymbol{\rho}} </span>
+<span class="sd">        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(k_\rho \rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} </span>
+<span class="sd">        + \frac{\mathrm{i} k_z}{k}J_m(k_\rho \rho) \hat{\mathbf{z}} \right] </span>
 <span class="sd">        \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}</span>
 
 <span class="sd">     using :py:obj:`treams.special.jv_d` and :py:obj:`scipy.special.jv`.</span>
@@ -526,12 +526,12 @@
 <span class="sd">    </span>
 <span class="sd">    Singular translation coefficient of scalar and longitudinal vector spherical waves.</span>
 
-<span class="sd">    Definded by</span>
+<span class="sd">    Defined by</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \alpha_{\lambda \mu l m}^{(3)}(x, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\</span>
-<span class="sd">        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} h^{(1)}_q(x) Y_{q,m-\mu}(\theta,\varphi) \\</span>
+<span class="sd">        C_{\lambda \mu l m}^{(3)}(kr, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\</span>
+<span class="sd">        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} h^{(1)}_q(kr) Y_{q,m-\mu}(\theta,\varphi) \\</span>
 <span class="sd">        \cdot \begin{pmatrix}</span>
 <span class="sd">            l&amp; \lambda &amp; q \\</span>
 <span class="sd">            m &amp; -\mu &amp; \mu-m</span>
@@ -555,7 +555,7 @@
 <span class="sd">        m (int or array_like): Order of the input mode.</span>
 <span class="sd">        x (float or complex or array_like): Translation in units of the wavenumber in the medium.</span>
 <span class="sd">        theta (float or complex or array_like): Polar angle (rad).</span>
-<span class="sd">        phi (float or array_like): Azimuthal angel (rad).</span>
+<span class="sd">        phi (float or array_like): Azimuthal angle (rad).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
@@ -581,12 +581,12 @@
 <span class="sd">    </span>
 <span class="sd">    Regular translation coefficient of scalar and longitudinal vector spherical waves.</span>
 
-<span class="sd">    Definded by</span>
+<span class="sd">    Defined by</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        \alpha_{\lambda \mu l m}^{(1)}(x, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\</span>
-<span class="sd">        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} j_q(x) Y_{q,m-\mu}(\theta,\varphi) \\</span>
+<span class="sd">        C_{\lambda \mu l m}^{(1)}(kr, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\</span>
+<span class="sd">        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} j_q(kr) Y_{q,m-\mu}(\theta,\varphi) \\</span>
 <span class="sd">        \cdot \begin{pmatrix}</span>
 <span class="sd">            l&amp; \lambda &amp; q \\</span>
 <span class="sd">            m &amp; -\mu &amp; \mu-m</span>
@@ -611,7 +611,7 @@
 <span class="sd">        m (int or array_like): Order of the input mode.</span>
 <span class="sd">        kr (float or complex or array_like): Translation in units of the wavenumber in the medium.</span>
 <span class="sd">        theta (float or complex or array_like): Polar angle (rad).</span>
-<span class="sd">        phi (float or array_like): Azimuthal angel (rad).</span>
+<span class="sd">        phi (float or array_like): Azimuthal angle (rad).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex</span>
@@ -636,20 +636,19 @@
 <span class="sd">    </span>
 <span class="sd">    Singular translation coefficient of scalar and longitudinal vector cylindrical waves.</span>
 
-<span class="sd">    Definded by</span>
+<span class="sd">    Defined by</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        \begin{cases}</span>
-<span class="sd">            H_{m - \mu}^{(1)}(x_\rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}</span>
+<span class="sd">            H_{m - \mu}^{(1)}(k_\rho \rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}</span>
 <span class="sd">            &amp; \text{if }k_{z,1} = k_{z,2} \\</span>
 <span class="sd">            0 &amp; \text{otherwise}</span>
 <span class="sd">        \end{cases}</span>
 
 <span class="sd">    where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:py:obj:`scipy.special.hankel1`).</span>
 
-<span class="sd">    These coefficients are used to translate from scattered to scattered modes and</span>
-<span class="sd">    from incident to incident modes.</span>
+<span class="sd">    These coefficients are used to translate from scattered to incident modes.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        kz1 (float or array_like): Z-component of the wave vector of the output mode.</span>
@@ -658,7 +657,7 @@
 <span class="sd">        m (int or array_like): Order of the input mode.</span>
 <span class="sd">        krr (float or complex or array_like): Translation in radial direction in units of </span>
 <span class="sd">            the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>
-<span class="sd">        phi (float or array_like): Azimuthal angel.</span>
+<span class="sd">        phi (float or array_like): Azimuthal angle.</span>
 <span class="sd">        z (float or array_like): Translation in the z-direction. Has units of 1/kz1.</span>
 
 <span class="sd">    Returns:</span>
@@ -677,19 +676,20 @@
 <span class="sd">    </span>
 <span class="sd">    Regular translation coefficient of scalar and longitudinal vector cylindrical waves.</span>
 
-<span class="sd">    Definded by</span>
+<span class="sd">    Defined by</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        \begin{cases}</span>
-<span class="sd">            J_{m - \mu}(x_\rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}</span>
+<span class="sd">            J_{m - \mu}(k_\rho \rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}</span>
 <span class="sd">            &amp; \text{if }k_{z,1} = k_{z,2} \\</span>
 <span class="sd">            0 &amp; \text{otherwise}</span>
 <span class="sd">        \end{cases}</span>
 
 <span class="sd">    where :math:`J_{m - \mu}` are the Bessel functions (:py:obj:`scipy.special.jv`).</span>
 
-<span class="sd">    These coefficients are used to translate from scattered to incident modes.</span>
+<span class="sd">        These coefficients are used to translate from scattered to scattered modes or</span>
+<span class="sd">    from incident to incident modes.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        kz1 (float or array_like): Z-component of the wave vector of the output mode.</span>
@@ -698,7 +698,7 @@
 <span class="sd">        m (int or array_like): Order of the input mode.</span>
 <span class="sd">        krr (float or complex or array_like): Translation in radial direction in units of </span>
 <span class="sd">            the radial component of the wave vector in the medium :math:`k_\rho \rho`.</span>
-<span class="sd">        phi (float or array_like): Azimuthal angel.</span>
+<span class="sd">        phi (float or array_like): Azimuthal angle.</span>
 <span class="sd">        z (float or array_like): Translation in the z-direction. Has units of 1/kz1.</span>
 
 <span class="sd">    Returns:</span>

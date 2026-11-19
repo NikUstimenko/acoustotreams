@@ -163,9 +163,9 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">impedance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Relative impedance for longitudinal waves (Pa*s/m).</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Impedance for longitudinal waves (Pa*s/m).</span>
 
-<span class="sd">        The relative impedance is defined by :math:`Z = \rho c`.</span>
+<span class="sd">        The impedance is defined by :math:`Z = \rho c`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex</span>
@@ -174,9 +174,9 @@
     
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">impedancet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">"""Relative impedance for transverse waves (Pa*s/m).</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Impedance for transverse waves (Pa*s/m).</span>
 
-<span class="sd">        The relative impedance is defined by :math:`Z = \rho c_t`.</span>
+<span class="sd">        The impedance is defined by :math:`Z = \rho c_t`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            complex</span>
@@ -189,7 +189,7 @@
 <span class="w">        </span><span class="sd">"""Return a tuple containing all material parameters.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple</span>
+<span class="sd">            tuple[complex, complex, complex]: ``(rho, c, ct)``</span>
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span></div>
 
@@ -265,12 +265,24 @@
 <span class="sd">            k0 (float): Angular wavenumber in the air.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple</span>
+<span class="sd">             complex or tuple[complex, ...]: Wavenumber of longitudinal waves.</span>
+<span class="sd">             If ``c`` is a sequence, a tuple with one wavenumber per entry of ``c``.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If ``c`` (or any entry of it) is zero, i.e. the material</span>
+<span class="sd">                is an acoustically soft or hard medium, in which no waves</span>
+<span class="sd">                propagate.</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span></div>
+        <span class="n">is_seq</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
+        <span class="n">cs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="k">if</span> <span class="n">is_seq</span> <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"longitudinal wavenumber is undefined for c = 0: "</span>
+                <span class="s2">"soft and hard media do not sustain propagating waves"</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_seq</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span></div>
 
 
         
@@ -283,12 +295,23 @@
 <span class="sd">            k0 (float): Angular wavenumber in the air.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple</span>
+<span class="sd">            complex or tuple[complex, ...]: Wavenumber of transverse waves.</span>
+<span class="sd">            If ``ct`` is a sequence, a tuple with one wavenumber per entry of ``ct``.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If ``ct`` (or any entry of it) is zero, i.e. the medium is</span>
+<span class="sd">                a fluid and does not sustain transverse waves.</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">ct</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span></div>
+        <span class="n">is_seq</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
+        <span class="n">cts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span> <span class="k">if</span> <span class="n">is_seq</span> <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ct</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">ct</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">cts</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"transverse wavenumber is undefined for ct = 0: "</span>
+                <span class="s2">"the medium does not sustain transverse waves (see 'isshear')"</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_seq</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="n">ct</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">cts</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ct</span></div>
 
     
 <div class="viewcode-block" id="AcousticMaterial.krhos">
@@ -296,7 +319,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">krhos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kz</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""The (cylindrically) radial part of the wave vector for longitudinal waves .</span>
 
-<span class="sd">        The cylindrically radial part is defined by :math:`k_\rho = \sqrt(k^2 - k_z^2)`.</span>
+<span class="sd">        The cylindrically radial part is defined by :math:`k_\rho = \sqrt{k^2 - k_z^2}`.</span>
 <span class="sd">        The returned values have non-negative imaginary parts.</span>
 
 <span class="sd">        Args:</span>
@@ -316,7 +339,7 @@
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""The z-component of the wave vector for longitudinal waves.</span>
 
 <span class="sd">        The z-component of the wave vector is defined by</span>
-<span class="sd">        :math:`k_z = \sqrt(k^2 - k_x^2 - k_y^2)`. The returned values have</span>
+<span class="sd">        :math:`k_z = \sqrt{k^2 - k_x^2 - k_y^2}`. The returned values have</span>
 <span class="sd">        non-negative imaginary parts.</span>
 
 <span class="sd">        Args:</span>
@@ -336,7 +359,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">krhost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kz</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""The (cylindrically) radial part of the wave vector for transverse waves.</span>
 
-<span class="sd">        The cylindrically radial part is defined by :math:`k_\rho = \sqrt(k^2 - k_z^2)`.</span>
+<span class="sd">        The cylindrically radial part is defined by :math:`k_\rho = \sqrt{k^2 - k_z^2}`.</span>
 <span class="sd">        The returned values have non-negative imaginary parts.</span>
 
 <span class="sd">        Args:</span>
@@ -356,7 +379,7 @@
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""The z-component of the wave vector for transverse waves.</span>
 
 <span class="sd">        The z-component of the wave vector is defined by</span>
-<span class="sd">        :math:`k_z = \sqrt(k^2 - k_x^2 - k_y^2)`. The returned values have</span>
+<span class="sd">        :math:`k_z = \sqrt{k^2 - k_x^2 - k_y^2}`. The returned values have</span>
 <span class="sd">        non-negative imaginary parts.</span>
 
 <span class="sd">        Args:</span>

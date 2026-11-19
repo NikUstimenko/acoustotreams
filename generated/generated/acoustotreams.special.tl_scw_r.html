@@ -60,15 +60,18 @@
 <dt class="sig sig-object py" id="acoustotreams.special.tl_scw_r">
 <span class="sig-prename descclassname"><span class="pre">acoustotreams.special.</span></span><span class="sig-name descname"><span class="pre">tl_scw_r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kz1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kz2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">krr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/acoustotreams/special/_wavesacoustics.html#tl_scw_r"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.special.tl_scw_r" title="Link to this definition">¶</a></dt>
 <dd><p>Regular translation coefficient of scalar and longitudinal vector cylindrical waves.</p>
-<p>Definded by</p>
+<p>Defined by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{cases}
-    J_{m - \mu}(x_\rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}
+    J_{m - \mu}(k_\rho \rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}
     &amp; \text{if }k_{z,1} = k_{z,2} \\
     0 &amp; \text{otherwise}
 \end{cases}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(J_{m - \mu}\)</span> are the Bessel functions (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.jv.html#scipy.special.jv" title="(in SciPy v1.18.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.special.jv</span></code></a>).</p>
-<p>These coefficients are used to translate from scattered to incident modes.</p>
+<blockquote>
+<div><p>These coefficients are used to translate from scattered to scattered modes or</p>
+</div></blockquote>
+<p>from incident to incident modes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -78,7 +81,7 @@
 <li><p><strong>m</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order of the input mode.</p></li>
 <li><p><strong>krr</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Translation in radial direction in units of
 the radial component of the wave vector in the medium <span class="math notranslate nohighlight">\(k_\rho \rho\)</span>.</p></li>
-<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angel.</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angle.</p></li>
 <li><p><strong>z</strong> (<em>float</em><em> or </em><em>array_like</em>) – Translation in the z-direction. Has units of 1/kz1.</p></li>
 </ul>
 </dd>

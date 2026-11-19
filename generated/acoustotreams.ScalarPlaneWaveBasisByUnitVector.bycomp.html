@@ -61,17 +61,15 @@
 <dd><p>Creates an instance of <a class="reference internal" href="acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp" title="acoustotreams.ScalarPlaneWaveBasisByComp"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code></a>.</p>
 <p>The plane-wave basis is changed to a partial basis, where only two (real-valued)
 wave-vector components are specified. A third component is then inferred from the
-dispersion relation, which depends on the wavenumber, material and
-<code class="docutils literal notranslate"><span class="pre">modetype</span></code>, which determines the sign of the third component.</p>
+dispersion relation, which depends on the wavenumber and material.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air (rad/m).</p></li>
 <li><p><strong>alignment</strong> (<em>str</em><em>, </em><em>optional</em>) – Wave-vector components included in the
 partial basis. Defaults to “xy”, other permitted values are “yz” and
 “zx”.</p></li>
-<li><p><strong>k0</strong> (<em>float</em><em>, </em><em>optional</em>) – Angular wavenumber in the air (rad/m).
-Verifies that the current basis satisfies the dispersion relation.</p></li>
-<li><p><strong>material</strong> (<a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial</span></code></a> or tuple) – Material definition.
+<li><p><strong>material</strong> (<a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">acoustotreams.AcousticMaterial</span></code></a>) – Material definition.
 Defaults to the air.</p></li>
 </ul>
 </dd>

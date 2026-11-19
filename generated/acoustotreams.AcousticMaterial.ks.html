@@ -64,7 +64,16 @@
 <dd class="field-odd"><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple</p>
+<dd class="field-even"><p>Wavenumber of longitudinal waves.
+If <code class="docutils literal notranslate"><span class="pre">c</span></code> is a sequence, a tuple with one wavenumber per entry of <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex or tuple[complex, …]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">c</span></code> (or any entry of it) is zero, i.e. the material
+    is an acoustically soft or hard medium, in which no waves
+    propagate.</p>
 </dd>
 </dl>
 </dd></dl>

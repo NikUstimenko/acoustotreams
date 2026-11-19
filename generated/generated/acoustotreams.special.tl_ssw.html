@@ -60,10 +60,10 @@
 <dt class="sig sig-object py" id="acoustotreams.special.tl_ssw">
 <span class="sig-prename descclassname"><span class="pre">acoustotreams.special.</span></span><span class="sig-name descname"><span class="pre">tl_ssw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambda_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/acoustotreams/special/_wavesacoustics.html#tl_ssw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.special.tl_ssw" title="Link to this definition">¶</a></dt>
 <dd><p>Singular translation coefficient of scalar and longitudinal vector spherical waves.</p>
-<p>Definded by</p>
+<p>Defined by</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\alpha_{\lambda \mu l m}^{(3)}(x, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\
-\cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} h^{(1)}_q(x) Y_{q,m-\mu}(\theta,\varphi) \\
+\[\begin{split}C_{\lambda \mu l m}^{(3)}(kr, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\
+\cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} h^{(1)}_q(kr) Y_{q,m-\mu}(\theta,\varphi) \\
 \cdot \begin{pmatrix}
     l&amp; \lambda &amp; q \\
     m &amp; -\mu &amp; \mu-m
@@ -86,7 +86,7 @@ functions (<a class="reference external" href="https://tfp-photonics.github.io/t
 <li><p><strong>m</strong> (<em>int</em><em> or </em><em>array_like</em>) – Order of the input mode.</p></li>
 <li><p><strong>x</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Translation in units of the wavenumber in the medium.</p></li>
 <li><p><strong>theta</strong> (<em>float</em><em> or </em><em>complex</em><em> or </em><em>array_like</em>) – Polar angle (rad).</p></li>
-<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angel (rad).</p></li>
+<li><p><strong>phi</strong> (<em>float</em><em> or </em><em>array_like</em>) – Azimuthal angle (rad).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

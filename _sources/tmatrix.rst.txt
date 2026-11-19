@@ -69,8 +69,8 @@ We select the T-matrix and illuminate it with a plane wave. Next, we set up
 the x and z coordinates and define the auxiliary function to compute
 the intensity at a single valid point. We can calculate the intensity
 of the fields as a superposition of incident and scattered fields.
-Here, we also accelerate the computations using paralyzation by
-:mod:`Parallel` in :mod:`joblib`. 
+Here, we also accelerate the computations using parallelization with
+:class:`joblib.Parallel`. 
 
 Finally, we compute the radiation pattern of the sphere at the same frequency
 as a function of the polar angle :math:`\theta`. The red arrow indicates 
@@ -200,7 +200,7 @@ xy plane.
 
 With a few changes we computed the fields in a square array of the same spheres as in the
 previous examples. Most importantly we changed the value of the variable :code:`lattice`
-to an instance of a two-dimensional :class:`~acoustotreams.Lattice` and set :code:`kpar`
+to an instance of a two-dimensional :class:`~treams.Lattice` and set :code:`kpar`
 accordingly. Most other changes are just resulting from the change of the coordinate
 system.
 

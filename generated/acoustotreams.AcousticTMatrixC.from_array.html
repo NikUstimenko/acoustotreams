@@ -58,7 +58,23 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="acoustotreams.AcousticTMatrixC.from_array">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">AcousticTMatrixC.</span></span><span class="sig-name descname"><span class="pre">from_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acoustotreams/_tmatrixacoustics.html#AcousticTMatrixC.from_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.AcousticTMatrixC.from_array" title="Link to this definition">¶</a></dt>
-<dd><p>One-dimensional array of spherical T-matrices.</p>
+<dd><p>Cylindrical T-matrix of a one-dimensional array of spherical T-matrices.</p>
+<p>The objects described by the spherical T-matrix <code class="docutils literal notranslate"><span class="pre">tm</span></code> are repeated periodically
+along the z-axis, and their scattered field is expanded in the cylindrical waves of
+<code class="docutils literal notranslate"><span class="pre">basis</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tm</strong> (<a class="reference internal" href="acoustotreams.AcousticTMatrix.html#acoustotreams.AcousticTMatrix" title="acoustotreams.AcousticTMatrix"><em>AcousticTMatrix</em></a>) – Spherical T-matrix of the objects in one unit cell.</p></li>
+<li><p><strong>basis</strong> (<a class="reference internal" href="acoustotreams.ScalarCylindricalWaveBasis.html#acoustotreams.ScalarCylindricalWaveBasis" title="acoustotreams.ScalarCylindricalWaveBasis"><em>ScalarCylindricalWaveBasis</em></a>) – Basis of the cylindrical T-matrix.</p></li>
+<li><p><strong>eta</strong> (<em>float</em><em> or </em><em>complex</em><em>, </em><em>optional</em>) – Splitting parameter for the Ewald summation of
+the lattice sums. Defaults to 0, which selects a value automatically.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>AcousticTMatrixC</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

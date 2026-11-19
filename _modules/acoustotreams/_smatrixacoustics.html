@@ -133,7 +133,7 @@
 <span class="sd">    propagating in negative z-direction, respectively. Each of these four matrices</span>
 <span class="sd">    also maps different diffraction orders to one another.</span>
 
-<span class="sd">    The wavenumber :attr:`k0` and, if not the air, the material :attr:`material` </span>
+<span class="sd">    The wavenumber ``k0`` and, if not the air, the material ``material`` </span>
 <span class="sd">    are required.</span>
 
 <span class="sd">    Args:</span>
@@ -231,7 +231,7 @@
 <span class="sd">            materials (Sequence[AcousticMaterial]): Material definitions.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            AcousticSMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="n">materials</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">AcousticMaterial</span><span class="p">,</span> <span class="n">materials</span><span class="p">))</span>
         <span class="n">qs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">)),</span> <span class="nb">complex</span><span class="p">)</span>
@@ -261,7 +261,7 @@
 <span class="sd">                positive z.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            AcousticSMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">iter</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span>
@@ -291,7 +291,7 @@
 <span class="sd">                from negative to positive z.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            AcousticSMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="n">acc</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
@@ -314,7 +314,7 @@
 <span class="sd">            material (AcousticMaterial, optional): Material definition.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            AcousticSMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="n">sup</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">"up"</span><span class="p">)</span>
         <span class="n">sdown</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span>
@@ -340,7 +340,7 @@
 <span class="sd">            basis (ScalarPlaneWaveBasisByComp): Basis definition.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            SMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">AcousticTMatrixC</span><span class="p">):</span>
             <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -358,14 +358,14 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sm</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Couple another S-matrix on top of the current one.</span>
 
-<span class="sd">        See also :func:`AcousticSMatrix.stack` for a function that does not change the</span>
+<span class="sd">        See also :meth:`~acoustotreams.AcousticSMatrices.stack` for a function that does not change the</span>
 <span class="sd">        current S-matrix but creates a new one.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            sm (AcousticSMatrix): Acoustic S-matrix to add.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            AcousticSMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
         <span class="n">snew</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
@@ -390,7 +390,7 @@
 <span class="sd">            n (int, optional): Number of times to double itself. Defaults to 1.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            AcousticSMatrix</span>
+<span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -414,15 +414,18 @@
 <span class="sd">            illu2 (complex or array_like, optional): Second insonification. If used, the first</span>
 <span class="sd">                argument is taken to be coming from below and this one to be coming from</span>
 <span class="sd">                above.</span>
-<span class="sd">            smat (AcousticSMatrix, optional): Second S-matrix for computing the</span>
+<span class="sd">            smat (AcousticSMatrices, optional): Second S-matrix for computing the</span>
 <span class="sd">                field expansion between two S-matrices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple</span>
+<span class="sd">            tuple[array_like, ...]: Expansion coefficients of the outgoing fields.</span>
+<span class="sd">            Without ``smat``, the 2-tuple ``(field_up, field_down)``.</span>
+<span class="sd">            With ``smat``, the 4-tuple</span>
+<span class="sd">            ``(field_up, field_down, field_in_up, field_in_down)``.</span>
 <span class="sd">        """</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="nb">tuple</span><span class="p">))]</span>
+            <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">modetype</span><span class="p">))]</span>
         <span class="n">illu2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">illu</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="k">if</span> <span class="n">illu2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">illu2</span>
         <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="n">illu</span><span class="p">,</span> <span class="n">illu2</span> <span class="o">=</span> <span class="n">illu2</span><span class="p">,</span> <span class="n">illu</span>
@@ -452,11 +455,11 @@
 <span class="sd">            illu (complex or array_like): Expansion coefficients of the incoming wave.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple</span>
+<span class="sd">            tuple[float, float]: ``(transmittance, reflectance)``</span>
 <span class="sd">        """</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="nb">tuple</span><span class="p">))]</span>
+            <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">modetype</span><span class="p">))]</span>
         <span class="n">trans</span><span class="p">,</span> <span class="n">refl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">illuminate</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
         <span class="n">material</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -495,8 +498,7 @@
 <span class="sd">            \end{pmatrix}\,.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            complex or array_like</span>
-
+<span class="sd">            array_like</span>
 <span class="sd">        """</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dim</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
@@ -536,8 +538,10 @@
 <span class="sd">            az (float): Lattice pitch along the z-direction (m).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple</span>
-
+<span class="sd">            tuple[ndarray, ndarray]: ``(kz, v)``. ``kz`` is a 1D complex array</span>
+<span class="sd">            of the Bloch wave numbers :math:`k_z` (1/m), of length</span>
+<span class="sd">            ``2 * len(basis)``. ``v`` is a 2D array whose column ``v[:, i]`` is</span>
+<span class="sd">            the eigenvector belonging to ``kz[i]``.</span>
 <span class="sd">        """</span>
         <span class="n">w</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodic</span><span class="p">())</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="n">az</span><span class="p">,</span> <span class="n">v</span></div>
@@ -576,7 +580,7 @@
 <span class="sd">            the S-matrix. Defaults to the air.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        array-like</span>
+<span class="sd">        ndarray: Real matrix of shape ``(len(basis), len(basis))``.</span>
 <span class="sd">    """</span>
     <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
     <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kzs</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">kvecs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">)</span>

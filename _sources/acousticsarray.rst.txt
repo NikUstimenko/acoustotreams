@@ -102,8 +102,8 @@ Name     Description
 ======== ==============================================================
 basis    Basis set: spherical, cylindrical, planar
 k0       Wave number in air (at the room temperature)
-kpar     Phase relation in lattices (:class:`acoustotreams.WaveVector`)
-lattice  Definition of a lattice (:class:`acoustotreams.Lattice`)
+kpar     Phase relation in lattices (``WaveVector``)
+lattice  Definition of a lattice (:class:`~treams.Lattice`)
 modetype Modetype, depends on wave (:ref:`params:Mode types`)
 material Embedding material (:class:`acoustotreams.AcousticMaterial`)
 ======== ==============================================================

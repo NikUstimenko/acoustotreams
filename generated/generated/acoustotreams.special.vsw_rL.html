@@ -60,13 +60,11 @@
 <dt class="sig sig-object py" id="acoustotreams.special.vsw_rL">
 <span class="sig-prename descclassname"><span class="pre">acoustotreams.special.</span></span><span class="sig-name descname"><span class="pre">vsw_rL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/acoustotreams/special/_wavesacoustics.html#vsw_rL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#acoustotreams.special.vsw_rL" title="Link to this definition">¶</a></dt>
 <dd><p>Regular longitudinal vector spherical wave L</p>
-<blockquote>
-<div><p>The regular vector spherical wave is defined as</p>
-</div></blockquote>
+<p>The regular vector spherical wave is defined as</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{L}_{lm}^{(1)}(x, \theta, \varphi)
-= -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi)
-+ \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
+\[\mathbf{L}_{lm}^{(1)}(kr, \theta, \varphi)
+= -\mathrm{i} \left[j_l'(kr) \mathbf{Z}_{lm}(\theta, \varphi)
++ \sqrt{l(l+1)}\frac{j_l(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]\]</div>
 <p>with <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Z.html#treams.special.vsh_Z" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Z</span></code></a>, <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.vsh_Y.html#treams.special.vsh_Y" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.vsh_Y</span></code></a>,
 and <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.spherical_jn.html#scipy.special.spherical_jn" title="(in SciPy v1.18.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.special.spherical_jn</span></code></a>.</p>
 <p>This function describes a longitudinal solution to the vector Helmholtz wave

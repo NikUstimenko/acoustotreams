@@ -80,7 +80,13 @@ vector <span class="math notranslate nohighlight">\(k_z\)</span> and the corresp
 <dd class="field-odd"><p><strong>az</strong> (<em>float</em>) – Lattice pitch along the z-direction (m).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">(kz,</span> <span class="pre">v)</span></code>. <code class="docutils literal notranslate"><span class="pre">kz</span></code> is a 1D complex array
+of the Bloch wave numbers <span class="math notranslate nohighlight">\(k_z\)</span> (1/m), of length
+<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">len(basis)</span></code>. <code class="docutils literal notranslate"><span class="pre">v</span></code> is a 2D array whose column <code class="docutils literal notranslate"><span class="pre">v[:,</span> <span class="pre">i]</span></code> is
+the eigenvector belonging to <code class="docutils literal notranslate"><span class="pre">kz[i]</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[ndarray, ndarray]</p>
 </dd>
 </dl>
 </dd></dl>

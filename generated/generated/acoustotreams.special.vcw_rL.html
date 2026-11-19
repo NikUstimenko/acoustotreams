@@ -62,10 +62,10 @@
 <dd><p>Regular longitudinal vector cylindrical wave L</p>
 <p>The regular vector cylindrical wave is defined by</p>
 <div class="math notranslate nohighlight">
-\[ \mathbf{L}_{k_z m}^{(1)}(x_\rho, \varphi, z)
-= \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}' \hat{\boldsymbol{\rho}}
-+ \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}}
-+ \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right]
+\[ \mathbf{L}_{k_z m}^{(1)}(k_\rho \rho, \varphi, z)
+= \left[\frac{k_{\rho}}{k} {J_m(k_\rho \rho)}' \hat{\boldsymbol{\rho}}
++ \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(k_\rho \rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}}
++ \frac{\mathrm{i} k_z}{k}J_m(k_\rho \rho) \hat{\mathbf{z}} \right]
 \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}\]</div>
 <p>using <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.special.jv_d.html#treams.special.jv_d" title="(in Project name not set)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treams.special.jv_d</span></code></a> and <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.jv.html#scipy.special.jv" title="(in SciPy v1.18.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.special.jv</span></code></a>.</p>
 <p>This function describes a longitudinal solution to the vector Helmholtz wave

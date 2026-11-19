@@ -71,8 +71,8 @@ beneficial to use suitable solution sets that represent the waves with sufficien
 precision when truncated to a finite number of modes. The chosen finite number of
 modes is given in the classes <a class="reference internal" href="generated/acoustotreams.ScalarSphericalWaveBasis.html#acoustotreams.ScalarSphericalWaveBasis" title="acoustotreams.ScalarSphericalWaveBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarSphericalWaveBasis</span></code></a>,
 <a class="reference internal" href="generated/acoustotreams.ScalarCylindricalWaveBasis.html#acoustotreams.ScalarCylindricalWaveBasis" title="acoustotreams.ScalarCylindricalWaveBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarCylindricalWaveBasis</span></code></a>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasis</span></code>, which
-are all children of the base call <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarBasisSet</span></code>.</p>
-<p>The modes of the spherical basis can are defined by their degree <code class="docutils literal notranslate"><span class="pre">l</span></code>, and the order <code class="docutils literal notranslate"><span class="pre">m</span></code>.
+are all children of the base class <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarBasisSet</span></code>.</p>
+<p>The modes of the spherical basis are defined by their degree <code class="docutils literal notranslate"><span class="pre">l</span></code>, and the order <code class="docutils literal notranslate"><span class="pre">m</span></code>.
 The basis is then simply the collection of multiple of these modes,
 each given in a tuple with exactly that order, for example</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
@@ -279,7 +279,7 @@ without any parameters. For other cases, the parameters can be given in the orde
 <span class="go">AcousticMaterial(1000, (141.4213562373095+0j), (44.721359549995796+0j))</span>
 </pre></div>
 </div>
-<p>where the first is agrument is density and the second one is tuple <span class="math notranslate nohighlight">\((\lambda, \mu)\)</span>.</p>
+<p>where the first is agrument is the density and the second one is the tuple <span class="math notranslate nohighlight">\((\lambda, \mu)\)</span>.</p>
 <p>We can also get the speed of transverse waves from Poisson’s ratio as</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="o">.</span><span class="n">from_pratio</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mf">141.421</span><span class="o">+</span><span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="mf">0.44444</span><span class="p">)</span>
 <span class="go">AcousticMaterial(1000, (141.421+0j), (44.72285682089808+0j))</span>
@@ -289,7 +289,7 @@ without any parameters. For other cases, the parameters can be given in the orde
 <section id="lattices">
 <h2>Lattices<a class="headerlink" href="#lattices" title="Link to this heading">¶</a></h2>
 <p>The periodicity of arrangements is given by defining an instance of the class
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code>. A lattice can be one-, two-, or three-dimensional.</p>
+<a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.Lattice_class.html#treams.Lattice" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code></a>. A lattice can be one-, two-, or three-dimensional.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">Lattice(1.0, alignment='z')</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">Lattice</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>

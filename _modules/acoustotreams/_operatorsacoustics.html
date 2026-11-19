@@ -121,11 +121,15 @@
 <span class="sd">        phi (float): First Euler angle (rotation about z) (rad).</span>
 <span class="sd">        theta (float, optional): Second Euler angle (rotation about y) (rad).</span>
 <span class="sd">        psi (float, optional): Third Euler angle (rotation about z) (rad).</span>
-<span class="sd">        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
+<span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordingly; otherwise, </span>
 <span class="sd">            both sets of the modes are the same.</span>
 <span class="sd">        where (array_like, bool, optional): Only evaluate specified parts of the rotation matrix.</span>
 <span class="sd">            The input array must have a shape that matches the output shape.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Rotation matrix. Its rows correspond to the output modes and its</span>
+<span class="sd">        columns to the input modes, both annotated with their basis set.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
         <span class="n">to_basis</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
@@ -248,7 +252,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        r (array_like): Translation vector.</span>
-<span class="sd">        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
+<span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordingly; otherwise, </span>
 <span class="sd">            both sets of modes are the same.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air. Has units of 1/r.</span>
@@ -258,6 +262,11 @@
 <span class="sd">            :class:`ScalarPlaneWaveBasisByComp`.</span>
 <span class="sd">        where (array_like of bool, optional): Only evaluate specified parts of the translation</span>
 <span class="sd">            matrix. The given array must have a shape that matches the output shape.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Translation matrix. Its rows correspond to the output modes and</span>
+<span class="sd">        its columns to the input modes. For several translation vectors in ``r``, their</span>
+<span class="sd">        shape is prepended, giving ``(..., len(to_basis), len(basis))``.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
         <span class="n">to_basis</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
@@ -445,16 +454,21 @@
 <span class="sd">    of plane waves, so that the transformation becomes an integral over this spectrum.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
+<span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordingly; otherwise, </span>
 <span class="sd">            both sets of modes are the same.</span>
-<span class="sd">        modetype (str, optional): Mode type, used for</span>
+<span class="sd">        modetype (array_like of str, optional): Mode type, used for</span>
 <span class="sd">            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        where (array_like of bool, optional): Only evaluate specified parts of the expansion </span>
 <span class="sd">            matrix. The given array must have a shape that matches the output shape.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Expansion matrix. Its rows correspond to the modes of the output</span>
+<span class="sd">        basis set and its columns to the modes of the input basis set. Both dimensions are</span>
+<span class="sd">        annotated with ``k0``, ``material``, and their mode type.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
         <span class="n">to_basis</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
@@ -787,6 +801,12 @@
 <span class="sd">            :class:`ScalarPlaneWaveBasisByComp`.</span>
 <span class="sd">        where (array_like of bool, optional): Only evaluate specified parts of the expansion </span>
 <span class="sd">            matrix. The given array must have a shape that matches the output shape.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Expansion matrix. Its rows correspond to the modes of the output</span>
+<span class="sd">        basis set and its columns to the modes of the input basis set. Both dimensions are</span>
+<span class="sd">        annotated with ``lattice`` and ``kpar`` in addition to ``k0``, ``material``, and</span>
+<span class="sd">        their mode type.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
         <span class="n">to_basis</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
@@ -948,20 +968,22 @@
 
 <div class="viewcode-block" id="permute">
 <a class="viewcode-back" href="../../generated/acoustotreams.permute.html#acoustotreams.permute">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">permute</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">permute</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">(),</span> <span class="n">modetype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Permutation matrix.</span>
 
 <span class="sd">    Permute the axes of a scalar plane-wave basis expansion.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        n (int, optional): Number of permutations. Defaults to 1.</span>
-<span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
-<span class="sd">            basis sets, the output and input modes are taken accordinglyp; otherwise, both sets</span>
-<span class="sd">            of modes are the same.</span>
+<span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Permutation matrix that maps the coefficients in ``basis`` to the</span>
+<span class="sd">        coefficients in the permuted basis ``basis.permute(n)``.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'n' must be integer"</span><span class="p">)</span>
@@ -1092,15 +1114,24 @@
 <span class="sd">    The velocity field is given in units of m/s.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array_like): Evaluation points.</span>
+<span class="sd">        r (array_like): Evaluation points as Cartesian coordinates in the last</span>
+<span class="sd">            dimension, which must have length 3.</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.</span>
 <span class="sd">        k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.  </span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        treams.util.AnnotatedArray: Array of shape ``(..., 3, len(basis))``, where ``...``</span>
+<span class="sd">        is the shape of ``r`` without its last dimension. Multiplied with the expansion</span>
+<span class="sd">        coefficients, it gives the Cartesian components of the velocity at the evaluation</span>
+<span class="sd">        points.</span>
 <span class="sd">    """</span>
     <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'r' must contain Cartesian coordinates (x, y, z) in its last dimension"</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">):</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="s2">"regular"</span> <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">modetype</span>
@@ -1212,15 +1243,23 @@
 <span class="sd">    The pressure field is given in units of Pa.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array_like): Evaluation points.</span>
+<span class="sd">        r (array_like): Evaluation points as Cartesian coordinates in the last</span>
+<span class="sd">            dimension, which must have length 3.</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.</span>
 <span class="sd">        k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        treams.util.AnnotatedArray: Array of shape ``(..., 1, len(basis))``, where ``...``</span>
+<span class="sd">        is the shape of ``r`` without its last dimension. Multiplied with the expansion</span>
+<span class="sd">        coefficients, it gives the pressure at the evaluation points.</span>
 <span class="sd">    """</span>
     <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'r' must contain Cartesian coordinates (x, y, z) in its last dimension"</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">):</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="s2">"regular"</span> <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">modetype</span>
@@ -1307,18 +1346,28 @@
 <span class="sd">    The resulting matrix maps the scattered pressure field coefficients in the scalar </span>
 <span class="sd">    spherical or cylindrical wave basis to the far-field amplitude of the pressure field.</span>
 
-<span class="sd">    The far-field amplitude is given in units of N/m.</span>
+<span class="sd">    The far-field amplitude is given in units of N/m for spherical waves and</span>
+<span class="sd">    Pa*m^1/2 for cylindrical waves.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        r (array_like): Evaluation points.</span>
+<span class="sd">        r (array_like): Directions as Cartesian coordinates in the last</span>
+<span class="sd">            dimension, which must have length 3.</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.</span>
 <span class="sd">        k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
 <span class="sd">        modetype (str, optional): Mode type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        treams.util.AnnotatedArray: Array of shape ``(..., 1, len(basis))``, where ``...``</span>
+<span class="sd">        is the shape of ``r`` without its last dimension. Multiplied with the expansion</span>
+<span class="sd">        coefficients of the scattered field, it gives the far-field amplitude in the</span>
+<span class="sd">        directions of ``r``.</span>
 <span class="sd">    """</span>
     <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'r' must contain Cartesian coordinates (x, y, z) in its last dimension"</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="p">):</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="s2">"singular"</span> <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">modetype</span>

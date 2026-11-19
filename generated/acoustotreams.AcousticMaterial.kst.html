@@ -64,7 +64,15 @@
 <dd class="field-odd"><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple</p>
+<dd class="field-even"><p>Wavenumber of transverse waves.
+If <code class="docutils literal notranslate"><span class="pre">ct</span></code> is a sequence, a tuple with one wavenumber per entry of <code class="docutils literal notranslate"><span class="pre">ct</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex or tuple[complex, …]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">ct</span></code> (or any entry of it) is zero, i.e. the medium is
+    a fluid and does not sustain transverse waves.</p>
 </dd>
 </dl>
 </dd></dl>

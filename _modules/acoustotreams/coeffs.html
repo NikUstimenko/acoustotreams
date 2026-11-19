@@ -335,15 +335,14 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        l (int or array_like): Degree :math:`l \geq 0`.</span>
-<span class="sd">        x (float or array_like): Size parameters in the array.</span>
+<span class="sd">        x (float or array_like): Size parameters of the layers.</span>
 <span class="sd">        rho (array_like of float or complex): Mass density (kg/m^3). The length must be at least two.</span>
 <span class="sd">        c (array_like of float or complex): Longitudinal speed of sound (m/s). The length must be at least two.</span>
 <span class="sd">        c_t (array_like of float or complex): Transverse speed of sound (m/s). The length must be at least two.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex array</span>
+<span class="sd">        list</span>
 <span class="sd">    """</span>
-    
     <span class="n">mat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">materials</span><span class="p">))</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -445,9 +444,8 @@
 <span class="sd">        c_t (float or complex or array_like): Transverse speed of sound (m/s).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        complex array</span>
+<span class="sd">        list</span>
 <span class="sd">    """</span>
-    
     <span class="n">mat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">materials</span><span class="p">))</span>
     <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
@@ -474,8 +472,8 @@
 <span class="sd">    the outgoing modes and the second one to the incoming modes.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        kzs (float): Z-components of the wave vector (rad/m).</span>
-<span class="sd">        rhos (float or complex): Mass densities (kg/m^3).</span>
+<span class="sd">        kzs (array_like of float or complex): Z-components of the wave vector (rad/m).</span>
+<span class="sd">        rhos (array_like of float or complex): Mass densities (kg/m^3).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        complex (2, 2, 1, 1)-array</span>

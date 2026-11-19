@@ -70,7 +70,7 @@ of plane waves, so that the transformation becomes an integral over this spectru
 <li><p><strong>basis</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarBasisSet</span></code> or tuple) – Basis set. If it is a tuple of two
 basis sets, the output and input modes are taken accordingly; otherwise,
 both sets of modes are the same.</p></li>
-<li><p><strong>modetype</strong> (<em>str</em><em>, </em><em>optional</em>) – Mode type, used for
+<li><p><strong>modetype</strong> (<em>array_like</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Mode type, used for
 <a class="reference internal" href="acoustotreams.ScalarSphericalWaveBasis.html#acoustotreams.ScalarSphericalWaveBasis" title="acoustotreams.ScalarSphericalWaveBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarSphericalWaveBasis</span></code></a> and <a class="reference internal" href="acoustotreams.ScalarCylindricalWaveBasis.html#acoustotreams.ScalarCylindricalWaveBasis" title="acoustotreams.ScalarCylindricalWaveBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarCylindricalWaveBasis</span></code></a>.</p></li>
 <li><p><strong>k0</strong> (<em>float</em><em>, </em><em>optional</em>) – Angular wavenumber in the air.</p></li>
 <li><p><strong>material</strong> (<a class="reference internal" href="acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a> or tuple, optional) – Material
@@ -78,6 +78,14 @@ parameters. Defaults to the air.</p></li>
 <li><p><strong>where</strong> (<em>array_like</em><em> of </em><em>bool</em><em>, </em><em>optional</em>) – Only evaluate specified parts of the expansion
 matrix. The given array must have a shape that matches the output shape.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Expansion matrix. Its rows correspond to the modes of the output
+basis set and its columns to the modes of the input basis set. Both dimensions are
+annotated with <code class="docutils literal notranslate"><span class="pre">k0</span></code>, <code class="docutils literal notranslate"><span class="pre">material</span></code>, and their mode type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="acoustotreams.AcousticsArray.html#acoustotreams.AcousticsArray" title="acoustotreams.AcousticsArray">AcousticsArray</a></p>
 </dd>
 </dl>
 </dd></dl>

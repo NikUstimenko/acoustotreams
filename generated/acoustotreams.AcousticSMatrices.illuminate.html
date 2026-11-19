@@ -71,12 +71,18 @@ is chosen accordingly.</p></li>
 <li><p><strong>illu2</strong> (<em>complex</em><em> or </em><em>array_like</em><em>, </em><em>optional</em>) – Second insonification. If used, the first
 argument is taken to be coming from below and this one to be coming from
 above.</p></li>
-<li><p><strong>smat</strong> (<a class="reference internal" href="acoustotreams.AcousticSMatrix.html#acoustotreams.AcousticSMatrix" title="acoustotreams.AcousticSMatrix"><em>AcousticSMatrix</em></a><em>, </em><em>optional</em>) – Second S-matrix for computing the
+<li><p><strong>smat</strong> (<a class="reference internal" href="acoustotreams.AcousticSMatrices.html#acoustotreams.AcousticSMatrices" title="acoustotreams.AcousticSMatrices"><em>AcousticSMatrices</em></a><em>, </em><em>optional</em>) – Second S-matrix for computing the
 field expansion between two S-matrices.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple</p>
+<dd class="field-even"><p>Expansion coefficients of the outgoing fields.
+Without <code class="docutils literal notranslate"><span class="pre">smat</span></code>, the 2-tuple <code class="docutils literal notranslate"><span class="pre">(field_up,</span> <span class="pre">field_down)</span></code>.
+With <code class="docutils literal notranslate"><span class="pre">smat</span></code>, the 4-tuple
+<code class="docutils literal notranslate"><span class="pre">(field_up,</span> <span class="pre">field_down,</span> <span class="pre">field_in_up,</span> <span class="pre">field_in_down)</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[array_like, …]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -103,8 +103,8 @@
 
 <span class="sd">    The acoustic T-matrix is a square matrix that maps incident (regular) fields</span>
 <span class="sd">    :func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered (singular) fields </span>
-<span class="sd">    :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in :attr:`basis`. </span>
-<span class="sd">    Moreover, the wavenumber :attr:`k0` and, if not air, the material :attr:`material` are</span>
+<span class="sd">    :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in ``basis``. </span>
+<span class="sd">    Moreover, the wavenumber ``k0`` and, if not air, the material ``material`` are</span>
 <span class="sd">    specified.</span>
 
 <span class="sd">    Args:</span>
@@ -112,7 +112,7 @@
 <span class="sd">        k0 (float): Angular wavenumber in the air.</span>
 <span class="sd">        basis (ScalarSphericalWaveBasis, optional): Basis definition.</span>
 <span class="sd">        material (AcousticMaterial, optional): Background material. Defaults to the air.</span>
-<span class="sd">        lattice (Lattice, optional): Lattice definition. If specified, the T-matrix is</span>
+<span class="sd">        lattice (:class:`~treams.Lattice`, optional): Lattice definition. If specified, the T-matrix is</span>
 <span class="sd">            assumed to be placed on the defined lattice.</span>
 <span class="sd">        kpar (list, optional): Bloch wave vector for the effective T-Matrix.</span>
 <span class="sd">    """</span>
@@ -271,14 +271,14 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \sigma_\mathrm{ext} \rangle</span>
-<span class="sd">            = 4 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},</span>
+<span class="sd">            = -4 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},</span>
 
 <span class="sd">        where :math:`k` is the angular wavenumber in the background medium.    </span>
 
 <span class="sd">        It is only implemented for global T-matrices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float or complex</span>
+<span class="sd">            float</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -305,7 +305,7 @@
 <span class="sd">        It is only implemented for global T-matrices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float or complex</span>
+<span class="sd">            float</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -374,7 +374,7 @@
 <span class="sd">                normalization, which is used as default.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[float]</span>
+<span class="sd">            tuple[float, float]: ``(sigma_sca, sigma_ext)``.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -440,15 +440,15 @@
 <span class="sd">    The acoustic T-matrix is a square matrix that maps incident (regular) fields</span>
 <span class="sd">    :func:`acoustotreams.special.scw_rPsi` to corresponding scattered (singular) fields </span>
 <span class="sd">    :func:`acoustotreams.special.scw_Psi`. The modes themselves are defined </span>
-<span class="sd">    in :attr:`basis`. Moreover, the wavenumber :attr:`k0` and, if not the air, </span>
-<span class="sd">    the material :attr:`material` are specified.</span>
+<span class="sd">    in ``basis``. Moreover, the wavenumber ``k0`` and, if not the air, </span>
+<span class="sd">    the material ``material`` are specified.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arr (float or complex or array_like): T-matrix itself.</span>
 <span class="sd">        k0 (float): Angular wavenumber in the air.</span>
 <span class="sd">        basis (ScalarCylindricalWaveBasis, optional): Basis definition.</span>
 <span class="sd">        material (AcousticMaterial, optional): Background material. Defaults to air.</span>
-<span class="sd">        lattice (Lattice, optional): Lattice definition. If specified, the T-matrix is</span>
+<span class="sd">        lattice (:class:`~treams.Lattice`, optional): Lattice definition. If specified, the T-matrix is</span>
 <span class="sd">            assumed to be placed on the defined lattice.</span>
 <span class="sd">        kpar (list, optional): Bloch wave vector for the effective T-Matrix.</span>
 <span class="sd">    """</span>
@@ -488,7 +488,7 @@
 <span class="w">        </span><span class="sa">r</span><span class="sd">"""Radial part of the wave vector.</span>
 
 <span class="sd">        Calculate :math:`\sqrt{k^2 - k_z^2}`, where :math:`k` is the wavenumber in the</span>
-<span class="sd">        medium for each insonification.</span>
+<span class="sd">        medium for each mode.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Sequence[complex]</span>
@@ -608,7 +608,21 @@
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticTMatrixC.from_array.html#acoustotreams.AcousticTMatrixC.from_array">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""One-dimensional array of spherical T-matrices."""</span>
+<span class="w">        </span><span class="sd">"""Cylindrical T-matrix of a one-dimensional array of spherical T-matrices.</span>
+
+<span class="sd">        The objects described by the spherical T-matrix ``tm`` are repeated periodically</span>
+<span class="sd">        along the z-axis, and their scattered field is expanded in the cylindrical waves of</span>
+<span class="sd">        ``basis``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tm (AcousticTMatrix): Spherical T-matrix of the objects in one unit cell.</span>
+<span class="sd">            basis (ScalarCylindricalWaveBasis): Basis of the cylindrical T-matrix.</span>
+<span class="sd">            eta (float or complex, optional): Splitting parameter for the Ewald summation of</span>
+<span class="sd">                the lattice sums. Defaults to 0, which selects a value automatically.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AcousticTMatrixC</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="p">(</span><span class="n">tm</span> <span class="o">@</span> <span class="n">opa</span><span class="o">.</span><span class="n">Expand</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span><span class="o">.</span><span class="n">inv</span><span class="p">)</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">),</span>
             <span class="n">lattice</span><span class="o">=</span><span class="n">tm</span><span class="o">.</span><span class="n">lattice</span><span class="p">,</span>
@@ -635,7 +649,7 @@
 <span class="sd">        It is only implemented for global T-matrices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float or complex</span>
+<span class="sd">            float</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -675,7 +689,7 @@
 <span class="sd">        It is only implemented for global T-matrices.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            float or complex</span>
+<span class="sd">            float</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isglobal</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -745,7 +759,7 @@
 <span class="sd">            b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-1}</span>
 <span class="sd">            C_{{k_z}'m',{k_z}''m''}^{(1)}</span>
 <span class="sd">            T_{{k_z}''m'',{k_z}'''m'''} b_{{k_z}'''m'''} \\</span>
-<span class="sd">            \sigma_\mathrm{ext}</span>
+<span class="sd">            \lambda_\mathrm{ext}</span>
 <span class="sd">            = -\frac{2}{I}</span>
 <span class="sd">            b_{k_z m}^\ast k^{-1} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}</span>
 
@@ -754,6 +768,8 @@
 <span class="sd">        matrix, and :math:`k` is the wavenumber in the medium. All repeated indices</span>
 <span class="sd">        are summed over. The flux of a plane pressure wave is :math:`I = 0.5`.</span>
 
+<span class="sd">        Only propagating modes are taken into account. </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            inc (array_like): Incident wave or its expansion coefficients</span>
 <span class="sd">            flux (float, optional): Ingoing flux corresponding to the incident wave. Used for</span>
@@ -761,7 +777,7 @@
 <span class="sd">                normalization, which is used as default.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[float]</span>
+<span class="sd">            tuple[float, float]: ``(lambda_sca, lambda_ext)``.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">isreal</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -867,6 +883,10 @@
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
 <span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Expansion coefficients of the plane wave in the basis: 1 for the</span>
+<span class="sd">        mode with the given wave vector and 0 for all other modes.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kvec</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_plane_wave_partial_scalar</span><span class="p">(</span>
@@ -933,9 +953,13 @@
 <span class="sd">        l (int): Degree :math:`l \geq 0`.</span>
 <span class="sd">        m (int): Order :math:`|m| \leq l`.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
-<span class="sd">        basis (ScalarPlaneWaveBasis, optional): Basis definition.</span>
+<span class="sd">        basis (ScalarSphericalWaveBasis, optional): Basis definition.</span>
 <span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
 <span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Expansion coefficients in the basis: 1 for the mode with degree ``l``</span>
+<span class="sd">        and order ``m`` and 0 for all other modes.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">basis</span> <span class="o">=</span> <span class="n">SSWB</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
@@ -963,6 +987,10 @@
 <span class="sd">        basis (ScalarCylindricalWaveBasis, optional): Basis definition.</span>
 <span class="sd">        material (AcousticMaterial, optional): Material definition.</span>
 <span class="sd">        modetype (str, optional): Mode type (see :ref:`params:Mode types`).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        AcousticsArray: Expansion coefficients in the basis: 1 for the mode with ``kz``</span>
+<span class="sd">        and order ``m`` and 0 for all other modes.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">basis</span> <span class="o">=</span> <span class="n">SCWB</span><span class="o">.</span><span class="n">default</span><span class="p">([</span><span class="n">kz</span><span class="p">],</span> <span class="nb">abs</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
