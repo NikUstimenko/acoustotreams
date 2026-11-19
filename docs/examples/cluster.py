@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from joblib import Parallel, delayed
 
 import acoustotreams
 
@@ -25,22 +24,15 @@ xs = tm.xs(inc)
 
 x = np.linspace(-0.02, 0.02, 101)
 z = np.linspace(-0.02, 0.02, 101)
-def compute_intensity(i, j, tm, radii, inc, sca):
-    r = [x[j], 0, z[i]]
-    result = 0  
-    if tm.valid_points(r, radii): 
-        result = np.abs(inc.pfield(r) + sca.pfield(r))**2  
-    else:
-        result = np.nan
-    return i, j, result  
-results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm, radii, inc, sca) 
-    for i in range(len(z)) 
-    for j in range(len(x))
-)
-intensity = np.zeros((len(z), len(x)))
-for i, j, result in results:
-    intensity[i, j] = result
+X, Z = np.meshgrid(x, z)
+points = np.stack([X, np.zeros_like(X), Z], axis=-1)
+def compute_intensity(tm, radii, inc, sca):
+    valid = tm.valid_points(points, radii)
+    intensity = np.full(X.shape, np.nan)
+    field = inc.pfield(points[valid]) + sca.pfield(points[valid])
+    intensity[valid] = np.abs(np.asarray(field)[:, 0]) ** 2
+    return intensity
+intensity = compute_intensity(tm, radii, inc, sca)
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
@@ -77,12 +69,7 @@ tm_global = tm.expand(acoustotreams.ScalarSphericalWaveBasis.default(10))
 sca = tm_global.sca(inc)
 xs = tm_global.xs(inc)
 
-results_global = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm_global, [0.0125], inc, sca) for i in range(len(z)) for j in range(len(x))
-)
-intensity_global = np.zeros((len(z), len(x)))
-for i, j, result in results_global:
-    intensity_global[i, j] = result
+intensity_global = compute_intensity(tm_global, [0.0125], inc, sca)
 
 fig, ax = plt.subplots()
 cax = ax.imshow(
@@ -118,12 +105,7 @@ inc = acoustotreams.plane_wave_scalar([k0, 0, 0], k0=tm.k0, material=tm.material
 tm_rotate = tm_global.rotate(0, np.pi / 2)
 sca = tm_rotate.sca(inc)
 
-results_rotate = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j, tm_rotate, [0.0125], inc, sca) for i in range(len(z)) for j in range(len(x))
-)
-intensity_rotate = np.zeros((len(z), len(x)))
-for i, j, result in results_rotate:
-    intensity_rotate[i, j] = result
+intensity_rotate = compute_intensity(tm_rotate, [0.0125], inc, sca)
 
 fig, ax = plt.subplots()
 cax = ax.imshow(

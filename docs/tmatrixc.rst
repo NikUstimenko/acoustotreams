@@ -37,7 +37,7 @@ it is also diagonal with respect to :code:`kz`.
 
 .. literalinclude:: examples/cylinder_tmatrixc.py
     :language: python
-    :lines: 7-13
+    :lines: 6-12
 
 For such infinitely long structures it makes more sense to talk about cross width
 instead of cross section. We obtain the averaged scattering and extinction cross width
@@ -45,26 +45,26 @@ by
 
 .. literalinclude:: examples/cylinder_tmatrixc.py
     :language: python
-    :lines: 15-16
+    :lines: 14-15
 
 Again, we can also select specific modes only, for example the modes with :math:`m = 0` and :math:`m = \pm 1`.
 
 .. literalinclude:: examples/cylinder_tmatrixc.py
     :language: python
-    :lines: 18-21
+    :lines: 17-20
 
 to calculate their cross width. Evaluating the field intensity in the xy plane is similar to the case of a sphere.
 
 .. literalinclude:: examples/cylinder_tmatrixc.py
     :language: python
-    :lines: 23-42
+    :lines: 22-33
 
 For the infinite cylinder we can also calculate the radiation pattern as a function of the angle :math:`\varphi`.
 The red arrow indicates the direction of incidence of the plane wave.
 
 .. plot:: examples/cylinder_tmatrixc.py
 
-Cylindrical T-matrices for one-dimensional arrays of spherical T-matrices
+Cylindrical T-matrices of one-dimensional arrays of spherical T-matrices
 =========================================================================
 
 For our next example we want to look at the system of spheres on a one-dimensional
@@ -127,20 +127,20 @@ basis as before
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 7-22
+    :lines: 6-21
 
 Then, we create the T-matrix of the cylinder in the cylindrical wave basis.
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 24
+    :lines: 23
 
 Finally, we construct the cluster, find the T-matrix of the interacting system,
 and then scattered field coeffcients for the incident plane wave.
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
-    :lines: 26-32
+    :lines: 25-31
 
 The scattered pressure field within three unit cells is shown below
 

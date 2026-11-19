@@ -34,7 +34,7 @@ our calculation and creating the acoustic T-matrices themselves.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 7-12
+   :lines: 6-11
 
 Here we define a material using the class :meth:`~acoustotreams.AcousticMaterial`.
 To create an instance of this class, we pass three arguments: mass density,
@@ -47,7 +47,7 @@ sections
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 14-15
+   :lines: 13-14
 
 From the parameter ``lmax = 10`` we see that the acoustic T-matrix is calculated up to the tenth
 multipolar order. To restrict the T-matrix in the monopole-dipole approximation, we can
@@ -55,7 +55,7 @@ select a basis containing only those multipoles.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 17-20
+   :lines: 16-19
 
 Now, we can look at the results by plotting them and observe, unsurprisingly, that for
 larger frequencies the monopole-dipole approximation is not giving an accurate result.
@@ -63,22 +63,20 @@ Further, we visualize the total acoustic field intensity at frequency 163 kHz.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 22-40
+   :lines: 21-31
 
-We select the T-matrix and illuminate it with a plane wave. Next, we set up 
-the x and z coordinates and define the auxiliary function to compute
-the intensity at a single valid point. We can calculate the intensity
-of the fields as a superposition of incident and scattered fields.
-Here, we also accelerate the computations using parallelization with
-:class:`joblib.Parallel`. 
+We select the T-matrix and insonificate it with a plane wave. Next, we set up a grid of
+points in the xz plane and keep only the points outside the sphere, where the expansion
+of the scattered field is valid. At all of these points at once, we calculate the
+intensity of the total field as a superposition of the incident and scattered fields.
 
 Finally, we compute the radiation pattern of the sphere at the same frequency
-as a function of the polar angle :math:`\theta`. The red arrow indicates 
+for all polar angles :math:`\theta` at once. The red arrow indicates 
 the direction of incidence of the plane wave.
 
 .. literalinclude:: examples/sphere.py
    :language: python
-   :lines: 42-47
+   :lines: 33-35
 
 .. plot:: examples/sphere.py
 
@@ -92,28 +90,28 @@ of the relevant parameters
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 7-17
+   :lines: 6-16
 
 we can simply first create the spheres and put them together in a cluster, where we immediately calculate 
 the interaction.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 19-20
+   :lines: 18-19
 
 Then, we can illuminate with a plane wave and get the scattered field coefficients and
 the scattering and extinction cross sections for that particular illumination.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 22-24
+   :lines: 21-23
 
 Finally, with few lines similar to the plotting of the field intensity of a single
 sphere we can obtain the fields outside of the sphere.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 26-43
+   :lines: 25-35
 
 Up to here, we did all calculations for the cluster in the local basis. By expanding
 the incident and scattered fields in a basis with a single origin we can describe the
@@ -123,7 +121,7 @@ basis can be more efficient in terms of matrix size.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 76-77
+   :lines: 68-69
 
 A comparison of the calculated near-fields and the cross sections show good agreement
 between the results of both, local and global, T-matrices.
@@ -135,7 +133,7 @@ produces consistent results.
 
 .. literalinclude:: examples/cluster.py
    :language: python
-   :lines: 117-118
+   :lines: 104-105
 
 .. plot:: examples/cluster.py
 
@@ -177,6 +175,10 @@ we want to calculate the pressure field.
 .. literalinclude:: examples/chain.py
    :language: python
    :lines: 23-40
+
+Because the expansion is done at each evaluation point separately, the points have to be
+computed one at a time. To speed this up, we distribute them over all processor cores with
+:class:`joblib.Parallel`.
 
 To calculate the velocity field, we again expand the scattered field coefficients, 
 however, in the dipole approximation.

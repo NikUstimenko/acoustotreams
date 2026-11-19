@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from joblib import Parallel, delayed
 
 import acoustotreams
 
@@ -24,27 +23,16 @@ inc = acoustotreams.plane_wave_scalar([0, 0, tm.k0], k0=tm.k0, material=tm.mater
 sca = tm.sca(inc)
 x = np.linspace(-0.0075, 0.0075, 101)
 z = np.linspace(-0.0075, 0.0075, 101)
-def compute_intensity(i, j):
-    r = [x[j], 0, z[i]]
-    result = 0  
-    if tm.valid_points(r, [radius]): 
-        result = np.abs(inc.pfield(r) + sca.pfield(r))**2  
-    else:
-        result = np.nan
-    return i, j, result  
-results = Parallel(n_jobs=-1)(
-    delayed(compute_intensity)(i, j) for i in range(len(z)) for j in range(len(x))
-)
-intensity = np.zeros((len(z), len(x)))
-for i, j, result in results:
-    intensity[i, j] = result
+X, Z = np.meshgrid(x, z)
+points = np.stack([X, np.zeros_like(X), Z], axis=-1)
+valid = tm.valid_points(points, [radius])
+intensity = np.full(X.shape, np.nan)
+field = inc.pfield(points[valid]) + sca.pfield(points[valid])
+intensity[valid] = np.abs(np.asarray(field)[:, 0]) ** 2
 
 theta = np.linspace(0, 2 * np.pi, 301)
-radpattern = np.zeros(len(theta))
-def compute_radpattern(i):
-    n = [np.sin(theta[i]), 0, np.cos(theta[i])]
-    return np.abs(sca.pamplitudeff(n))**2
-radpattern = Parallel(n_jobs=-1)(delayed(compute_radpattern)(i) for i in range(len(theta)))
+directions = np.stack([np.sin(theta), np.zeros_like(theta), np.cos(theta)], axis=-1)
+radpattern = np.abs(np.asarray(sca.pamplitudeff(directions))[:, 0]) ** 2
 
 import matplotlib
 matplotlib.use("Agg")

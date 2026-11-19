@@ -496,7 +496,7 @@ class TestPField:
             rsph[..., 1],
             rsph[..., 2],
         )
-        y = np.array([y]).T
+        y = y[..., None]
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
 
     def test_ssw_s(self):
@@ -521,7 +521,7 @@ class TestPField:
             rsph[..., 1],
             rsph[..., 2],
         )
-        y = np.array([y]).T
+        y = y[..., None]
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
 
     def test_scw_r(self):
@@ -540,7 +540,7 @@ class TestPField:
             rcyl[..., 1],
             rcyl[..., 2],
         )
-        y = np.array([y]).T
+        y = y[..., None]
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
 
     def test_scw_s(self):
@@ -565,7 +565,7 @@ class TestPField:
             rcyl[..., 1],
             rcyl[..., 2],
         )
-        y = np.array([y]).T
+        y = y[..., None]
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
 
     def test_spw(self):
@@ -581,7 +581,7 @@ class TestPField:
             r[..., None, 1],
             r[..., None, 2],
         )
-        y = np.array([y]).T
+        y = y[..., None]
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
 
     def test_spwp(self):
@@ -597,8 +597,9 @@ class TestPField:
             r[..., None, 1],
             r[..., None, 2],
         )
-        y = np.array([y]).T
+        y = y[..., None]
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
+
 
 class TestVField:
     def test_spw_multiple_modes(self):
@@ -621,3 +622,70 @@ class TestVField:
         assert x.shape == (2, 3, 2) and all(
             np.allclose(x[i], np.asarray(s)) for i, s in enumerate(single)
         )
+
+
+FIELD_BASES = [
+    (acoustotreams.ScalarSphericalWaveBasis.default(2, 2, [[0, 0, 0], [0.3, 0, 0]]), "regular"),
+    (acoustotreams.ScalarSphericalWaveBasis.default(2, 2, [[0.1, 0.1, 0.1], [0.3, 0, 0]]), "singular"),
+    (acoustotreams.ScalarCylindricalWaveBasis.default([0.2, -0.1], 2), "regular"),
+    (
+        acoustotreams.ScalarCylindricalWaveBasis.default(
+            [0.2, -0.1], 2, 2, [[0.05, 0.02, 0], [0.4, 0, 0]]
+        ),
+        "singular",
+    ),
+    (acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.4, -0.2], [0.1, 0.3]]), "up"),
+]
+
+
+@pytest.mark.parametrize("field", ["pfield", "vfield"])
+@pytest.mark.parametrize("basis, modetype", FIELD_BASES)
+def test_field_several_points(basis, modetype, field):
+    # The first point lies on an expansion centre (spherical) or on the axis (cylindrical).
+    r = np.array([[[0, 0, 0], [0.5, -0.2, 0.7]], [[-0.3, 0.4, 0.1], [0.9, 0.1, -0.6]]])
+    kwargs = dict(basis=basis, k0=2, material=(1000, 1500, 0), modetype=modetype)
+    x = np.asarray(getattr(acoustotreams, field)(r, **kwargs))
+    y = np.array(
+        [[np.asarray(getattr(acoustotreams, field)(ri, **kwargs)) for ri in row] for row in r]
+    )
+    ncomp = 3 if field == "vfield" else 1
+    assert x.shape == (2, 2, ncomp, len(basis)) and np.allclose(x, y)
+
+
+@pytest.mark.parametrize("basis, modetype", FIELD_BASES)
+def test_vfield_is_pressure_gradient(basis, modetype):
+    material = acoustotreams.AcousticMaterial(1000, 1500, 0)
+    k0 = 2
+    omega = k0 * acoustotreams.AcousticMaterial().c
+    kwargs = dict(basis=basis, k0=k0, material=material, modetype=modetype)
+    r0 = np.array([0.3, -0.4, 0.5])
+    h = 1e-6
+    grad = np.array(
+        [
+            (
+                np.asarray(acoustotreams.pfield(r0 + d, **kwargs))
+                - np.asarray(acoustotreams.pfield(r0 - d, **kwargs))
+            )[0]
+            / (2 * h)
+            for d in np.eye(3) * h
+        ]
+    )
+    expect = grad / (1j * omega * material.rho)
+    v = np.asarray(acoustotreams.vfield(r0, **kwargs))
+    assert np.allclose(v, expect, rtol=1e-6, atol=1e-6 * np.abs(expect).max())
+
+
+@pytest.mark.parametrize(
+    "basis",
+    [
+        acoustotreams.ScalarSphericalWaveBasis.default(2, 2, [[0.2, -0.1, 0.3], [-0.4, 0.2, 0.1]]),
+        acoustotreams.ScalarCylindricalWaveBasis.default(
+            [0.3], 2, 2, [[0.2, -0.1, 0], [-0.4, 0.2, 0]]
+        ),
+    ],
+)
+def test_pamplitudeff_several_directions(basis):
+    r = np.array([[0.3, -0.5, 0.8], [-0.6, 0.2, 0.1], [0, 0.1, 1]])
+    x = np.asarray(acoustotreams.pamplitudeff(r, basis=basis, k0=1))
+    y = np.array([np.asarray(acoustotreams.pamplitudeff(ri, basis=basis, k0=1)) for ri in r])
+    assert x.shape == (3, 1, len(basis)) and np.allclose(x, y)

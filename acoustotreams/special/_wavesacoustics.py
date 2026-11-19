@@ -211,17 +211,18 @@ def scw_psi(kz, m, x, y, phi, z, krho):
     Returns:
         complex
      """
-    res = []
-    for i in range(len(x)):
-        if krho[i].imag != 0:
-            res.append(0j)
-        else:
-            res.append(np.exp(1j * m[i] * phi[i] + 1j * kz[i] * z[i]) * 
-                    np.sqrt(2 / (np.pi * krho[i])) *
-                    np.exp(-1j * ((krho[i] * x[i] * np.cos(phi[i]) + krho[i] * y[i] * np.sin(phi[i])))) *
-                    np.power(-1j, m[i]) * 
-                    np.exp(-1j * np.pi/4))
-    return np.array(res)
+    m = np.asarray(m)
+    krho = np.asarray(krho)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        res = (
+            np.exp(1j * m * phi + 1j * kz * z)
+            * np.sqrt(2 / (np.pi * krho))
+            * np.exp(-1j * krho * (x * np.cos(phi) + y * np.sin(phi)))
+            * np.power(-1j, m)
+            * np.exp(-1j * np.pi / 4)
+        )
+     # Evanescent modes (complex k_rho) do not contribute to the far field
+    return np.where(krho.imag != 0, 0j, res)
 
 def scw_rPsi(kz, m, krr, phi, z):
      r"""Regular scalar cylindrical wave :math:`\Psi`
@@ -276,11 +277,16 @@ def vsw_L(l, m, kr, theta, phi):
         phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
-        complex 3-array
+        complex array: Components in spherical coordinates in
+        the last dimension, which has length 3.
      """
-    return np.transpose(sc.vsh_Z(l, m, theta, phi).T * sc.spherical_hankel1_d(l, kr)  + np.sqrt(
-         l * (l + 1)
-     ) * sc.vsh_Y(l, m, theta, phi).T * sc.spherical_hankel1(l, kr) / kr) * (-1.0j)
+    k_l = np.sqrt(l * (l + 1))[..., None]
+    h = sc.spherical_hankel1(l, kr)
+    res = (
+        sc.vsh_Z(l, m, theta, phi) * sc.spherical_hankel1_d(l, kr)[..., None]
+        + k_l * sc.vsh_Y(l, m, theta, phi) * (h / kr)[..., None]
+    )
+    return -1j * res
 
 def vsw_rL(l, m, kr, theta, phi):
     r"""Regular longitudinal vector spherical wave L
@@ -307,28 +313,24 @@ def vsw_rL(l, m, kr, theta, phi):
         phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
-        complex, 3-array
+        complex array: Components in spherical coordinates in
+        the last dimension, which has length 3.
      """
-    res = []
-    for i, x in enumerate(kr):
-            if x == 0:
-                if l[i] != 1:
-                    val = np.zeros(3, complex).T
-                    res.append(val)
-                else:
-                   val = np.transpose(
-                       sc.vsh_Z(1, m[i], 0, 0).T + 
-                       np.sqrt(2) * sc.vsh_Y(1, m[i], 0, 0).T) * (1/3) * (-1.0j)
-                   res.append(val)
-            else:      
-                val = np.transpose(
-                    sc.vsh_Z(l[i], m[i], theta[i], phi[i]).T * 
-                    sc.spherical_jn_d(l[i], kr[i])  
-                    + np.sqrt(l[i] * (l[i] + 1)) * 
-                    sc.vsh_Y(l[i], m[i], theta[i], phi[i]).T * 
-                    sc.spherical_jn(l[i], kr[i]) / kr[i]) * (-1.0j)
-                res.append(val)
-    return np.array(res)
+    l, m, kr, theta, phi = np.broadcast_arrays(l, m, kr, theta, phi)
+    # At the origin the angles are undefined; the limit is evaluated at theta = phi = 0.
+    at_origin = kr == 0
+    theta = np.where(at_origin, 0, theta)
+    phi = np.where(at_origin, 0, phi)
+    # Limits of j_l'(x) and j_l(x) / x for x -> 0: 1/3 for l = 1, zero otherwise.
+    lim = np.where(l == 1, 1 / 3, 0)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        jn_d = np.where(at_origin, lim, sc.spherical_jn_d(l, kr))
+        jn_x = np.where(at_origin, lim, sc.spherical_jn(l, kr) / kr)
+    res = (
+        sc.vsh_Z(l, m, theta, phi) * jn_d[..., None]
+        + np.sqrt(l * (l + 1))[..., None] * sc.vsh_Y(l, m, theta, phi) * jn_x[..., None]
+    )
+    return -1j * res
 
 
 def vcw_L(kz, m, krr, phi, z, krho, k):
@@ -359,17 +361,19 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
          k (float or complex or array_like): Angular wavenumber in the medium. Has units of kz.
 
      Returns:
-         complex 3-array
+         complex array: Components in cylindrical coordinates in
+         the last dimension, which has length 3.
       """
-     return np.transpose(
-         np.array(
-             [
-                 sc.hankel1_d(m, krr) * krho / k  * np.exp(1j * (m * phi + kz * z)),
-                 1j * m * sc.hankel1(m, krr) / krr * krho / k  * np.exp(1j * (m * phi + kz * z)),
-                 1j * kz / k * sc.hankel1(m, krr) * np.exp(1j * (m * phi + kz * z)),
-             ]
-         )
+     h = sc.hankel1(m, krr)
+     res = np.stack(
+         np.broadcast_arrays(
+             sc.hankel1_d(m, krr) * krho / k,
+             1j * m * h / krr * krho / k,
+             1j * kz / k * h,
+         ),
+         axis=-1,
      )
+     return res * np.exp(1j * (m * phi + kz * z))[..., None]
 
 
 def vcw_rL(kz, m, krr, phi, z, krho, k):
@@ -400,42 +404,25 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
          k (float or complex or array_like): Angular wavenumber in the medium. Has units of kz.
 
      Returns:
-         complex 3-array
+         complex array: Components in cylindrical coordinates in
+         the last dimension, which has length 3.
      """
-     # todo: implement for k as array_like
-     res = []
-     for i, x in enumerate(krr):
-            if x == 0:
-                if (abs(m[i]) != 1) and (m[i] != 0):
-                    val = np.zeros(3, complex).T
-                    res.append(val)
-                elif abs(m[i]) == 1:
-                   val = np.array(
-                                  [
-                       0.5 * m[i] * krho[i] / k,
-                       0.5j * krho[i] / k,
-                       0. 
-                       ]).T * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
-                   res.append(val)
-                elif m[i] == 0:
-                    val = np.array(
-                        [
-                            0., 
-                            0., 
-                            1j * kz[i] / k * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
-                            ]
-                            ).T
-                    res.append(val)
-            else:      
-                val = np.array(
-                [
-                    sc.jv_d(m[i], krr[i]) * krho[i] / k,
-                    1j * m[i] * sc.jv(m[i], krr[i]) / krr[i] * krho[i] / k,
-                    1j * kz[i] / k * sc.jv(m[i], krr[i]),
-                ] 
-            ).T * np.exp(1j * (m[i] * phi[i] + kz[i] * z[i]))
-                res.append(val)
-     return np.array(res)
+     m = np.asarray(m)
+     on_axis = np.asarray(krr) == 0
+     # Limits of J_m'(x) and J_m(x) / x for x -> 0: m / 2 for |m| = 1, zero otherwise.
+     lim = np.where(np.abs(m) == 1, 0.5 * m, 0)
+     with np.errstate(divide="ignore", invalid="ignore"):
+         jv_d = np.where(on_axis, lim, sc.jv_d(m, krr))
+         jv_x = np.where(on_axis, lim, sc.jv(m, krr) / krr)
+     res = np.stack(
+         np.broadcast_arrays(
+             jv_d * krho / k,
+             1j * m * jv_x * krho / k,
+             1j * kz / k * sc.jv(m, krr),
+         ),
+         axis=-1,
+     )
+     return res * np.exp(1j * (m * phi + kz * z))[..., None]
 
 def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     r"""tl_ssw(lambda_, mu, l, m, kr, theta, phi)

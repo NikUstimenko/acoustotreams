@@ -1116,7 +1116,7 @@ def _ssw_pfield(r, basis, k0, material, modetype):
         )
     if res is None:
         raise ValueError("invalid parameters")
-    res = util.AnnotatedArray(np.array([res]).T)  
+    res = util.AnnotatedArray(np.asarray(res)[..., None])  
     res.ann[-2]["basis"] = basis
     res.ann[-2]["k0"] = k0
     res.ann[-2]["material"] = material
@@ -1147,7 +1147,7 @@ def _scw_pfield(r, basis, k0, material, modetype):
         )   
     if res is None:
         raise ValueError("invalid parameters")
-    res = util.AnnotatedArray(np.array([res]).T)  
+    res = util.AnnotatedArray(np.asarray(res)[..., None])
     res.ann[-2]["basis"] = basis
     res.ann[-2]["k0"] = k0
     res.ann[-2]["material"] = material
@@ -1161,7 +1161,7 @@ def _spw_pfield(r, basis, k0, material, modetype):
     res = ats.spw_Psi(*kvecs, r[..., 0], r[..., 1], r[..., 2])
     if res is None:
         raise ValueError("invalid parameters")
-    res = util.AnnotatedArray(np.array([res]).T)
+    res = util.AnnotatedArray(np.asarray(res)[..., None])
     res.ann[-2]["basis"] = basis
     res.ann[-2]["k0"] = k0
     res.ann[-2]["material"] = material
@@ -1222,7 +1222,7 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
     """Far-field amplitude of pressure field of singular scalar spherical waves."""
     ks = k0 * AcousticMaterial().c / material.c
     r = sc.car2sph(r)
-    r = np.broadcast_to(r, basis.positions.shape)
+    r = np.broadcast_to(r, r.shape[:-2] + basis.positions.shape)
     rsph = basis.positions
     res = None
     res = ats.ssw_psi(
@@ -1237,7 +1237,7 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
         )
     if res is None:
         raise ValueError("invalid parameters")
-    res = util.AnnotatedArray(np.array([res]).T)  
+    res = util.AnnotatedArray(np.asarray(res)[..., None])
     res.ann[-2]["basis"] = basis
     res.ann[-2]["k0"] = k0
     res.ann[-2]["material"] = material
@@ -1247,7 +1247,7 @@ def _ssw_pamplitudeff(r, basis, k0, material, modetype):
 def _scw_pamplitudeff(r, basis, k0, material, modetype):
     """Far-field amplitude of pressure field of singular scalar cylindrical waves."""
     r = sc.car2cyl(r)
-    r = np.broadcast_to(r, basis.positions.shape)
+    r = np.broadcast_to(r, r.shape[:-2] + basis.positions.shape)
     material = AcousticMaterial(material)
     krhos = material.krhos(k0, basis.kz)
     krhos[krhos.imag < 0] = -krhos[krhos.imag < 0]
@@ -1264,7 +1264,7 @@ def _scw_pamplitudeff(r, basis, k0, material, modetype):
         )   
     if res is None:
         raise ValueError("invalid parameters")
-    res = util.AnnotatedArray(np.array([res]).T)  
+    res = util.AnnotatedArray(np.asarray(res)[..., None])
     res.ann[-2]["basis"] = basis
     res.ann[-2]["k0"] = k0
     res.ann[-2]["material"] = material
