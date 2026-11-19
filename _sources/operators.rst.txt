@@ -547,9 +547,9 @@ Evaluate the far-field amplitude
 ================================
 
 Similarly, we can also calculate the far-field amplitudes of the scattered pressure field
-defined as :math:`p = \frac{\mathrm e^{\mathrm i k r}}{r}p_{FF}` for spherical waves,
-and :math:`p = \frac{\mathrm e^{\mathrm i k_{\rho} \rho}}{\sqrt{\rho}}p_{FF}`
-for cylindrical waves. For a singular spherical wave, the amplitude :math:`p_0` is calculated
+defined as :math:`p(kr,\theta,\varphi) = \frac{\mathrm e^{\mathrm i k r}}{r}f(\theta,\varphi)` for spherical waves,
+and :math:`p(k_{\rho} \rho,\varphi,z) = \frac{\mathrm e^{\mathrm i k_{\rho} \rho + \mathrm i k_z z}}{\sqrt{\rho}}f_{k_z}(\varphi)`
+for cylindrical waves. For a singular spherical wave, the amplitude :math:`f` is calculated
 using :func:`acoustotreams.special.ssw_psi`; for a singular cylindrical wave, 
 using :func:`acoustotreams.special.scw_psi`.
 

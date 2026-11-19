@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from joblib import Parallel, delayed
 
 import acoustotreams
 
@@ -33,21 +32,11 @@ sca = cluster.sca(inc)
 
 x = np.linspace(-period, period, 101)
 z = np.linspace(-0.5*period, 0.5*period, 101)
-def compute_pressure(i, j):
-    r = [x[j], 0, z[i]]  
-    if cluster.valid_points(r, radii):
-        result = sca.pfield(r)
-    else:
-        result = np.nan
-    return i, j, result  
-results = Parallel(n_jobs=-1)(
-    delayed(compute_pressure)(i, j) 
-    for i in range(len(z)) 
-    for j in range(len(x))
-)
-p = np.zeros((len(z), len(x)), complex)
-for i, j, result in results:
-    p[i, j] = result
+X, Z = np.meshgrid(x, z)
+points = np.stack([X, np.zeros_like(X), Z], axis=-1)
+valid = cluster.valid_points(points, radii)
+p = np.full(X.shape, np.nan, complex)
+p[valid] = np.asarray(sca.pfield(points[valid]))[:, 0]
 
 p = np.concatenate(
     (

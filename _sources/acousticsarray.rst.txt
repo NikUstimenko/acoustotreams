@@ -22,7 +22,7 @@ change the type and mix them
     8
 
 but they have mainly two features added. First, they derive from
-:class:`treams.util.AnnotatedArray`, so that they can carry annotations with them, but these
+:class:`~treams.util.AnnotatedArray`, so that they can carry annotations with them, but these
 annotations are restricted to the physical quantities (as described in :doc:`params`).
 Secondly, they offer special methods to create matrices for common transformations like
 rotations and translations, which are described in more detail in :doc:`operators`.
