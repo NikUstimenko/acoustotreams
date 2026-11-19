@@ -287,15 +287,14 @@ def mie_acoustics(l, x, *materials):
 
     Args:
         l (int or array_like): Degree :math:`l \geq 0`.
-        x (float or array_like): Size parameters in the array.
+        x (float or array_like): Size parameters of the layers.
         rho (array_like of float or complex): Mass density (kg/m^3). The length must be at least two.
         c (array_like of float or complex): Longitudinal speed of sound (m/s). The length must be at least two.
         c_t (array_like of float or complex): Transverse speed of sound (m/s). The length must be at least two.
 
     Returns:
-        complex array
+        list
     """
-    
     mat = list(zip(*materials))
     l = np.atleast_1d(l)
     x = np.atleast_1d(x)
@@ -394,9 +393,8 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
         c_t (float or complex or array_like): Transverse speed of sound (m/s).
 
     Returns:
-        complex array
+        list
     """
-    
     mat = list(zip(*materials))
     radii = np.atleast_1d(radii)
     m = np.atleast_1d(m)
@@ -420,8 +418,8 @@ def fresnel_acoustics(kzs, rhos):
     the outgoing modes and the second one to the incoming modes.
 
     Args:
-        kzs (float): Z-components of the wave vector (rad/m).
-        rhos (float or complex): Mass densities (kg/m^3).
+        kzs (array_like of float or complex): Z-components of the wave vector (rad/m).
+        rhos (array_like of float or complex): Mass densities (kg/m^3).
 
     Returns:
         complex (2, 2, 1, 1)-array

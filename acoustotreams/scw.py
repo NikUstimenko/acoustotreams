@@ -116,9 +116,9 @@ def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
         kx (float or array_like): X-component of the wave vector of plane waves.
         ky (float or complex or array_like): Y-component of the wave vector of plane waves. Has units of kx.
         kzpw (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.
-        kzcw (float or array_like): Z-component of the waver vector of cylindrical waves. Has units of kx.
+        kzcw (float or array_like): Z-component of the wave vector of cylindrical waves. Has units of kx.
         m (int or array_like): Order of cylindrical waves.
-        area (float or array_like): Unit cell area.
+        area (float or array_like): Lattice period a one-dimensional lattice.
 
     Returns:
         complex or array_like
@@ -163,7 +163,7 @@ def to_ssw(l, m, kz, mu, k, *args, **kwargs):
 def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
     """Translation coefficients for cylindrical waves on a lattice.
 
-    Return the translation coefficents for the given modes on a lattice. The
+    Return the translation coefficients for the given modes on a lattice. The
     computations employ the fast converging Ewald summation from :mod:`treams.lattice`.
 
     Args:
@@ -178,7 +178,7 @@ def translate_periodic(k, kpar, a, rs, out, in_=None, rsin=None, eta=0):
         in_ (2- or 3-tuple of arrays): Input modes. If None is given, they are equal to the output 
             modes. If `len(in_) == 2`, `in_[0]` may be float and `in_[1]` must be integer. 
             If `len(in_) == 3`, `in_[1]` may be float, while `in_[0]` and `in_[2]` must be integer.
-        rsin (float): Shift vectors of the input modes. If None is given, they are equal
+        rsin ((M, 3)-array of float): Shift vectors of the input modes. If None is given, they are equal
             to `rs`. Have units of 1/k.
         eta (float or complex, optional): Splitting parameter for the Ewald summation of
             lattice sums. If zero, an estimation for the optimal value is done. Defaults

@@ -61,7 +61,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
     or :func:`~acoustotreams.special.ssw_Psi`, respectively.
 
     Args:
-        modes (array_like): A tuple containing a list for each of ``l`` and ``m``,
+        modes (array_like): A list of mode tuples for each of ``l`` and ``m``,
             or ``pidx``, ``l`` and ``m``.
         positions (array_like, optional): The positions of the expansion centers 
             for the specified modes (m). Defaults to ``[[0, 0, 0]]``.
@@ -69,13 +69,13 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
     Attributes:
         pidx (array_like): Integer referring to a row in :attr:`positions`.
         l (array_like): Degree as an integer :math:`l \geq 0`
-        m (array_like): Order as an integer :math:`m \leq |l|`.
+        m (array_like): Order as an integer :math:`|m| \leq l`.
     """
 
     _names = ("pidx", "l", "m")
 
     def __init__(self, modes, positions=None):
-        """Initalization."""
+        """Initialization."""
         tmp = []
         if isinstance(modes, np.ndarray):
             modes = modes.tolist()
@@ -166,7 +166,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         a tuple; all other index types return a new basis set.
 
         Alternatively, the string "plm", or "lm" can be used to select 
-        only a corresponding subset of the attrubutes :attr:`pidx`, :attr:`l`, 
+        only a corresponding subset of the attributes :attr:`pidx`, :attr:`l`, 
         and :attr:`m`.
         """
         res = self.pidx[idx], self.l[idx], self.m[idx]
@@ -198,7 +198,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
         By default, modes are grouped into separate blocks for each position 
         index in ascending order. Within each block, modes are sorted by 
-        degree :math:`l` (lowest first) and then by order :math:m from 
+        degree :math:`l` (lowest first) and then by order :math:`m` from 
         :math:`m = -l` to :math:`m = l`.
 
         Example:
@@ -235,7 +235,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
         """Calculate the maximum degree for a given number of modes.
 
         Return the estimated maximum value of `l` given the dimension of the T-matrix. 
-        This is the inverse of :meth:defaultdim. A value of zero is returned for empty T-matrices.
+        This is the inverse of :meth:`defaultdim`. A value of zero is returned for empty T-matrices.
 
         Example:
             >>> acoustotreams.ScalarSphericalWaveBasis.defaultlmax(len(acoustotreams.ScalarSphericalWaveBasis.default(3)))
@@ -256,9 +256,9 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
 
     @staticmethod
     def defaultdim(lmax, nmax=1):
-        """Calculate the number of modes for a given mulipolar degree.
+        """Calculate the number of modes for a given multipolar degree.
 
-        Return the dimesion of the T-matrix given the maximum value of `l`. 
+        Return the dimension of the T-matrix given the maximum value of `l`. 
         This is the inverse of :meth:`defaultlmax`. A value of lmax=-1 is allowed.
 
         Args:
@@ -297,7 +297,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     respectively.
 
     Args:
-        modes (array_like): A tuple containing a list for each of ``kz`` and ``m``,
+        modes (array_like): A list of mode tuples for each of ``kz`` and ``m``,
             or ``pidx``, ``kz`` and ``m``.
         positions (array_like, optional): Positions of the expansion centers for the specified
             modes (m). Defaults to ``[[0, 0, 0]]``.
@@ -311,7 +311,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     _names = ("pidx", "kz", "m")
 
     def __init__(self, modes, positions=None):
-        """Initalization."""
+        """Initialization."""
         tmp = []
         if isinstance(modes, np.ndarray):
             modes = modes.tolist()
@@ -400,7 +400,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         with an integer or an empty tuple returns a tuple; all other index types 
         return a new basis set.
 
-        Alternatively, the string "pkzm" or "kzm" can be used to select a 
+        Alternatively, the string "pzm" or "zm" can be used to select a 
         corresponding subset of the attributes :attr:`pidx`, :attr:`kz`, and :attr:`m`.
         """
         res = self.pidx[idx], self.kz[idx], self.m[idx]
@@ -430,8 +430,8 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
         By default, modes are grouped into separate blocks for each position 
         index in ascending order. Within each block, modes are sorted by 
-        the Z-component of the wave vector :math:`k_z` and then by order :math:m 
-        in asceding order.
+        the Z-component of the wave vector :math:`k_z` and then by order :math:`m`
+        in ascending order.
 
         Example:
             >>> acoustotreams.ScalarCylindricalWaveBasis.default([-0.5, 0.5], 1)
@@ -483,7 +483,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
             kz (float): Z-component of the wave vector. Ideally, it is defined within the 
                 first Brillouin zone (use :func:`treams.misc.firstbrillouin1d`).
             mmax (int): Maximum value of the order.
-            lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
+            lattice (:class:`~treams.Lattice` or float): Lattice definition or pitch.
             bmax (float): Maximum length of reciprocal-lattice vectors that defines 
                 a maximum momentum transfer from the given value of `kz`.
             nmax (int, optional): Number of expansion centers.
@@ -541,7 +541,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
 
     @staticmethod
     def defaultdim(nkz, mmax, nmax=1):
-        """Calculate the number of modes for a given mulipolar order.
+        """Calculate the number of modes for a given multipolar order.
 
         Return the dimension of the T-matrix given the maximum value of 
         `m` and number of `k_z` components. A value of zero is allowed.
@@ -572,10 +572,10 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
     Cartesian components ``qx``, ``qy``, and ``qz`` normalized to
     :math:`q_x^2 + q_y^2 + q_z^2 = 1`.
 
-    Plane waves can refer to:func:`~acoustotreams.special.spw_Psi`.
+    Plane waves can refer to :func:`~acoustotreams.special.spw_Psi`.
 
     Args:
-        modes (array_like): A tuple containing a list for each of ``qx``, ``qy``,
+        modes (array_like): A list of mode tuples for each of ``qx``, ``qy``,
             and ``qz``.
 
     Attributes:
@@ -692,20 +692,18 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
             return False
 
     def bycomp(self, k0, alignment="xy", material=AcousticMaterial()):
-        """Creates an instance of :class:`ScalarPlaneWaveBasisByComp`.
+        """Creates an instance of :class:`~acoustotreams.ScalarPlaneWaveBasisByComp`.
 
         The plane-wave basis is changed to a partial basis, where only two (real-valued)
         wave-vector components are specified. A third component is then inferred from the
-        dispersion relation, which depends on the wavenumber, material and
-        ``modetype``, which determines the sign of the third component.
+        dispersion relation, which depends on the wavenumber and material.
 
         Args:
+            k0 (float): Angular wavenumber in the air (rad/m). 
             alignment (str, optional): Wave-vector components included in the
                 partial basis. Defaults to "xy", other permitted values are "yz" and
                 "zx".
-            k0 (float, optional): Angular wavenumber in the air (rad/m). 
-                Verifies that the current basis satisfies the dispersion relation.
-            material (:class:`acoustotreams.AcousticMaterial` or tuple): Material definition. 
+            material (:class:`acoustotreams.AcousticMaterial`): Material definition. 
                 Defaults to the air.
         """
         ks = material.ks(k0)
@@ -757,7 +755,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
     Scalar plane waves refer to :func:`~acoustotreams.special.spw_Psi`.
 
     Args:
-        modes (array_like): A tuple containing a list for each of ``k1`` and ``k2``.
+        modes (array_like): A list of mode tuples for each of ``k1`` and ``k2``.
         alignment (str, optional): Wave-vector components included in the
                 partial basis. Defaults to "xy", other possible values are "yz" and "zx".
 
@@ -871,7 +869,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         res = self._kx[idx], self._ky[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res
-        return type(self)(zip(*res))
+        return type(self)(zip(*res), self.alignment)
 
     @classmethod
     def default(cls, kpars, alignment="xy"):
@@ -911,8 +909,8 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
         Args:
             kpar (float): In-plane wave-vector components (rad/m). Ideally, they are defined within the
-                first Brillouin zone (use :func:`misc.firstbrillouin2d`).
-            lattice (:class:`acoustotreams.Lattice` or float): Lattice definition or pitch.
+                first Brillouin zone (use :func:`treams.misc.firstbrillouin2d`).
+            lattice (:class:`~treams.Lattice` or float): Lattice definition or pitch.
             bmax (float): Maximum length of reciprocal-lattice vectors that defines a maximum
                 momentum transfer with respect to `kpar`.
         """
@@ -980,7 +978,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         kz = material.kzs(k0, kx, ky) * (2 * (modetype == "up") - 1)
         if self.alignment == "yz":
             kx, ky, kz = kz, kx, ky
-        elif self.alignment == "zy":
+        elif self.alignment == "zx":
             kx, ky, kz = ky, kz, kx
         obj = ScalarPlaneWaveBasisByUnitVector(zip(kx, ky, kz))
         obj.lattice = self.lattice
@@ -1020,20 +1018,20 @@ class ScalarPhysicsDict(util.AnnotationDict):
     several properties defined.
 
     Attributes:
-        basis (:class:`ScalarBasisSet`): Basis set.
+        basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Angular wavenumber in the air (rad/m).
         kpar (list): In-plane wave-vector components (rad/m). Usually, this is a list of length
             3 with its items corresponding to the Cartesian coordinates. Unspecified items
-            aree set to `nan`.
-        lattice (:class:`~acoustotreams.Lattice`): Lattice definition.
+            are set to `nan`.
+        lattice (:class:`~treams.Lattice`): Lattice definition.
         material (:class:`~acoustotreams.AcousticMaterial`): Material definition.
         modetype (str): Mode type. For spherical and cylindrical waves, it can be
-            "incident" and "scattered"; for partial plane waves, "up" or "down".
+            "regular" and "singular"; for partial plane waves, "up" or "down".
     """
 
     properties = {
         "basis": (
-            ":class:`ScalarBasisSet`.",
+            ":class:`~acoustotreams.ScalarBasisSet`.",
             lambda x: isinstance(x, ScalarBasisSet),
             _raise_basis_error,
         ),
@@ -1044,7 +1042,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
             WaveVector,
         ),
         "lattice": (
-            ":class:`~acoustotreams.Lattice`.",
+            ":class:`~treams.Lattice`.",
             lambda x: isinstance(x, Lattice),
             Lattice,
         ),
@@ -1060,7 +1058,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
     def __setitem__(self, key, val):
         """Sets item specified by key to the defined value.
 
-        When overwriting an existing key an :class:`AnnotationWarning` is emitted.
+        When overwriting an existing key an :class:`~treams.util.AnnotationWarning` is emitted.
         Avoid the warning by explicitly deleting the key first. The special attributes
         are cast to their corresponding types.
 
@@ -1069,7 +1067,7 @@ class ScalarPhysicsDict(util.AnnotationDict):
             val : Value
 
         Warns:
-            AnnotationWarning
+            treams.util.AnnotationWarning
         """
         if key not in self.properties:
             raise AttributeError(f"invalid key '{key}'")
@@ -1082,11 +1080,11 @@ class ScalarPhysicsDict(util.AnnotationDict):
 class AcousticsArray(util.AnnotatedArray):
     """Acoustics-aware array.
 
-    An acoustics-aware array is a special type of :class`~treams.util.AnnotatedArray`.
+    An acoustics-aware array is a special type of :class:`~treams.util.AnnotatedArray`.
     Additionally to keeping track of the annotations, it is enhanced by the ability to
     create suiting linear operators to perform tasks like rotations, translations, or
     expansions into different basis sets and by applying special rules for the
-    physical properties of :class:`ScalarPhysicsDict` upon matrix multiplications, see also
+    physical properties of :class:`~acoustotreams.ScalarPhysicsDict` upon matrix multiplications, see also
     :meth:`__matmul__`.
     """
 
@@ -1147,7 +1145,7 @@ class AcousticsArray(util.AnnotatedArray):
     def __repr__(self):
         """String representation.
 
-        For a more managable output only the special physics properties are shown
+        For a more manageable output only the special physics properties are shown
         alongside the array itself.
         """
         repr_arr = "    " + repr(self._array)[6:-1].replace("\n  ", "\n") + ","        

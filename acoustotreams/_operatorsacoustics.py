@@ -73,11 +73,15 @@ def rotate(phi, theta=0, psi=0, *, basis, where=True):
         phi (float): First Euler angle (rotation about z) (rad).
         theta (float, optional): Second Euler angle (rotation about y) (rad).
         psi (float, optional): Third Euler angle (rotation about z) (rad).
-        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordingly; otherwise, 
             both sets of the modes are the same.
         where (array_like, bool, optional): Only evaluate specified parts of the rotation matrix.
             The input array must have a shape that matches the output shape.
+
+    Returns:
+        AcousticsArray: Rotation matrix. Its rows correspond to the output modes and its
+        columns to the input modes, both annotated with their basis set.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -197,7 +201,7 @@ def translate(
 
     Args:
         r (array_like): Translation vector.
-        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordingly; otherwise, 
             both sets of modes are the same.
         k0 (float, optional): Angular wavenumber in the air. Has units of 1/r.
@@ -207,6 +211,11 @@ def translate(
             :class:`ScalarPlaneWaveBasisByComp`.
         where (array_like of bool, optional): Only evaluate specified parts of the translation
             matrix. The given array must have a shape that matches the output shape.
+
+    Returns:
+        AcousticsArray: Translation matrix. Its rows correspond to the output modes and
+        its columns to the input modes. For several translation vectors in ``r``, their
+        shape is prepended, giving ``(..., len(to_basis), len(basis))``.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -391,16 +400,21 @@ def expand(
     of plane waves, so that the transformation becomes an integral over this spectrum.
 
     Args:
-        basis (:class:`ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordingly; otherwise, 
             both sets of modes are the same.
-        modetype (str, optional): Mode type, used for
+        modetype (array_like of str, optional): Mode type, used for
             :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.
         k0 (float, optional): Angular wavenumber in the air.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         where (array_like of bool, optional): Only evaluate specified parts of the expansion 
             matrix. The given array must have a shape that matches the output shape.
+
+    Returns:
+        AcousticsArray: Expansion matrix. Its rows correspond to the modes of the output
+        basis set and its columns to the modes of the input basis set. Both dimensions are
+        annotated with ``k0``, ``material``, and their mode type.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -730,6 +744,12 @@ def expandlattice(
             :class:`ScalarPlaneWaveBasisByComp`.
         where (array_like of bool, optional): Only evaluate specified parts of the expansion 
             matrix. The given array must have a shape that matches the output shape.
+
+    Returns:
+        AcousticsArray: Expansion matrix. Its rows correspond to the modes of the output
+        basis set and its columns to the modes of the input basis set. Both dimensions are
+        annotated with ``lattice`` and ``kpar`` in addition to ``k0``, ``material``, and
+        their mode type.
     """
     if isinstance(basis, (tuple, list)):
         to_basis, basis = basis
@@ -888,20 +908,22 @@ def _spwa_permute(basis, n):
     return core.AcousticsArray(res, basis=(basis.permute(n), basis))
 
 
-def permute(n=1, *, basis, k0=None, material=None, modetype=None):
+def permute(n=1, *, basis, k0=None, material=AcousticMaterial(), modetype=None):
     """Permutation matrix.
 
     Permute the axes of a scalar plane-wave basis expansion.
 
     Args:
         n (int, optional): Number of permutations. Defaults to 1.
-        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
-            basis sets, the output and input modes are taken accordinglyp; otherwise, both sets
-            of modes are the same.
+        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set.
         k0 (float, optional): Angular wavenumber in the air.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type.
+    
+    Returns:
+        AcousticsArray: Permutation matrix that maps the coefficients in ``basis`` to the
+        coefficients in the permuted basis ``basis.permute(n)``.
     """
     if n != int(n):
         raise ValueError("'n' must be integer")
@@ -1029,15 +1051,24 @@ def vfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The velocity field is given in units of m/s.
 
     Args:
-        r (array_like): Evaluation points.
+        r (array_like): Evaluation points as Cartesian coordinates in the last
+            dimension, which must have length 3.
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.  
         modetype (str, optional): Mode type.
+
+    Returns:
+        treams.util.AnnotatedArray: Array of shape ``(..., 3, len(basis))``, where ``...``
+        is the shape of ``r`` without its last dimension. Multiplied with the expansion
+        coefficients, it gives the Cartesian components of the velocity at the evaluation
+        points.
     """
     material = AcousticMaterial(material)
     r = np.asanyarray(r)
+    if r.ndim == 0 or r.shape[-1] != 3:
+        raise ValueError("'r' must contain Cartesian coordinates (x, y, z) in its last dimension")
     r = r[..., None, :]
     if isinstance(basis, core.ScalarSphericalWaveBasis):
         modetype = "regular" if modetype is None else modetype
@@ -1146,15 +1177,23 @@ def pfield(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The pressure field is given in units of Pa.
 
     Args:
-        r (array_like): Evaluation points.
+        r (array_like): Evaluation points as Cartesian coordinates in the last
+            dimension, which must have length 3.
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type.
+
+    Returns:
+        treams.util.AnnotatedArray: Array of shape ``(..., 1, len(basis))``, where ``...``
+        is the shape of ``r`` without its last dimension. Multiplied with the expansion
+        coefficients, it gives the pressure at the evaluation points.
     """
     material = AcousticMaterial(material)
     r = np.asanyarray(r)
+    if r.ndim == 0 or r.shape[-1] != 3:
+        raise ValueError("'r' must contain Cartesian coordinates (x, y, z) in its last dimension")
     r = r[..., None, :]
     if isinstance(basis, core.ScalarSphericalWaveBasis):
         modetype = "regular" if modetype is None else modetype
@@ -1238,18 +1277,28 @@ def pamplitudeff(r, *, basis, k0, material=AcousticMaterial(), modetype=None):
     The resulting matrix maps the scattered pressure field coefficients in the scalar 
     spherical or cylindrical wave basis to the far-field amplitude of the pressure field.
 
-    The far-field amplitude is given in units of N/m.
+    The far-field amplitude is given in units of N/m for spherical waves and
+    Pa*m^1/2 for cylindrical waves.
 
     Args:
-        r (array_like): Evaluation points.
+        r (array_like): Directions as Cartesian coordinates in the last
+            dimension, which must have length 3.
         basis (:class:`~acoustotreams.ScalarBasisSet`): Basis set.
         k0 (float): Angular wavenumber in the air. Has units of 1/r.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
         modetype (str, optional): Mode type.
+
+    Returns:
+        treams.util.AnnotatedArray: Array of shape ``(..., 1, len(basis))``, where ``...``
+        is the shape of ``r`` without its last dimension. Multiplied with the expansion
+        coefficients of the scattered field, it gives the far-field amplitude in the
+        directions of ``r``.
     """
     material = AcousticMaterial(material)
     r = np.asanyarray(r)
+    if r.ndim == 0 or r.shape[-1] != 3:
+        raise ValueError("'r' must contain Cartesian coordinates (x, y, z) in its last dimension")
     r = r[..., None, :]
     if isinstance(basis, core.ScalarSphericalWaveBasis):
         modetype = "singular" if modetype is None else modetype

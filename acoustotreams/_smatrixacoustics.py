@@ -82,7 +82,7 @@ class AcousticSMatrices:
     propagating in negative z-direction, respectively. Each of these four matrices
     also maps different diffraction orders to one another.
 
-    The wavenumber :attr:`k0` and, if not the air, the material :attr:`material` 
+    The wavenumber ``k0`` and, if not the air, the material ``material`` 
     are required.
 
     Args:
@@ -169,7 +169,7 @@ class AcousticSMatrices:
             materials (Sequence[AcousticMaterial]): Material definitions.
 
         Returns:
-            AcousticSMatrix
+            AcousticSMatrices
         """
         materials = tuple(map(AcousticMaterial, materials))
         qs = np.zeros((2, 2, len(basis), len(basis)), complex)
@@ -196,7 +196,7 @@ class AcousticSMatrices:
                 positive z.
 
         Returns:
-            AcousticSMatrix
+            AcousticSMatrices
         """
         try:
             iter(thickness)
@@ -223,7 +223,7 @@ class AcousticSMatrices:
                 from negative to positive z.
 
         Returns:
-            AcousticSMatrix
+            AcousticSMatrices
         """
         acc = items[0]
         for item in items[1:]:
@@ -243,7 +243,7 @@ class AcousticSMatrices:
             material (AcousticMaterial, optional): Material definition.
 
         Returns:
-            AcousticSMatrix
+            AcousticSMatrices
         """
         sup = translate(r, basis=basis, k0=k0, material=material, modetype="up")
         sdown = translate(
@@ -266,7 +266,7 @@ class AcousticSMatrices:
             basis (ScalarPlaneWaveBasisByComp): Basis definition.
 
         Returns:
-            SMatrix
+            AcousticSMatrices
         """
         if isinstance(tm, AcousticTMatrixC):
             basis = basis.permute(-1)
@@ -281,14 +281,14 @@ class AcousticSMatrices:
     def add(self, sm):
         """Couple another S-matrix on top of the current one.
 
-        See also :func:`AcousticSMatrix.stack` for a function that does not change the
+        See also :meth:`~acoustotreams.AcousticSMatrices.stack` for a function that does not change the
         current S-matrix but creates a new one.
 
         Args:
             sm (AcousticSMatrix): Acoustic S-matrix to add.
 
         Returns:
-            AcousticSMatrix
+            AcousticSMatrices
         """
         dim = len(self.basis)
         snew = [[None, None], [None, None]]
@@ -310,7 +310,7 @@ class AcousticSMatrices:
             n (int, optional): Number of times to double itself. Defaults to 1.
 
         Returns:
-            AcousticSMatrix
+            AcousticSMatrices
         """
         res = self
         for _ in range(n):
@@ -331,15 +331,18 @@ class AcousticSMatrices:
             illu2 (complex or array_like, optional): Second insonification. If used, the first
                 argument is taken to be coming from below and this one to be coming from
                 above.
-            smat (AcousticSMatrix, optional): Second S-matrix for computing the
+            smat (AcousticSMatrices, optional): Second S-matrix for computing the
                 field expansion between two S-matrices.
 
         Returns:
-            tuple
+            tuple[array_like, ...]: Expansion coefficients of the outgoing fields.
+            Without ``smat``, the 2-tuple ``(field_up, field_down)``.
+            With ``smat``, the 4-tuple
+            ``(field_up, field_down, field_in_up, field_in_down)``.
         """
         modetype = getattr(illu, "modetype", "up")
         if isinstance(modetype, tuple):
-            modetype = modetype[max(-2, -len(tuple))]
+            modetype = modetype[max(-2, -len(modetype))]
         illu2 = np.zeros(np.shape(illu)[-2:]) if illu2 is None else illu2
         if modetype == "down":
             illu, illu2 = illu2, illu
@@ -366,11 +369,11 @@ class AcousticSMatrices:
             illu (complex or array_like): Expansion coefficients of the incoming wave.
 
         Returns:
-            tuple
+            tuple[float, float]: ``(transmittance, reflectance)``
         """
         modetype = getattr(illu, "modetype", "up")
         if isinstance(modetype, tuple):
-            modetype = modetype[max(-2, -len(tuple))]
+            modetype = modetype[max(-2, -len(modetype))]
         trans, refl = self.illuminate(illu)
         material = self.material
         if not isinstance(material, tuple):
@@ -406,8 +409,7 @@ class AcousticSMatrices:
             \end{pmatrix}\,.
 
         Returns:
-            complex or array_like
-
+            array_like
         """
         dim = len(self.basis)
         res = np.empty((2 * dim, 2 * dim), dtype=complex)
@@ -444,8 +446,10 @@ class AcousticSMatrices:
             az (float): Lattice pitch along the z-direction (m).
 
         Returns:
-            tuple
-
+            tuple[ndarray, ndarray]: ``(kz, v)``. ``kz`` is a 1D complex array
+            of the Bloch wave numbers :math:`k_z` (1/m), of length
+            ``2 * len(basis)``. ``v`` is a 2D array whose column ``v[:, i]`` is
+            the eigenvector belonging to ``kz[i]``.
         """
         w, v = np.linalg.eig(self.periodic())
         return -1j * np.log(w) / az, v
@@ -477,7 +481,7 @@ def poynting_avg_z(basis, k0, material=AcousticMaterial()):
             the S-matrix. Defaults to the air.
 
     Returns:
-        array-like
+        ndarray: Real matrix of shape ``(len(basis), len(basis))``.
     """
     material = AcousticMaterial(material)
     kx, ky, kzs = basis.kvecs(k0, material)

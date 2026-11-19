@@ -599,3 +599,25 @@ class TestPField:
         )
         y = np.array([y]).T
         assert np.all(np.abs(y.swapaxes(-1, -2) - x) < 1e-14)
+
+class TestVField:
+    def test_spw_multiple_modes(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByComp([[0.4, -0.2], [0.1, 0.3]])
+        k0 = 2
+        material = acoustotreams.AcousticMaterial(1000, 1500, 0)
+        r = np.array([0.3, -0.4, 0.5])
+        x = acoustotreams.vfield(r, basis=b, k0=k0, material=material, modetype="up")
+        kvecs = np.array(b.kvecs(k0, material, "up"))
+        k = material.ks(k0)
+        y = kvecs / k * np.exp(1j * (kvecs.T @ r)) / (material.rho * material.c)
+        assert x.shape == (3, 2) and np.allclose(np.asarray(x), y, rtol=1e-12, atol=0)
+
+    def test_spw_multiple_points(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByUnitVector([[0.3, 0.4, 0.5], [0, 0, 1]])
+        r = np.array([[0.3, -0.4, 0.5], [0.1, 0.2, -0.3]])
+        x = acoustotreams.vfield(r, basis=b, k0=2)
+        single = [acoustotreams.vfield(ri, basis=b, k0=2) for ri in r]
+        x = np.asarray(x)
+        assert x.shape == (2, 3, 2) and all(
+            np.allclose(x[i], np.asarray(s)) for i, s in enumerate(single)
+        )

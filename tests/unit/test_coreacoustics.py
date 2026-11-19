@@ -382,6 +382,16 @@ class TestSPWBC:
             and np.all(b.kx == [0.2])
             and np.all(b.ky is None)
         )
+        
+    def test_getitem_slice_keeps_alignment(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByComp([[0.4, 0.2], [0.1, 0.3]], "yz")
+        sub = b[:1]
+        assert (
+            sub.alignment == "yz"
+            and np.all(sub.ky == [0.4])
+            and np.all(sub.kz == [0.2])
+            and sub.kx is None
+        )
 
     def test_init_duplicate(self):
         b = acoustotreams.ScalarPlaneWaveBasisByComp([[0.4, 0.2], [0.4, 0.2]])

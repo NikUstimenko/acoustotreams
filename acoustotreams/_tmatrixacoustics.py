@@ -55,8 +55,8 @@ class AcousticTMatrix(AcousticsArray):
 
     The acoustic T-matrix is a square matrix that maps incident (regular) fields
     :func:`acoustotreams.special.ssw_rPsi` to the corresponding scattered (singular) fields 
-    :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in :attr:`basis`. 
-    Moreover, the wavenumber :attr:`k0` and, if not air, the material :attr:`material` are
+    :func:`acoustotreams.special.ssw_Psi`. The modes themselves are defined in ``basis``. 
+    Moreover, the wavenumber ``k0`` and, if not air, the material ``material`` are
     specified.
 
     Args:
@@ -64,7 +64,7 @@ class AcousticTMatrix(AcousticsArray):
         k0 (float): Angular wavenumber in the air.
         basis (ScalarSphericalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Background material. Defaults to the air.
-        lattice (Lattice, optional): Lattice definition. If specified, the T-matrix is
+        lattice (:class:`~treams.Lattice`, optional): Lattice definition. If specified, the T-matrix is
             assumed to be placed on the defined lattice.
         kpar (list, optional): Bloch wave vector for the effective T-Matrix.
     """
@@ -217,14 +217,14 @@ class AcousticTMatrix(AcousticsArray):
         .. math::
 
             \langle \sigma_\mathrm{ext} \rangle
-            = 4 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},
+            = -4 \pi \sum_{lm} \frac{\Re(T_{lm,lm})}{k^2},
 
         where :math:`k` is the angular wavenumber in the background medium.    
 
         It is only implemented for global T-matrices.
 
         Returns:
-            float or complex
+            float
         """
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
@@ -251,7 +251,7 @@ class AcousticTMatrix(AcousticsArray):
         It is only implemented for global T-matrices.
 
         Returns:
-            float or complex
+            float
         """
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
@@ -315,7 +315,7 @@ class AcousticTMatrix(AcousticsArray):
                 normalization, which is used as default.
 
         Returns:
-            tuple[float]
+            tuple[float, float]: ``(sigma_sca, sigma_ext)``.
         """
         if not self.material.isreal:
             raise NotImplementedError
@@ -371,15 +371,15 @@ class AcousticTMatrixC(AcousticsArray):
     The acoustic T-matrix is a square matrix that maps incident (regular) fields
     :func:`acoustotreams.special.scw_rPsi` to corresponding scattered (singular) fields 
     :func:`acoustotreams.special.scw_Psi`. The modes themselves are defined 
-    in :attr:`basis`. Moreover, the wavenumber :attr:`k0` and, if not the air, 
-    the material :attr:`material` are specified.
+    in ``basis``. Moreover, the wavenumber ``k0`` and, if not the air, 
+    the material ``material`` are specified.
 
     Args:
         arr (float or complex or array_like): T-matrix itself.
         k0 (float): Angular wavenumber in the air.
         basis (ScalarCylindricalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Background material. Defaults to air.
-        lattice (Lattice, optional): Lattice definition. If specified, the T-matrix is
+        lattice (:class:`~treams.Lattice`, optional): Lattice definition. If specified, the T-matrix is
             assumed to be placed on the defined lattice.
         kpar (list, optional): Bloch wave vector for the effective T-Matrix.
     """
@@ -419,7 +419,7 @@ class AcousticTMatrixC(AcousticsArray):
         r"""Radial part of the wave vector.
 
         Calculate :math:`\sqrt{k^2 - k_z^2}`, where :math:`k` is the wavenumber in the
-        medium for each insonification.
+        medium for each mode.
 
         Returns:
             Sequence[complex]
@@ -531,7 +531,21 @@ class AcousticTMatrixC(AcousticsArray):
 
     @classmethod
     def from_array(cls, tm, basis, *, eta=0):
-        """One-dimensional array of spherical T-matrices."""
+        """Cylindrical T-matrix of a one-dimensional array of spherical T-matrices.
+
+        The objects described by the spherical T-matrix ``tm`` are repeated periodically
+        along the z-axis, and their scattered field is expanded in the cylindrical waves of
+        ``basis``.
+
+        Args:
+            tm (AcousticTMatrix): Spherical T-matrix of the objects in one unit cell.
+            basis (ScalarCylindricalWaveBasis): Basis of the cylindrical T-matrix.
+            eta (float or complex, optional): Splitting parameter for the Ewald summation of
+                the lattice sums. Defaults to 0, which selects a value automatically.
+
+        Returns:
+            AcousticTMatrixC
+        """
         return cls(
             (tm @ opa.Expand(basis).inv).expandlattice(basis=basis, eta=eta),
             lattice=tm.lattice,
@@ -557,7 +571,7 @@ class AcousticTMatrixC(AcousticsArray):
         It is only implemented for global T-matrices.
 
         Returns:
-            float or complex
+            float
         """
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
@@ -597,7 +611,7 @@ class AcousticTMatrixC(AcousticsArray):
         It is only implemented for global T-matrices.
 
         Returns:
-            float or complex
+            float
         """
         if not self.isglobal or not self.material.isreal:
             raise NotImplementedError
@@ -662,7 +676,7 @@ class AcousticTMatrixC(AcousticsArray):
             b_{k_z m}^\ast T_{{k_z} m, {k_z}' m'}^\ast k^{-1}
             C_{{k_z}'m',{k_z}''m''}^{(1)}
             T_{{k_z}''m'',{k_z}'''m'''} b_{{k_z}'''m'''} \\
-            \sigma_\mathrm{ext}
+            \lambda_\mathrm{ext}
             = -\frac{2}{I}
             b_{k_z m}^\ast k^{-1} T_{k_z m,{k_z}'m'} b_{{k_z}'m'}
 
@@ -671,6 +685,8 @@ class AcousticTMatrixC(AcousticsArray):
         matrix, and :math:`k` is the wavenumber in the medium. All repeated indices
         are summed over. The flux of a plane pressure wave is :math:`I = 0.5`.
 
+        Only propagating modes are taken into account. 
+
         Args:
             inc (array_like): Incident wave or its expansion coefficients
             flux (float, optional): Ingoing flux corresponding to the incident wave. Used for
@@ -678,7 +694,7 @@ class AcousticTMatrixC(AcousticsArray):
                 normalization, which is used as default.
 
         Returns:
-            tuple[float]
+            tuple[float, float]: ``(lambda_sca, lambda_ext)``.
         """
         if not self.material.isreal:
             raise NotImplementedError
@@ -774,6 +790,10 @@ def plane_wave_scalar(
         k0 (float, optional): Angular wavenumber in the air.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).
+
+    Returns:
+        AcousticsArray: Expansion coefficients of the plane wave in the basis: 1 for the
+        mode with the given wave vector and 0 for all other modes.
     """
     if len(kvec) == 2:
         return _plane_wave_partial_scalar(
@@ -834,9 +854,13 @@ def spherical_wave_scalar(
         l (int): Degree :math:`l \geq 0`.
         m (int): Order :math:`|m| \leq l`.
         k0 (float, optional): Angular wavenumber in the air.
-        basis (ScalarPlaneWaveBasis, optional): Basis definition.
+        basis (ScalarSphericalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).
+    
+    Returns:
+        AcousticsArray: Expansion coefficients in the basis: 1 for the mode with degree ``l``
+        and order ``m`` and 0 for all other modes.
     """
     if basis is None:
         basis = SSWB.default(l)
@@ -861,6 +885,10 @@ def cylindrical_wave_scalar(
         basis (ScalarCylindricalWaveBasis, optional): Basis definition.
         material (AcousticMaterial, optional): Material definition.
         modetype (str, optional): Mode type (see :ref:`params:Mode types`).
+    
+    Returns:
+        AcousticsArray: Expansion coefficients in the basis: 1 for the mode with ``kz``
+        and order ``m`` and 0 for all other modes.
     """
     if basis is None:
         basis = SCWB.default([kz], abs(m))

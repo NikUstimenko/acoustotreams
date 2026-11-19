@@ -74,7 +74,7 @@ def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
 
     
 def _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
-    """Coefficient for the expansion of a scalar plane wave in scalar cylindricrical waves"""  
+    """Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves"""  
     krho = np.sqrt(kx * kx + ky * ky)
     if np.abs(kzcw - kzpw) <= 1e-12:
         if m == 0:

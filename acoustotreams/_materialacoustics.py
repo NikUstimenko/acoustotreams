@@ -109,9 +109,9 @@ class AcousticMaterial:
     
     @property
     def impedance(self):
-        r"""Relative impedance for longitudinal waves (Pa*s/m).
+        r"""Impedance for longitudinal waves (Pa*s/m).
 
-        The relative impedance is defined by :math:`Z = \rho c`.
+        The impedance is defined by :math:`Z = \rho c`.
 
         Returns:
             complex
@@ -120,9 +120,9 @@ class AcousticMaterial:
     
     @property
     def impedancet(self):
-        r"""Relative impedance for transverse waves (Pa*s/m).
+        r"""Impedance for transverse waves (Pa*s/m).
 
-        The relative impedance is defined by :math:`Z = \rho c_t`.
+        The impedance is defined by :math:`Z = \rho c_t`.
 
         Returns:
             complex
@@ -133,7 +133,7 @@ class AcousticMaterial:
         """Return a tuple containing all material parameters.
 
         Returns:
-            tuple
+            tuple[complex, complex, complex]: ``(rho, c, ct)``
         """
         return self.rho, self.c, self.ct
 
@@ -197,12 +197,24 @@ class AcousticMaterial:
             k0 (float): Angular wavenumber in the air.
 
         Returns:
-            tuple
+             complex or tuple[complex, ...]: Wavenumber of longitudinal waves.
+             If ``c`` is a sequence, a tuple with one wavenumber per entry of ``c``.
+
+        Raises:
+            ValueError: If ``c`` (or any entry of it) is zero, i.e. the material
+                is an acoustically soft or hard medium, in which no waves
+                propagate.
         """
-        if isinstance(self.c, (tuple, list, np.ndarray)):
-            return tuple(k0 * AcousticMaterial().c / c for c in self.c)
-        else:
-            return k0 * AcousticMaterial().c / self.c
+        is_seq = isinstance(self.c, (tuple, list, np.ndarray))
+        cs = self.c if is_seq else (self.c,)
+        if any(c == 0 for c in cs):
+            raise ValueError(
+                "longitudinal wavenumber is undefined for c = 0: "
+                "soft and hard media do not sustain propagating waves"
+            )
+        if is_seq:
+            return tuple(k0 * AcousticMaterial().c / c for c in cs)
+        return k0 * AcousticMaterial().c / self.c
 
         
     def kst(self, k0):
@@ -212,17 +224,28 @@ class AcousticMaterial:
             k0 (float): Angular wavenumber in the air.
 
         Returns:
-            tuple
+            complex or tuple[complex, ...]: Wavenumber of transverse waves.
+            If ``ct`` is a sequence, a tuple with one wavenumber per entry of ``ct``.
+
+        Raises:
+            ValueError: If ``ct`` (or any entry of it) is zero, i.e. the medium is
+                a fluid and does not sustain transverse waves.
         """
-        if isinstance(self.ct, (tuple, list, np.ndarray)):
-            return tuple(k0 * AcousticMaterial().c / ct for ct in self.ct)
-        else:
-            return k0 * AcousticMaterial().c / self.ct
+        is_seq = isinstance(self.ct, (tuple, list, np.ndarray))
+        cts = self.ct if is_seq else (self.ct,)
+        if any(ct == 0 for ct in cts):
+            raise ValueError(
+                "transverse wavenumber is undefined for ct = 0: "
+                "the medium does not sustain transverse waves (see 'isshear')"
+            )
+        if is_seq:
+            return tuple(k0 * AcousticMaterial().c / ct for ct in cts)
+        return k0 * AcousticMaterial().c / self.ct
     
     def krhos(self, k0, kz):
         r"""The (cylindrically) radial part of the wave vector for longitudinal waves .
 
-        The cylindrically radial part is defined by :math:`k_\rho = \sqrt(k^2 - k_z^2)`.
+        The cylindrically radial part is defined by :math:`k_\rho = \sqrt{k^2 - k_z^2}`.
         The returned values have non-negative imaginary parts.
 
         Args:
@@ -239,7 +262,7 @@ class AcousticMaterial:
         r"""The z-component of the wave vector for longitudinal waves.
 
         The z-component of the wave vector is defined by
-        :math:`k_z = \sqrt(k^2 - k_x^2 - k_y^2)`. The returned values have
+        :math:`k_z = \sqrt{k^2 - k_x^2 - k_y^2}`. The returned values have
         non-negative imaginary parts.
 
         Args:
@@ -256,7 +279,7 @@ class AcousticMaterial:
     def krhost(self, k0, kz):
         r"""The (cylindrically) radial part of the wave vector for transverse waves.
 
-        The cylindrically radial part is defined by :math:`k_\rho = \sqrt(k^2 - k_z^2)`.
+        The cylindrically radial part is defined by :math:`k_\rho = \sqrt{k^2 - k_z^2}`.
         The returned values have non-negative imaginary parts.
 
         Args:
@@ -273,7 +296,7 @@ class AcousticMaterial:
         r"""The z-component of the wave vector for transverse waves.
 
         The z-component of the wave vector is defined by
-        :math:`k_z = \sqrt(k^2 - k_x^2 - k_y^2)`. The returned values have
+        :math:`k_z = \sqrt{k^2 - k_x^2 - k_y^2}`. The returned values have
         non-negative imaginary parts.
 
         Args:

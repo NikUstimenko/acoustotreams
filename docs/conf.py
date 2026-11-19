@@ -90,6 +90,7 @@ intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy", None),
     "numpy": ("https://numpy.org/doc/stable", None),
     "treams": ("https://tfp-photonics.github.io/treams", None),
+    "joblib": ("https://joblib.readthedocs.io/en/stable", None),
 }
 todo_include_todos = False
 

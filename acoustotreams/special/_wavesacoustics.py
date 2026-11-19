@@ -54,15 +54,15 @@ def vpw_L(kx, ky, kz, x, y, z):
         z (float or array_like): Z-coordinate. Has units of 1/kx.
 
     Returns:
-        complex, 3-array
+        complex array
     
     """
-    k = np.sqrt(kx * kx + ky * ky + kz * kz)
+    k = np.sqrt(np.asarray(kx * kx + ky * ky + kz * kz))
     phase = np.exp(1j * (kx * x + ky * y + kz * z))
-    if k == 0:
-        return np.asarray([np.nan, np.nan, np.nan]).T
-    else:
-        return 1j * np.asarray([kx * phase, ky * phase, kz * phase], complex).T / k
+    vec = np.stack(np.broadcast_arrays(kx * phase, ky * phase, kz * phase), axis=-1)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        res = 1j * vec / k[..., None]
+    return np.where((k == 0)[..., None], np.nan, res)
 
 def ssw_Psi(l, m, kr, theta, phi):
     r"""Singular scalar spherical wave :math:`\Psi`
@@ -71,8 +71,8 @@ def ssw_Psi(l, m, kr, theta, phi):
 
     .. math::
 
-        \Psi_{lm}^{(3)}(x, \theta, \varphi)
-        = h_l^{(1)}(x) Y_{lm}(\theta, \varphi)
+        \Psi_{lm}^{(3)}(kr, \theta, \varphi)
+        = h_l^{(1)}(kr) Y_{lm}(\theta, \varphi)
 
     with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_hankel1`.
 
@@ -92,9 +92,9 @@ def ssw_Psi(l, m, kr, theta, phi):
     return sc.sph_harm(m, l, phi, theta) * sc.spherical_hankel1(l, kr)
 
 def ssw_psi(l, m, x, y, z, theta, phi, k):
-     r"""Far-field amplitude of singular scalar spherical wave :math:`\psi`
+    r"""Far-field amplitude of singular scalar spherical wave :math:`\psi`
 
-     It is defined as
+    It is defined as
 
     .. math::
 
@@ -122,23 +122,23 @@ def ssw_psi(l, m, x, y, z, theta, phi, k):
     Returns:
         complex
      """
-     return (sc.sph_harm(m, l, phi, theta)
+    return (sc.sph_harm(m, l, phi, theta)
              * np.exp(-1j * ((k * x * np.cos(phi) + k * y * np.sin(phi)) * np.sin(theta) 
                              + k * z * np.cos(theta)))
              * np.power(-1j, l + 1)
              * 1 / k)
 
 def ssw_rPsi(l, m, kr, theta, phi):
-     r"""Regular scalar spherical wave :math:`\Psi`
+    r"""Regular scalar spherical wave :math:`\Psi`
 
-     The regular scalar spherical wave is defined as
+    The regular scalar spherical wave is defined as
 
     .. math::
 
-        \Psi_{lm}^{(1)}(x, \theta, \varphi)
-        = j_l(x) Y_{lm}(\theta, \varphi)
+        \Psi_{lm}^{(1)}(kr, \theta, \varphi)
+        = j_l(kr) Y_{lm}(\theta, \varphi)
 
-    with :py:obj:`treams.special.sph_harm` and :py:obj:`treams.special.spherical_jn`.
+    with :py:obj:`treams.special.sph_harm` and :py:obj:`scipy.special.spherical_jn`.
 
     This function describes a solution to the scalar Helmholtz wave
     equation in spherical coordinates.
@@ -153,45 +153,45 @@ def ssw_rPsi(l, m, kr, theta, phi):
     Returns:
         complex
     """
-     return sc.sph_harm(m, l, phi, theta) * sc.spherical_jn(l, kr)
+    return sc.sph_harm(m, l, phi, theta) * sc.spherical_jn(l, kr)
 
 
 def scw_Psi(kz, m, krr, phi, z):
-     r"""Singular scalar cylindrical wave :math:`\Psi`
+    r"""Singular scalar cylindrical wave :math:`\Psi`
 
-     The singular scalar cylindrical wave is defined as
+    The singular scalar cylindrical wave is defined as
 
-     .. math::
+    .. math::
 
-         \Psi_{k_z m}^{(3)}(x_\rho, \varphi, z)
-        = H_m^{(1)}(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
+        \Psi_{k_z m}^{(3)}(k_\rho \rho, \varphi, z)
+        = H_m^{(1)}(k_\rho \rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
-     using :py:obj:`scipy.special.hankel1`.
+    using :py:obj:`scipy.special.hankel1`.
 
-     This function describes a solution to the scalar Helmholtz wave
-     equation in cylindrical coordinates.
+    This function describes a solution to the scalar Helmholtz wave
+    equation in cylindrical coordinates.
 
-     Args:
-         kz (float or array_like): Z-component of the wave vector.
-         m (int or array_like): Order :math:`|m| \leq l`.
-         krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
-         phi (float or array_like): Azimuthal angle (rad).
-         z (float or array_like): Z-coordinate. Has units of 1/kz.
+    Args:
+        kz (float or array_like): Z-component of the wave vector.
+        m (int or array_like): Order :math:`m`.
+        krr (float or complex or array_like): Radial distance in units of the radial component of the wave vector in the medium :math:`k_\rho \rho`.
+        phi (float or array_like): Azimuthal angle (rad).
+        z (float or array_like): Z-coordinate. Has units of 1/kz.
 
-     Returns:
-         complex
-      """
-     return np.exp(1j * (m * phi + kz * z)) * sc.hankel1(m, krr)
+    Returns:
+        complex
+    """
+    return np.exp(1j * (m * phi + kz * z)) * sc.hankel1(m, krr)
 
 def scw_psi(kz, m, x, y, phi, z, krho):
-     r"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`
+    r"""Far-field amplitude of singular scalar cylindrical wave :math:`\psi`
 
-     It is defined as
+    It is defined as
 
     .. math::
 
         \psi_{k_z m}(x, y, \varphi)
-        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-|m|} \mathrm{e}^{-\mathrm{i} \pi/4}
+        = \sqrt{\frac{2}{\pi k_{\rho}}} \mathrm{i}^{-m} \mathrm{e}^{-\mathrm{i} \pi/4}
         \mathrm{e}^{-\mathrm{i} k_{\rho} \left(x \cos \varphi + y \sin \varphi\right)}
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
@@ -211,8 +211,8 @@ def scw_psi(kz, m, x, y, phi, z, krho):
     Returns:
         complex
      """
-     res = []
-     for i in range(len(x)):
+    res = []
+    for i in range(len(x)):
         if krho[i].imag != 0:
             res.append(0j)
         else:
@@ -221,7 +221,7 @@ def scw_psi(kz, m, x, y, phi, z, krho):
                     np.exp(-1j * ((krho[i] * x[i] * np.cos(phi[i]) + krho[i] * y[i] * np.sin(phi[i])))) *
                     np.power(-1j, m[i]) * 
                     np.exp(-1j * np.pi/4))
-     return np.array(res)
+    return np.array(res)
 
 def scw_rPsi(kz, m, krr, phi, z):
      r"""Regular scalar cylindrical wave :math:`\Psi`
@@ -230,8 +230,8 @@ def scw_rPsi(kz, m, krr, phi, z):
 
      .. math::
 
-         \Psi_{k_z m}^{(1)}(x_\rho, \varphi, z)
-        = J_m(x_\rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
+         \Psi_{k_z m}^{(1)}(k_\rho \rho, \varphi, z)
+        = J_m(k_\rho \rho) \mathrm e^{\mathrm i (k_z z + m \varphi)}
 
      using :py:obj:`scipy.special.jv`.
 
@@ -252,15 +252,15 @@ def scw_rPsi(kz, m, krr, phi, z):
 
 
 def vsw_L(l, m, kr, theta, phi):
-     r"""Singular longitudinal vector spherical wave L
+    r"""Singular longitudinal vector spherical wave L
 
-     The singular vector spherical wave is defined as
+    The singular vector spherical wave is defined as
 
     .. math::
 
-        \mathbf{L}_{lm}^{(3)}(x, \theta, \varphi)
-        = -\mathrm{i} \left[{h_l^{(1)}}'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
-        + \sqrt{l(l+1)} \frac{h_l^{(1)}(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
+        \mathbf{L}_{lm}^{(3)}(kr, \theta, \varphi)
+        = -\mathrm{i} \left[{h_l^{(1)}}'(kr) \mathbf{Z}_{lm}(\theta, \varphi) 
+        + \sqrt{l(l+1)} \frac{h_l^{(1)}(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
     with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, 
     :py:obj:`treams.special.spherical_hankel1`, and :py:obj:`treams.special.spherical_hankel1_d`.
@@ -278,20 +278,20 @@ def vsw_L(l, m, kr, theta, phi):
     Returns:
         complex 3-array
      """
-     return np.transpose(sc.vsh_Z(l, m, theta, phi).T * sc.spherical_hankel1_d(l, kr)  + np.sqrt(
+    return np.transpose(sc.vsh_Z(l, m, theta, phi).T * sc.spherical_hankel1_d(l, kr)  + np.sqrt(
          l * (l + 1)
      ) * sc.vsh_Y(l, m, theta, phi).T * sc.spherical_hankel1(l, kr) / kr) * (-1.0j)
 
 def vsw_rL(l, m, kr, theta, phi):
-     r"""Regular longitudinal vector spherical wave L
+    r"""Regular longitudinal vector spherical wave L
 
-     The regular vector spherical wave is defined as
+    The regular vector spherical wave is defined as
 
     .. math::
 
-        \mathbf{L}_{lm}^{(1)}(x, \theta, \varphi)
-        = -\mathrm{i} \left[j_l'(x) \mathbf{Z}_{lm}(\theta, \varphi) 
-        + \sqrt{l(l+1)}\frac{j_l(x)}{x} \mathbf{Y}_{lm}(\theta, \varphi) \right]
+        \mathbf{L}_{lm}^{(1)}(kr, \theta, \varphi)
+        = -\mathrm{i} \left[j_l'(kr) \mathbf{Z}_{lm}(\theta, \varphi) 
+        + \sqrt{l(l+1)}\frac{j_l(kr)}{kr} \mathbf{Y}_{lm}(\theta, \varphi) \right]
 
     with :py:obj:`treams.special.vsh_Z`, :py:obj:`treams.special.vsh_Y`, 
     and :py:obj:`scipy.special.spherical_jn`.
@@ -309,8 +309,8 @@ def vsw_rL(l, m, kr, theta, phi):
     Returns:
         complex, 3-array
      """
-     res = []
-     for i, x in enumerate(kr):
+    res = []
+    for i, x in enumerate(kr):
             if x == 0:
                 if l[i] != 1:
                     val = np.zeros(3, complex).T
@@ -328,7 +328,7 @@ def vsw_rL(l, m, kr, theta, phi):
                     sc.vsh_Y(l[i], m[i], theta[i], phi[i]).T * 
                     sc.spherical_jn(l[i], kr[i]) / kr[i]) * (-1.0j)
                 res.append(val)
-     return np.array(res)
+    return np.array(res)
 
 
 def vcw_L(kz, m, krr, phi, z, krho, k):
@@ -338,10 +338,10 @@ def vcw_L(kz, m, krr, phi, z, krho, k):
 
      .. math::
 
-         \mathbf{L}_{k_z m}^{(3)}(x_\rho, \varphi, z)
-        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(x_\rho)}' \hat{\boldsymbol{\rho}} 
-        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
-        + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(x_\rho) \hat{\mathbf{z}} \right] 
+         \mathbf{L}_{k_z m}^{(3)}(k_\rho \rho, \varphi, z)
+        = \left[\frac{k_{\rho}}{k} {H^{(1)}_m(k_\rho \rho)}' \hat{\boldsymbol{\rho}} 
+        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{H^{(1)}_m(k_\rho \rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
+        + \frac{\mathrm{i} k_z}{k}H^{(1)}_m(k_\rho \rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
      using :py:obj:`treams.special.hankel1_d` and :py:obj:`scipy.special.hankel1`.
@@ -379,10 +379,10 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
 
      .. math::
 
-         \mathbf{L}_{k_z m}^{(1)}(x_\rho, \varphi, z)
-        = \left[\frac{k_{\rho}}{k} {J_m(x_\rho)}' \hat{\boldsymbol{\rho}} 
-        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(x_\rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
-        + \frac{\mathrm{i} k_z}{k}J_m(x_\rho) \hat{\mathbf{z}} \right] 
+         \mathbf{L}_{k_z m}^{(1)}(k_\rho \rho, \varphi, z)
+        = \left[\frac{k_{\rho}}{k} {J_m(k_\rho \rho)}' \hat{\boldsymbol{\rho}} 
+        + \mathrm{i}\frac{m k_{\rho}}{k}\frac{J_m(k_\rho \rho)}{k_{\rho}\rho} \hat{\boldsymbol{\varphi}} 
+        + \frac{\mathrm{i} k_z}{k}J_m(k_\rho \rho) \hat{\mathbf{z}} \right] 
         \mathrm{e}^{\mathrm{i} m \varphi + \mathrm{i} k_z z}
 
      using :py:obj:`treams.special.jv_d` and :py:obj:`scipy.special.jv`.
@@ -442,12 +442,12 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     
     Singular translation coefficient of scalar and longitudinal vector spherical waves.
 
-    Definded by
+    Defined by
 
     .. math::
 
-        \alpha_{\lambda \mu l m}^{(3)}(x, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\
-        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} h^{(1)}_q(x) Y_{q,m-\mu}(\theta,\varphi) \\
+        C_{\lambda \mu l m}^{(3)}(kr, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\
+        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} h^{(1)}_q(kr) Y_{q,m-\mu}(\theta,\varphi) \\
         \cdot \begin{pmatrix}
             l& \lambda & q \\
             m & -\mu & \mu-m
@@ -471,7 +471,7 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
         m (int or array_like): Order of the input mode.
         x (float or complex or array_like): Translation in units of the wavenumber in the medium.
         theta (float or complex or array_like): Polar angle (rad).
-        phi (float or array_like): Azimuthal angel (rad).
+        phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
         complex
@@ -494,12 +494,12 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
     
     Regular translation coefficient of scalar and longitudinal vector spherical waves.
 
-    Definded by
+    Defined by
 
     .. math::
 
-        \alpha_{\lambda \mu l m}^{(1)}(x, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\
-        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} j_q(x) Y_{q,m-\mu}(\theta,\varphi) \\
+        C_{\lambda \mu l m}^{(1)}(kr, \theta, \varphi) = (-1)^m \mathrm{i}^{\lambda-l} \sqrt{4\pi (2l+1)(2\lambda+1)} \\
+        \cdot \sum_q \mathrm{i}^{q} \sqrt{2q+1} j_q(kr) Y_{q,m-\mu}(\theta,\varphi) \\
         \cdot \begin{pmatrix}
             l& \lambda & q \\
             m & -\mu & \mu-m
@@ -524,7 +524,7 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
         m (int or array_like): Order of the input mode.
         kr (float or complex or array_like): Translation in units of the wavenumber in the medium.
         theta (float or complex or array_like): Polar angle (rad).
-        phi (float or array_like): Azimuthal angel (rad).
+        phi (float or array_like): Azimuthal angle (rad).
 
     Returns:
         complex
@@ -546,20 +546,19 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     
     Singular translation coefficient of scalar and longitudinal vector cylindrical waves.
 
-    Definded by
+    Defined by
 
     .. math::
 
         \begin{cases}
-            H_{m - \mu}^{(1)}(x_\rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}
+            H_{m - \mu}^{(1)}(k_\rho \rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}
             & \text{if }k_{z,1} = k_{z,2} \\
             0 & \text{otherwise}
         \end{cases}
 
     where :math:`H_{m - \mu}^{(1)}` are the Hankel functions (:py:obj:`scipy.special.hankel1`).
 
-    These coefficients are used to translate from scattered to scattered modes and
-    from incident to incident modes.
+    These coefficients are used to translate from scattered to incident modes.
 
     Args:
         kz1 (float or array_like): Z-component of the wave vector of the output mode.
@@ -568,7 +567,7 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
         m (int or array_like): Order of the input mode.
         krr (float or complex or array_like): Translation in radial direction in units of 
             the radial component of the wave vector in the medium :math:`k_\rho \rho`.
-        phi (float or array_like): Azimuthal angel.
+        phi (float or array_like): Azimuthal angle.
         z (float or array_like): Translation in the z-direction. Has units of 1/kz1.
 
     Returns:
@@ -584,19 +583,20 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     
     Regular translation coefficient of scalar and longitudinal vector cylindrical waves.
 
-    Definded by
+    Defined by
 
     .. math::
 
         \begin{cases}
-            J_{m - \mu}(x_\rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}
+            J_{m - \mu}(k_\rho \rho) \mathrm e^{\mathrm i ((m - \mu) \varphi + k_{z,1}z)}
             & \text{if }k_{z,1} = k_{z,2} \\
             0 & \text{otherwise}
         \end{cases}
 
     where :math:`J_{m - \mu}` are the Bessel functions (:py:obj:`scipy.special.jv`).
 
-    These coefficients are used to translate from scattered to incident modes.
+        These coefficients are used to translate from scattered to scattered modes or
+    from incident to incident modes.
 
     Args:
         kz1 (float or array_like): Z-component of the wave vector of the output mode.
@@ -605,7 +605,7 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
         m (int or array_like): Order of the input mode.
         krr (float or complex or array_like): Translation in radial direction in units of 
             the radial component of the wave vector in the medium :math:`k_\rho \rho`.
-        phi (float or array_like): Azimuthal angel.
+        phi (float or array_like): Azimuthal angle.
         z (float or array_like): Translation in the z-direction. Has units of 1/kz1.
 
     Returns:

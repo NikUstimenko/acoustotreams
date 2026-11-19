@@ -113,7 +113,7 @@ def _transl_a_lattice(lambda_, mu, l, m, dlms):
 def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=lattice.lsumsw):
     """Translation coefficients for scalar spherical waves on a lattice.
 
-    Return the translation coefficents for the given modes on a lattice. The computations
+    Return the translation coefficients for the given modes on a lattice. The computations
     employ the fast converging Ewald summation from :mod:`treams.lattice`.
 
 
@@ -127,7 +127,7 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
         out (2- or 3-tuple of integer arrays): Output modes.
         in_ (2- or 3-tuple of integer arrays): Input modes. If None is given, they are equal to
             the output modes.
-        rsin (float): Shift vectors of the input modes. If None is given, they are equal to `rs`.
+        rsin ((M, 3)-array of float): Shift vectors of the input modes. If None is given, they are equal to `rs`.
             Have units of 1/ks.
         eta (float or complex, optional): Splitting parameter for the Ewald summation of
             lattice sums. If zero, an estimation for the optimal value is done. Defaults
@@ -245,12 +245,12 @@ def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):
     to identical positions) are returned. 
 
     Args:
-        kz (float or array_like): Z-component of the wave vector of cylinbdrical waves.
-        m (int or array_like): Order or cylinbdrical waves.
+        kz (float or array_like): Z-component of the wave vector of cylindrical waves.
+        m (int or array_like): Order of cylindrical waves.
         l (int or array_like): Degree of spherical waves.
         mu (int or array_like): Order of spherical waves.
         k (float or complex or array_like): Angular wavenumber.
-        area (float or array_like): Unit cell area.
+        area (float or array_like): Lattice period a one-dimensional lattice.
 
     Returns:
         complex

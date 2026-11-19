@@ -35,6 +35,7 @@ class TestInit:
             and tm.basis == acoustotreams.ScalarSphericalWaveBasis([[0, 0], [1, 0]], [1, 0, 0])
         )
 
+
 class TestSphere:
     def test(self):
         tm = AcousticTMatrix.sphere(2, 3, 4, [(200, 1000, 500), (900, 800, 0)])

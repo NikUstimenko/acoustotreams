@@ -198,3 +198,36 @@ class TestArray:
             for i in range(2)
             for j in range(2)
         )
+
+def _slab_and_waves():
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0.5, 0]])
+    air = acoustotreams.AcousticMaterial()
+    water = acoustotreams.AcousticMaterial(1000, 1500, 0)
+    sm = AcousticSMatrices.slab(0.3, b, 2.0, [air, water, air])
+    waves = [
+        acoustotreams.plane_wave_scalar(kpar, k0=2.0, basis=b, material=air, modetype="up")
+        for kpar in ([0, 0], [0.5, 0])
+    ]
+    return b, sm, waves
+
+
+def test_illuminate_two_dimensional():
+    b, sm, waves = _slab_and_waves()
+    illu = acoustotreams.AcousticsArray(
+        np.stack([np.asarray(w) for w in waves], -1),
+        ({"basis": b, "modetype": "up", "k0": 2.0}, {}),
+    )
+    up, down = sm.illuminate(illu)
+    single = [sm.illuminate(w) for w in waves]
+    assert np.allclose(np.asarray(up), np.stack([np.asarray(s[0]) for s in single], -1))
+    assert np.allclose(np.asarray(down), np.stack([np.asarray(s[1]) for s in single], -1))
+
+
+def test_tr_two_dimensional():
+    b, sm, waves = _slab_and_waves()
+    illu = acoustotreams.AcousticsArray(
+        np.asarray(waves[0])[:, None], ({"basis": b, "modetype": "up", "k0": 2.0}, {})
+    )
+    t2, r2 = sm.tr(illu)
+    t1, r1 = sm.tr(waves[0])
+    assert np.isclose(np.asarray(t2).item(), t1) and np.isclose(np.asarray(r2).item(), r1)

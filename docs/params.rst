@@ -24,10 +24,10 @@ coordinate systems. While being in principle equivalent, for different scenarios
 beneficial to use suitable solution sets that represent the waves with sufficient
 precision when truncated to a finite number of modes. The chosen finite number of
 modes is given in the classes :class:`~acoustotreams.ScalarSphericalWaveBasis`,
-:class:`~acoustotreams.ScalarCylindricalWaveBasis`, and :class:`~acoustotreams._coreacoustics.ScalarPlaneWaveBasis`, which
-are all children of the base call :class:`~acoustotreams._coreacoustics.ScalarBasisSet`.
+:class:`~acoustotreams.ScalarCylindricalWaveBasis`, and :class:`~acoustotreams.ScalarPlaneWaveBasis`, which
+are all children of the base class :class:`~acoustotreams.ScalarBasisSet`.
 
-The modes of the spherical basis can are defined by their degree ``l``, and the order ``m``. 
+The modes of the spherical basis are defined by their degree ``l``, and the order ``m``. 
 The basis is then simply the collection of multiple of these modes, 
 each given in a tuple with exactly that order, for example
 
@@ -273,7 +273,7 @@ Moreover, we can get the speeds from the Lamé parameters as
     >>> acoustotreams.AcousticMaterial.from_params(1000, (1.6e7, 2e6))
     AcousticMaterial(1000, (141.4213562373095+0j), (44.721359549995796+0j))
 
-where the first is agrument is density and the second one is tuple :math:`(\lambda, \mu)`.
+where the first is agrument is the density and the second one is the tuple :math:`(\lambda, \mu)`.
 
 We can also get the speed of transverse waves from Poisson's ratio as
 
@@ -287,7 +287,7 @@ Lattices
 ========
 
 The periodicity of arrangements is given by defining an instance of the class
-:class:`~acoustotreams.Lattice`. A lattice can be one-, two-, or three-dimensional.
+:class:`~treams.Lattice`. A lattice can be one-, two-, or three-dimensional.
 
 .. doctest::
 
