@@ -361,7 +361,13 @@ class AcousticTMatrix(AcousticsArray):
     def __getitem__(self, key):
         if isinstance(key, SSWB):
             key = np.array([self.basis.index(i) for i in key])
-            key = (key[:, None], key)
+            if len(key) == 1:
+                # treams drops all annotations for a single-element index array,
+                # because it squeezes to 0-d, so a slice is used instead
+                key = slice(key[0], key[0] + 1)
+                key = (key, key)
+            else:
+                key = (key[:, None], key)
         return super().__getitem__(key)
     
 
@@ -742,7 +748,13 @@ class AcousticTMatrixC(AcousticsArray):
     def __getitem__(self, key):
         if isinstance(key, SCWB):
             key = np.array([self.basis.index(i) for i in key])
-            key = (key[:, None], key)
+            if len(key) == 1:
+                # treams drops all annotations for a single-element index array,
+                # because it squeezes to 0-d, so a slice is used instead
+                key = slice(key[0], key[0] + 1)
+                key = (key, key)
+            else:
+                key = (key[:, None], key)
         return super().__getitem__(key)
 
 
