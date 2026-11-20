@@ -453,12 +453,14 @@ class AcousticTMatrixC(AcousticsArray):
         an arbitrary number of layers.
 
         Please note:
-            1. :math:`c_t` of **all** the materials must be zero. 
-            2. For the soft and hard cylinders, only one radius must be given.  
+            1. The transverse speed :math:`c_t` must be 0 in every layer and the background. 
+            2. For the soft and hard cylinders, only one radius must be given.
+            3. :math:`k_z` must be real, also in a lossy background. For oblique incidence there, use a (plane) wave with real :math:`k_z`.
+            4. :math:`|k_z|` must differ from the wavenumber of every layer and of the background.
+            5. Each :math:`k_z` value may appear only once.  
 
         Args:
             kzs (float or array_like): Z-components of the wave vector in the medium (rad/m).
-                They must be real, also in a lossy background medium.
             mmax (int): Positive integer for the maximum order of the T-matrix.
             k0 (float): Angular wavenumber in the air.
             radii (float): Radii from inside to outside of the cylinder. For a
@@ -634,7 +636,7 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{sca} \rangle
-            = \frac{4}{n_{k_z}} \sum_{|k_z| < k, m} \sum_{m} \sum_{|{k_z}'| < k, m'}
+            = \frac{4}{n_{k_z}} \sum_{|k_z| < k, m} \sum_{|{k_z}'| < k, m'}
             \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 
