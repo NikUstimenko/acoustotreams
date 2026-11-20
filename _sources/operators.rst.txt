@@ -193,7 +193,7 @@ Next, we can expand this plane wave also in cylindrical and in spherical waves.
     )
     >>> acoustotreams.Expand(acoustotreams.ScalarSphericalWaveBasis.default(1)) @ plw
     AcousticsArray(
-        [ 3.545+0.j   , -2.605+0.j   ,  0.   +4.912j, -2.605-0.j   ],
+        [ 3.545+0.j   , -2.605+0.j   ,  0.   +4.912j, -2.605+0.j   ],
         basis=ScalarSphericalWaveBasis(
         pidx=[0 0 0 0],
         l=[0 1 1 1],

@@ -287,8 +287,8 @@
             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
         <span class="p">)</span>
-     <span class="c1"># Evanescent modes (complex k_rho) do not contribute to the far field</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">krho</span><span class="o">.</span><span class="n">imag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
+    <span class="c1"># Evanescent modes (imaginary k_rho) do not contribute to the far field</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">krho</span><span class="o">.</span><span class="n">real</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="scw_rPsi">

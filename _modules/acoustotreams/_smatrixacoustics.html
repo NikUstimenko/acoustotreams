@@ -253,12 +253,12 @@
 <span class="sd">        parameters.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            k0 (float): Angular wavenumber in air (rad/m).</span>
-<span class="sd">            basis (ScalarPlaneWaveBasisByComp): Basis definition.</span>
 <span class="sd">            thickness (Sequence[Float]): Thickness of the slab or the thicknesses of all</span>
 <span class="sd">                slabs in order from negative to positive z.</span>
+<span class="sd">            basis (ScalarPlaneWaveBasisByComp): Basis definition.</span>
+<span class="sd">            k0 (float): Angular wavenumber in air (rad/m).</span>
 <span class="sd">            materials (Sequence[AcousticMaterial]): Material definitions from negative to</span>
-<span class="sd">                positive z.</span>
+<span class="sd">                positive z. Exactly two more than thicknesses.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticSMatrices</span>
@@ -267,6 +267,12 @@
             <span class="nb">iter</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">thickness</span> <span class="o">=</span> <span class="p">[</span><span class="n">thickness</span><span class="p">]</span>
+        <span class="n">thickness</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">materials</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span><span class="si">}</span><span class="s2"> thickness(es) need </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">thickness</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2"> materials, "</span>
+                <span class="sa">f</span><span class="s2">"got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">materials</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">interface</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">materials</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">ma</span><span class="p">,</span> <span class="n">mb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">materials</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">materials</span><span class="p">[</span><span class="mi">2</span><span class="p">:]):</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -308,7 +314,7 @@
 <span class="sd">        This S-matrix translates the reference origin along `r`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            r (float, (3,)-array): Translation vector.</span>
+<span class="sd">            r (float, (3,)-array): Translation vector, or a distance along z.</span>
 <span class="sd">            basis (ScalarPlaneWaveBasis): Basis definition.</span>
 <span class="sd">            k0 (float): Angular wavenumber in the air. Has units of 1/r.</span>
 <span class="sd">            material (AcousticMaterial, optional): Material definition.</span>
@@ -316,6 +322,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticSMatrices</span>
 <span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
         <span class="n">sup</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">"up"</span><span class="p">)</span>
         <span class="n">sdown</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">"down"</span>
@@ -468,8 +476,16 @@
 <span class="sd">            illu (complex or array_like): Expansion coefficients of the incoming wave.</span>
 <span class="sd">                Coefficients in another plane-wave basis are re-expanded into the basis</span>
 <span class="sd">                of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple[float, float]: ``(transmittance, reflectance)``</span>
+<span class="sd">            tuple[float, float]: ``(transmittance, reflectance)``. For a two-dimensional `illu`, </span>
+<span class="sd">                each column is an independent incident wave and </span>
+<span class="sd">                the arrays hold one value per column.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no power flows into the structure from the incident side,</span>
+<span class="sd">                e.g., for evanescent incident waves when no wave can propagate on the</span>
+<span class="sd">                other side.</span>
 <span class="sd">        """</span>
         <span class="n">illu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
@@ -483,15 +499,26 @@
         <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="n">trans</span><span class="p">,</span> <span class="n">refl</span> <span class="o">=</span> <span class="n">refl</span><span class="p">,</span> <span class="n">trans</span>
             <span class="n">paz</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-        <span class="n">illu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
-        <span class="n">s_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">trans</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">trans</span><span class="p">)</span>             
-        <span class="n">s_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">refl</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">refl</span><span class="p">)</span>
-        <span class="n">s_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span><span class="p">)</span>
-        <span class="n">s_ir</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
-            <span class="n">refl</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">illu</span>
-            <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">refl</span>
+        <span class="n">trans</span><span class="p">,</span> <span class="n">refl</span><span class="p">,</span> <span class="n">illu</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">refl</span><span class="p">,</span> <span class="n">illu</span><span class="p">))</span>
+        <span class="n">paz</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">paz</span><span class="p">]</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">flux</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+            <span class="c1"># Re(a^H p b), evaluated separately for each column</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"i...,ij,j...-&gt;..."</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(),</span> <span class="n">p</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+        <span class="n">s_t</span> <span class="o">=</span> <span class="n">flux</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">paz</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">trans</span><span class="p">)</span>
+        <span class="n">s_r</span> <span class="o">=</span> <span class="n">flux</span><span class="p">(</span><span class="n">refl</span><span class="p">,</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">refl</span><span class="p">)</span>
+        <span class="n">s_in</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">flux</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">illu</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">flux</span><span class="p">(</span><span class="n">refl</span><span class="p">,</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">illu</span><span class="p">)</span>
+            <span class="o">-</span> <span class="n">flux</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="n">paz</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">refl</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">s_t</span> <span class="o">/</span> <span class="p">(</span><span class="n">s_i</span> <span class="o">+</span> <span class="n">s_ir</span><span class="p">),</span> <span class="n">s_r</span> <span class="o">/</span> <span class="p">(</span><span class="n">s_i</span> <span class="o">+</span> <span class="n">s_ir</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">s_in</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"no power flows in from the incident side (evanescent incidence?): "</span>
+                <span class="s2">"transmittance and reflectance are undefined"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">s_t</span> <span class="o">/</span> <span class="n">s_in</span><span class="p">,</span> <span class="n">s_r</span> <span class="o">/</span> <span class="n">s_in</span></div>
 
 
 <div class="viewcode-block" id="AcousticSMatrices.periodic">
@@ -576,16 +603,35 @@
 <div class="viewcode-block" id="poynting_avg_z">
 <a class="viewcode-back" href="../../generated/acoustotreams.poynting_avg_z.html#acoustotreams.poynting_avg_z">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">poynting_avg_z</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">AcousticMaterial</span><span class="p">()):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">"""Time-averaged z-component of the Poynting vector.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Time-averaged z-component of the acoustic intensity.</span>
 
-<span class="sd">    Return the time-averaged Poynting vector's z-component</span>
+<span class="sd">    For plane waves that all go in the same direction with coefficients :math:`a`,</span>
+<span class="sd">    the time-averaged intensity, averaged over the xy plane and evaluated at the</span>
+<span class="sd">    reference plane, is</span>
+<span class="sd"> </span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        \langle S_z \rangle</span>
 <span class="sd">        = \frac{1}{2} \Re (p v_z^\ast)</span>
+<span class="sd">        = \Re (a^\dagger P a),</span>
+<span class="sd">        \qquad</span>
+<span class="sd">        P_{nn'} = \delta_{\boldsymbol k_{\parallel n} \boldsymbol k_{\parallel n'}}</span>
+<span class="sd">        \frac{k_{z,n}}{2 \omega \rho},</span>
 
-<span class="sd">    on one side of the S-matrix with the given coefficients.</span>
+<span class="sd">    where :math:`\omega = k_0 c_0` with the speed of sound in air :math:`c_0`. For</span>
+<span class="sd">    down-going waves, it is the intensity along :math:`-z`. If up-going waves</span>
+<span class="sd">    :math:`a` and down-going waves :math:`b` are present together, the intensity is</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \langle I_z \rangle</span>
+<span class="sd">        = \Re (a^\dagger P a) - \Re (b^\dagger P b)</span>
+<span class="sd">        + \Re (b^\dagger P a - a^\dagger P b).</span>
+<span class="sd"> </span>
+<span class="sd">    The last term is the interference of both waves. It depends on the imaginary</span>
+<span class="sd">    part of :math:`P` and is nonzero only for complex :math:`k_z`, i.e., for</span>
+<span class="sd">    evanescent waves or in lossy media.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        basis (ScalarPlaneWaveBasisByComp or ScalarPlaneWaveBasisByUnitVector): Basis</span>
@@ -595,13 +641,13 @@
 <span class="sd">            the S-matrix. Defaults to the air.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ndarray: Real matrix of shape ``(len(basis), len(basis))``.</span>
+<span class="sd">        ndarray: Complex matrix :math:`P` of shape ``(len(basis), len(basis))``.</span>
 <span class="sd">    """</span>
     <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
     <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kzs</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">kvecs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">)</span>
     <span class="n">selection</span> <span class="o">=</span> <span class="p">(</span><span class="n">kx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">kx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ky</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">ky</span><span class="p">)</span>
     <span class="n">gamma</span> <span class="o">=</span> <span class="n">kzs</span> <span class="o">/</span> <span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">)</span> <span class="o">*</span> <span class="n">material</span><span class="o">.</span><span class="n">impedance</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">selection</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">selection</span> <span class="o">*</span> <span class="n">gamma</span></div>
 
 </pre></div>
 

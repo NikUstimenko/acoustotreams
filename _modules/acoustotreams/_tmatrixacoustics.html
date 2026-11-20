@@ -419,7 +419,8 @@
 <span class="sd">                corresponds to an expansion center in the basis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            array</span>
+<span class="sd">            ndarray: Boolean array of shape ``grid.shape[:-1]`` that is true where the</span>
+<span class="sd">                expansion is valid.</span>
 <span class="sd">        """</span>
         <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
@@ -528,6 +529,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            kzs (float or array_like): Z-components of the wave vector in the medium (rad/m).</span>
+<span class="sd">                They must be real, also in a lossy background medium.</span>
 <span class="sd">            mmax (int): Positive integer for the maximum order of the T-matrix.</span>
 <span class="sd">            k0 (float): Angular wavenumber in the air.</span>
 <span class="sd">            radii (float): Radii from inside to outside of the cylinder. For a</span>
@@ -551,6 +553,8 @@
         <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">radii</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">materials</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"incompatible lengths of radii and materials"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">kzs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'kzs' must be real"</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">material</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">material</span><span class="o">.</span><span class="n">c</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>  <span class="c1"># soft or hard core: no wave inside</span>
@@ -851,7 +855,8 @@
 <span class="sd">                corresponds to an expansion center of the basis.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            array</span>
+<span class="sd">            ndarray: Boolean array of shape ``grid.shape[:-1]`` that is true where the</span>
+<span class="sd">                expansion is valid.</span>
 <span class="sd">        """</span>
         <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
