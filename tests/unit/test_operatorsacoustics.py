@@ -689,3 +689,26 @@ def test_pamplitudeff_several_directions(basis):
     x = np.asarray(acoustotreams.pamplitudeff(r, basis=basis, k0=1))
     y = np.array([np.asarray(acoustotreams.pamplitudeff(ri, basis=basis, k0=1)) for ri in r])
     assert x.shape == (3, 1, len(basis)) and np.allclose(x, y)
+
+
+def test_plane_wave_to_ssw_lossy():
+    material = acoustotreams.AcousticMaterial(1000, 1500 - 100j)
+    inc = acoustotreams.plane_wave_scalar([0, 0.6, 0.8], k0=2.0, material=material)
+    exp = inc.expand(acoustotreams.ScalarSphericalWaveBasis.default(12), "regular")
+    r = [0.3, -0.2, 0.1]
+    assert np.isclose(np.asarray(exp.pfield(r)).item(), np.asarray(inc.pfield(r)).item())
+
+
+def test_scw_pamplitudeff_lossy():
+    # in a lossy medium, k_rho is complex for all modes, but the far field is not zero
+    material = acoustotreams.AcousticMaterial(1000, 1500 - 100j)
+    basis = acoustotreams.ScalarCylindricalWaveBasis.default([0.1], 1)
+    ff = np.asarray(acoustotreams.pamplitudeff([1.0, 0, 0], basis=basis, k0=2.0, material=material))
+    assert np.all(ff != 0)
+
+
+def test_scw_pamplitudeff_evanescent():
+    material = acoustotreams.AcousticMaterial(1000, 1500)
+    basis = acoustotreams.ScalarCylindricalWaveBasis.default([1.0], 1)  # |kz| > k = 0.457
+    ff = np.asarray(acoustotreams.pamplitudeff([1.0, 0, 0], basis=basis, k0=2.0, material=material))
+    assert np.all(ff == 0)

@@ -457,6 +457,7 @@ class AcousticTMatrixC(AcousticsArray):
 
         Args:
             kzs (float or array_like): Z-components of the wave vector in the medium (rad/m).
+                They must be real, also in a lossy background medium.
             mmax (int): Positive integer for the maximum order of the T-matrix.
             k0 (float): Angular wavenumber in the air.
             radii (float): Radii from inside to outside of the cylinder. For a
@@ -480,6 +481,8 @@ class AcousticTMatrixC(AcousticsArray):
         radii = np.atleast_1d(radii)
         if radii.size != len(materials) - 1:
             raise ValueError("incompatible lengths of radii and materials")
+        if np.any(np.imag(kzs) != 0):
+            raise ValueError("'kzs' must be real")
         for material in materials:
             if material.c == 0:
                 continue  # soft or hard core: no wave inside

@@ -24,6 +24,12 @@ class TestToSsw:
             spw.to_ssw(5, 4, 3, 2, 1), 3.0179547476477375 - 2.9928051247506713j
         )
 
+    def test_complex_wave_vector(self):
+        # lossy medium: the coefficient only depends on the (real) direction
+        q = np.array([0.48, -0.6, 0.64])
+        s = 3 + 0.4j
+        assert np.isclose(spw.to_ssw(3, -2, *(s * q)), spw.to_ssw(3, -2, *q))
+
 
 class TestTranslate:
     def test(self):

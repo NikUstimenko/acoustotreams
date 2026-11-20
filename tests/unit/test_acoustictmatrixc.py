@@ -87,6 +87,10 @@ class TestCylinder:
         tm = AcousticTMatrixC.cylinder([1.5 * (1 - 1e-9)], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
         assert np.all(np.isfinite(np.asarray(tm)))
 
+    def test_complex_kz(self):
+        with pytest.raises(ValueError):
+            AcousticTMatrixC.cylinder([0.5 + 0.1j], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
+
 
 class TestProperties:
     def test_xw_ext_avg_ct_zero(self):

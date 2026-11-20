@@ -1,5 +1,5 @@
 import numpy as np
-
+import pytest
 import acoustotreams
 from acoustotreams import AcousticSMatrices
 
@@ -251,3 +251,82 @@ def test_tr_plane_wave_without_basis():
     air = acoustotreams.AcousticMaterial()
     pw = acoustotreams.plane_wave_scalar([0, 0, air.ks(2.0)], k0=2.0, material=air, modetype="up")
     assert np.allclose(sm.tr(pw), sm.tr(waves[0]))
+
+
+def test_slab_wrong_number_of_materials():
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([1, 2])
+    with pytest.raises(ValueError):
+        AcousticSMatrices.slab([3, 4], b, 12, [(200, 1029,), (900, 686,), (100, 343,)])
+
+
+def test_slab_two_layers():
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([1, 2])
+    mats = [(200, 1029,), (900, 686,), (900, 686,), (100, 343,)]
+    two = AcousticSMatrices.slab([1, 2], b, 12, mats)
+    one = AcousticSMatrices.slab(3, b, 12, [mats[0], mats[1], mats[3]])
+    assert all(np.allclose(np.asarray(two[i, j]), np.asarray(one[i, j])) for i in range(2) for j in range(2))
+
+
+def test_propagation_scalar_distance():
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([1, 2])
+    assert AcousticSMatrices.propagation(3, b, 12) == AcousticSMatrices.propagation([0, 0, 3], b, 12)
+
+
+def test_tr_several_columns():
+    b, sm, waves = _slab_and_waves()
+    t, r = sm.tr(np.eye(2))
+    single = [sm.tr(np.eye(2)[:, i]) for i in range(2)]
+    assert np.shape(t) == np.shape(r) == (2,)
+    assert np.allclose(t, [s[0] for s in single]) and np.allclose(r, [s[1] for s in single])
+
+
+def test_tr_evanescent_incidence():
+    air = acoustotreams.AcousticMaterial()
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[3.0, 0]])  # k = 2 in air
+    sm = AcousticSMatrices.slab(0.3, b, 2.0, [air, acoustotreams.AcousticMaterial(1000, 1500, 0), air])
+    with pytest.raises(ValueError):
+        sm.tr([1])
+
+
+def test_tr_lossy_background():
+    # lossless slab between lossy media: T + R = 1
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.2, 0]])
+    lossy = acoustotreams.AcousticMaterial(1000, 1500 - 40j)
+    slab = acoustotreams.AcousticMaterial(1050, 2350)
+    sm = AcousticSMatrices.slab(0.3, b, 2.0, [lossy, slab, lossy])
+    t, r = sm.tr([1])
+    assert np.isclose(t + r, 1)
+
+
+def test_tr_tunnelling():
+    # evanescent in water, propagating in the slower medium above: all power is transmitted
+    water = acoustotreams.AcousticMaterial(1000, 1500)
+    slow = acoustotreams.AcousticMaterial(1200, 1100)
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[1.15 * water.ks(2.0), 0]])
+    sm = AcousticSMatrices.slab(1.0, b, 2.0, [water, water, slow])
+    t, r = sm.tr([1])
+    assert np.isclose(t, 1) and np.isclose(r, 0, atol=1e-12)
+
+
+def test_poynting_avg_z_interference():
+    # up- and down-going evanescent waves carry intensity together
+    water = acoustotreams.AcousticMaterial(1000, 1500)
+    k0 = 2.0
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[1.5 * water.ks(k0), 0]])
+    paz = np.asarray(acoustotreams.poynting_avg_z(b, k0, water))
+    up, down = np.array([1.0]), np.array([0.4 + 0.5j])
+    r = np.zeros(3)
+    p = sum(
+        np.asarray(acoustotreams.pfield(r, basis=b, k0=k0, material=water, modetype=m)).ravel() @ c
+        for c, m in ((up, "up"), (down, "down"))
+    )
+    vz = sum(
+        np.asarray(acoustotreams.vfield(r, basis=b, k0=k0, material=water, modetype=m))[..., 2, :].ravel() @ c
+        for c, m in ((up, "up"), (down, "down"))
+    )
+    expect = 0.5 * np.real(p * np.conj(vz))
+    got = np.real(
+        up.conj() @ paz @ up - down.conj() @ paz @ down
+        + down.conj() @ paz @ up - up.conj() @ paz @ down
+    )
+    assert expect > 0 and np.isclose(got, expect)

@@ -39,13 +39,16 @@ def translate(kx, ky, kz, x, y, z, *args, **kwargs):
 
 def _to_ssw(l, m, kx, ky, kz, *args, **kwargs):
     """Coefficient for the expansion of a scalar plane wave in scalar spherical waves"""
-    phi = np.arctan2(ky, kx)
-    k = np.sqrt(kx * kx + ky * ky + kz * kz)
+    krho = np.sqrt(kx * kx + ky * ky)
+    # exp(i phi) of a possibly complex wave vector (lossy media); for krho = 0, only
+    # m = 0 contributes, so any value can be used
+    eiphi = 1 + 0j if krho == 0 else (kx + 1j * ky) / krho
+    k = np.sqrt(krho * krho + kz * kz)
     pref = (
         2 * np.sqrt(np.pi * (2 * l + 1))
         * np.sqrt(ss.gamma(l - m + 1) / ss.gamma(l + m + 1))
         * np.power(1j, l)
-        * np.exp(-1j * m * phi)
+        * np.power(eiphi, -m)
     )
     return pref * sc.lpmv(m, l, kz / k, *args, **kwargs)
 

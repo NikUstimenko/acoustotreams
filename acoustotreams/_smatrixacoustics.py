@@ -188,12 +188,12 @@ class AcousticSMatrices:
         parameters.
 
         Args:
-            k0 (float): Angular wavenumber in air (rad/m).
-            basis (ScalarPlaneWaveBasisByComp): Basis definition.
             thickness (Sequence[Float]): Thickness of the slab or the thicknesses of all
                 slabs in order from negative to positive z.
+            basis (ScalarPlaneWaveBasisByComp): Basis definition.
+            k0 (float): Angular wavenumber in air (rad/m).
             materials (Sequence[AcousticMaterial]): Material definitions from negative to
-                positive z.
+                positive z. Exactly two more than thicknesses.
 
         Returns:
             AcousticSMatrices
@@ -202,6 +202,12 @@ class AcousticSMatrices:
             iter(thickness)
         except TypeError:
             thickness = [thickness]
+        thickness = list(thickness)
+        if len(materials) != len(thickness) + 2:
+            raise ValueError(
+                f"{len(thickness)} thickness(es) need {len(thickness) + 2} materials, "
+                f"got {len(materials)}"
+            )
         res = cls.interface(basis, k0, materials[:2])
         for d, ma, mb in zip(thickness, materials[1:-1], materials[2:]):
             if np.ndim(d) == 0:
@@ -237,7 +243,7 @@ class AcousticSMatrices:
         This S-matrix translates the reference origin along `r`.
 
         Args:
-            r (float, (3,)-array): Translation vector.
+            r (float, (3,)-array): Translation vector, or a distance along z.
             basis (ScalarPlaneWaveBasis): Basis definition.
             k0 (float): Angular wavenumber in the air. Has units of 1/r.
             material (AcousticMaterial, optional): Material definition.
@@ -245,6 +251,8 @@ class AcousticSMatrices:
         Returns:
             AcousticSMatrices
         """
+        if np.ndim(r) == 0:
+            r = [0, 0, r]
         sup = translate(r, basis=basis, k0=k0, material=material, modetype="up")
         sdown = translate(
             np.negative(r), basis=basis, k0=k0, material=material, modetype="down"
@@ -382,8 +390,16 @@ class AcousticSMatrices:
             illu (complex or array_like): Expansion coefficients of the incoming wave.
                 Coefficients in another plane-wave basis are re-expanded into the basis
                 of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.
+
         Returns:
-            tuple[float, float]: ``(transmittance, reflectance)``
+            tuple[float, float]: ``(transmittance, reflectance)``. For a two-dimensional `illu`, 
+                each column is an independent incident wave and 
+                the arrays hold one value per column.
+
+        Raises:
+            ValueError: If no power flows into the structure from the incident side,
+                e.g., for evanescent incident waves when no wave can propagate on the
+                other side.
         """
         illu = self._to_basis(illu)
         modetype = getattr(illu, "modetype", "up")
@@ -397,15 +413,26 @@ class AcousticSMatrices:
         if modetype == "down":
             trans, refl = refl, trans
             paz.reverse()
-        illu = np.asarray(illu)
-        s_t = np.real(trans.conjugate().T @ paz[0] @ trans)             
-        s_r = np.real(refl.conjugate().T @ paz[1] @ refl)
-        s_i = np.real(np.conjugate(illu).T @ paz[1] @ illu)
-        s_ir = np.real(
-            refl.conjugate().T @ paz[1] @ illu
-            - np.conjugate(illu).T @ paz[1] @ refl
+        trans, refl, illu = (np.asarray(x) for x in (trans, refl, illu))
+        paz = [np.asarray(x) for x in paz]
+
+        def flux(a, p, b):
+            # Re(a^H p b), evaluated separately for each column
+            return np.real(np.einsum("i...,ij,j...->...", a.conjugate(), p, b))
+
+        s_t = flux(trans, paz[0], trans)
+        s_r = flux(refl, paz[1], refl)
+        s_in = (
+            flux(illu, paz[1], illu)
+            + flux(refl, paz[1], illu)
+            - flux(illu, paz[1], refl)
         )
-        return s_t / (s_i + s_ir), s_r / (s_i + s_ir)
+        if np.any(s_in <= 0):
+            raise ValueError(
+                "no power flows in from the incident side (evanescent incidence?): "
+                "transmittance and reflectance are undefined"
+            )
+        return s_t / s_in, s_r / s_in
 
     def periodic(self):
         r"""Periodic repetition of an S-matrix.
@@ -477,16 +504,35 @@ class AcousticSMatrices:
 )"""
 
 def poynting_avg_z(basis, k0, material=AcousticMaterial()):
-    r"""Time-averaged z-component of the Poynting vector.
+    r"""Time-averaged z-component of the acoustic intensity.
 
-    Return the time-averaged Poynting vector's z-component
+    For plane waves that all go in the same direction with coefficients :math:`a`,
+    the time-averaged intensity, averaged over the xy plane and evaluated at the
+    reference plane, is
+ 
 
     .. math::
 
         \langle S_z \rangle
         = \frac{1}{2} \Re (p v_z^\ast)
+        = \Re (a^\dagger P a),
+        \qquad
+        P_{nn'} = \delta_{\boldsymbol k_{\parallel n} \boldsymbol k_{\parallel n'}}
+        \frac{k_{z,n}}{2 \omega \rho},
 
-    on one side of the S-matrix with the given coefficients.
+    where :math:`\omega = k_0 c_0` with the speed of sound in air :math:`c_0`. For
+    down-going waves, it is the intensity along :math:`-z`. If up-going waves
+    :math:`a` and down-going waves :math:`b` are present together, the intensity is
+
+    .. math::
+
+        \langle I_z \rangle
+        = \Re (a^\dagger P a) - \Re (b^\dagger P b)
+        + \Re (b^\dagger P a - a^\dagger P b).
+ 
+    The last term is the interference of both waves. It depends on the imaginary
+    part of :math:`P` and is nonzero only for complex :math:`k_z`, i.e., for
+    evanescent waves or in lossy media.
 
     Args:
         basis (ScalarPlaneWaveBasisByComp or ScalarPlaneWaveBasisByUnitVector): Basis
@@ -496,10 +542,10 @@ def poynting_avg_z(basis, k0, material=AcousticMaterial()):
             the S-matrix. Defaults to the air.
 
     Returns:
-        ndarray: Real matrix of shape ``(len(basis), len(basis))``.
+        ndarray: Complex matrix :math:`P` of shape ``(len(basis), len(basis))``.
     """
     material = AcousticMaterial(material)
     kx, ky, kzs = basis.kvecs(k0, material)
     selection = (kx[:, None] == kx) & (ky[:, None] == ky)
     gamma = kzs / (material.ks(k0) * material.impedance)
-    return 0.5 * np.real(selection * gamma)
+    return 0.5 * selection * gamma

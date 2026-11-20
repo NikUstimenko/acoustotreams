@@ -20,7 +20,8 @@ Welcome to acoustotreams's documentation!
 The package **acoustotreams** adopts the framework of the package **treams** to 
 simplify computations of the scattering of acoustic waves in acoustic metamaterials. 
 The supported geometries include single particles as well as finite and periodically infinite arrangements. 
-All methods are suitable for the use of lossy materials. The periodic systems can have 
+Lossy materials can be used for the scatterers and for the background medium. Only cross sections 
+and cross widths require a lossless background medium. The periodic systems can have 
 one-, two-, or three-dimensional lattices. The lattice computations are performed 
 by the functions imported from :mod:`treams.lattice`, which accelerates them 
 by converting the occurring slowly converging sums to exponentially fast convergent series

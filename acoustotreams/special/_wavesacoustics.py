@@ -221,8 +221,8 @@ def scw_psi(kz, m, x, y, phi, z, krho):
             * np.power(-1j, m)
             * np.exp(-1j * np.pi / 4)
         )
-     # Evanescent modes (complex k_rho) do not contribute to the far field
-    return np.where(krho.imag != 0, 0j, res)
+    # Evanescent modes (imaginary k_rho) do not contribute to the far field
+    return np.where(krho.real == 0, 0j, res)
 
 def scw_rPsi(kz, m, krr, phi, z):
      r"""Regular scalar cylindrical wave :math:`\Psi`
