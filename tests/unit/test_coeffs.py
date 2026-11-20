@@ -1,5 +1,5 @@
 import numpy as np
-
+import pytest
 import acoustotreams.coeffs as cf
 
 EPS = 2e-7
@@ -241,3 +241,14 @@ class TestFresnel:
         )
 
 
+@pytest.mark.parametrize(
+    "kz, materials",
+    [
+        (1.5, [(200, 1000, 0), (900, 686, 0)]),  # cutoff of the background
+        (3 * 343 / 1000, [(200, 1000, 0), (900, 686, 0)]),  # cutoff of the core
+        (0.5, [(200, 1000, 500), (900, 686, 0)]),  # shear core
+    ],
+)
+def test_mie_acoustics_cyl_invalid(kz, materials):
+    with pytest.raises(ValueError):
+        cf.mie_acoustics_cyl(kz, [0, 1], 3, [4], *zip(*materials))

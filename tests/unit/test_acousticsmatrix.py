@@ -330,3 +330,31 @@ def test_poynting_avg_z_interference():
         + down.conj() @ paz @ up - up.conj() @ paz @ down
     )
     assert expect > 0 and np.isclose(got, expect)
+
+
+def test_tr_full_wave_vector_down():
+    b, sm, waves = _slab_and_waves()
+    air = acoustotreams.AcousticMaterial()
+    down = acoustotreams.plane_wave_scalar([0, 0, -1], k0=2.0, material=air)
+    ref = acoustotreams.plane_wave_scalar([0, 0, -1], k0=2.0, material=air, modetype="down")
+    assert np.allclose(sm.tr(down), sm.tr(ref))
+
+
+def test_illuminate_contradicting_modetype():
+    b, sm, waves = _slab_and_waves()
+    air = acoustotreams.AcousticMaterial()
+    wrong = acoustotreams.plane_wave_scalar([0, 0, -1], k0=2.0, material=air, modetype="up")
+    with pytest.raises(ValueError):
+        sm.illuminate(wrong)
+
+
+def test_tr_oblique_full_wave_vector():
+    air = acoustotreams.AcousticMaterial()
+    water = acoustotreams.AcousticMaterial(1000, 1500, 0)
+    k = air.ks(2.0)
+    for theta in np.linspace(0.1, 1.3, 7):
+        b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[k * np.sin(theta), 0]])
+        sm = AcousticSMatrices.slab(0.3, b, 2.0, [air, water, air])
+        pw = acoustotreams.plane_wave_scalar([np.sin(theta), 0, np.cos(theta)], k0=2.0, material=air)
+        ref = acoustotreams.plane_wave_scalar([k * np.sin(theta), 0], k0=2.0, basis=b, material=air)
+        assert np.allclose(sm.tr(pw), sm.tr(ref))

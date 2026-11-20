@@ -381,7 +381,11 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
 
     Note:
         1. :math:`c_t` of **all** the materials must be zero. 
-        2. For the soft and hard infinite cylinders, only one radius must be given. 
+        2. For the soft and hard infinite cylinders, only one radius must be given.
+        3. :math:`|k_z|` must differ from the wavenumber of every layer and of the
+           background. At the cutoff of the background, the coefficients vanish only
+           logarithmically. At the cutoff of an inner layer, they have a finite limit,
+           which is not implemented. 
 
     Args:
         kz (float): Z-component of the wave vector in the medium.
@@ -396,6 +400,16 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
         list
     """
     mat = list(zip(*materials))
+    for rho, c, ct in mat:
+        if ct != 0:
+            raise ValueError("cylinders require c_t = 0 in all layers")
+        if c != 0 and np.isclose(
+            np.abs(kz), k0 * AcousticMaterial().c / c, rtol=1e-12, atol=0
+        ):
+            raise ValueError(
+                "|kz| equals the wavenumber of a layer or the background: "
+                "the radial wavenumber vanishes"
+            )
     radii = np.atleast_1d(radii)
     m = np.atleast_1d(m)
     res = []

@@ -328,6 +328,22 @@ class TestSCWB:
         assert np.array_equal(res.positions, [[0, 0, 1]])
         assert res.lattice == a.lattice
 
+    def test_setops_different_kpar(self):
+        a = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.0, 0, 2.0, 4)
+        b = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.5, 0, 2.0, 4)
+        with pytest.raises(ValueError):
+            a | b
+
+    def test_union_drops_hints(self):
+        a = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.0, 0, 2.0, 4)
+        b = acoustotreams.ScalarCylindricalWaveBasis.default([0.5, 0.7], 0)
+        res = a | b
+        assert res.lattice is None and res.kpar is None
+
+    def test_neq(self):
+         b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
+         assert not b == []
+
     def test_neq(self):
         b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
         assert not b == []
@@ -504,6 +520,13 @@ class TestSPWBC:
         b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.1, 0.2]], "xy")
         with pytest.raises(ValueError):
             a & b
+
+    def test_setops_different_kpar(self):
+        lattice = acoustotreams.Lattice.square(2.0)
+        a = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], lattice, 4)
+        b = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0.3, 0], lattice, 4)
+        with pytest.raises(ValueError):
+            a | b
 
     def test_getitem_int(self):
         b = acoustotreams.ScalarPlaneWaveBasisByComp([[1, 0], [0, 1]])
