@@ -42,7 +42,7 @@ cax = ax.imshow(
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Intensity $|p|^2/|p_0|^2$")
+cb.set_label(r"$|p_{\rm tot}|^2/|p_0|^2$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.text(

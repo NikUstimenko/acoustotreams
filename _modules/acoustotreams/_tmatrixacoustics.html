@@ -524,12 +524,14 @@
 <span class="sd">        an arbitrary number of layers.</span>
 
 <span class="sd">        Please note:</span>
-<span class="sd">            1. :math:`c_t` of **all** the materials must be zero. </span>
-<span class="sd">            2. For the soft and hard cylinders, only one radius must be given.  </span>
+<span class="sd">            1. The transverse speed :math:`c_t` must be 0 in every layer and the background. </span>
+<span class="sd">            2. For the soft and hard cylinders, only one radius must be given.</span>
+<span class="sd">            3. :math:`k_z` must be real, also in a lossy background. For oblique incidence there, use a (plane) wave with real :math:`k_z`.</span>
+<span class="sd">            4. :math:`|k_z|` must differ from the wavenumber of every layer and of the background.</span>
+<span class="sd">            5. Each :math:`k_z` value may appear only once.  </span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            kzs (float or array_like): Z-components of the wave vector in the medium (rad/m).</span>
-<span class="sd">                They must be real, also in a lossy background medium.</span>
 <span class="sd">            mmax (int): Positive integer for the maximum order of the T-matrix.</span>
 <span class="sd">            k0 (float): Angular wavenumber in the air.</span>
 <span class="sd">            radii (float): Radii from inside to outside of the cylinder. For a</span>
@@ -712,7 +714,7 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{sca} \rangle</span>
-<span class="sd">            = \frac{4}{n_{k_z}} \sum_{|k_z| &lt; k, m} \sum_{m} \sum_{|{k_z}'| &lt; k, m'}</span>
+<span class="sd">            = \frac{4}{n_{k_z}} \sum_{|k_z| &lt; k, m} \sum_{|{k_z}'| &lt; k, m'}</span>
 <span class="sd">            \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},</span>
 
 <span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>

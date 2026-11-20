@@ -65,16 +65,18 @@ The scatterer can also consist of multiple concentric cylindrical shells with
 an arbitrary number of layers.</p>
 <dl class="simple">
 <dt>Please note:</dt><dd><ol class="arabic simple">
-<li><p><span class="math notranslate nohighlight">\(c_t\)</span> of <strong>all</strong> the materials must be zero.</p></li>
+<li><p>The transverse speed <span class="math notranslate nohighlight">\(c_t\)</span> must be 0 in every layer and the background.</p></li>
 <li><p>For the soft and hard cylinders, only one radius must be given.</p></li>
+<li><p><span class="math notranslate nohighlight">\(k_z\)</span> must be real, also in a lossy background. For oblique incidence there, use a (plane) wave with real <span class="math notranslate nohighlight">\(k_z\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(|k_z|\)</span> must differ from the wavenumber of every layer and of the background.</p></li>
+<li><p>Each <span class="math notranslate nohighlight">\(k_z\)</span> value may appear only once.</p></li>
 </ol>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>kzs</strong> (<em>float</em><em> or </em><em>array_like</em>) – Z-components of the wave vector in the medium (rad/m).
-They must be real, also in a lossy background medium.</p></li>
+<li><p><strong>kzs</strong> (<em>float</em><em> or </em><em>array_like</em>) – Z-components of the wave vector in the medium (rad/m).</p></li>
 <li><p><strong>mmax</strong> (<em>int</em>) – Positive integer for the maximum order of the T-matrix.</p></li>
 <li><p><strong>k0</strong> (<em>float</em>) – Angular wavenumber in the air.</p></li>
 <li><p><strong>radii</strong> (<em>float</em>) – Radii from inside to outside of the cylinder. For a

@@ -49,7 +49,7 @@ cax = ax.imshow(
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("p$")
+cb.set_label(r"$\Re(p_{\rm tot})$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(

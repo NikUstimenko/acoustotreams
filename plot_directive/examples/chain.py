@@ -47,7 +47,7 @@ cax = ax.imshow(
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Pressure")
+cb.set_label(r"$\Re(p_{\rm sca})$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(
@@ -87,7 +87,7 @@ cax = ax.imshow(
     origin='lower',
 )
 cb = plt.colorbar(cax)
-cb.set_label("Velocity $v_x$")
+cb.set_label(r"$\Re(v_{\rm sca,x})$")
 ax.set_xlabel("x (cm)")
 ax.set_ylabel("z (cm)")
 ax.annotate(
