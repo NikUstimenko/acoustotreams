@@ -357,7 +357,8 @@ class AcousticTMatrix(AcousticsArray):
                 corresponds to an expansion center in the basis.
 
         Returns:
-            array
+            ndarray: Boolean array of shape ``grid.shape[:-1]`` that is true where the
+                expansion is valid.
         """
         grid = np.asarray(grid)
         if grid.shape[-1] != 3:
@@ -768,7 +769,8 @@ class AcousticTMatrixC(AcousticsArray):
                 corresponds to an expansion center of the basis.
 
         Returns:
-            array
+            ndarray: Boolean array of shape ``grid.shape[:-1]`` that is true where the
+                expansion is valid.
         """
         grid = np.asarray(grid)
         if grid.shape[-1] not in (2, 3):
