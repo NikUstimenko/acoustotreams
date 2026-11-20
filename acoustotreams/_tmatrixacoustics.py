@@ -469,6 +469,15 @@ class AcousticTMatrixC(AcousticsArray):
         radii = np.atleast_1d(radii)
         if radii.size != len(materials) - 1:
             raise ValueError("incompatible lengths of radii and materials")
+        for material in materials:
+            if material.c == 0:
+                continue  # soft or hard core: no wave inside
+            k = material.ks(k0)
+            if np.any(np.isclose(np.abs(kzs), k, rtol=1e-12, atol=0)):
+                raise ValueError(
+                    f"|kz| equals the wavenumber {k} of a layer or the background: "
+                    "the radial wavenumber vanishes and the T-matrix is undefined"
+                )
         dim = SCWB.defaultdim(len(kzs), mmax)
         tmat = np.zeros((dim, dim), complex)
         idx = 0

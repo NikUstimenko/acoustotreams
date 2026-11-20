@@ -77,6 +77,16 @@ class TestCylinder:
         tm = AcousticTMatrixC.cylinder([0.2, 0.1], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
         assert tm.shape == (len(tm.basis), len(tm.basis))
 
+    @pytest.mark.parametrize("kz", [1.5, -1.5, 3 * 343 / 1000])
+    def test_cutoff_kz(self, kz):
+        # background k_s = 1.5, core k = 1.029
+        with pytest.raises(ValueError):
+            AcousticTMatrixC.cylinder([0, kz], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
+
+    def test_near_cutoff_is_finite(self):
+        tm = AcousticTMatrixC.cylinder([1.5 * (1 - 1e-9)], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
+        assert np.all(np.isfinite(np.asarray(tm)))
+
 
 class TestProperties:
     def test_xw_ext_avg_ct_zero(self):
