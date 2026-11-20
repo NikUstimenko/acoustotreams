@@ -597,7 +597,7 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{ext} \rangle
-            = -\frac{4}{n_{k_z}} \sum_{|k_z|, |k_z'| < k} \sum_{m} \frac{\Re(T_{k_z m,k_z m})}{k_s},
+            = -\frac{4}{n_{k_z}} \sum_{|k_z| < k_s} \sum_{m} \frac{\Re(T_{k_z m,k_z m})}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 
         is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. 
@@ -636,7 +636,7 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{sca} \rangle
-            = \frac{4}{n_{k_z}} \sum_{|k_z| < k, m} \sum_{|{k_z}'| < k, m'}
+            = \frac{4}{n_{k_z}} \sum_{|k_z| < k_s, m} \sum_{|{k_z}'| < k_s, m'}
             \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 
