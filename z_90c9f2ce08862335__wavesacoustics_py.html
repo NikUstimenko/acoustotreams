@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_557d234e890bff6d_spw_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-20 14:56 +0000
+            created at 2026-11-20 16:54 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -303,8 +303,8 @@
     <p class="run run2"><span class="n"><a id="t221" href="#t221">221</a></span><span class="t">            <span class="op">*</span> <span class="nam">np</span><span class="op">.</span><span class="nam">power</span><span class="op">(</span><span class="op">-</span><span class="num">1j</span><span class="op">,</span> <span class="nam">m</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t222" href="#t222">222</a></span><span class="t">            <span class="op">*</span> <span class="nam">np</span><span class="op">.</span><span class="nam">exp</span><span class="op">(</span><span class="op">-</span><span class="num">1j</span> <span class="op">*</span> <span class="nam">np</span><span class="op">.</span><span class="nam">pi</span> <span class="op">/</span> <span class="num">4</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t223" href="#t223">223</a></span><span class="t">        <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t224" href="#t224">224</a></span><span class="t">     <span class="com"># Evanescent modes (complex k_rho) do not contribute to the far field</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t225" href="#t225">225</a></span><span class="t">    <span class="key">return</span> <span class="nam">np</span><span class="op">.</span><span class="nam">where</span><span class="op">(</span><span class="nam">krho</span><span class="op">.</span><span class="nam">imag</span> <span class="op">!=</span> <span class="num">0</span><span class="op">,</span> <span class="num">0j</span><span class="op">,</span> <span class="nam">res</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t224" href="#t224">224</a></span><span class="t">    <span class="com"># Evanescent modes (imaginary k_rho) do not contribute to the far field</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t225" href="#t225">225</a></span><span class="t">    <span class="key">return</span> <span class="nam">np</span><span class="op">.</span><span class="nam">where</span><span class="op">(</span><span class="nam">krho</span><span class="op">.</span><span class="nam">real</span> <span class="op">==</span> <span class="num">0</span><span class="op">,</span> <span class="num">0j</span><span class="op">,</span> <span class="nam">res</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t226" href="#t226">226</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t227" href="#t227">227</a></span><span class="t"><span class="key">def</span> <span class="nam">scw_rPsi</span><span class="op">(</span><span class="nam">kz</span><span class="op">,</span> <span class="nam">m</span><span class="op">,</span> <span class="nam">krr</span><span class="op">,</span> <span class="nam">phi</span><span class="op">,</span> <span class="nam">z</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t228" href="#t228">228</a></span><span class="t">     <span class="str">r&quot;&quot;&quot;Regular scalar cylindrical wave :math:`\Psi`</span>&nbsp;</span><span class="r"></span></p>
@@ -692,7 +692,7 @@
             <a class="nav" href="z_557d234e890bff6d_spw_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.17.3">coverage.py v7.17.3</a>,
-            created at 2026-11-20 14:56 +0000
+            created at 2026-11-20 16:54 +0000
         </p>
     </div>
 </footer>
