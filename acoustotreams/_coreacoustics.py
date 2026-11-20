@@ -73,6 +73,18 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
             raise ValueError("basis sets have different expansion centers")
         if getattr(self, "alignment", None) != getattr(other, "alignment", None):
             raise ValueError("basis sets have different alignments")
+        for name in ("lattice", "kpar"):
+            a, b = getattr(self, name, None), getattr(other, name, None)
+            if a is not None and b is not None and a != b:
+                raise ValueError(f"basis sets have different '{name}'")
+
+    def _drop_hints(self, res, other):
+        """Remove lattice hints from a union with modes that need not fulfil them."""
+        if isinstance(other, ScalarBasisSet):
+            for name in ("lattice", "kpar"):
+                if getattr(other, name, None) is None and hasattr(res, name):
+                    setattr(res, name, None)
+        return res
 
     def __and__(self, other):
         self._check_compatible(other)
@@ -80,7 +92,7 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
 
     def __or__(self, other):
         self._check_compatible(other)
-        return super().__or__(other)
+        return self._drop_hints(super().__or__(other), other)
 
     def __sub__(self, other):
         self._check_compatible(other)
@@ -88,7 +100,7 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
 
     def __xor__(self, other):
         self._check_compatible(other)
-        return super().__xor__(other)
+        return self._drop_hints(super().__xor__(other), other)
 
     __rand__ = __and__
     __ror__ = __or__

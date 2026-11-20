@@ -3,6 +3,7 @@ import numpy as np
 from treams import util
 from acoustotreams._coreacoustics import AcousticsArray
 from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
+from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByUnitVector as SPWBUV
 from acoustotreams._materialacoustics import AcousticMaterial
 from acoustotreams._operatorsacoustics import translate
 from acoustotreams._tmatrixacoustics import AcousticTMatrixC
@@ -373,11 +374,33 @@ class AcousticSMatrices:
         """Re-expand an incident field given in another plane-wave basis.
 
         Arrays without a basis are taken to be in the basis of the S-matrix.
+        For plane waves given by full wave vectors, the direction along z follows from the sign 
+        of the z-component.
         """
         basis = getattr(illu, "basis", None)
         basis = basis[-2] if isinstance(basis, tuple) else basis
         if basis is None or basis == self.basis:
             return illu
+        if isinstance(basis, SPWBUV):
+            qz = np.real(basis.qz)
+            if np.all(qz > 0):
+                direction = "up"
+            elif np.all(qz < 0):
+                direction = "down"
+            else:
+                raise ValueError(
+                    "plane waves must all go up or all go down along z; "
+                    "illuminate with each direction separately"
+                )
+            modetype = getattr(illu, "modetype", None)
+            if isinstance(modetype, tuple):
+                modetype = modetype[max(-2, -len(modetype))]
+            if modetype not in (None, direction):
+                raise ValueError(
+                    f"modetype '{modetype}' contradicts the wave vectors, "
+                    f"which go {direction}"
+                )
+            return illu.expand(self.basis, direction)
         return illu.expand(self.basis)
 
     def tr(self, illu):

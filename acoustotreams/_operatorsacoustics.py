@@ -375,11 +375,13 @@ def _spw_spw_expand(basis, to_basis, k0, material, modetype, where):
     if isinstance(to_basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up" if modetype is None else modetype
     kx, ky, kz = to_basis.kvecs(k0, material, modetype)
+    # Wave vectors given as unit vectors and as components differ by rounding errors
+    tol = 1e-10 * np.abs(AcousticMaterial(material).ks(k0))
     res = np.array(
         where
-        & (kx[:, None] == kvecs[0])
-        & (ky[:, None] == kvecs[1])
-        & (kz[:, None] == kvecs[2]),
+        & (np.abs(kx[:, None] - kvecs[0]) <= tol)
+        & (np.abs(ky[:, None] - kvecs[1]) <= tol)
+        & (np.abs(kz[:, None] - kvecs[2]) <= tol),
         int,
     )
     return core.AcousticsArray(
