@@ -77,7 +77,10 @@ repeated indices are summed over. The incoming flux is <span class="math notrans
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>inc</strong> (<em>array_like</em>) – Incident wave or its expansion coefficients.</p></li>
+<li><p><strong>inc</strong> (<em>array_like</em>) – Incident wave or its expansion coefficients.
+Coefficients in another basis (other mode order, a subset of the modes,
+other expansion centers, or plane waves) are re-expanded into the basis of
+the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.</p></li>
 <li><p><strong>flux</strong> (<em>float</em><em>, </em><em>optional</em>) – Input flux corresponding to the incident wave. Used for
 the result’s normalization. A plane pressure wave has the flux <cite>0.5</cite> in this
 normalization, which is used as default.</p></li>

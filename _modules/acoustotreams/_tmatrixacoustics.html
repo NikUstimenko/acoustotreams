@@ -330,7 +330,10 @@
 <span class="sd">        and :math:`T` is the T-matrix.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            inc (array_like): Incident wave or its expansion coefficients</span>
+<span class="sd">            inc (array_like): Incident wave or its expansion coefficients.</span>
+<span class="sd">                Coefficients in another basis (other mode order, a subset of the modes,</span>
+<span class="sd">                other expansion centers, or plane waves) are re-expanded into the basis of</span>
+<span class="sd">                the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticsArray</span>
@@ -338,9 +341,11 @@
         <span class="n">inc</span> <span class="o">=</span> <span class="n">AcousticsArray</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">basis</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc_basis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">inc_basis</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SSWB</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SSWB</span><span class="p">)</span> <span class="ow">and</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span></div>
+        <span class="k">if</span> <span class="n">inc_basis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">inc_basis</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="ow">or</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span>
+        <span class="p">):</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>          </div>
 
     
 
@@ -369,6 +374,9 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            inc (array_like): Incident wave or its expansion coefficients.</span>
+<span class="sd">                Coefficients in another basis (other mode order, a subset of the modes,</span>
+<span class="sd">                other expansion centers, or plane waves) are re-expanded into the basis of</span>
+<span class="sd">                the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.</span>
 <span class="sd">            flux (float, optional): Input flux corresponding to the incident wave. Used for</span>
 <span class="sd">                the result's normalization. A plane pressure wave has the flux `0.5` in this </span>
 <span class="sd">                normalization, which is used as default.</span>
@@ -381,11 +389,14 @@
         <span class="n">inc</span> <span class="o">=</span> <span class="n">AcousticsArray</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">basis</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc_basis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">inc_basis</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SSWB</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SSWB</span><span class="p">)</span> <span class="ow">and</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">inc_basis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">inc_basis</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="ow">or</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span>
+        <span class="p">):</span>
             <span class="n">inc</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">)</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>    
         <span class="n">p_invksq</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">del</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span>
+        <span class="k">if</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">basis</span><span class="p">))</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>
             <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="p">)</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>
@@ -750,7 +761,10 @@
 <span class="sd">        and :math:`T` is the T-matrix.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            inc (array_like): Incident wave or its expansion coefficients</span>
+<span class="sd">            inc (array_like): Incident wave or its expansion coefficients.</span>
+<span class="sd">                Coefficients in another basis (other mode order, a subset of the modes,</span>
+<span class="sd">                other expansion centers, or plane waves) are re-expanded into the basis of</span>
+<span class="sd">                the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            AcousticsArray</span>
@@ -758,9 +772,11 @@
         <span class="n">inc</span> <span class="o">=</span> <span class="n">AcousticsArray</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">basis</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc_basis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">inc_basis</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SCWB</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SCWB</span><span class="p">)</span> <span class="ow">and</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span></div>
+        <span class="k">if</span> <span class="n">inc_basis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">inc_basis</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="ow">or</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span>
+        <span class="p">):</span>
+            <span class="n">inc</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>       </div>
 
         
 <div class="viewcode-block" id="AcousticTMatrixC.xw">
@@ -803,13 +819,16 @@
         <span class="n">inc</span> <span class="o">=</span> <span class="n">AcousticsArray</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">basis</span>
         <span class="n">inc_basis</span> <span class="o">=</span> <span class="n">inc_basis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">inc_basis</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SCWB</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">inc_basis</span><span class="p">,</span> <span class="n">SCWB</span><span class="p">)</span> <span class="ow">and</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">inc_basis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">inc_basis</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="ow">or</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="o">==</span> <span class="s2">"singular"</span>
+        <span class="p">):</span>
             <span class="n">inc</span> <span class="o">=</span> <span class="n">inc</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">)</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span> <span class="o">@</span> <span class="n">inc</span>        
         <span class="n">p_invksq</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="c1"># Evanescent modes do not contribute to the scattered power</span>
         <span class="n">prop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">kz</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span>
-        <span class="k">del</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span>
+        <span class="k">if</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">inc</span><span class="o">.</span><span class="n">modetype</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">basis</span><span class="p">)[</span><span class="n">prop</span><span class="p">])</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>
             <span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">inc</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">p_invksq</span><span class="p">[</span><span class="n">prop</span><span class="p">])</span> <span class="o">/</span> <span class="n">flux</span><span class="p">,</span>

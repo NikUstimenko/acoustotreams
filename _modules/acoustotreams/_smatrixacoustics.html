@@ -423,10 +423,11 @@
 <span class="sd">            With ``smat``, the 4-tuple</span>
 <span class="sd">            ``(field_up, field_down, field_in_up, field_in_down)``.</span>
 <span class="sd">        """</span>
+        <span class="n">illu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">modetype</span><span class="p">))]</span>
-        <span class="n">illu2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">illu</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="k">if</span> <span class="n">illu2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">illu2</span>
+        <span class="n">illu2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">illu</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="k">if</span> <span class="n">illu2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="n">illu</span><span class="p">,</span> <span class="n">illu2</span> <span class="o">=</span> <span class="n">illu2</span><span class="p">,</span> <span class="n">illu</span>
         <span class="k">if</span> <span class="n">smat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -443,6 +444,18 @@
         <span class="k">return</span> <span class="n">field_up</span><span class="p">,</span> <span class="n">field_down</span><span class="p">,</span> <span class="n">field_in_up</span><span class="p">,</span> <span class="n">field_in_down</span></div>
 
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">illu</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Re-expand an incident field given in another plane-wave basis.</span>
+
+<span class="sd">        Arrays without a basis are taken to be in the basis of the S-matrix.</span>
+<span class="sd">        """</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"basis"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">basis</span>
+        <span class="k">if</span> <span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">basis</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">illu</span>
+        <span class="k">return</span> <span class="n">illu</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
+
 <div class="viewcode-block" id="AcousticSMatrices.tr">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.tr.html#acoustotreams.AcousticSMatrices.tr">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">illu</span><span class="p">):</span>
@@ -453,10 +466,12 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            illu (complex or array_like): Expansion coefficients of the incoming wave.</span>
-
+<span class="sd">                Coefficients in another plane-wave basis are re-expanded into the basis</span>
+<span class="sd">                of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple[float, float]: ``(transmittance, reflectance)``</span>
 <span class="sd">        """</span>
+        <span class="n">illu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">modetype</span><span class="p">))]</span>
