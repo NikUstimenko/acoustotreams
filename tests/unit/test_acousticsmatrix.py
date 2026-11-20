@@ -231,3 +231,23 @@ def test_tr_two_dimensional():
     t2, r2 = sm.tr(illu)
     t1, r1 = sm.tr(waves[0])
     assert np.isclose(np.asarray(t2).item(), t1) and np.isclose(np.asarray(r2).item(), r1)
+
+
+def test_tr_reordered_incident_basis():
+    b, sm, waves = _slab_and_waves()
+    rev = acoustotreams.ScalarPlaneWaveBasisByComp([(0.5, 0), (0, 0)])
+    illu = acoustotreams.AcousticsArray(
+        [0, 1], basis=rev, k0=2.0, material=acoustotreams.AcousticMaterial(), modetype="up"
+    )
+    assert np.allclose(sm.tr(illu), sm.tr(waves[0]))
+    up, down = sm.illuminate(illu)
+    up0, down0 = sm.illuminate(waves[0])
+    assert np.allclose(np.asarray(up), np.asarray(up0))
+    assert np.allclose(np.asarray(down), np.asarray(down0))
+
+
+def test_tr_plane_wave_without_basis():
+    b, sm, waves = _slab_and_waves()
+    air = acoustotreams.AcousticMaterial()
+    pw = acoustotreams.plane_wave_scalar([0, 0, air.ks(2.0)], k0=2.0, material=air, modetype="up")
+    assert np.allclose(sm.tr(pw), sm.tr(waves[0]))

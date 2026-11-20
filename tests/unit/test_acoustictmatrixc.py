@@ -156,3 +156,15 @@ def test_xw_evanescent():
     inc = acoustotreams.plane_wave_scalar([k0, 0, 0], k0=k0, material=materials[-1])
     sca, ext = tmc.xw(inc.expand(tmc.basis))
     assert 0 < sca < ext
+
+
+def test_xw_reordered_incident_basis():
+    tm = AcousticTMatrixC.cylinder([0, 0.5], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
+    coeffs = np.zeros(len(tm.basis), complex)
+    coeffs[0] = 1  # kz = 0, m = -1
+    rev = acoustotreams.ScalarCylindricalWaveBasis(list(zip(tm.basis.kz, tm.basis.m))[::-1])
+    def inc(c, b):
+        return acoustotreams.AcousticsArray(
+            c, basis=b, k0=tm.k0, material=tm.material, modetype="regular"
+        )
+    assert np.allclose(tm.xw(inc(coeffs[::-1].copy(), rev)), tm.xw(inc(coeffs, tm.basis)))

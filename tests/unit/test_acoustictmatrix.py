@@ -103,6 +103,40 @@ class TestSca:
                 and sca[1] == sca[3] == 0. + 0.j)
 
 
+class TestIncidentBasis:
+    @staticmethod
+    def setup_tm():
+        tm = AcousticTMatrix.sphere(2, 3, [4], [(200, 1000, 0), (900, 800, 0)])
+        coeffs = np.zeros(len(tm.basis), complex)
+        coeffs[0] = 1  # monopole
+        return tm, coeffs
+
+    @staticmethod
+    def inc(tm, coeffs, basis):
+        return acoustotreams.AcousticsArray(
+            coeffs, basis=basis, k0=tm.k0, material=tm.material, modetype="regular"
+        )
+
+    def test_reordered(self):
+        tm, coeffs = self.setup_tm()
+        rev = acoustotreams.ScalarSphericalWaveBasis(list(zip(tm.basis.l, tm.basis.m))[::-1])
+        ref = self.inc(tm, coeffs, tm.basis)
+        other = self.inc(tm, coeffs[::-1].copy(), rev)
+        assert np.allclose(tm.xs(other), tm.xs(ref))
+        assert np.allclose(np.asarray(tm.sca(other)), np.asarray(tm.sca(ref)))
+
+    def test_subset(self):
+        tm, coeffs = self.setup_tm()
+        sub = self.inc(tm, [1], acoustotreams.ScalarSphericalWaveBasis([(0, 0)]))
+        assert np.allclose(tm.xs(sub), tm.xs(self.inc(tm, coeffs, tm.basis)))
+
+    def test_plain_coefficients(self):
+        tm, coeffs = self.setup_tm()
+        ref = self.inc(tm, coeffs, tm.basis)
+        assert np.allclose(np.asarray(tm.sca(coeffs)), np.asarray(tm.sca(ref)))
+        assert np.allclose(tm.xs(coeffs), tm.xs(ref))
+
+
 class TestTranslate:
     def test(self):
         tm = AcousticTMatrix.sphere(3, 0.1, [0.2], [(200 + 10j, 1000 - 100j, 500 - 50j), (900, 800, 0)])

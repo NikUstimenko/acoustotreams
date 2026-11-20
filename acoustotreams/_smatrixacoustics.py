@@ -340,10 +340,11 @@ class AcousticSMatrices:
             With ``smat``, the 4-tuple
             ``(field_up, field_down, field_in_up, field_in_down)``.
         """
+        illu = self._to_basis(illu)
         modetype = getattr(illu, "modetype", "up")
         if isinstance(modetype, tuple):
             modetype = modetype[max(-2, -len(modetype))]
-        illu2 = np.zeros(np.shape(illu)[-2:]) if illu2 is None else illu2
+        illu2 = np.zeros(np.shape(illu)[-2:]) if illu2 is None else self._to_basis(illu2)
         if modetype == "down":
             illu, illu2 = illu2, illu
         if smat is None:
@@ -359,6 +360,18 @@ class AcousticSMatrices:
         field_down = self[1, 0] @ illu + self[1, 1] @ field_in_down
         return field_up, field_down, field_in_up, field_in_down
 
+
+    def _to_basis(self, illu):
+        """Re-expand an incident field given in another plane-wave basis.
+
+        Arrays without a basis are taken to be in the basis of the S-matrix.
+        """
+        basis = getattr(illu, "basis", None)
+        basis = basis[-2] if isinstance(basis, tuple) else basis
+        if basis is None or basis == self.basis:
+            return illu
+        return illu.expand(self.basis)
+
     def tr(self, illu):
         """Transmittance and reflectance.
 
@@ -367,10 +380,12 @@ class AcousticSMatrices:
 
         Args:
             illu (complex or array_like): Expansion coefficients of the incoming wave.
-
+                Coefficients in another plane-wave basis are re-expanded into the basis
+                of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.
         Returns:
             tuple[float, float]: ``(transmittance, reflectance)``
         """
+        illu = self._to_basis(illu)
         modetype = getattr(illu, "modetype", "up")
         if isinstance(modetype, tuple):
             modetype = modetype[max(-2, -len(modetype))]

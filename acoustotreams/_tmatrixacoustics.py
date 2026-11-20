@@ -274,7 +274,10 @@ class AcousticTMatrix(AcousticsArray):
         and :math:`T` is the T-matrix.
 
         Args:
-            inc (array_like): Incident wave or its expansion coefficients
+            inc (array_like): Incident wave or its expansion coefficients.
+                Coefficients in another basis (other mode order, a subset of the modes,
+                other expansion centers, or plane waves) are re-expanded into the basis of
+                the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.
 
         Returns:
             AcousticsArray
@@ -282,9 +285,11 @@ class AcousticTMatrix(AcousticsArray):
         inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
-        if (not isinstance(inc_basis, SSWB)) or (isinstance(inc_basis, SSWB) and inc.modetype == "singular"):
-            return self @ inc.expand(self.basis, "regular")
-        return self @ inc
+        if inc_basis is not None and (
+            inc_basis != self.basis or inc.modetype == "singular"
+        ):
+            inc = inc.expand(self.basis, "regular")
+        return self @ inc          
     
 
     def xs(self, inc, flux=0.5):
@@ -310,6 +315,9 @@ class AcousticTMatrix(AcousticsArray):
 
         Args:
             inc (array_like): Incident wave or its expansion coefficients.
+                Coefficients in another basis (other mode order, a subset of the modes,
+                other expansion centers, or plane waves) are re-expanded into the basis of
+                the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.
             flux (float, optional): Input flux corresponding to the incident wave. Used for
                 the result's normalization. A plane pressure wave has the flux `0.5` in this 
                 normalization, which is used as default.
@@ -322,11 +330,14 @@ class AcousticTMatrix(AcousticsArray):
         inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
-        if (not isinstance(inc_basis, SSWB)) or (isinstance(inc_basis, SSWB) and inc.modetype == "singular"):
+        if inc_basis is not None and (
+            inc_basis != self.basis or inc.modetype == "singular"
+        ):
             inc = inc.expand(self.basis, "regular")
-        p = self @ inc
+        p = self @ inc    
         p_invksq = p * np.power(self.ks, -2)
-        del inc.modetype
+        if inc.modetype is not None:
+            del inc.modetype
         return (
             0.5 * np.real(p.conjugate().T @ p_invksq.expand(p.basis)) / flux,
             -0.5 * np.real(inc.conjugate().T @ p_invksq) / flux,
@@ -670,7 +681,10 @@ class AcousticTMatrixC(AcousticsArray):
         and :math:`T` is the T-matrix.
 
         Args:
-            inc (array_like): Incident wave or its expansion coefficients
+            inc (array_like): Incident wave or its expansion coefficients.
+                Coefficients in another basis (other mode order, a subset of the modes,
+                other expansion centers, or plane waves) are re-expanded into the basis of
+                the T-matrix. Plain arrays are taken to be in the basis of the T-matrix.
 
         Returns:
             AcousticsArray
@@ -678,9 +692,11 @@ class AcousticTMatrixC(AcousticsArray):
         inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
-        if (not isinstance(inc_basis, SCWB)) or (isinstance(inc_basis, SCWB) and inc.modetype == "singular"):
-            return self @ inc.expand(self.basis, "regular")
-        return self @ inc
+        if inc_basis is not None and (
+            inc_basis != self.basis or inc.modetype == "singular"
+        ):
+            inc = inc.expand(self.basis, "regular")
+        return self @ inc       
         
     def xw(self, inc, flux=0.5):
         r"""Scattering and extinction cross width (m).
@@ -720,13 +736,16 @@ class AcousticTMatrixC(AcousticsArray):
         inc = AcousticsArray(inc)
         inc_basis = inc.basis
         inc_basis = inc_basis[-2] if isinstance(inc_basis, tuple) else inc_basis
-        if (not isinstance(inc_basis, SCWB)) or (isinstance(inc_basis, SCWB) and inc.modetype == "singular"):
+        if inc_basis is not None and (
+            inc_basis != self.basis or inc.modetype == "singular"
+        ):
             inc = inc.expand(self.basis, "regular")
-        p = self @ inc
+        p = self @ inc        
         p_invksq = p * np.power(self.ks, -1)
         # Evanescent modes do not contribute to the scattered power
         prop = np.abs(self.basis.kz) < self.ks
-        del inc.modetype
+        if inc.modetype is not None:
+            del inc.modetype
         return (
             2.0 * np.real(p[prop].conjugate().T @ p_invksq.expand(p.basis)[prop]) / flux,
             -2.0 * np.real(inc[prop].conjugate().T @ p_invksq[prop]) / flux,
