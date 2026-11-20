@@ -311,6 +311,15 @@ class TestSCWB:
         b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 2)
         assert a & b == a
 
+    def test_slice_keeps_hints(self):
+        b = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.1, 1, 2.0, 5)
+        sub = b[:3]
+        assert sub.lattice == b.lattice and sub.kpar == b.kpar
+
+    def test_slice_single_kz_without_hints(self):
+        b = acoustotreams.ScalarCylindricalWaveBasis.default([0.1, 0.2], 1)
+        assert b.kpar is None and b[:3].kpar is not None
+
     def test_setops_keep_positions_and_lattice(self):
         a = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(
             0.1, 1, 2.0, 5, positions=[[0, 0, 1]]
@@ -474,6 +483,16 @@ class TestSPWBC:
         a = acoustotreams.ScalarPlaneWaveBasisByComp.default([0, 0])
         b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 1]])
         assert a & b == a
+
+    def test_len_yz(self):
+        b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.1, 0.2], [0.3, 0.4]], "yz")
+        assert len(b) == 2 and len(b[:1]) == 1
+
+    def test_slice_keeps_hints(self):
+        lattice = acoustotreams.Lattice.square(2.0)
+        b = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0.1, 0.2], lattice, 5)
+        for sub in (b[:2], b[[0, 2]], b[np.arange(len(b)) % 2 == 0]):
+            assert sub.lattice == b.lattice and sub.kpar == b.kpar
 
     def test_setops_keep_alignment(self):
         a = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.1, 0.2], [0.3, 0.4]], "yz")

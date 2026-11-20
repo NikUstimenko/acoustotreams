@@ -92,7 +92,7 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
 
     __rand__ = __and__
     __ror__ = __or__
-    
+
     def __repr__(self):
         """String representation.
 
@@ -239,7 +239,7 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
             isinstance(idx, tuple) and len(idx) == 0
         ):
             return res
-        return type(self)(zip(*res), self.positions)
+        return self._from_iterable(zip(*res))
 
     def __eq__(self, other):
         """Compare basis sets.
@@ -463,7 +463,7 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         res = self.pidx[idx], self.kz[idx], self.m[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res
-        return type(self)(zip(*res), self.positions)
+        return self._from_iterable(zip(*res))
 
     def __eq__(self, other):
         """Compare basis sets.
@@ -558,8 +558,10 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
     def _from_iterable(self, it, positions=None):
         positions = self.positions if positions is None else positions
         obj = type(self)(it, positions=positions)
-        obj.lattice = self.lattice
-        obj.kpar = self.kpar
+        if self.lattice is not None:
+            obj.lattice = self.lattice
+        if self.kpar is not None:
+            obj.kpar = self.kpar
         return obj
 
     @staticmethod
@@ -688,7 +690,7 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         res = self.qx[idx], self.qy[idx], self.qz[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res
-        return type(self)(zip(*res))
+        return self._from_iterable(zip(*res))
 
     @classmethod
     def default(cls, kvecs):
@@ -837,7 +839,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
 
     def __len__(self):
         """Number of modes."""
-        return len(self.kx)
+        return len(self._kx)
 
     def permute(self, n=1):
         n = n % 3
@@ -908,7 +910,7 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         res = self._kx[idx], self._ky[idx]
         if isinstance(idx, (int, np.integer)) or (isinstance(idx, tuple) and idx == ()):
             return res
-        return type(self)(zip(*res), self.alignment)
+        return self._from_iterable(zip(*res))
 
     @classmethod
     def default(cls, kpars, alignment="xy"):
