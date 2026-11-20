@@ -105,6 +105,40 @@
                 <span class="k">pass</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">' object has no attribute '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_compatible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Raise an error if a set operation with `other` would mix incompatible modes."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ScalarBasisSet</span><span class="p">):</span>
+            <span class="k">return</span>  <span class="c1"># plain mode tuples are interpreted in this basis</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"cannot combine '</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">' and '</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">'"</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"positions"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">"positions"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"basis sets have different expansion centers"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"alignment"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">"alignment"</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"basis sets have different alignments"</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__and__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__xor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_compatible</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__xor__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="fm">__rand__</span> <span class="o">=</span> <span class="fm">__and__</span>
+    <span class="fm">__ror__</span> <span class="o">=</span> <span class="fm">__or__</span>
+    
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""String representation.</span>
 
@@ -373,13 +407,9 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nmax</span></div>
 
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarSphericalWaveBasis</span><span class="p">):</span>
-            <span class="n">positions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">positions</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
-            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">obj</span>    </div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>  </div>
 
     
 
@@ -615,18 +645,11 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarCylindricalWaveBasis</span><span class="p">):</span>
-            <span class="n">positions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">positions</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">lattice</span>
-            <span class="n">kpar</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">kpar</span>
-            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">it</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span>
         <span class="k">return</span> <span class="n">obj</span>
 
 <div class="viewcode-block" id="ScalarCylindricalWaveBasis.defaultmmax">
@@ -795,17 +818,10 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">modes</span><span class="p">)</span></div>
 
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarPlaneWaveBasisByUnitVector</span><span class="p">):</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">lattice</span>
-            <span class="n">kpar</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">kpar</span>
-            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">it</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span>
         <span class="k">return</span> <span class="n">obj</span>
 
 <div class="viewcode-block" id="ScalarPlaneWaveBasisByUnitVector.__eq__">
@@ -1085,18 +1101,11 @@
         <span class="k">return</span> <span class="n">obj</span></div>
 
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s2">"xy"</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ScalarPlaneWaveBasisByComp</span><span class="p">):</span>
-            <span class="n">alignment</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">alignment</span> <span class="k">if</span> <span class="n">alignment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">alignment</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">lattice</span>
-            <span class="n">kpar</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">kpar</span>
-            <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">kpar</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">alignment</span><span class="p">)</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="n">kpar</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">alignment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignment</span> <span class="k">if</span> <span class="n">alignment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">alignment</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">it</span><span class="p">,</span> <span class="n">alignment</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">kpar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpar</span>
         <span class="k">return</span> <span class="n">obj</span>
 
 <div class="viewcode-block" id="ScalarPlaneWaveBasisByComp.__eq__">

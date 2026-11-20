@@ -530,9 +530,13 @@
 <span class="sd">            AcousticTMatrixC</span>
 <span class="sd">        """</span>
         <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">materials</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isshear</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">isshear</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"cylinders require c_t = 0 in all layers"</span><span class="p">)</span>
         <span class="n">kzs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">kzs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kzs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"kzs has dimension larger than one: '</span><span class="si">{</span><span class="n">kzs</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">kzs</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">kzs</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"repeated values in 'kzs'"</span><span class="p">)</span>
         <span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">radii</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">radii</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">materials</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"incompatible lengths of radii and materials"</span><span class="p">)</span>
@@ -645,7 +649,7 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{ext} \rangle</span>
-<span class="sd">            = -\frac{4}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},</span>
+<span class="sd">            = -\frac{4}{n_{k_z}} \sum_{|k_z|, |k_z'| &lt; k} \sum_{m} \frac{\Re(T_{k_z m,k_z m})}{k_s},</span>
 
 <span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>
 <span class="sd">        is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. </span>
@@ -684,7 +688,7 @@
 <span class="sd">        .. math::</span>
 
 <span class="sd">            \langle \lambda_\mathrm{sca} \rangle</span>
-<span class="sd">            = \frac{4}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}'m'}</span>
+<span class="sd">            = \frac{4}{n_{k_z}} \sum_{|k_z| &lt; k, m} \sum_{m} \sum_{|{k_z}'| &lt; k, m'}</span>
 <span class="sd">            \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},</span>
 
 <span class="sd">        where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` </span>
