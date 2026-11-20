@@ -65,7 +65,7 @@ Further, we visualize the total acoustic field intensity at frequency 163 kHz.
    :language: python
    :lines: 21-31
 
-We select the T-matrix and insonificate it with a plane wave. Next, we set up a grid of
+We select the T-matrix and insonify it with a plane wave. Next, we set up a grid of
 points in the xz plane and keep only the points outside the sphere, where the expansion
 of the scattered field is valid. At all of these points at once, we calculate the
 intensity of the total field as a superposition of the incident and scattered fields.

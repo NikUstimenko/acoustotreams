@@ -118,7 +118,7 @@ def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
         kzpw (float or array_like): Z-component of the wave vector of plane waves. Has units of kx.
         kzcw (float or array_like): Z-component of the wave vector of cylindrical waves. Has units of kx.
         m (int or array_like): Order of cylindrical waves.
-        area (float or array_like): Lattice period a one-dimensional lattice.
+        area (float or array_like): Lattice period of a one-dimensional lattice.
 
     Returns:
         complex or array_like

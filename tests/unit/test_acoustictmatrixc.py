@@ -68,6 +68,14 @@ class TestCylinder:
             and np.all(tm.basis.pidx == 5 * [0])
             and tm.ks == 1.5
         )
+        
+    def test_repeated_kzs(self):
+        with pytest.raises(ValueError):
+            AcousticTMatrixC.cylinder([0, 0], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
+
+    def test_matrix_matches_basis(self):
+        tm = AcousticTMatrixC.cylinder([0.2, 0.1], 1, 3, 4, [(200, 1000, 0), (900, 686, 0)])
+        assert tm.shape == (len(tm.basis), len(tm.basis))
 
 
 class TestProperties:

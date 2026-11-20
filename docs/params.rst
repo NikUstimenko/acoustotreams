@@ -273,7 +273,7 @@ Moreover, we can get the speeds from the Lamé parameters as
     >>> acoustotreams.AcousticMaterial.from_params(1000, (1.6e7, 2e6))
     AcousticMaterial(1000, (141.4213562373095+0j), (44.721359549995796+0j))
 
-where the first is agrument is the density and the second one is the tuple :math:`(\lambda, \mu)`.
+where the first is argument is the density and the second one is the tuple :math:`(\lambda, \mu)`.
 
 We can also get the speed of transverse waves from Poisson's ratio as
 

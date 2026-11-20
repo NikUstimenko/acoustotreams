@@ -29,7 +29,7 @@ python -m pip install acoustotreams
 
 Required dependencies (`treams`, `numpy`, `scipy`) are installed automatically. To update later, run `python -m pip install --upgrade acoustotreams`.
 
-> **Note:** Python 3.14 and newer are not supported yet. With these versions, pip falls back to an outdated release and the installation fails with a compiler error. If your default Python is 3.14 or newer, create the environment with an older version as shown above.
+> **Note:** Python 3.14 and newer are not supported yet. With these versions, pip falls back to an outdated release and the installation fails with a compiler error. If your default Python is 3.14 or newer, create the environment with an older version.
 
 If you are not using a virtual environment, invoke pip through a supported interpreter directly, for example Python 3.13.
 

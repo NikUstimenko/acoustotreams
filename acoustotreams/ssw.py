@@ -250,7 +250,7 @@ def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):
         l (int or array_like): Degree of spherical waves.
         mu (int or array_like): Order of spherical waves.
         k (float or complex or array_like): Angular wavenumber.
-        area (float or array_like): Lattice period a one-dimensional lattice.
+        area (float or array_like): Lattice period of a one-dimensional lattice.
 
     Returns:
         complex

@@ -30,8 +30,8 @@ Matrices and Arrays
    AcousticTMatrix
    AcousticTMatrixC
 
-Other
------
+Other classes
+-------------
 
 .. autosummary::
    :toctree: generated/
@@ -67,8 +67,8 @@ Scalar wave functions
    plane_wave_angle_scalar
    spherical_wave_scalar
 
-Other
------
+Other functions
+---------------
 
 .. autosummary::
    :toctree: generated/
@@ -98,7 +98,7 @@ Special functions, including those imported from SciPy and treams, are available
 | :py:class:`~treams.Lattice`\(arr, alignment=None)            | Lattice definition in one,    |
 |                                                              | two, or three dimensions.     |
 +--------------------------------------------------------------+-------------------------------+
-| :py:class:`~treams.WaveVector`\(seq=(), alignment=None)      | Wave vector with up to three  |
+| :py:class:`WaveVector`\(seq=(), alignment=None)      | Wave vector with up to three  |
 |                                                              | components and an alignment.  |
 +--------------------------------------------------------------+-------------------------------+
 

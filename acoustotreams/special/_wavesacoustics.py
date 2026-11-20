@@ -582,7 +582,7 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
 
     where :math:`J_{m - \mu}` are the Bessel functions (:py:obj:`scipy.special.jv`).
 
-        These coefficients are used to translate from scattered to scattered modes or
+    These coefficients are used to translate from scattered to scattered modes or
     from incident to incident modes.
 
     Args:

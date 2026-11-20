@@ -459,9 +459,13 @@ class AcousticTMatrixC(AcousticsArray):
             AcousticTMatrixC
         """
         materials = [AcousticMaterial(m) for m in materials]
-        if materials[-1].isshear:
-            raise NotImplementedError
+        if any(m.isshear for m in materials):
+            raise ValueError("cylinders require c_t = 0 in all layers")
         kzs = np.atleast_1d(kzs)
+        if kzs.ndim > 1:
+            raise ValueError(f"kzs has dimension larger than one: '{kzs.ndim}'")
+        if np.unique(kzs).size != kzs.size:
+            raise ValueError("repeated values in 'kzs'")
         radii = np.atleast_1d(radii)
         if radii.size != len(materials) - 1:
             raise ValueError("incompatible lengths of radii and materials")
@@ -567,7 +571,7 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{ext} \rangle
-            = -\frac{4}{n_{k_z}} \sum_{k_z m} \frac{\Re(T_{k_z m,k_z m})}{k_s},
+            = -\frac{4}{n_{k_z}} \sum_{|k_z|, |k_z'| < k} \sum_{m} \frac{\Re(T_{k_z m,k_z m})}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 
         is the number of distinct propagating :math:`k_z` components included in the basis of the T-matrix. 
@@ -606,7 +610,7 @@ class AcousticTMatrixC(AcousticsArray):
         .. math::
 
             \langle \lambda_\mathrm{sca} \rangle
-            = \frac{4}{n_{k_z}} \sum_{k_zm} \sum_{{k_z}'m'}
+            = \frac{4}{n_{k_z}} \sum_{|k_z| < k, m} \sum_{m} \sum_{|{k_z}'| < k, m'}
             \frac{|T_{k_zm,{k_z}'m'}|^2}{k_s},
 
         where :math:`k_s` is the wavenumber in the background medium and :math:`n_{k_z}` 

@@ -1259,7 +1259,7 @@ def _scw_pamplitudeff(r, basis, k0, material, modetype):
             rcyl[..., basis.pidx, 0],
             rcyl[..., basis.pidx, 1],
             r[..., basis.pidx, 1],
-            r[..., basis.pidx, 2],
+            -rcyl[..., basis.pidx, 2],
             krhos,
         )   
     if res is None:

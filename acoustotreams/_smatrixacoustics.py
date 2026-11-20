@@ -314,7 +314,7 @@ class AcousticSMatrices:
         """
         res = self
         for _ in range(n):
-            res = res.add(self)
+            res = res.add(res)
         return res
 
     def illuminate(self, illu, illu2=None, /, *, smat=None):

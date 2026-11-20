@@ -59,6 +59,40 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
                 pass
         raise AttributeError(f"'{type(self).__name__}' object has no attribute '{key}'")
 
+    def _check_compatible(self, other):
+        """Raise an error if a set operation with `other` would mix incompatible modes."""
+        if not isinstance(other, ScalarBasisSet):
+            return  # plain mode tuples are interpreted in this basis
+        if type(other) is not type(self):
+            raise TypeError(
+                f"cannot combine '{type(self).__name__}' and '{type(other).__name__}'"
+            )
+        if not np.array_equal(
+            getattr(self, "positions", None), getattr(other, "positions", None)
+        ):
+            raise ValueError("basis sets have different expansion centers")
+        if getattr(self, "alignment", None) != getattr(other, "alignment", None):
+            raise ValueError("basis sets have different alignments")
+
+    def __and__(self, other):
+        self._check_compatible(other)
+        return super().__and__(other)
+
+    def __or__(self, other):
+        self._check_compatible(other)
+        return super().__or__(other)
+
+    def __sub__(self, other):
+        self._check_compatible(other)
+        return super().__sub__(other)
+
+    def __xor__(self, other):
+        self._check_compatible(other)
+        return super().__xor__(other)
+
+    __rand__ = __and__
+    __ror__ = __or__
+    
     def __repr__(self):
         """String representation.
 
@@ -304,13 +338,9 @@ class ScalarSphericalWaveBasis(ScalarBasisSet):
             raise ValueError("maximal degree must be non-negative")
         return (lmax + 1) * (lmax + 1) * nmax
 
-    @classmethod
-    def _from_iterable(cls, it, positions=None):
-        if isinstance(cls, ScalarSphericalWaveBasis):
-            positions = cls.positions if positions is None else positions
-            cls = type(cls)
-        obj = cls(it, positions=positions)
-        return obj    
+    def _from_iterable(self, it, positions=None):
+        positions = self.positions if positions is None else positions
+        return type(self)(it, positions=positions)  
     
 
 class ScalarCylindricalWaveBasis(ScalarBasisSet):
@@ -525,18 +555,11 @@ class ScalarCylindricalWaveBasis(ScalarBasisSet):
         res.kpar = WaveVector(kz)
         return res
 
-    @classmethod
-    def _from_iterable(cls, it, positions=None):
-        if isinstance(cls, ScalarCylindricalWaveBasis):
-            positions = cls.positions if positions is None else positions
-            lattice = cls.lattice
-            kpar = cls.kpar
-            cls = type(cls)
-        else:
-            lattice = kpar = None
-        obj = cls(it, positions=positions)
-        obj.lattice = lattice
-        obj.kpar = kpar
+    def _from_iterable(self, it, positions=None):
+        positions = self.positions if positions is None else positions
+        obj = type(self)(it, positions=positions)
+        obj.lattice = self.lattice
+        obj.kpar = self.kpar
         return obj
 
     @staticmethod
@@ -687,17 +710,10 @@ class ScalarPlaneWaveBasisByUnitVector(ScalarPlaneWaveBasis):
         modes = kvecs
         return cls(modes)
 
-    @classmethod
-    def _from_iterable(cls, it):
-        if isinstance(cls, ScalarPlaneWaveBasisByUnitVector):
-            lattice = cls.lattice
-            kpar = cls.kpar
-            cls = type(cls)
-        else:
-            lattice = kpar = None
-        obj = cls(it)
-        obj.lattice = lattice
-        obj.kpar = kpar
+    def _from_iterable(self, it):
+        obj = type(self)(it)
+        obj.lattice = self.lattice
+        obj.kpar = self.kpar
         return obj
 
     def __eq__(self, other):
@@ -947,18 +963,11 @@ class ScalarPlaneWaveBasisByComp(ScalarPlaneWaveBasis):
         obj.kpar = WaveVector(kpar, alignment=lattice.alignment)
         return obj
 
-    @classmethod
-    def _from_iterable(cls, it, alignment="xy"):
-        if isinstance(cls, ScalarPlaneWaveBasisByComp):
-            alignment = cls.alignment if alignment is None else alignment
-            lattice = cls.lattice
-            kpar = cls.kpar
-            cls = type(cls)
-        else:
-            lattice = kpar = None
-        obj = cls(it, alignment)
-        obj.lattice = lattice
-        obj.kpar = kpar
+    def _from_iterable(self, it, alignment=None):
+        alignment = self.alignment if alignment is None else alignment
+        obj = type(self)(it, alignment)
+        obj.lattice = self.lattice
+        obj.kpar = self.kpar
         return obj
 
     def __eq__(self, other):

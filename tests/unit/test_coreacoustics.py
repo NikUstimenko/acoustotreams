@@ -151,6 +151,26 @@ class TestSSWB:
         b = acoustotreams.ScalarSphericalWaveBasis.default(2)
         assert a & b == a
 
+    def test_setops_keep_positions(self):
+        a = acoustotreams.ScalarSphericalWaveBasis.default(1, positions=[[1, 2, 3]])
+        b = acoustotreams.ScalarSphericalWaveBasis([(0, 0)], positions=[[1, 2, 3]])
+        for res in (a & b, a | b, a - b, b & a):
+            assert np.array_equal(res.positions, [[1, 2, 3]])
+
+    def test_setops_different_positions(self):
+        a = acoustotreams.ScalarSphericalWaveBasis.default(1, positions=[[1, 2, 3]])
+        b = acoustotreams.ScalarSphericalWaveBasis([(0, 0)])
+        with pytest.raises(ValueError):
+            a & b
+        with pytest.raises(ValueError):
+            a | b
+
+    def test_setops_different_type(self):
+        a = acoustotreams.ScalarSphericalWaveBasis.default(1)
+        b = acoustotreams.ScalarCylindricalWaveBasis([(0.0, 0)])
+        with pytest.raises(TypeError):
+            a & b
+
     def test_neq(self):
         b = acoustotreams.ScalarSphericalWaveBasis.default(1)
         assert not b == []
@@ -290,6 +310,14 @@ class TestSCWB:
         a = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
         b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 2)
         assert a & b == a
+
+    def test_setops_keep_positions_and_lattice(self):
+        a = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(
+            0.1, 1, 2.0, 5, positions=[[0, 0, 1]]
+        )
+        res = a & a
+        assert np.array_equal(res.positions, [[0, 0, 1]])
+        assert res.lattice == a.lattice
 
     def test_neq(self):
         b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
@@ -446,6 +474,17 @@ class TestSPWBC:
         a = acoustotreams.ScalarPlaneWaveBasisByComp.default([0, 0])
         b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0, 0], [0, 1]])
         assert a & b == a
+
+    def test_setops_keep_alignment(self):
+        a = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.1, 0.2], [0.3, 0.4]], "yz")
+        res = a & a
+        assert res.alignment == "yz" and np.array_equal(res.ky, [0.1, 0.3])
+
+    def test_setops_different_alignment(self):
+        a = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.1, 0.2]], "yz")
+        b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.1, 0.2]], "xy")
+        with pytest.raises(ValueError):
+            a & b
 
     def test_getitem_int(self):
         b = acoustotreams.ScalarPlaneWaveBasisByComp([[1, 0], [0, 1]])
