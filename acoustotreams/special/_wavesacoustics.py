@@ -424,7 +424,7 @@ def vcw_rL(kz, m, krr, phi, z, krho, k):
      )
      return res * np.exp(1j * (m * phi + kz * z))[..., None]
 
-def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
+def tl_ssw(lambda_, mu, l, m, kr, theta, phi):
     r"""tl_ssw(lambda_, mu, l, m, kr, theta, phi)
     
     Singular translation coefficient of scalar and longitudinal vector spherical waves.
@@ -471,12 +471,12 @@ def tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
         res += (
             sc._tl_vsw_helper(l, m, lambda_, -mu, p, p)
             * sc.spherical_hankel1(p, kr)
-            * sc.lpmv(m - mu, p, np.cos(theta), *args, **kwargs)
+            * sc.lpmv(m - mu, p, np.cos(theta))
         )
     return res * pref
 
 
-def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
+def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi):
     r"""tl_ssw_r(lambda_, mu, l, m, kr, theta, phi)
     
     Regular translation coefficient of scalar and longitudinal vector spherical waves.
@@ -524,11 +524,11 @@ def tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
         res += (
             sc._tl_vsw_helper(l, m, lambda_, -mu, p, p)
             * sc.spherical_jn(p, kr)
-            * sc.lpmv(m - mu, p, np.cos(theta), *args, **kwargs)
+            * sc.lpmv(m - mu, p, np.cos(theta))
         )
     return res * pref
 
-def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
+def tl_scw(kz1, mu, kz2, m, krr, phi, z):
     r"""tl_scw(kz1, mu, kz2, m, krr, phi, z)
     
     Singular translation coefficient of scalar and longitudinal vector cylindrical waves.
@@ -562,10 +562,10 @@ def tl_scw(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     """
     if kz1 != kz2:
         return 0.+0.j
-    return sc.hankel1(m - mu, krr) * np.exp(1j * ((m - mu) * phi + kz1 * z), *args, **kwargs)
+    return sc.hankel1(m - mu, krr) * np.exp(1j * ((m - mu) * phi + kz1 * z))
 
 
-def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
+def tl_scw_r(kz1, mu, kz2, m, krr, phi, z):
     r"""tl_scw_r(kz1, mu, kz2, m, krr, phi, z)
     
     Regular translation coefficient of scalar and longitudinal vector cylindrical waves.
@@ -600,4 +600,4 @@ def tl_scw_r(kz1, mu, kz2, m, krr, phi, z, *args, **kwargs):
     """
     if kz1 != kz2:
         return 0.+0.j
-    return sc.jv(m - mu, krr) * np.exp(1j * ((m - mu) * phi + kz1 * z), *args, **kwargs)
+    return sc.jv(m - mu, krr) * np.exp(1j * ((m - mu) * phi + kz1 * z))

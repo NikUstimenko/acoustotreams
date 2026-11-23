@@ -35,7 +35,7 @@ From T-matrix arrays
 ====================
 
 While this example is simple we can build more complicated structures from
-two-dimensional arrays of T-matrices. We take spheres on an thin film as an example.
+two-dimensional arrays of T-matrices. We take spheres on a thin film as an example.
 This means we first calculate the S-matrices for the thin film and the array
 individually and then couple those two systems.
 
@@ -95,12 +95,13 @@ Finally, we want to compute the band structure of a system consisting of the per
 repetition of an S-matrix along the z direction. In principle, one can obtain this
 band structure also from the lattice interaction in the T-matrix, but calculating it
 from the S-matrix has two benefits. First, more complex systems can be analyzed, because
-slabs and objects described by cylindrical T-matrices can be included. Second, one only
-defines :math:`k_0`, :math:`k_x`, and :math:`k_y`. Then, the result of the calculation
-are all values :math:`k_z` and the plane wave decomposition from an eigenvalue decomposition. 
-So, instead of a 4-dimensional parameter sweep only a 3-dimensional sweep is necessary 
-decreasing the computation time. The downside is, that one is restricted to unit cells, 
-where one vector points along the z axis and is perpendicular to the other two.
+slabs and objects described by cylindrical T-matrices can be included. Second, one only 
+needs to define :math:`k_0`, :math:`k_x`, and :math:`k_y`. An eigenvalue
+decomposition then yields all values of :math:`k_z` together with the corresponding
+plane-wave decompositions of the Bloch modes. So, instead of a 4-dimensional parameter
+sweep, only a 3-dimensional sweep is necessary, which reduces the computation time. The
+downside is that one is restricted to lattices in which one lattice vector points along
+the z axis and is perpendicular to the other two.
 
 We take the array of spheres on top of a slab and continue this one infinitely along the
 z axis. Thus, the setup is

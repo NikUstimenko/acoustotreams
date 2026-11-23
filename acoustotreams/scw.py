@@ -18,17 +18,21 @@ from treams import lattice
 import scipy.special as ss
 
 
-def _translate_s(kz, mu, qz, m, krr, phi, z, *args, **kwargs):
+def _translate_s(kz, mu, qz, m, krr, phi, z, where=True):
     if abs(krr) < 1e-16 and abs(z) < 1e-16:
         return 0.0j
-    return ats.tl_scw(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
+    if not where:
+        return 0j
+    return ats.tl_scw(kz, mu, qz, m, krr, phi, z)
 
-def _translate_r(kz, mu, qz, m, krr, phi, z, *args, **kwargs):
-    return ats.tl_scw_r(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
+def _translate_r(kz, mu, qz, m, krr, phi, z, where=True):
+    if not where:
+        return 0j
+    return ats.tl_scw_r(kz, mu, qz, m, krr, phi, z)
 
 
-_translate_s = np.vectorize(_translate_s)
-_translate_r = np.vectorize(_translate_r)
+_translate_s = np.vectorize(_translate_s, otypes=[complex])
+_translate_r = np.vectorize(_translate_r, otypes=[complex])
 
 
 def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
@@ -59,13 +63,13 @@ def translate(kz, mu, qz, m, krr, phi, z, singular=True, *args, **kwargs):
         return _translate_s(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
     return _translate_r(kz, mu, qz, m, krr, phi, z, *args, **kwargs)
 
-def _rotate(kz, mu, qz, m, phi, *args, **kwargs):
-    if (kz == qz) and (m == mu):
-        return np.exp(-1j * m * phi, *args, **kwargs)
+def _rotate(kz, mu, qz, m, phi, where=True):
+    if where and (kz == qz) and (m == mu):
+        return np.exp(-1j * m * phi)
     else:
         return 0.+0.j
     
-_rotate = np.vectorize(_rotate)
+_rotate = np.vectorize(_rotate, otypes=[complex])
 
 def rotate(kz, mu, qz, m, phi, *args, **kwargs):
     """rotate(kz, mu, qz, m, phi)
@@ -87,7 +91,9 @@ def rotate(kz, mu, qz, m, phi, *args, **kwargs):
     return _rotate(kz, mu, qz, m, phi, *args, **kwargs)
 
    
-def _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
+def _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, where=True):
+   if not where:
+      return 0j
    krho = np.sqrt(kx * kx + ky * ky)
    ky_s = ky
    if np.abs(kzcw - kzpw) < 1e-12:
@@ -97,11 +103,10 @@ def _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
             ky_s = -ky_s
       if krho == 0:
          return 2 * np.power(-1j, m) / (np.abs(a) * ky_s)
-      return 2 * np.power((-1j * kx + ky) / krho, m, *args, **kwargs) / (np.abs(a) * ky_s)
-   else:
-      return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)
+      return 2 * np.power((-1j * kx + ky) / krho, m) / (np.abs(a) * ky_s)
+   return 0j
 
-_periodic_to_spw = np.vectorize(_periodic_to_spw)
+_periodic_to_spw = np.vectorize(_periodic_to_spw, otypes=[complex])
 
 def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
     """periodic_to_spw(kx, ky, kz, qz, m, a)
@@ -126,17 +131,17 @@ def periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs):
     """
     return _periodic_to_spw(kx, ky, kzpw, kzcw, m, a, *args, **kwargs)
 
-def _to_ssw(l, m, kz, mu, k, *args, **kwargs):
-    if m == mu:
+def _to_ssw(l, m, kz, mu, k, where=True):
+    if where and m == mu:
         return (
-            np.power(1j, l - m, *args, **kwargs)
-            * np.sqrt(4 * np.pi * (2 * l + 1), *args, **kwargs)
-            * np.sqrt(ss.gamma(l - m + 1) / ss.gamma(l + m + 1), *args, **kwargs)
-            * sc.lpmv(m, l, kz/k+0j, *args, **kwargs)
-            )
-    return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)
+            np.power(1j, l - m)
+            * np.sqrt(4 * np.pi * (2 * l + 1))
+            * np.sqrt(ss.gamma(l - m + 1) / ss.gamma(l + m + 1))
+            * sc.lpmv(m, l, kz / k + 0j)
+        )
+    return 0j
 
-_to_ssw = np.vectorize(_to_ssw)
+_to_ssw = np.vectorize(_to_ssw, otypes=[complex])
 
 def to_ssw(l, m, kz, mu, k, *args, **kwargs):
     """to_ssw(l, m, kz, mu, k)

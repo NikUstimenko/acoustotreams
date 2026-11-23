@@ -29,9 +29,9 @@ periodic already.
 Infinitely long cylinders
 =========================
 
-The first simple object, for which we calculate the cylindrical T-matrix is an
-infinitely long cylinder. Due to the rotation symmetry about the z axis this matrix 
-is diagonal with respect to :code:`m` and due to the translation symmetry 
+The first scatteter for which we calculate the cylindrical T-matrix is an
+infinitely long cylinder. Due to the rotation symmetry about the z axis, this matrix 
+is diagonal with respect to :code:`m` and, due to the translation symmetry, 
 it is also diagonal with respect to :code:`kz`.
 
 
@@ -39,7 +39,7 @@ it is also diagonal with respect to :code:`kz`.
     :language: python
     :lines: 6-12
 
-For such infinitely long structures it makes more sense to talk about cross width
+For such infinitely long structures it makes more sense to consider cross width
 instead of cross section. We obtain the averaged scattering and extinction cross width
 by 
 
@@ -47,7 +47,7 @@ by
     :language: python
     :lines: 14-15
 
-Again, we can also select specific modes only, for example the modes with :math:`m = 0` and :math:`m = \pm 1`.
+Again, we can also select specific modes only, for example, the modes with :math:`m = 0` and :math:`m = \pm 1`.
 
 .. literalinclude:: examples/cylinder_tmatrixc.py
     :language: python
@@ -68,12 +68,12 @@ Cylindrical T-matrices of one-dimensional arrays of spherical T-matrices
 =========================================================================
 
 For our next example we want to look at the system of spheres on a one-dimensional
-lattice again (:ref:`tmatrix:One-dimensional arrays (along z)`). They fulfil all
+lattice again (:ref:`tmatrix:One-dimensional arrays (along z)`). They fulfill all
 properties that define structures where the use of cylindrical waves is beneficial,
-namely they have a finite extent in the xy plane and they are periodic along the
+namely they have a finite extent in the xy plane and are periodic along the
 z direction.
 
-Thus, the initial setup of our calculation starts with spheres in the spherical wave
+Thus, the initial setup for our calculation starts with spheres in the spherical wave
 basis and placing them in a chain. This is the same procedure as in
 :ref:`tmatrix:One-dimensional arrays (along z)`. We define a nonzero component of 
 the wave vector along the z axis :math:`k_z` in the air. 
@@ -83,8 +83,9 @@ the wave vector along the z axis :math:`k_z` in the air.
     :lines: 7-19
 
 Here we also define :math:`n` as a "refractive index" for the background medium of the spheres
-with respect to the air and divide :math:`k_z` by :math:`n` when it is needed. Next, we convert 
-this chain in the spherical wave basis to a suitable cylindrical wave basis.
+with respect to the air. The Bloch wave vector in water is then :math:`n k_z`, i.e., 0.1 times
+the wave number in water, and the incident plane wave is given with the same direction. 
+Next, we convert this chain in the spherical wave basis to a suitable cylindrical wave basis.
 
 .. literalinclude:: examples/chain_tmatrixc.py
     :language: python
@@ -93,7 +94,7 @@ this chain in the spherical wave basis to a suitable cylindrical wave basis.
 We chose to add the first three diffraction orders (plus a 0.1 margin to avoid problems
 with floating point comparisons).
 
-Finally, we set-up the incident wave and calculate the scattering coeffcients by the usual
+Finally, we set-up the incident wave and calculate the scattering coefficients by the usual
 procedure.
 
 .. literalinclude:: examples/chain_tmatrixc.py
@@ -118,11 +119,11 @@ are shown.
 Clusters
 ========
 
-Similarly to the case of spheres we can also calculate the response from a cluster of
-objects. As an example let us simulate a cylinder together with a chain of spheres
+Similarly to the case of spheres, we can also calculate the response from a cluster of
+scatterers. As an example let us simulate a cylinder together with a chain of spheres
 in the cylindrical wave basis as described in the previous section.
 
-Hence, we set up first the spheres in the chain and convert them to the cylindrical wave
+Hence, we first set up the spheres in the chain and convert them to the cylindrical wave
 basis as before
 
 .. literalinclude:: examples/cluster_tmatrixc.py
@@ -136,7 +137,7 @@ Then, we create the T-matrix of the cylinder in the cylindrical wave basis.
     :lines: 23
 
 Finally, we construct the cluster, find the T-matrix of the interacting system,
-and then scattered field coeffcients for the incident plane wave.
+and then the scattered field coefficients for the incident plane wave.
 
 .. literalinclude:: examples/cluster_tmatrixc.py
     :language: python
@@ -149,7 +150,7 @@ The scattered pressure field within three unit cells is shown below
 One-dimensional arrays (along the x axis)
 =========================================
 
-Now, we take the chain of spheres and cylinder and place them in a grating structure
+Now, we take the chain of spheres and a cylinder and place them in a grating structure
 along the x direction. We start again by defining the parameters and calculating the 
 relevant cylindrical T-matrices.
 

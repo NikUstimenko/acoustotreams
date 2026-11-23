@@ -17,19 +17,23 @@ import numpy as np
 from treams import lattice
 import scipy.special as ss
 
-def _translate_s(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
+def _translate_s(lambda_, mu, l, m, kr, theta, phi, where=True):
     """Regular translation coefficient for spherical modes"""
     if abs(kr) < 1e-16:
         return 0.0j
-    return ats.tl_ssw(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs)
+    if not where:
+        return 0j
+    return ats.tl_ssw(lambda_, mu, l, m, kr, theta, phi)
 
-def _translate_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs):
+def _translate_r(lambda_, mu, l, m, kr, theta, phi, where=True):
     """Singular translation coefficient for spherical modes"""
-    return ats.tl_ssw_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs)
+    if not where:
+        return 0j
+    return ats.tl_ssw_r(lambda_, mu, l, m, kr, theta, phi)
 
 
-_translate_s = np.vectorize(_translate_s)
-_translate_r = np.vectorize(_translate_r)
+_translate_s = np.vectorize(_translate_s, otypes=[complex])
+_translate_r = np.vectorize(_translate_r, otypes=[complex])
 
 
 def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs):
@@ -60,17 +64,17 @@ def translate(lambda_, mu, l, m, kr, theta, phi, singular=True, *args, **kwargs)
     return _translate_r(lambda_, mu, l, m, kr, theta, phi, *args, **kwargs)
 
 
-def _rotate(lambda_, mu, l, m, phi, theta, psi, *args, **kwargs):
+def _rotate(lambda_, mu, l, m, phi, theta, psi, where=True):
     """
     Rotation coefficients for the rotation by the Euler angles phi, theta, and psi.
     It is intended to be used for constructing the rotation matrix manually.
     """
-    if lambda_ == l:
-        return sc.wignerd(l, mu, m, phi, theta, psi, *args, **kwargs)
+    if where and lambda_ == l:
+        return sc.wignerd(l, mu, m, phi, theta, psi)
     else:
         return 0.0j
 
-_rotate = np.vectorize(_rotate)
+_rotate = np.vectorize(_rotate, otypes=[complex])
 
 
 def rotate(lambda_, mu, l, m, phi, theta=0, psi=0, *args, **kwargs):
@@ -174,8 +178,10 @@ def translate_periodic(ks, kpar, a, rs, out, in_=None, rsin=None, eta=0, func=la
     return res
          
 
-def _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
+def _periodic_to_spw(kx, ky, kz, l, m, area, where=True):
     """Convert a periodic spherical wave into plane waves"""
+    if not where:
+        return 0j
     k = np.sqrt(kx * kx + ky * ky + kz * kz)
     phi = np.arctan2(ky, kx)
     kz_s = kz
@@ -190,9 +196,9 @@ def _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
         * np.power(-1j, l)
         / (area * k * kz_s)
     )
-    return prefactor * sc.lpmv(m, l, kz / k + 0j, *args, **kwargs)
+    return prefactor * sc.lpmv(m, l, kz / k + 0j)
 
-_periodic_to_spw = np.vectorize(_periodic_to_spw)
+_periodic_to_spw = np.vectorize(_periodic_to_spw, otypes=[complex])
 
 
 def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
@@ -218,21 +224,21 @@ def periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs):
     """
     return _periodic_to_spw(kx, ky, kz, l, m, area, *args, **kwargs)
 
-def _periodic_to_scw(kz, m, l, mu, k, a, *args, **kwargs):
+def _periodic_to_scw(kz, m, l, mu, k, a, where=True):
     """Convert periodic spherical wave to cylindrical wave"""
-    if mu != m:
-        return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)
+    if not where or mu != m:
+        return 0j
     prefactor = (
-        np.sqrt(np.pi * (2 * l + 1), *args, **kwargs) *
-        np.sqrt(ss.gamma(l - m + 1) / ss.gamma(l + m + 1), *args, **kwargs) * 
-        0.5 * 
-        np.power(-1j, l - m, *args, **kwargs)
+        np.sqrt(np.pi * (2 * l + 1))
+        * np.sqrt(ss.gamma(l - m + 1) / ss.gamma(l + m + 1))
+        * 0.5
+        * np.power(-1j, l - m)
         / (a * k)
     ) 
-    return prefactor * sc.lpmv(m, l, kz/k+0j, *args, **kwargs)
+    return prefactor * sc.lpmv(m, l, kz/k+0j)
 
  
-_periodic_to_scw = np.vectorize(_periodic_to_scw)
+_periodic_to_scw = np.vectorize(_periodic_to_scw, otypes=[complex])
 
 
 def periodic_to_scw(kz, m, l, mu, k, area, *args, **kwargs):

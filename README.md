@@ -31,18 +31,20 @@ Required dependencies (`treams`, `numpy`, `scipy`) are installed automatically. 
 
 > **Note:** Python 3.14 and newer are not supported yet. With these versions, pip falls back to an outdated release and the installation fails with a compiler error. If your default Python is 3.14 or newer, create the environment with an older version.
 
-If you are not using a virtual environment, invoke pip through a supported interpreter directly, for example Python 3.13.
+> **Note (Windows):** On Windows, use Python 3.9–3.12. `treams` does not work with NumPy 2 on Windows yet, and NumPy 1.x is not available for Python 3.13.
+
+If you are not using a virtual environment, invoke pip through a supported interpreter directly, for example Python 3.12.
 
 On macOS or Linux:
 
 ```sh
-python3.13 -m pip install acoustotreams
+python3.12 -m pip install acoustotreams
 ```
 
 On Windows:
 
 ```bat
-py -3.13 -m pip install acoustotreams
+py -3.12 -m pip install acoustotreams
 ```
 
 To verify the installation, run

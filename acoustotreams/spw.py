@@ -15,7 +15,7 @@ import treams.special as sc
 import scipy.special as ss
 
 
-def translate(kx, ky, kz, x, y, z, *args, **kwargs):
+def translate(kx, ky, kz, x, y, z, where=True):
     r"""translate(kx, ky, kz, x, y, z)
     
     Translation coefficients for scalar plane waves.
@@ -34,10 +34,15 @@ def translate(kx, ky, kz, x, y, z, *args, **kwargs):
     Returns:
         complex or array_like
     """
-    return np.exp(1j * (kx * x + ky * y + kz * z), *args, **kwargs)
+    phase = 1j * (kx * x + ky * y + kz * z)
+    if where is True:
+        return np.exp(phase)
+    # Masked entries are set to zero instead of being left uninitialized
+    out = np.zeros(np.broadcast_shapes(np.shape(phase), np.shape(where)), complex)
+    return np.exp(phase, out=out, where=where)[()]
 
 
-def _to_ssw(l, m, kx, ky, kz, *args, **kwargs):
+def _to_ssw(l, m, kx, ky, kz, where=True):
     """Coefficient for the expansion of a scalar plane wave in scalar spherical waves"""
     krho = np.sqrt(kx * kx + ky * ky)
     # exp(i phi) of a possibly complex wave vector (lossy media); for krho = 0, only
@@ -50,9 +55,9 @@ def _to_ssw(l, m, kx, ky, kz, *args, **kwargs):
         * np.power(1j, l)
         * np.power(eiphi, -m)
     )
-    return pref * sc.lpmv(m, l, kz / k, *args, **kwargs)
+    return pref * sc.lpmv(m, l, kz / k)
 
-_to_ssw = np.vectorize(_to_ssw)
+_to_ssw = np.vectorize(_to_ssw, otypes=[complex])
 
 def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
     """to_ssw(l, m, kx, ky, kz)
@@ -76,20 +81,19 @@ def to_ssw(l, m, kx, ky, kz, *args, **kwargs):
     return _to_ssw(l, m, kx, ky, kz, *args, **kwargs)
 
     
-def _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
-    """Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves"""  
+def _to_scw(kzcw, m, kx, ky, kzpw, where=True):
+    """Coefficient for the expansion of a scalar plane wave in scalar cylindrical waves"""
+    if not where or np.abs(kzcw - kzpw) > 1e-12:
+        return 0j
+    if m == 0:
+        return 1 + 0j  
     krho = np.sqrt(kx * kx + ky * ky)
-    if np.abs(kzcw - kzpw) <= 1e-12:
-        if m == 0:
-            return np.power(1, 0, *args, **kwargs)
-        if krho == 0:
-            return np.power(1j, m, *args, **kwargs)
-        return np.power((1j * kx + ky) / krho, m, *args, **kwargs)
-    elif np.abs(kzcw - kzpw) > 1e-12:
-        return 0.0j + sc.lpmv(0, 1, 0, *args, **kwargs)
+    if krho == 0:
+        return np.power(1j, m)
+    return np.power((1j * kx + ky) / krho, m)
     
 
-_to_scw = np.vectorize(_to_scw)    
+_to_scw = np.vectorize(_to_scw, otypes=[complex])    
 
 def to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
     """to_scw(qz, m, kx, ky, kz)
@@ -112,13 +116,13 @@ def to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs):
     return _to_scw(kzcw, m, kx, ky, kzpw, *args, **kwargs)
 
 
-def _xyz_to_zxy(kx, ky, kz, *args, **kwargs):
-    return np.power(1, 0, *args, **kwargs)
+def _xyz_to_zxy(kx, ky, kz, where=True):
+    return 1.0 if where else 0.0
 
 _xyz_to_zxy = np.vectorize(_xyz_to_zxy)  
 
-def _xyz_to_yzx(kx, ky, kz, *args, **kwargs):
-    return np.power(1, 0, *args, **kwargs)
+def _xyz_to_yzx(kx, ky, kz, where=True):
+    return 1.0 if where else 0.0
 
 _xyz_to_yzx = np.vectorize(_xyz_to_yzx)
 

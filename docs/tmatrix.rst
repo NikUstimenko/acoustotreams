@@ -10,37 +10,37 @@ Acoustic T-Matrices
    :local:
 
 One of the main objects for acoustic scattering calculations within *acoustotreams* are
-acoustic T-matrices. They describe the scattering response of an object by encoding the linear
+acoustic T-matrices. They describe the scattering response of a scatterer by encoding the linear
 relationship between incident and scattered fields. These fields are expanded using
 the scalar spherical waves.
 
 The acoustic T-matrices of spheres can be obtained analytically. For more complicated shapes
 numerical methods are necessary to compute the acoustic T-matrix. Once the T-matrix of a single
-object is known, the acoustic interaction between particle within clusters can be
+scatterer is known, the acoustic interaction between scatterers within clusters can be
 calculated efficiently. Such clusters can be analyzed in their local description, where
-the field expansions are centered at each particle of the cluster, or in a global
+the field expansions are centered at each scatterer of the cluster, or in a global
 description treating the whole cluster as a single object.
 
 *acoustotreams* is particularly aimed at analyzing scattering within lattices. These lattices
 can be periodic in one, two, or all three spatial dimensions. The unit cell of those
-lattices can consist of an arbitrary number of objects described by the acoustic T-matrix.
+lattices can consist of an arbitrary number of scatterers described by the acoustic T-matrix.
 
 Spheres
 =======
 
-It's possible to calculate the acoustic T-matrix of a single sphere with the
-method :meth:`~acoustotreams.AcousticTMatrix.sphere`. We start by defining the relevant parameters for
-our calculation and creating the acoustic T-matrices themselves.
+It is possible to calculate the acoustic T-matrix of a single sphere using the
+method :meth:`~acoustotreams.AcousticTMatrix.sphere`. We start by defining the relevant 
+parameters for our calculation and creating the acoustic T-matrices themselves.
 
 .. literalinclude:: examples/sphere.py
    :language: python
    :lines: 6-11
 
-Here we define a material using the class :meth:`~acoustotreams.AcousticMaterial`.
-To create an instance of this class, we pass three arguments: mass density,
-longitudinal speed of sound, and transverse speed of sound. The acoustic
-material parameters can be complex. The imaginary part of the density must be
-positive, whereas the imaginary part of the speeds negative. 
+Here we define a material using the class :class:`~acoustotreams.AcousticMaterial`.
+Its arguments are the mass density, the longitudinal speed of sound, and the transverse
+speed of sound, which defaults to zero, i.e., a fluid. The acoustic material parameters
+can be complex. For a lossy material, the imaginary part of the density is positive and
+the imaginary parts of the speeds are negative.
 
 Now, we can easily access quantities like the scattering and extinction cross
 sections
@@ -49,8 +49,8 @@ sections
    :language: python
    :lines: 13-14
 
-From the parameter ``lmax = 10`` we see that the acoustic T-matrix is calculated up to the tenth
-multipolar order. To restrict the T-matrix in the monopole-dipole approximation, we can
+From the parameter ``lmax = 15`` we see that the acoustic T-matrix is calculated up to the
+multipole degree 15. To restrict the T-matrix in the monopole-dipole approximation, we can
 select a basis containing only those multipoles.
 
 .. literalinclude:: examples/sphere.py
@@ -84,7 +84,7 @@ the direction of incidence of the plane wave.
 Clusters
 ========
 
-Multi-scattering calculations in a cluster of particles is a typical application of the
+Multi-scattering calculations in a cluster of scatterers is a typical application of the
 T-matrix method. We first construct an object from two spheres. Using the definition 
 of the relevant parameters
 
@@ -107,15 +107,15 @@ the scattering and extinction cross sections for that particular illumination.
    :lines: 21-23
 
 Finally, with few lines similar to the plotting of the field intensity of a single
-sphere we can obtain the fields outside of the sphere.
+sphere we can obtain the fields outside of the spheres.
 
 .. literalinclude:: examples/cluster.py
    :language: python
    :lines: 25-35
 
 Up to here, we did all calculations for the cluster in the local basis. By expanding
-the incident and scattered fields in a basis with a single origin we can describe the
-same object. Often, a larger number of multipoles is needed to do so and some
+the incident and scattered fields in a basis with a single origin, we can describe the
+same system. Often, a larger number of multipoles is needed to do so and some
 information on fields between the particles is lost. However, the description in a global
 basis can be more efficient in terms of matrix size.
 
@@ -142,8 +142,8 @@ One-dimensional arrays (along z)
 
 Next, we turn to systems that are periodic in the z direction. We calculate the
 scattering from an array of spheres. Intentionally, we choose a unit cell with two
-different spheres that overlap along the z direction, but are not placed exactly along 
-the same line. This is the most general case for the implemented lattice sums. 
+different spheres that are not placed along the same line parallel to the z axis. 
+This is the most general case for the implemented lattice sums. 
 After the common setup of the parameters, we simply create a cluster in a local basis.
 
 .. literalinclude:: examples/chain.py
@@ -157,7 +157,7 @@ form a chain.
    :language: python
    :lines: 17-18
 
-Next, we choose set the illumination to be propagating along the x axis.
+Next, we set the insonification to be propagating along the x axis.
 The z component of the wave vector of the plane wave has to match to the wave vector
 component of the lattice interaction, i.e., the Bloch wave vector.
 
@@ -169,8 +169,8 @@ There is an efficient way to calculate the acoustic response, especially in the 
 using cylindrical acoustic T-matrices. That will be introduced in :doc:`tmatrixc`. Here, we will
 stay in the expression of the fields as scalar spherical waves. This allows the
 calculation of the fields in the domain between the spheres. To compute them accurately, we
-expand the scattered field coefficients in the whole lattice in monopole approximation at each point
-we want to calculate the pressure field.
+expand the scattered field coefficients in the whole lattice in a monopole approximation 
+at each point we want to calculate the pressure field.
 
 .. literalinclude:: examples/chain.py
    :language: python
@@ -200,11 +200,11 @@ xy plane.
    :language: python
    :lines: 7-42
 
-With a few changes we computed the fields in a square array of the same spheres as in the
-previous examples. Most importantly we changed the value of the variable :code:`lattice`
-to an instance of a two-dimensional :class:`~treams.Lattice` and set :code:`kpar`
-accordingly. Most other changes are just resulting from the change of the coordinate
-system.
+With a few changes we computed the fields in a square array of spheres at the same positions 
+as in the previous examples, now both with a radius of 0.75 cm. Most importantly we changed 
+the value of the variable :code:`lattice` to an instance of a two-dimensional 
+:class:`~treams.Lattice` and set :code:`kpar` accordingly. Most other changes are just 
+resulting from the change of the coordinate system.
 
 .. plot:: examples/grid.py
 
@@ -216,7 +216,7 @@ crystal. We want to restrict the example to calculating modes at the gamma point
 reciprocal space. The calculated system consists of a single sphere in a cubic lattice.
 In our very crude analysis, we blindly select the lowest singular value of the lattice
 interaction matrix. Besides the mode when the frequency tends to zero, there are two
-additional modes at higher frequencies in the chosen range.
+additional modes at higher frequencies in the chosen range, near 18.9 kHz and 31 kHz.
 
 .. literalinclude:: examples/crystal.py
    :language: python
