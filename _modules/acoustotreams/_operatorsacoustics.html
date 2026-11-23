@@ -427,13 +427,11 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasisByComp</span><span class="p">):</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="s2">"up"</span> <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">modetype</span>
     <span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">,</span> <span class="n">kz</span> <span class="o">=</span> <span class="n">to_basis</span><span class="o">.</span><span class="n">kvecs</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="p">)</span>
-    <span class="c1"># Wave vectors given as unit vectors and as components differ by rounding errors</span>
-    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span><span class="o">.</span><span class="n">ks</span><span class="p">(</span><span class="n">k0</span><span class="p">))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
         <span class="n">where</span>
-        <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">kx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">kvecs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">)</span>
-        <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ky</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">kvecs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">)</span>
-        <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">kz</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">kvecs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">),</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">kx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">kvecs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">ky</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">kvecs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">kz</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">kvecs</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
         <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">AcousticsArray</span><span class="p">(</span>
@@ -455,12 +453,20 @@
 <span class="sd">    waves, but the inverse transformation generally requires a continuous spectrum </span>
 <span class="sd">    of plane waves, so that the transformation becomes an integral over this spectrum.</span>
 
+<span class="sd">    Plane waves are matched by exactly equal wave vectors. Because of rounding errors,</span>
+<span class="sd">    a plane wave given by its full wave vector does not match a mode given by two</span>
+<span class="sd">    components in general.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two</span>
 <span class="sd">            basis sets, the output and input modes are taken accordingly; otherwise, </span>
 <span class="sd">            both sets of modes are the same.</span>
-<span class="sd">        modetype (array_like of str, optional): Mode type, used for</span>
-<span class="sd">            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.</span>
+<span class="sd">        modetype (str or tuple, optional): Mode type: "regular" or "singular" for</span>
+<span class="sd">            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`,</span>
+<span class="sd">            and "up" (default) or "down" for :class:`ScalarPlaneWaveBasisByComp`. If it</span>
+<span class="sd">            is a tuple of two mode types, they are taken for the output and input modes</span>
+<span class="sd">            accordingly. A single mode type applies to both. For plane waves, both mode</span>
+<span class="sd">            types must be the same, and an unspecified entry takes the other.</span>
 <span class="sd">        k0 (float, optional): Angular wavenumber in the air.</span>
 <span class="sd">        material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material </span>
 <span class="sd">            parameters. Defaults to the air.</span>
@@ -502,7 +508,13 @@
             <span class="k">return</span> <span class="n">_ssw_scw_expand</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">to_basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasis</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarPlaneWaveBasis</span><span class="p">):</span>
-            <span class="n">to_modetype</span> <span class="o">=</span> <span class="n">modetype</span> <span class="k">if</span> <span class="n">to_modetype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">to_modetype</span>
+            <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">modetype</span> <span class="o">=</span> <span class="n">to_modetype</span>
+            <span class="k">elif</span> <span class="n">to_modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">modetype</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">"different mode types are unsupported for plane-wave expansion: got "</span>
+                    <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">to_modetype</span><span class="si">}</span><span class="s2">' for the output and '</span><span class="si">{</span><span class="n">modetype</span><span class="si">}</span><span class="s2">' for the input"</span>
+                <span class="p">)</span>
             <span class="k">return</span> <span class="n">_spw_spw_expand</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">to_basis</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">to_basis</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ScalarCylindricalWaveBasis</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">to_modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"regular"</span><span class="p">):</span>

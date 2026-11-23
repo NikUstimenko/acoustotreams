@@ -64,8 +64,13 @@ insonification and propagation direction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>illu</strong> (<em>complex</em><em> or </em><em>array_like</em>) – Expansion coefficients of the incoming wave.
-Coefficients in another plane-wave basis are re-expanded into the basis
-of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.</p>
+Plain arrays are taken to be in the basis of the S-matrix. Otherwise, the
+plane waves must be given by two wave-vector components
+(<a class="reference internal" href="acoustotreams.ScalarPlaneWaveBasisByComp.html#acoustotreams.ScalarPlaneWaveBasisByComp" title="acoustotreams.ScalarPlaneWaveBasisByComp"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarPlaneWaveBasisByComp</span></code></a>) and a mode type,
+which gives the direction, “up” by default. Each mode with a nonzero
+amplitude must be in the basis of the S-matrix with exactly the same
+components. A wavenumber or material of the incoming wave must agree
+with the S-matrix on the incident side.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
@@ -79,9 +84,14 @@ the arrays hold one value per column.</p>
 <dd class="field-odd"><p>tuple[float, float]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If no power flows into the structure from the incident side,
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If no power flows into the structure from the incident side,
     e.g., for evanescent incident waves when no wave can propagate on the
-    other side.</p>
+    other side.</p></li>
+<li><p><strong>ValueError</strong> – If the incoming wave is given by full wave vectors, has modes
+    that are not in the basis of the S-matrix, or has another wavenumber or
+    material.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

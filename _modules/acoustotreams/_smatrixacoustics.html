@@ -49,7 +49,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">treams</span><span class="w"> </span><span class="kn">import</span> <span class="n">util</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._coreacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticsArray</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._coreacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScalarPlaneWaveBasisByComp</span> <span class="k">as</span> <span class="n">SPWBC</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._coreacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScalarPlaneWaveBasisByUnitVector</span> <span class="k">as</span> <span class="n">SPWBUV</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._materialacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticMaterial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._operatorsacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">translate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">acoustotreams._tmatrixacoustics</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcousticTMatrixC</span>
@@ -325,10 +324,15 @@
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
-        <span class="n">sup</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">"up"</span><span class="p">)</span>
-        <span class="n">sdown</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">"down"</span>
+        <span class="c1"># Propagation in a homogeneous medium preserves each diffraction order.</span>
+        <span class="n">diagonal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">sup</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span>
+            <span class="n">r</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span> <span class="n">modetype</span><span class="o">=</span><span class="s2">"up"</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">diagonal</span>
         <span class="p">)</span>
+        <span class="n">sdown</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span>
+            <span class="n">modetype</span><span class="o">=</span><span class="s2">"down"</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">diagonal</span><span class="p">,</span>
+         <span class="p">)</span>
         <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sup</span><span class="p">)</span>
         <span class="n">material</span> <span class="o">=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">([[</span><span class="n">sup</span><span class="p">,</span> <span class="n">zero</span><span class="p">],</span> <span class="p">[</span><span class="n">zero</span><span class="p">,</span> <span class="n">sdown</span><span class="p">]],</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">)</span></div>
@@ -419,10 +423,10 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            illu (complex or array_like): Insonification. If `modetype` is specified, the direction</span>
-<span class="sd">                is chosen accordingly.</span>
+<span class="sd">                is chosen accordingly. Plane waves must be given as in :meth:`tr`.</span>
 <span class="sd">            illu2 (complex or array_like, optional): Second insonification. If used, the first</span>
 <span class="sd">                argument is taken to be coming from below and this one to be coming from</span>
-<span class="sd">                above.</span>
+<span class="sd">                above, or the other way round if the first one goes down.</span>
 <span class="sd">            smat (AcousticSMatrices, optional): Second S-matrix for computing the</span>
 <span class="sd">                field expansion between two S-matrices.</span>
 
@@ -432,11 +436,17 @@
 <span class="sd">            With ``smat``, the 4-tuple</span>
 <span class="sd">            ``(field_up, field_down, field_in_up, field_in_down)``.</span>
 <span class="sd">        """</span>
-        <span class="n">illu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">smat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">smat</span><span class="o">.</span><span class="n">basis</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"coupled S-matrices must have the same modes in the same order"</span><span class="p">)</span>
+        <span class="n">illu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">smat</span><span class="p">)</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">modetype</span><span class="p">))]</span>
-        <span class="n">illu2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">illu</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="k">if</span> <span class="n">illu2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">illu2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">illu2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">illu</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="s2">"up"</span> <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span> <span class="k">else</span> <span class="s2">"down"</span>
+            <span class="n">illu2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu2</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">smat</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="n">illu</span><span class="p">,</span> <span class="n">illu2</span> <span class="o">=</span> <span class="n">illu2</span><span class="p">,</span> <span class="n">illu</span>
         <span class="k">if</span> <span class="n">smat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -454,38 +464,59 @@
 
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_to_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">illu</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Re-expand an incident field given in another plane-wave basis.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">illu</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Incident field in the basis of the S-matrix.</span>
 
-<span class="sd">        Arrays without a basis are taken to be in the basis of the S-matrix.</span>
-<span class="sd">        For plane waves given by full wave vectors, the direction along z follows from the sign </span>
-<span class="sd">        of the z-component.</span>
+<span class="sd">        See :meth:`tr`. The mode type gives the direction, "up" by default. If</span>
+<span class="sd">        `direction` is given, the wave must go this way. A wave going down is incident on</span>
+<span class="sd">        the S-matrix `upper`, if given.</span>
 <span class="sd">        """</span>
-        <span class="n">basis</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"basis"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">basis</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">first</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">))]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
+
+        <span class="n">modetype</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">modetype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">modetype</span> <span class="o">=</span> <span class="s2">"up"</span> <span class="k">if</span> <span class="n">direction</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">direction</span>
+        <span class="k">elif</span> <span class="n">modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"incident mode type must be 'up' or 'down', got </span><span class="si">{</span><span class="n">modetype</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">modetype</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"the second incident wave must go </span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">, but it goes </span><span class="si">{</span><span class="n">modetype</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">upper</span> <span class="k">if</span> <span class="n">upper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span> <span class="k">else</span> <span class="bp">self</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">port</span><span class="o">.</span><span class="n">material</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">side</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">side</span> <span class="o">=</span> <span class="n">side</span><span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">modetype</span> <span class="o">==</span> <span class="s2">"down"</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">k0</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"k0"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">k0</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">port</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"incident wave has k0=</span><span class="si">{</span><span class="n">k0</span><span class="si">}</span><span class="s2">, the S-matrix k0=</span><span class="si">{</span><span class="n">port</span><span class="o">.</span><span class="n">k0</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">material</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"material"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">material</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span> <span class="o">!=</span> <span class="n">AcousticMaterial</span><span class="p">(</span><span class="n">side</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"incident wave is in </span><span class="si">{</span><span class="n">material</span><span class="si">}</span><span class="s2">, the S-matrix expects </span><span class="si">{</span><span class="n">side</span><span class="si">}</span><span class="s2"> "</span>
+                <span class="s2">"on the incident side"</span>
+            <span class="p">)</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"basis"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">basis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">basis</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">illu</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">SPWBUV</span><span class="p">):</span>
-            <span class="n">qz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">qz</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">qz</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-                <span class="n">direction</span> <span class="o">=</span> <span class="s2">"up"</span>
-            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">qz</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-                <span class="n">direction</span> <span class="o">=</span> <span class="s2">"down"</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">"plane waves must all go up or all go down along z; "</span>
-                    <span class="s2">"illuminate with each direction separately"</span>
-                <span class="p">)</span>
-            <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modetype</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                <span class="n">modetype</span> <span class="o">=</span> <span class="n">modetype</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">modetype</span><span class="p">))]</span>
-            <span class="k">if</span> <span class="n">modetype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">direction</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">"modetype '</span><span class="si">{</span><span class="n">modetype</span><span class="si">}</span><span class="s2">' contradicts the wave vectors, "</span>
-                    <span class="sa">f</span><span class="s2">"which go </span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">"</span>
-                <span class="p">)</span>
-            <span class="k">return</span> <span class="n">illu</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">illu</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">SPWBC</span><span class="p">)</span> <span class="ow">or</span> <span class="n">basis</span><span class="o">.</span><span class="n">alignment</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">alignment</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"incident plane waves must be given by the wave-vector components of the "</span>
+                <span class="s2">"S-matrix basis and a mode type, e.g., "</span>
+                <span class="s2">"plane_wave_scalar(kpar, k0=smat.k0, basis=smat.basis, modetype='up')"</span>
+            <span class="p">)</span>
+        <span class="p">(</span><span class="n">kx</span><span class="p">,</span> <span class="n">ky</span><span class="p">),</span> <span class="p">(</span><span class="n">skx</span><span class="p">,</span> <span class="n">sky</span><span class="p">)</span> <span class="o">=</span> <span class="n">basis</span><span class="p">[()],</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">[()]</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="p">((</span><span class="n">skx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">kx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sky</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">ky</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
+        <span class="n">active</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">coeffs</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">coeffs</span><span class="o">.</span><span class="n">ndim</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">active</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">matrix</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"incident plane waves are not in the basis of the S-matrix"</span><span class="p">)</span>
+        <span class="n">ann</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"basis"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span> <span class="s2">"k0"</span><span class="p">:</span> <span class="n">port</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="s2">"material"</span><span class="p">:</span> <span class="n">side</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">:</span> <span class="n">modetype</span><span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">@</span> <span class="n">coeffs</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AcousticsArray</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="o">**</span><span class="n">ann</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">AcousticsArray</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">(</span><span class="n">ann</span><span class="p">,)</span> <span class="o">+</span> <span class="p">({},)</span> <span class="o">*</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
 <div class="viewcode-block" id="AcousticSMatrices.tr">
 <a class="viewcode-back" href="../../generated/acoustotreams.AcousticSMatrices.tr.html#acoustotreams.AcousticSMatrices.tr">[docs]</a>
@@ -497,8 +528,13 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            illu (complex or array_like): Expansion coefficients of the incoming wave.</span>
-<span class="sd">                Coefficients in another plane-wave basis are re-expanded into the basis</span>
-<span class="sd">                of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.</span>
+<span class="sd">                Plain arrays are taken to be in the basis of the S-matrix. Otherwise, the</span>
+<span class="sd">                plane waves must be given by two wave-vector components</span>
+<span class="sd">                (:class:`~acoustotreams.ScalarPlaneWaveBasisByComp`) and a mode type,</span>
+<span class="sd">                which gives the direction, "up" by default. Each mode with a nonzero</span>
+<span class="sd">                amplitude must be in the basis of the S-matrix with exactly the same</span>
+<span class="sd">                components. A wavenumber or material of the incoming wave must agree</span>
+<span class="sd">                with the S-matrix on the incident side.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple[float, float]: ``(transmittance, reflectance)``. For a two-dimensional `illu`, </span>
@@ -509,6 +545,9 @@
 <span class="sd">            ValueError: If no power flows into the structure from the incident side,</span>
 <span class="sd">                e.g., for evanescent incident waves when no wave can propagate on the</span>
 <span class="sd">                other side.</span>
+<span class="sd">            ValueError: If the incoming wave is given by full wave vectors, has modes</span>
+<span class="sd">                that are not in the basis of the S-matrix, or has another wavenumber or</span>
+<span class="sd">                material.</span>
 <span class="sd">        """</span>
         <span class="n">illu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_basis</span><span class="p">(</span><span class="n">illu</span><span class="p">)</span>
         <span class="n">modetype</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">illu</span><span class="p">,</span> <span class="s2">"modetype"</span><span class="p">,</span> <span class="s2">"up"</span><span class="p">)</span>
