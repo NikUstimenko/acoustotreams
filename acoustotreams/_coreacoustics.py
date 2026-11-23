@@ -79,12 +79,15 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
                 raise ValueError(f"basis sets have different '{name}'")
 
     def _drop_hints(self, res, other):
-        """Remove lattice hints from a union with modes that need not fulfil them."""
-        if isinstance(other, ScalarBasisSet):
-            for name in ("lattice", "kpar"):
-                if getattr(other, name, None) is None and hasattr(res, name):
-                    setattr(res, name, None)
-        return res
+        """Remove lattice hints from a union with modes that need not fulfil them.
+
+        Plain mode tuples have no hints, so they keep them only if they add no modes.
+        """
+        if not isinstance(other, ScalarBasisSet) and res <= self:
+            return res
+        for name in ("lattice", "kpar"):
+            if getattr(other, name, None) is None and hasattr(res, name):
+                setattr(res, name, None)
 
     def __and__(self, other):
         self._check_compatible(other)
