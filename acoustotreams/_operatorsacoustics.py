@@ -375,13 +375,11 @@ def _spw_spw_expand(basis, to_basis, k0, material, modetype, where):
     if isinstance(to_basis, core.ScalarPlaneWaveBasisByComp):
         modetype = "up" if modetype is None else modetype
     kx, ky, kz = to_basis.kvecs(k0, material, modetype)
-    # Wave vectors given as unit vectors and as components differ by rounding errors
-    tol = 1e-10 * np.abs(AcousticMaterial(material).ks(k0))
     res = np.array(
         where
-        & (np.abs(kx[:, None] - kvecs[0]) <= tol)
-        & (np.abs(ky[:, None] - kvecs[1]) <= tol)
-        & (np.abs(kz[:, None] - kvecs[2]) <= tol),
+        & (kx[:, None] == kvecs[0])
+        & (ky[:, None] == kvecs[1])
+        & (kz[:, None] == kvecs[2]),
         int,
     )
     return core.AcousticsArray(
@@ -401,12 +399,20 @@ def expand(
     waves, but the inverse transformation generally requires a continuous spectrum 
     of plane waves, so that the transformation becomes an integral over this spectrum.
 
+    Plane waves are matched by exactly equal wave vectors. Because of rounding errors,
+    a plane wave given by its full wave vector does not match a mode given by two
+    components in general.
+
     Args:
         basis (:class:`~acoustotreams.ScalarBasisSet` or tuple): Basis set. If it is a tuple of two
             basis sets, the output and input modes are taken accordingly; otherwise, 
             both sets of modes are the same.
-        modetype (array_like of str, optional): Mode type, used for
-            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`.
+        modetype (str or tuple, optional): Mode type: "regular" or "singular" for
+            :class:`ScalarSphericalWaveBasis` and :class:`ScalarCylindricalWaveBasis`,
+            and "up" (default) or "down" for :class:`ScalarPlaneWaveBasisByComp`. If it
+            is a tuple of two mode types, they are taken for the output and input modes
+            accordingly. A single mode type applies to both. For plane waves, both mode
+            types must be the same, and an unspecified entry takes the other.
         k0 (float, optional): Angular wavenumber in the air.
         material (:class:`~acoustotreams.AcousticMaterial` or tuple, optional): Material 
             parameters. Defaults to the air.
@@ -448,7 +454,13 @@ def expand(
             return _ssw_scw_expand(basis, to_basis, k0, material, where)
     if isinstance(basis, core.ScalarPlaneWaveBasis):
         if isinstance(to_basis, core.ScalarPlaneWaveBasis):
-            to_modetype = modetype if to_modetype is None else to_modetype
+            if modetype is None:
+                modetype = to_modetype
+            elif to_modetype not in (None, modetype):
+                raise ValueError(
+                    "different mode types are unsupported for plane-wave expansion: got "
+                    f"'{to_modetype}' for the output and '{modetype}' for the input"
+                )
             return _spw_spw_expand(basis, to_basis, k0, material, modetype, where)
         if isinstance(to_basis, core.ScalarCylindricalWaveBasis):
             if to_modetype not in (None, "regular"):

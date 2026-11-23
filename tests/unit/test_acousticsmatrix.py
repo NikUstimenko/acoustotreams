@@ -247,10 +247,12 @@ def test_tr_reordered_incident_basis():
 
 
 def test_tr_plane_wave_without_basis():
+    # a plane wave in its own basis of components is mapped to the S-matrix basis
     b, sm, waves = _slab_and_waves()
     air = acoustotreams.AcousticMaterial()
-    pw = acoustotreams.plane_wave_scalar([0, 0, air.ks(2.0)], k0=2.0, material=air, modetype="up")
-    assert np.allclose(sm.tr(pw), sm.tr(waves[0]))
+    for kpar, wave in zip(([0, 0], [0.5, 0]), waves):
+        pw = acoustotreams.plane_wave_scalar(kpar, k0=2.0, material=air, modetype="up")
+        assert np.allclose(sm.tr(pw), sm.tr(wave))
 
 
 def test_slab_wrong_number_of_materials():
@@ -332,29 +334,120 @@ def test_poynting_avg_z_interference():
     assert expect > 0 and np.isclose(got, expect)
 
 
-def test_tr_full_wave_vector_down():
+def test_tr_down_in_other_basis():
     b, sm, waves = _slab_and_waves()
     air = acoustotreams.AcousticMaterial()
-    down = acoustotreams.plane_wave_scalar([0, 0, -1], k0=2.0, material=air)
-    ref = acoustotreams.plane_wave_scalar([0, 0, -1], k0=2.0, material=air, modetype="down")
-    assert np.allclose(sm.tr(down), sm.tr(ref))
+    own = acoustotreams.plane_wave_scalar([0, 0], k0=2.0, material=air, modetype="down")
+    ref = acoustotreams.plane_wave_scalar([0, 0], k0=2.0, basis=b, material=air, modetype="down")
+    assert np.allclose(sm.tr(own), sm.tr(ref))
 
 
-def test_illuminate_contradicting_modetype():
+def test_full_wave_vectors_rejected():
     b, sm, waves = _slab_and_waves()
     air = acoustotreams.AcousticMaterial()
-    wrong = acoustotreams.plane_wave_scalar([0, 0, -1], k0=2.0, material=air, modetype="up")
+    pw = acoustotreams.plane_wave_scalar([0, 0, 1], k0=2.0, material=air)
     with pytest.raises(ValueError):
-        sm.illuminate(wrong)
+        sm.tr(pw)
+    with pytest.raises(ValueError):
+        sm.illuminate(pw)
+    with pytest.raises(ValueError):
+        sm.illuminate(waves[0], pw)
 
 
-def test_tr_oblique_full_wave_vector():
+def test_illuminate_mode_not_in_basis():
+    b, sm, waves = _slab_and_waves()
+    air = acoustotreams.AcousticMaterial()
+    other = acoustotreams.plane_wave_scalar([0.3, 0], k0=2.0, material=air, modetype="up")
+    with pytest.raises(ValueError):
+        sm.illuminate(other)
+    # modes with zero amplitude need not be in the basis
+    extra = acoustotreams.ScalarPlaneWaveBasisByComp([(0.3, 0), (0.5, 0)])
+    illu = acoustotreams.AcousticsArray([0, 1], basis=extra, k0=2.0, material=air, modetype="up")
+    for x, y in zip(sm.illuminate(illu), sm.illuminate(waves[1])):
+        assert np.allclose(np.asarray(x), np.asarray(y))
+
+
+@pytest.mark.parametrize(
+    "k0, material", [(2.2, None), (2.0, acoustotreams.AcousticMaterial(1000, 1500))]
+)
+def test_illuminate_conflicting_metadata(k0, material):
+    b, sm, waves = _slab_and_waves()
+    illu = acoustotreams.AcousticsArray([1, 0], basis=b, k0=k0, material=material, modetype="up")
+    with pytest.raises(ValueError):
+        sm.illuminate(illu)
+
+
+def test_illuminate_second_wave_same_direction():
+    b, sm, waves = _slab_and_waves()
+    with pytest.raises(ValueError):
+        sm.illuminate(waves[0], waves[1])
+
+
+def test_illuminate_grazing_by_components():
+    # k_z = 0: the mode type gives the direction
     air = acoustotreams.AcousticMaterial()
     water = acoustotreams.AcousticMaterial(1000, 1500, 0)
-    k = air.ks(2.0)
-    for theta in np.linspace(0.1, 1.3, 7):
-        b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[k * np.sin(theta), 0]])
-        sm = AcousticSMatrices.slab(0.3, b, 2.0, [air, water, air])
-        pw = acoustotreams.plane_wave_scalar([np.sin(theta), 0, np.cos(theta)], k0=2.0, material=air)
-        ref = acoustotreams.plane_wave_scalar([k * np.sin(theta), 0], k0=2.0, basis=b, material=air)
-        assert np.allclose(sm.tr(pw), sm.tr(ref))
+    b = acoustotreams.ScalarPlaneWaveBasisByComp.default([[air.ks(2.0), 0]])
+    sm = AcousticSMatrices.slab(0.3, b, 2.0, [air, water, air])
+    for modetype in ("up", "down"):
+        pw = acoustotreams.plane_wave_scalar(
+            [air.ks(2.0), 0], k0=2.0, basis=b, material=air, modetype=modetype
+        )
+        assert all(np.isfinite(np.asarray(f)).all() for f in sm.illuminate(pw))
+
+
+def _two_interfaces():
+    air = acoustotreams.AcousticMaterial()
+    water = acoustotreams.AcousticMaterial(998, 1497)
+    oil = acoustotreams.AcousticMaterial(900, 1400)
+    k0 = 2 * np.pi * 20000 / 343
+    basis = acoustotreams.ScalarPlaneWaveBasisByComp.default([[0.2 * k0, 0], [0.5 * k0, 0]])
+    lower = AcousticSMatrices.interface(basis, k0, [air, water])
+    upper = AcousticSMatrices.interface(basis, k0, [water, oil])
+    up = acoustotreams.AcousticsArray([1.0, 0.3], basis=basis, k0=k0, material=air, modetype="up")
+    down = acoustotreams.AcousticsArray([0.2, 1.0], basis=basis, k0=k0, material=oil, modetype="down")
+    return lower, upper, up, down, (air, water, oil, k0, basis)
+
+
+def test_illuminate_smat_exterior_media():
+    # with a second S-matrix, a wave going down is incident on it from above
+    lower, upper, up, down, (air, water, oil, k0, basis) = _two_interfaces()
+    ref = lower.add(upper).illuminate(up, down)
+    for args in ((up, down), (down, up)):
+        res = lower.illuminate(*args, smat=upper)
+        assert np.allclose(np.asarray(res[0]), np.asarray(ref[0]))
+        assert np.allclose(np.asarray(res[1]), np.asarray(ref[1]))
+    interior = acoustotreams.AcousticsArray(
+        [0.2, 1.0], basis=basis, k0=k0, material=water, modetype="down"
+    )
+    with pytest.raises(ValueError):
+        lower.illuminate(up, interior, smat=upper)
+
+
+def test_exact_incident_channels():
+    air = acoustotreams.AcousticMaterial()
+    basis = acoustotreams.ScalarPlaneWaveBasisByComp([(0, 0), (5e-15, 0)])
+    sm = AcousticSMatrices.propagation(0, basis, 1.0, air)
+    np.testing.assert_array_equal(np.asarray(sm["down", "down"]), np.eye(len(basis)))
+    for kpar, expected in zip(basis, np.eye(len(basis))):
+        wave = acoustotreams.plane_wave_scalar(kpar, basis=basis, k0=sm.k0, material=air)
+        np.testing.assert_array_equal(np.asarray(wave), expected)
+        up, down = sm.illuminate(wave)
+        np.testing.assert_array_equal(np.asarray(up), expected)
+        np.testing.assert_array_equal(np.asarray(down), np.zeros_like(expected))
+    with pytest.raises(ValueError, match="not in the basis"):
+        acoustotreams.plane_wave_scalar([2.5e-15, 0], basis=basis, k0=sm.k0, material=air)
+
+
+def test_invalid_incident_modetype():
+    basis, sm, _ = _slab_and_waves()
+    wave = acoustotreams.AcousticsArray([1, 0], basis=basis, modetype="regular")
+    with pytest.raises(ValueError, match="must be 'up' or 'down'"):
+        sm.illuminate(wave)
+
+
+def test_incompatible_stack_basis():
+    basis, sm, waves = _slab_and_waves()
+    upper = AcousticSMatrices.propagation(0, basis[::-1], sm.k0)
+    with pytest.raises(ValueError, match="same modes in the same order"):
+        sm.illuminate(waves[0], smat=upper)

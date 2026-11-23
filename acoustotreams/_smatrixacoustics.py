@@ -3,7 +3,6 @@ import numpy as np
 from treams import util
 from acoustotreams._coreacoustics import AcousticsArray
 from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByComp as SPWBC
-from acoustotreams._coreacoustics import ScalarPlaneWaveBasisByUnitVector as SPWBUV
 from acoustotreams._materialacoustics import AcousticMaterial
 from acoustotreams._operatorsacoustics import translate
 from acoustotreams._tmatrixacoustics import AcousticTMatrixC
@@ -254,10 +253,15 @@ class AcousticSMatrices:
         """
         if np.ndim(r) == 0:
             r = [0, 0, r]
-        sup = translate(r, basis=basis, k0=k0, material=material, modetype="up")
-        sdown = translate(
-            np.negative(r), basis=basis, k0=k0, material=material, modetype="down"
+        # Propagation in a homogeneous medium preserves each diffraction order.
+        diagonal = np.eye(len(basis), dtype=bool)
+        sup = translate(
+            r, basis=basis, k0=k0, material=material, modetype="up", where=diagonal
         )
+        sdown = translate(
+            np.negative(r), basis=basis, k0=k0, material=material,
+            modetype="down", where=diagonal,
+         )
         zero = np.zeros_like(sup)
         material = AcousticMaterial(material)
         return cls([[sup, zero], [zero, sdown]], basis=basis, k0=k0, material=material)
@@ -336,10 +340,10 @@ class AcousticSMatrices:
 
         Args:
             illu (complex or array_like): Insonification. If `modetype` is specified, the direction
-                is chosen accordingly.
+                is chosen accordingly. Plane waves must be given as in :meth:`tr`.
             illu2 (complex or array_like, optional): Second insonification. If used, the first
                 argument is taken to be coming from below and this one to be coming from
-                above.
+                above, or the other way round if the first one goes down.
             smat (AcousticSMatrices, optional): Second S-matrix for computing the
                 field expansion between two S-matrices.
 
@@ -349,11 +353,17 @@ class AcousticSMatrices:
             With ``smat``, the 4-tuple
             ``(field_up, field_down, field_in_up, field_in_down)``.
         """
-        illu = self._to_basis(illu)
+        if smat is not None and smat.basis != self.basis:
+            raise ValueError("coupled S-matrices must have the same modes in the same order")
+        illu = self._to_basis(illu, upper=smat)
         modetype = getattr(illu, "modetype", "up")
         if isinstance(modetype, tuple):
             modetype = modetype[max(-2, -len(modetype))]
-        illu2 = np.zeros(np.shape(illu)[-2:]) if illu2 is None else self._to_basis(illu2)
+        if illu2 is None:
+            illu2 = np.zeros(np.shape(illu)[-2:])
+        else:
+            other = "up" if modetype == "down" else "down"
+            illu2 = self._to_basis(illu2, other, upper=smat)
         if modetype == "down":
             illu, illu2 = illu2, illu
         if smat is None:
@@ -370,38 +380,59 @@ class AcousticSMatrices:
         return field_up, field_down, field_in_up, field_in_down
 
 
-    def _to_basis(self, illu):
-        """Re-expand an incident field given in another plane-wave basis.
+    def _to_basis(self, illu, direction=None, upper=None):
+        """Incident field in the basis of the S-matrix.
 
-        Arrays without a basis are taken to be in the basis of the S-matrix.
-        For plane waves given by full wave vectors, the direction along z follows from the sign 
-        of the z-component.
+        See :meth:`tr`. The mode type gives the direction, "up" by default. If
+        `direction` is given, the wave must go this way. A wave going down is incident on
+        the S-matrix `upper`, if given.
         """
-        basis = getattr(illu, "basis", None)
-        basis = basis[-2] if isinstance(basis, tuple) else basis
+
+        def first(value):
+            return value[max(-2, -len(value))] if isinstance(value, tuple) else value
+
+        modetype = first(getattr(illu, "modetype", None))
+        if modetype is None:
+            modetype = "up" if direction is None else direction
+        elif modetype not in ("up", "down"):
+            raise ValueError(f"incident mode type must be 'up' or 'down', got {modetype!r}")
+        elif direction not in (None, modetype):
+            raise ValueError(
+                f"the second incident wave must go {direction}, but it goes {modetype}"
+            )
+        port = upper if upper is not None and modetype == "down" else self
+        side = port.material
+        if isinstance(side, tuple):
+            side = side[0 if modetype == "down" else 1]
+        k0 = first(getattr(illu, "k0", None))
+        if k0 is not None and not np.isclose(k0, port.k0, rtol=1e-12, atol=0):
+            raise ValueError(f"incident wave has k0={k0}, the S-matrix k0={port.k0}")
+        material = first(getattr(illu, "material", None))
+        if material is not None and AcousticMaterial(material) != AcousticMaterial(side):
+            raise ValueError(
+                f"incident wave is in {material}, the S-matrix expects {side} "
+                "on the incident side"
+            )
+        basis = first(getattr(illu, "basis", None))
         if basis is None or basis == self.basis:
             return illu
-        if isinstance(basis, SPWBUV):
-            qz = np.real(basis.qz)
-            if np.all(qz > 0):
-                direction = "up"
-            elif np.all(qz < 0):
-                direction = "down"
-            else:
-                raise ValueError(
-                    "plane waves must all go up or all go down along z; "
-                    "illuminate with each direction separately"
-                )
-            modetype = getattr(illu, "modetype", None)
-            if isinstance(modetype, tuple):
-                modetype = modetype[max(-2, -len(modetype))]
-            if modetype not in (None, direction):
-                raise ValueError(
-                    f"modetype '{modetype}' contradicts the wave vectors, "
-                    f"which go {direction}"
-                )
-            return illu.expand(self.basis, direction)
-        return illu.expand(self.basis)
+        if not isinstance(basis, SPWBC) or basis.alignment != self.basis.alignment:
+            raise ValueError(
+                "incident plane waves must be given by the wave-vector components of the "
+                "S-matrix basis and a mode type, e.g., "
+                "plane_wave_scalar(kpar, k0=smat.k0, basis=smat.basis, modetype='up')"
+            )
+        (kx, ky), (skx, sky) = basis[()], self.basis[()]
+        matrix = ((skx[:, None] == kx) & (sky[:, None] == ky)).astype(int)
+        coeffs = np.asarray(illu)
+        active = np.any(coeffs != 0, axis=tuple(range(1, coeffs.ndim)))
+        if np.any(active & ~matrix.any(axis=0)):
+            raise ValueError("incident plane waves are not in the basis of the S-matrix")
+        ann = {"basis": self.basis, "k0": port.k0, "material": side, "modetype": modetype}
+        res = matrix @ coeffs
+        if res.ndim == 1:
+            return AcousticsArray(res, **ann)
+        return AcousticsArray(res, (ann,) + ({},) * (res.ndim - 1))
 
     def tr(self, illu):
         """Transmittance and reflectance.
@@ -411,8 +442,13 @@ class AcousticSMatrices:
 
         Args:
             illu (complex or array_like): Expansion coefficients of the incoming wave.
-                Coefficients in another plane-wave basis are re-expanded into the basis
-                of the S-matrix. Plain arrays are taken to be in the basis of the S-matrix.
+                Plain arrays are taken to be in the basis of the S-matrix. Otherwise, the
+                plane waves must be given by two wave-vector components
+                (:class:`~acoustotreams.ScalarPlaneWaveBasisByComp`) and a mode type,
+                which gives the direction, "up" by default. Each mode with a nonzero
+                amplitude must be in the basis of the S-matrix with exactly the same
+                components. A wavenumber or material of the incoming wave must agree
+                with the S-matrix on the incident side.
 
         Returns:
             tuple[float, float]: ``(transmittance, reflectance)``. For a two-dimensional `illu`, 
@@ -423,6 +459,9 @@ class AcousticSMatrices:
             ValueError: If no power flows into the structure from the incident side,
                 e.g., for evanescent incident waves when no wave can propagate on the
                 other side.
+            ValueError: If the incoming wave is given by full wave vectors, has modes
+                that are not in the basis of the S-matrix, or has another wavenumber or
+                material.
         """
         illu = self._to_basis(illu)
         modetype = getattr(illu, "modetype", "up")

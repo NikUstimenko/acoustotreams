@@ -712,3 +712,24 @@ def test_scw_pamplitudeff_evanescent():
     basis = acoustotreams.ScalarCylindricalWaveBasis.default([1.0], 1)  # |kz| > k = 0.457
     ff = np.asarray(acoustotreams.pamplitudeff([1.0, 0, 0], basis=basis, k0=2.0, material=material))
     assert np.all(ff == 0)
+
+
+def test_spw_expand_exact():
+    # plane waves closer than any tolerance are still distinct
+    material = acoustotreams.AcousticMaterial(1.0, 343.0)
+    a = acoustotreams.ScalarPlaneWaveBasisByComp([(0.0, 0.0), (5e-11, 0.0)])
+    b = acoustotreams.ScalarPlaneWaveBasisByComp([(5e-11, 0.0), (0.0, 0.0)])
+    res = np.asarray(acoustotreams.expand(basis=(b, a), k0=1.0, material=material, modetype="up"))
+    assert (res == [[0, 1], [1, 0]]).all()
+
+
+def test_spw_expand_keeps_modetype():
+    material = acoustotreams.AcousticMaterial()
+    basis = acoustotreams.ScalarPlaneWaveBasisByComp([(0.6, 0)])
+    up = acoustotreams.plane_wave_scalar([0.6, 0], k0=1.0, material=material, modetype="up")
+    with pytest.raises(ValueError):
+        up.expand(basis, "down")
+    with pytest.raises(ValueError):
+        acoustotreams.expand((basis, basis), ("down", "up"), k0=1.0, material=material)
+    res = acoustotreams.expand((basis, basis), (None, "down"), k0=1.0, material=material)
+    assert np.asarray(res).item() == 1 and res.modetype == "down"

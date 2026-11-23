@@ -171,3 +171,13 @@ class TestClusterRotate:
         tm2 = AcousticTMatrix.cluster(tms, rs2)
         tm2 = tm2.interaction.solve().expand(acoustotreams.ScalarSphericalWaveBasis.default(3))
         assert np.all(np.abs(tm1 - tm2) < 1e-16)
+
+
+def test_plane_wave_not_in_basis():
+    material = acoustotreams.AcousticMaterial()
+    partial = acoustotreams.ScalarPlaneWaveBasisByComp([(0.5, 0)])
+    with pytest.raises(ValueError):
+        acoustotreams.plane_wave_scalar([0.3, 0], k0=1.0, basis=partial, material=material)
+    full = acoustotreams.ScalarPlaneWaveBasisByUnitVector([(0, 0, 1)])
+    with pytest.raises(ValueError):
+        acoustotreams.plane_wave_scalar([0, 1, 0], k0=1.0, basis=full, material=material)
