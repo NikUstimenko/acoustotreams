@@ -114,7 +114,7 @@ simple loop we can get the band structure for :math:`k_x = k_y = 0`.
 
 .. literalinclude:: examples/band_structure.py
    :language: python
-   :lines: 27-44
+   :lines: 19-36
 
 which looks as follows, after a cut on the imaginary part of the :math:`k_z` component.
 
