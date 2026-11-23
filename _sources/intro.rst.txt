@@ -14,14 +14,14 @@ the foundation of T-matrix computations. They are mainly imported from
 mathematical functions related to the scalar waves, while the
 second subpackage contains functions that are associated with computations in lattices.
 All functions necessary in acoustic computations, e.g., the various solutions 
-to the Helmholtz equation and their translation coefficients, implemented within
+to the Helmholtz equation and their translation coefficients, are implemented within
 the subpackage :mod:`acoustotreams.special`.
 
 On the intermediate-level those underlying functions are combined to provide functions
 that are often needed for T-matrix computations, e.g., the acoustic Mie coefficients, 
 or the expansion coefficients of scalar plane waves in spherical waves. 
 
-The high-level functionality is more focused on the usability. We attempt to create an
+The high-level functionality is more focused on the usability. We attempt to create a
 useful interface to the underlying functions that mitigates redundancy and that is less
 error prone than using the pure functions, while still integrating nicely with :mod:`numpy` 
 functions. It consists of a combination of different classes and functions. At first,

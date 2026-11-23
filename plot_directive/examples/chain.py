@@ -26,7 +26,7 @@ def compute_pressure(i, j):
     r = [x[j], 0, z[i]]  
     if chain.valid_points(r, radii):
         swb = acoustotreams.ScalarSphericalWaveBasis.default(0, positions=[r])
-        result = sca.expandlattice(basis=swb).pfield(r) 
+        result = sca.expandlattice(basis=swb).pfield(r)[0]
     else:
         result = np.nan
     return i, j, result  

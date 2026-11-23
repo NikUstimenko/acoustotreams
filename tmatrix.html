@@ -66,23 +66,23 @@
 </ul>
 </nav>
 <p>One of the main objects for acoustic scattering calculations within <em>acoustotreams</em> are
-acoustic T-matrices. They describe the scattering response of an object by encoding the linear
+acoustic T-matrices. They describe the scattering response of a scatterer by encoding the linear
 relationship between incident and scattered fields. These fields are expanded using
 the scalar spherical waves.</p>
 <p>The acoustic T-matrices of spheres can be obtained analytically. For more complicated shapes
 numerical methods are necessary to compute the acoustic T-matrix. Once the T-matrix of a single
-object is known, the acoustic interaction between particle within clusters can be
+scatterer is known, the acoustic interaction between scatterers within clusters can be
 calculated efficiently. Such clusters can be analyzed in their local description, where
-the field expansions are centered at each particle of the cluster, or in a global
+the field expansions are centered at each scatterer of the cluster, or in a global
 description treating the whole cluster as a single object.</p>
 <p><em>acoustotreams</em> is particularly aimed at analyzing scattering within lattices. These lattices
 can be periodic in one, two, or all three spatial dimensions. The unit cell of those
-lattices can consist of an arbitrary number of objects described by the acoustic T-matrix.</p>
+lattices can consist of an arbitrary number of scatterers described by the acoustic T-matrix.</p>
 <section id="spheres">
 <h2><a class="toc-backref" href="#id9" role="doc-backlink">Spheres</a><a class="headerlink" href="#spheres" title="Link to this heading">¶</a></h2>
-<p>It’s possible to calculate the acoustic T-matrix of a single sphere with the
-method <a class="reference internal" href="generated/acoustotreams.AcousticTMatrix.sphere.html#acoustotreams.AcousticTMatrix.sphere" title="acoustotreams.AcousticTMatrix.sphere"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sphere()</span></code></a>. We start by defining the relevant parameters for
-our calculation and creating the acoustic T-matrices themselves.</p>
+<p>It is possible to calculate the acoustic T-matrix of a single sphere using the
+method <a class="reference internal" href="generated/acoustotreams.AcousticTMatrix.sphere.html#acoustotreams.AcousticTMatrix.sphere" title="acoustotreams.AcousticTMatrix.sphere"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sphere()</span></code></a>. We start by defining the relevant
+parameters for our calculation and creating the acoustic T-matrices themselves.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">500000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
              <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
@@ -91,19 +91,19 @@ our calculation and creating the acoustic T-matrices themselves.</p>
 <span class="n">spheres</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">sphere</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span> <span class="k">for</span> <span class="n">k0</span> <span class="ow">in</span> <span class="n">k0s</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Here we define a material using the class <a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AcousticMaterial()</span></code></a>.
-To create an instance of this class, we pass three arguments: mass density,
-longitudinal speed of sound, and transverse speed of sound. The acoustic
-material parameters can be complex. The imaginary part of the density must be
-positive, whereas the imaginary part of the speeds negative.</p>
+<p>Here we define a material using the class <a class="reference internal" href="generated/acoustotreams.AcousticMaterial.html#acoustotreams.AcousticMaterial" title="acoustotreams.AcousticMaterial"><code class="xref py py-class docutils literal notranslate"><span class="pre">AcousticMaterial</span></code></a>.
+Its arguments are the mass density, the longitudinal speed of sound, and the transverse
+speed of sound, which defaults to zero, i.e., a fluid. The acoustic material parameters
+can be complex. For a lossy material, the imaginary part of the density is positive and
+the imaginary parts of the speeds are negative.</p>
 <p>Now, we can easily access quantities like the scattering and extinction cross
 sections</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xs_sca</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">xs_sca_avg</span> <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">spheres</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">xs_ext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tm</span><span class="o">.</span><span class="n">xs_ext_avg</span> <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">spheres</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>From the parameter <code class="docutils literal notranslate"><span class="pre">lmax</span> <span class="pre">=</span> <span class="pre">10</span></code> we see that the acoustic T-matrix is calculated up to the tenth
-multipolar order. To restrict the T-matrix in the monopole-dipole approximation, we can
+<p>From the parameter <code class="docutils literal notranslate"><span class="pre">lmax</span> <span class="pre">=</span> <span class="pre">15</span></code> we see that the acoustic T-matrix is calculated up to the
+multipole degree 15. To restrict the T-matrix in the monopole-dipole approximation, we can
 select a basis containing only those multipoles.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">swb_lmax1</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">spheres_lmax1</span> <span class="o">=</span> <span class="p">[</span><span class="n">tm</span><span class="p">[</span><span class="n">swb_lmax1</span><span class="p">]</span> <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">spheres</span><span class="p">]</span>
@@ -161,7 +161,7 @@ the direction of incidence of the plane wave.</p>
 </section>
 <section id="clusters">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">Clusters</a><a class="headerlink" href="#clusters" title="Link to this heading">¶</a></h2>
-<p>Multi-scattering calculations in a cluster of particles is a typical application of the
+<p>Multi-scattering calculations in a cluster of scatterers is a typical application of the
 T-matrix method. We first construct an object from two spheres. Using the definition
 of the relevant parameters</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">150000</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
@@ -191,7 +191,7 @@ the scattering and extinction cross sections for that particular illumination.</
 </pre></div>
 </div>
 <p>Finally, with few lines similar to the plotting of the field intensity of a single
-sphere we can obtain the fields outside of the sphere.</p>
+sphere we can obtain the fields outside of the spheres.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
@@ -206,8 +206,8 @@ sphere we can obtain the fields outside of the sphere.</p>
 </pre></div>
 </div>
 <p>Up to here, we did all calculations for the cluster in the local basis. By expanding
-the incident and scattered fields in a basis with a single origin we can describe the
-same object. Often, a larger number of multipoles is needed to do so and some
+the incident and scattered fields in a basis with a single origin, we can describe the
+same system. Often, a larger number of multipoles is needed to do so and some
 information on fields between the particles is lost. However, the description in a global
 basis can be more efficient in terms of matrix size.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tm_global</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span> 
@@ -248,8 +248,8 @@ produces consistent results.</p>
 <h2><a class="toc-backref" href="#id11" role="doc-backlink">One-dimensional arrays (along z)</a><a class="headerlink" href="#one-dimensional-arrays-along-z" title="Link to this heading">¶</a></h2>
 <p>Next, we turn to systems that are periodic in the z direction. We calculate the
 scattering from an array of spheres. Intentionally, we choose a unit cell with two
-different spheres that overlap along the z direction, but are not placed exactly along
-the same line. This is the most general case for the implemented lattice sums.
+different spheres that are not placed along the same line parallel to the z axis.
+This is the most general case for the implemented lattice sums.
 After the common setup of the parameters, we simply create a cluster in a local basis.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0</span> <span class="o">=</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">50000</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span> <span class="o">+</span> <span class="mi">100</span><span class="n">j</span><span class="p">,</span> <span class="mi">2350</span> <span class="o">-</span> <span class="mi">300</span><span class="n">j</span><span class="p">),</span> 
@@ -268,7 +268,7 @@ form a chain.</p>
 <span class="n">chain</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticTMatrix</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">spheres</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">latticeinteraction</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">kz</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Next, we choose set the illumination to be propagating along the x axis.
+<p>Next, we set the insonification to be propagating along the x axis.
 The z component of the wave vector of the plane wave has to match to the wave vector
 component of the lattice interaction, i.e., the Bloch wave vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inc</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">plane_wave_scalar</span><span class="p">([</span><span class="n">chain</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">k0</span><span class="o">=</span><span class="n">chain</span><span class="o">.</span><span class="n">k0</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">chain</span><span class="o">.</span><span class="n">material</span><span class="p">)</span>
@@ -279,15 +279,15 @@ component of the lattice interaction, i.e., the Bloch wave vector.</p>
 using cylindrical acoustic T-matrices. That will be introduced in <a class="reference internal" href="tmatrixc.html"><span class="doc">Acoustic cylindrical T-Matrices</span></a>. Here, we will
 stay in the expression of the fields as scalar spherical waves. This allows the
 calculation of the fields in the domain between the spheres. To compute them accurately, we
-expand the scattered field coefficients in the whole lattice in monopole approximation at each point
-we want to calculate the pressure field.</p>
+expand the scattered field coefficients in the whole lattice in a monopole approximation
+at each point we want to calculate the pressure field.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.75</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_pressure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  
     <span class="k">if</span> <span class="n">chain</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
         <span class="n">swb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> 
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
@@ -367,7 +367,7 @@ xy plane.</p>
     <span class="k">if</span> <span class="n">tm</span><span class="o">.</span><span class="n">valid_points</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">radii</span><span class="p">):</span>
         <span class="n">swb</span> <span class="o">=</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">ScalarSphericalWaveBasis</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
         <span class="n">field</span> <span class="o">=</span> <span class="n">sca</span><span class="o">.</span><span class="n">expandlattice</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="n">swb</span><span class="p">)</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> 
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">field</span><span class="p">)</span>  
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">inc</span><span class="o">.</span><span class="n">pfield</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">field</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">result</span>  
@@ -381,11 +381,11 @@ xy plane.</p>
     <span class="n">intensity</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
 </pre></div>
 </div>
-<p>With a few changes we computed the fields in a square array of the same spheres as in the
-previous examples. Most importantly we changed the value of the variable <code class="code docutils literal notranslate"><span class="pre">lattice</span></code>
-to an instance of a two-dimensional <a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.Lattice_class.html#treams.Lattice" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code></a> and set <code class="code docutils literal notranslate"><span class="pre">kpar</span></code>
-accordingly. Most other changes are just resulting from the change of the coordinate
-system.</p>
+<p>With a few changes we computed the fields in a square array of spheres at the same positions
+as in the previous examples, now both with a radius of 0.75 cm. Most importantly we changed
+the value of the variable <code class="code docutils literal notranslate"><span class="pre">lattice</span></code> to an instance of a two-dimensional
+<a class="reference external" href="https://tfp-photonics.github.io/treams/generated/treams.Lattice_class.html#treams.Lattice" title="(in Project name not set)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lattice</span></code></a> and set <code class="code docutils literal notranslate"><span class="pre">kpar</span></code> accordingly. Most other changes are just
+resulting from the change of the coordinate system.</p>
 <p>(<a class="reference download internal" download="" href="_downloads/f216cf50362cf137998d2ee51a62cc67/grid.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="_downloads/dd07a01a7da20d4b4fde091940f7e362/grid.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>, <a class="reference download internal" download="" href="_downloads/0e3aca70d4197ed9a5bfb9fa90c32a1b/grid.hires.png"><code class="xref download docutils literal notranslate"><span class="pre">hires.png</span></code></a>, <a class="reference download internal" download="" href="_downloads/811c139d308d87e5a431df9787a62b20/grid.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
 <figure class="align-default">
 <img alt="_images/grid.png" class="plot-directive" src="_images/grid.png" />
@@ -398,7 +398,7 @@ crystal. We want to restrict the example to calculating modes at the gamma point
 reciprocal space. The calculated system consists of a single sphere in a cubic lattice.
 In our very crude analysis, we blindly select the lowest singular value of the lattice
 interaction matrix. Besides the mode when the frequency tends to zero, there are two
-additional modes at higher frequencies in the chosen range.</p>
+additional modes at higher frequencies in the chosen range, near 18.9 kHz and 31 kHz.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k0s</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">40000</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span> <span class="o">/</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">()</span><span class="o">.</span><span class="n">c</span>
 <span class="n">materials</span> <span class="o">=</span> <span class="p">[</span><span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">2350</span><span class="p">),</span> <span class="n">acoustotreams</span><span class="o">.</span><span class="n">AcousticMaterial</span><span class="p">(</span><span class="mi">998</span><span class="p">,</span> <span class="mi">1497</span><span class="p">)]</span>
 <span class="n">lmax</span> <span class="o">=</span> <span class="mi">3</span>

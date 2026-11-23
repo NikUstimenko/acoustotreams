@@ -28,7 +28,7 @@ def compute_intensity(i, j, tm, radii, inc, sca):
     if tm.valid_points(r, radii):
         swb = acoustotreams.ScalarSphericalWaveBasis.default(0, positions=[r])
         field = sca.expandlattice(basis=swb).pfield(r) 
-        result = np.real(inc.pfield(r) + field)  
+        result = np.real(inc.pfield(r) + field)[0]
     else:
         result = np.nan
     return i, j, result  

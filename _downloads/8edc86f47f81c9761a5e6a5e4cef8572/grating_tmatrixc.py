@@ -40,7 +40,7 @@ def compute_pressure(i, j):
     r = [x[j], 0, z[i]]  
     if cluster.valid_points(r, radii):
         cwb = acoustotreams.ScalarCylindricalWaveBasis.default(kzs, 0, positions=[r])
-        result = sca.expandlattice(basis=cwb).pfield(r)
+        result = sca.expandlattice(basis=cwb).pfield(r)[0]
     else:
         result = np.nan
     return i, j, result  
