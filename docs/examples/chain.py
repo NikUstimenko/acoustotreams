@@ -60,7 +60,7 @@ ax.annotate(
         color="red" 
     )
 )
-plt.show()
+fig.show()
 
 def compute_velocity(i, j):
     r = [x[j], 0, z[i]]  

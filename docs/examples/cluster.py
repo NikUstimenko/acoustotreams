@@ -6,7 +6,7 @@ import acoustotreams
 k0 = 2 * np.pi * 150000 / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
              acoustotreams.AcousticMaterial(998, 1497)]
-lmax = 3
+lmax = 5
 radii = [0.005, 0.005]
 positions = np.array(
     [
@@ -48,9 +48,9 @@ ax.set_ylabel("z (cm)")
 ax.text(
     0, -1,
     r"$\sigma_{\mathrm{sca}} = "
-    f"{xs[0] * 10000:.4f}\,$cm$^2$\n"
+    rf"{xs[0] * 10000:.4f}\,$cm$^2$" "\n"
     r"$\sigma_{\mathrm{ext}} = "
-    f"{xs[1] * 10000:.4f}\,$cm$^2$"
+    rf"{xs[1] * 10000:.4f}\,$cm$^2$"
 )
 ax.annotate(
     "", 
@@ -65,7 +65,7 @@ ax.annotate(
 fig.show()
 
 
-tm_global = tm.expand(acoustotreams.ScalarSphericalWaveBasis.default(10))
+tm_global = tm.expand(acoustotreams.ScalarSphericalWaveBasis.default(16)) 
 sca = tm_global.sca(inc)
 xs = tm_global.xs(inc)
 
@@ -85,9 +85,9 @@ ax.set_ylabel("z (cm)")
 ax.text(
     0, 0,
     r"$\sigma_{\mathrm{sca}} = "
-    f"{xs[0] * 10000:.4f}\,$cm$^2$\n"
+    rf"{xs[0] * 10000:.4f}\,$cm$^2$" "\n"
     r"$\sigma_{\mathrm{ext}} = "
-    f"{xs[1] * 10000:.4f}\,$cm$^2$"
+    rf"{xs[1] * 10000:.4f}\,$cm$^2$"
 )
 ax.annotate(
     "", 
@@ -104,6 +104,7 @@ fig.show()
 inc = acoustotreams.plane_wave_scalar([k0, 0, 0], k0=tm.k0, material=tm.material)
 tm_rotate = tm_global.rotate(0, np.pi / 2)
 sca = tm_rotate.sca(inc)
+xs = tm_rotate.xs(inc)
 
 intensity_rotate = compute_intensity(tm_rotate, [0.0125], inc, sca)
 
@@ -121,9 +122,9 @@ ax.set_ylabel("z (cm)")
 ax.text(
     0, 0,
     r"$\sigma_{\mathrm{sca}} = "
-    f"{xs[0] * 10000:.4f}\,$cm$^2$\n"
+    rf"{xs[0] * 10000:.4f}\,$cm$^2$" "\n"
     r"$\sigma_{\mathrm{ext}} = "
-    f"{xs[1] * 10000:.4f}\,$cm$^2$"
+    rf"{xs[1] * 10000:.4f}\,$cm$^2$"
 )
 ax.annotate(
     "", 
