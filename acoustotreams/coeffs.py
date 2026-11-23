@@ -267,6 +267,20 @@ def _mie_acoustics_iter(tm, l, x, mat_sphere, mat_env):
             return res
     return res 
 
+def _check_layers(radii, materials):
+    """Check that each material parameter is a 1d array with one entry more than the
+    radii."""
+    if radii.ndim != 1:
+        raise ValueError(f"radii must be one-dimensional, got shape {radii.shape}")
+    if len(materials) != 3:
+        raise ValueError("expected densities, longitudinal and transverse speeds")
+    for name, values in zip(("rho", "c", "c_t"), materials):
+        if np.ndim(values) != 1 or np.size(values) != radii.size + 1:
+            raise ValueError(
+                f"'{name}' must be one-dimensional with {radii.size + 1} entries for "
+                f"{radii.size} radii, got shape {np.shape(values)}"
+            )
+
 def mie_acoustics(l, x, *materials):
     r"""Mie-scattering coefficient of degree :math:`l` for a sphere.
 
@@ -298,6 +312,7 @@ def mie_acoustics(l, x, *materials):
     mat = list(zip(*materials))
     l = np.atleast_1d(l)
     x = np.atleast_1d(x)
+    _check_layers(x, materials)
     res = []
     for j in l:
         mie = np.zeros(4, complex)
@@ -399,6 +414,7 @@ def mie_acoustics_cyl(kz, m, k0, radii, *materials):
     Returns:
         list
     """
+    _check_layers(np.atleast_1d(radii), materials)
     mat = list(zip(*materials))
     for rho, c, ct in mat:
         if ct != 0:

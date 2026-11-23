@@ -252,3 +252,27 @@ class TestFresnel:
 def test_mie_acoustics_cyl_invalid(kz, materials):
     with pytest.raises(ValueError):
         cf.mie_acoustics_cyl(kz, [0, 1], 3, [4], *zip(*materials))
+
+
+@pytest.mark.parametrize(
+    "radii, materials",
+    [
+        ([4, 5], ([200, 900], [1000, 686], [0, 0])),  # two radii, two materials
+        ([4], ([200, 900], [1000, 686], [0])),  # one c_t entry missing
+    ],
+)
+def test_mie_layer_count(radii, materials):
+    with pytest.raises(ValueError):
+        cf.mie_acoustics_cyl(0.5, [0, 1], 3, radii, *materials)
+    with pytest.raises(ValueError):
+        cf.mie_acoustics(1, radii, *materials)
+
+
+def test_mie_layer_shape():
+    rho, c, c_t = (np.array([[200, 900]]), np.array([[1000, 686]]), np.array([[0, 0]]))
+    with pytest.raises(ValueError):
+        cf.mie_acoustics(1, [4], rho, c, c_t)
+    with pytest.raises(ValueError):
+        cf.mie_acoustics_cyl(0.5, [0], 3, [4], rho, c, c_t)
+    with pytest.raises(ValueError):
+        cf.mie_acoustics(1, [[4]], [200, 900], [1000, 686], [0, 0])
