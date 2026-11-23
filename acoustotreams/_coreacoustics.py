@@ -88,6 +88,7 @@ class ScalarBasisSet(util.OrderedSet, metaclass=abc.ABCMeta):
         for name in ("lattice", "kpar"):
             if getattr(other, name, None) is None and hasattr(res, name):
                 setattr(res, name, None)
+        return res
 
     def __and__(self, other):
         self._check_compatible(other)

@@ -340,6 +340,15 @@ class TestSCWB:
         res = a | b
         assert res.lattice is None and res.kpar is None
 
+    def test_union_plain_modes(self):
+        # a plain mode with k_z = 0.7 does not belong to the orders with k_z0 = 0
+        a = acoustotreams.ScalarCylindricalWaveBasis.diffr_orders(0.0, 1, 2.0, 4)
+        for res in (a | [(0, 0.7, 0)], [(0, 0.7, 0)] | a, a ^ [(0, 0.7, 0)]):
+            assert res.lattice is None and res.kpar is None
+        # modes that are already in the basis keep the hints
+        for res in (a | [a[0]], a ^ [a[0]]):
+            assert res.lattice == a.lattice and res.kpar == a.kpar
+
     def test_neq(self):
          b = acoustotreams.ScalarCylindricalWaveBasis.default(0, 1)
          assert not b == []
@@ -527,6 +536,14 @@ class TestSPWBC:
         b = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0.3, 0], lattice, 4)
         with pytest.raises(ValueError):
             a | b
+
+    def test_union_plain_modes(self):
+        lattice = acoustotreams.Lattice.square(2.0)
+        a = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders([0, 0], lattice, 4)
+        res = a | [(0.3, 0)]
+        assert res.lattice is None and res.kpar is None
+        res = a | [a[1]]
+        assert res.lattice == a.lattice and res.kpar == a.kpar
 
     def test_getitem_int(self):
         b = acoustotreams.ScalarPlaneWaveBasisByComp([[1, 0], [0, 1]])
