@@ -7,7 +7,7 @@ k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / acoustotreams.AcousticMateri
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
              acoustotreams.AcousticMaterial(998, 1497)]
 kzs = [0]
-mmax = 10
+mmax = 15
 radius = 0.005
 cylinders = [acoustotreams.AcousticTMatrixC.cylinder(kzs, mmax, k0, radius, materials) for k0 in k0s]
  
@@ -15,9 +15,9 @@ xw_sca = np.array([tm.xw_sca_avg for tm in cylinders]) / (2 * radius)
 xw_ext = np.array([tm.xw_ext_avg for tm in cylinders]) / (2 * radius)
  
 cwb_mmax1 = acoustotreams.ScalarCylindricalWaveBasis.default(kzs, 1)
-cylinders_mmax0 = [tm[cwb_mmax1] for tm in cylinders]
-xw_sca_mmax0 = np.array([tm.xw_sca_avg for tm in cylinders_mmax0]) / (2 * radius)
-xw_ext_mmax0 = np.array([tm.xw_ext_avg for tm in cylinders_mmax0]) / (2 * radius)
+cylinders_mmax1 = [tm[cwb_mmax1] for tm in cylinders]
+xw_sca_mmax1 = np.array([tm.xw_sca_avg for tm in cylinders_mmax1]) / (2 * radius)
+xw_ext_mmax1 = np.array([tm.xw_ext_avg for tm in cylinders_mmax1]) / (2 * radius)
  
 tm = cylinders[50]
 inc = acoustotreams.plane_wave_scalar([tm.k0, 0, 0], k0=tm.k0, material=tm.material)
@@ -39,8 +39,8 @@ radpattern = np.abs(np.asarray(sca.pamplitudeff(directions))[:, 0]) ** 2
 fig, ax = plt.subplots()
 ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_ext)
 ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_sca)
-ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_ext_mmax0, color="C0", linestyle=":")
-ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_sca_mmax0, color="C1", linestyle=":")
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_ext_mmax1, color="C0", linestyle=":")
+ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xw_sca_mmax1, color="C1", linestyle=":")
 ax.set_xlabel("Frequency (kHz)")
 ax.set_ylabel("Efficiency")
 ax.legend(["Extinction", "Scattering", "Extinction $m_{\\rm max}=1$", "Scattering $m_{\\rm max}=1$"])
@@ -69,8 +69,7 @@ ax.annotate(
 )
 fig.show()
  
-ax = plt.figure()
-ax = plt.subplot(111, polar=True) 
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
 ax.plot(phi, radpattern / np.max(radpattern) )
 ax.annotate(
     "", 

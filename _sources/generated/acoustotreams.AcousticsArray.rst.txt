@@ -88,33 +88,33 @@
          ~AcousticsArray.transpose
       
          ~AcousticsArray.__floordiv__
-         ~AcousticsArray.__sub__
-         ~AcousticsArray.__array__
-         ~AcousticsArray.__mod__
-         ~AcousticsArray.__len__
-         ~AcousticsArray.__rshift__
-         ~AcousticsArray.__divmod__
-         ~AcousticsArray.__eq__
-         ~AcousticsArray.__pos__
-         ~AcousticsArray.__ne__
-         ~AcousticsArray.__lshift__
-         ~AcousticsArray.__xor__
-         ~AcousticsArray.__setitem__
          ~AcousticsArray.__and__
-         ~AcousticsArray.__ge__
-         ~AcousticsArray.__le__
-         ~AcousticsArray.__pow__
-         ~AcousticsArray.__add__
          ~AcousticsArray.__truediv__
-         ~AcousticsArray.__getitem__
-         ~AcousticsArray.__abs__
-         ~AcousticsArray.__gt__
-         ~AcousticsArray.__mul__
-         ~AcousticsArray.__neg__
-         ~AcousticsArray.__array_function__
-         ~AcousticsArray.__invert__
-         ~AcousticsArray.__matmul__
-         ~AcousticsArray.__or__
-         ~AcousticsArray.__lt__
+         ~AcousticsArray.__mod__
          ~AcousticsArray.__str__
+         ~AcousticsArray.__xor__
+         ~AcousticsArray.__eq__
+         ~AcousticsArray.__rshift__
+         ~AcousticsArray.__ge__
+         ~AcousticsArray.__pos__
+         ~AcousticsArray.__matmul__
+         ~AcousticsArray.__sub__
+         ~AcousticsArray.__lt__
+         ~AcousticsArray.__divmod__
+         ~AcousticsArray.__neg__
+         ~AcousticsArray.__or__
+         ~AcousticsArray.__ne__
+         ~AcousticsArray.__abs__
+         ~AcousticsArray.__add__
+         ~AcousticsArray.__getitem__
+         ~AcousticsArray.__gt__
+         ~AcousticsArray.__lshift__
+         ~AcousticsArray.__array_function__
+         ~AcousticsArray.__pow__
+         ~AcousticsArray.__setitem__
+         ~AcousticsArray.__invert__
+         ~AcousticsArray.__len__
+         ~AcousticsArray.__array__
+         ~AcousticsArray.__le__
+         ~AcousticsArray.__mul__
   

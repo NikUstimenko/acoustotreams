@@ -6,7 +6,7 @@ import acoustotreams
 k0s = 2 * np.pi * np.linspace(50000, 500000, 200) / acoustotreams.AcousticMaterial().c
 materials = [acoustotreams.AcousticMaterial(1050 + 100j, 2350 - 300j), 
              acoustotreams.AcousticMaterial(998, 1497)]
-lmax = 10
+lmax = 15
 radius = 0.005
 spheres = [acoustotreams.AcousticTMatrix.sphere(lmax, k0, radius, materials) for k0 in k0s]
 
@@ -35,7 +35,6 @@ directions = np.stack([np.sin(theta), np.zeros_like(theta), np.cos(theta)], axis
 radpattern = np.abs(np.asarray(sca.pamplitudeff(directions))[:, 0]) ** 2
 
 import matplotlib
-matplotlib.use("Agg")
 
 fig, ax = plt.subplots()
 ax.plot(k0s * acoustotreams.AcousticMaterial().c / (2 * np.pi) / 1000, xs_ext)
