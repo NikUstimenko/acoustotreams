@@ -313,6 +313,20 @@
             <span class="k">return</span> <span class="n">res</span>
     <span class="k">return</span> <span class="n">res</span> 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_layers</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">materials</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Check that each material parameter is a 1d array with one entry more than the</span>
+<span class="sd">    radii."""</span>
+    <span class="k">if</span> <span class="n">radii</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"radii must be one-dimensional, got shape </span><span class="si">{</span><span class="n">radii</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">materials</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"expected densities, longitudinal and transverse speeds"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="s2">"rho"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="s2">"c_t"</span><span class="p">),</span> <span class="n">materials</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="n">radii</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">' must be one-dimensional with </span><span class="si">{</span><span class="n">radii</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> entries for "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">radii</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> radii, got shape </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+
 <div class="viewcode-block" id="mie_acoustics">
 <a class="viewcode-back" href="../../generated/acoustotreams.coeffs.mie_acoustics.html#acoustotreams.coeffs.mie_acoustics">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">mie_acoustics</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">materials</span><span class="p">):</span>
@@ -346,6 +360,7 @@
     <span class="n">mat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">materials</span><span class="p">))</span>
     <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">_check_layers</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
         <span class="n">mie</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">complex</span><span class="p">)</span>
@@ -450,6 +465,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        list</span>
 <span class="sd">    """</span>
+    <span class="n">_check_layers</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">radii</span><span class="p">),</span> <span class="n">materials</span><span class="p">)</span>
     <span class="n">mat</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">materials</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">rho</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">mat</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">ct</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
