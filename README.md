@@ -53,7 +53,7 @@ To verify the installation, run
 python -c "import acoustotreams; from importlib.metadata import version; print('acoustotreams', version('acoustotreams'))"
 ```
 
-Outside a virtual environment, replace `python` with `python3.13` (macOS / Linux) or `py -3.13` (Windows). The command should print the latest version listed on [PyPI](https://pypi.org/project/acoustotreams/).
+Outside a virtual environment, replace `python` with `python3.12` (macOS / Linux) or `py -3.12` (Windows). The command should print the latest version listed on [PyPI](https://pypi.org/project/acoustotreams/).
 
 #### Other platforms
 
