@@ -14,15 +14,7 @@ materials = [acoustotreams.AcousticMaterial(1050, 2350),
 n = acoustotreams.AcousticMaterial().c / materials[1].c
 radius = 0.0075
 lmax = 4
-az = 0.02
-
-def compute_ndiff(period, wavelength):
-    if period < wavelength:
-        return 0.
-    if period >= wavelength and period < np.sqrt(2) * wavelength:
-        return 1.
-    if period >= np.sqrt(2) * wavelength and period < 2 * wavelength:
-        return np.sqrt(2)
+az = thickness + 2 * radius
 
 def compute_coeffs(k0):
     kpar = np.array([0, 0])
@@ -31,15 +23,15 @@ def compute_coeffs(k0):
         lmax, k0, radius, materials
         ).latticeinteraction.solve(lattice, kpar * n)
     
-    bmax = 1.1 * 2 * np.pi / period * compute_ndiff(period, 2 * np.pi / (n * k0))
+    bmax = 3.1 * max(n * k0, 2 * np.pi / period)
     spwb = acoustotreams.ScalarPlaneWaveBasisByComp.diffr_orders(kpar * n, lattice, bmax)
     slab = acoustotreams.AcousticSMatrices.slab(thickness, spwb, k0, [materials[1], material_slab, materials[1]])
     dist = acoustotreams.AcousticSMatrices.propagation([0, 0, radius], spwb, k0, materials[1])
     array = acoustotreams.AcousticSMatrices.from_array(spheres, spwb)
-    total = acoustotreams.AcousticSMatrices.stack([slab, dist, array])
+    total = acoustotreams.AcousticSMatrices.stack([slab, dist, array, dist])
     x, _ = total.bands_kz(az)
     x = x * az / np.pi
-    return x[np.abs(np.imag(x)) < 0.1]
+    return x[np.abs(np.imag(x)) < .001]
 
 res = Parallel(n_jobs=-1)(delayed(compute_coeffs)(k0s[i]) for i in range(len(k0s)))
 
