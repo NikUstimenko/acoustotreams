@@ -1,5 +1,7 @@
+![Version](https://img.shields.io/github/v/tag/NikUstimenko/acoustotreams)
 [![PyPI](https://img.shields.io/pypi/v/acoustotreams)](https://pypi.org/project/acoustotreams)
 ![License](https://img.shields.io/github/license/NikUstimenko/acoustotreams)
+![publish](https://github.com/NikUstimenko/acoustotreams/actions/workflows/publish.yml/badge.svg)
 [![Documentation Status](https://img.shields.io/badge/docs-online-brightgreen)](https://NikUstimenko.github.io/acoustotreams)
 ![doctests](https://github.com/NikUstimenko/acoustotreams/actions/workflows/doctests.yml/badge.svg?branch=main)
 ![tests](https://github.com/NikUstimenko/acoustotreams/actions/workflows/tests.yml/badge.svg?branch=main)
