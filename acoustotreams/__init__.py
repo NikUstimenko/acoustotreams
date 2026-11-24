@@ -106,6 +106,16 @@ Special functions, including those imported from SciPy and treams, are available
 
 __version__ = "0.2.53"
 
+import sys
+
+import numpy as np
+
+if sys.platform == "win32" and int(np.__version__.split(".")[0]) >= 2:
+    raise ImportError(
+        "treams does not support NumPy 2 on Windows yet. Use Python 3.12 or "
+        "older, where acoustotreams installs NumPy 1.x automatically."
+    )
+
 from treams.misc import(  # noqa: F401,
     wave_vec_z,
     firstbrillouin1d,
