@@ -86,3 +86,7 @@ The following publications document the developments and methods for different p
 * [x] Scattering from particles and clusters arranged in 3d-, 2d-, and 1d-lattices
 * [x] Calculation of sound propagation in stratified media
 * [x] Band calculation in crystal structures
+
+## Declaration of generative AI and AI-assisted technologies
+
+Anthropic Claude (Opus 5.5) was used in order to assist with the debugging, testing, and reviewing of this software. After using this tool, the content was reviewed and edited as needed.
